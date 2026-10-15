@@ -1,1 +1,5 @@
-book
+node_modules/
+.vocs-content/
+.vocs/
+.waku/
+dist/

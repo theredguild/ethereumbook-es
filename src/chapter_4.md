@@ -1,154 +1,154 @@
-# Chapter 4. Cryptography
+# Capítulo 4. Criptografía
 
-One of Ethereum's foundational technologies is *cryptography*, which is a branch of mathematics used extensively in computer security. Cryptography means "secret writing" in Greek, but the study of cryptography encompasses more than just secret writing, which is referred to as *encryption*. Cryptography can, for example, also be used to prove knowledge of a secret without revealing that secret (e.g., with a *digital signature*) or to prove the authenticity of data (e.g., with digital fingerprints, also known as *hashes*). These types of cryptographic proofs are mathematical tools critical to the operation of the Ethereum platform (and, indeed, all blockchain systems) and are also extensively used in Ethereum applications.
+Una de las tecnologías fundamentales de Ethereum es la *criptografía*, una rama de las matemáticas utilizada ampliamente en la seguridad informática. Criptografía significa "escritura secreta" en griego, pero su estudio abarca más que la escritura secreta, denominada *cifrado*. Por ejemplo, la criptografía también puede utilizarse para demostrar el conocimiento de un secreto sin revelarlo (p. ej., con una *firma digital*) o para demostrar la autenticidad de los datos (p. ej., con huellas digitales, también conocidas como *hashes*). Estos tipos de pruebas criptográficas son herramientas matemáticas esenciales para el funcionamiento de la plataforma Ethereum (y, de hecho, de todos los sistemas blockchain) y también se utilizan ampliamente en las aplicaciones de Ethereum.
 
-Note that, at the time of publication, no part of the Ethereum protocol involves encryption; that is to say all communications with the Ethereum platform and between nodes (including transaction data) are unencrypted and can (necessarily) be read by anyone. This is so everyone can verify the correctness of state updates and consensus can be reached. In the future, advanced cryptographic tools, such as zero-knowledge proofs and homomorphic encryption, will be available that will allow for some encrypted calculations to be recorded on the blockchain while still enabling consensus; however, while provision has been made for them, they have yet to be fully deployed.
+Cabe señalar que, al momento de la publicación, ninguna parte del protocolo Ethereum implica cifrado; es decir, todas las comunicaciones con la plataforma Ethereum y entre nodos (incluidos los datos de las transacciones) están sin cifrar y cualquiera puede (necesariamente) leerlas. Esto permite que todos verifiquen la corrección de las actualizaciones de estado y que se alcance el consenso. En el futuro, estarán disponibles herramientas criptográficas avanzadas, como las pruebas de conocimiento cero y el cifrado homomórfico, que permitirán registrar algunos cálculos cifrados en la blockchain sin impedir el consenso; sin embargo, aunque se han previsto, todavía no se han desplegado por completo.
 
-In this chapter, we will introduce some of the cryptography used in Ethereum—namely, *public key cryptography* (PKC), which is used to control ownership of funds, in the form of private keys and addresses.
+En este capítulo, presentaremos parte de la criptografía utilizada en Ethereum, concretamente la *criptografía de clave pública* (PKC), utilizada para controlar la propiedad de los fondos mediante claves privadas y direcciones.
 
-## Keys and Addresses
+## Claves y direcciones
 
-As we learned earlier in this book, Ethereum has two different types of accounts: EOAs and contracts. Ownership of ether by EOAs is established through digital *private keys*, Ethereum *addresses*, and digital *signatures*. The private keys are at the heart of all user interactions with Ethereum. In fact, account addresses are derived directly from private keys: a private key uniquely determines a single Ethereum address, also known as an account.
+Como aprendimos anteriormente en este libro, Ethereum tiene dos tipos diferentes de cuentas: EOA y contratos. La propiedad del ether de las EOA se establece mediante *claves privadas* digitales, *direcciones* de Ethereum y *firmas* digitales. Las claves privadas constituyen el núcleo de todas las interacciones de los usuarios con Ethereum. De hecho, las direcciones de las cuentas se derivan directamente de las claves privadas: una clave privada determina de forma unívoca una sola dirección de Ethereum, también conocida como cuenta.
 
-Private keys are not used directly in the Ethereum system in any way; they are never transmitted or stored on Ethereum. That is to say that private keys should remain private and should never appear in messages passed to the network, nor should they be stored on chain; only account addresses and digital signatures are ever transmitted and stored on the Ethereum system. For more information on how to keep private keys safe and secure, see "Wallet Best Practices".
+Las claves privadas no se utilizan directamente de ninguna manera en el sistema Ethereum; nunca se transmiten ni se almacenan en Ethereum. Es decir, deben permanecer privadas y nunca aparecer en los mensajes enviados a la red, ni almacenarse en la cadena; solo las direcciones de las cuentas y las firmas digitales se transmiten y almacenan en el sistema Ethereum. Para obtener más información sobre cómo mantener seguras y protegidas las claves privadas, consulte "Buenas prácticas para billeteras".
 
-Access to and control of funds are achieved with digital signatures, which are also created using the private key. Ethereum transactions require a valid digital signature to be included in the blockchain. Anyone with a copy of a private key has control of the corresponding account and any ether it holds. Assuming a user keeps their private key safe, the digital signatures in Ethereum transactions prove the true owner of the funds, because they prove ownership of the private key.
+El acceso y el control de los fondos se logran mediante firmas digitales, que también se crean con la clave privada. Las transacciones de Ethereum requieren una firma digital válida para incluirse en la blockchain. Cualquier persona que tenga una copia de una clave privada controla la cuenta correspondiente y todo el ether que contiene. Si un usuario mantiene segura su clave privada, las firmas digitales de las transacciones de Ethereum demuestran quién es el verdadero propietario de los fondos, porque demuestran la propiedad de la clave privada.
 
-In PKC-based systems, such as that used by Ethereum, keys come in pairs consisting of a private (secret) key and a public key. Think of the public key as similar to a bank account number and the private key as similar to the secret PIN; it is the latter that provides control over the account and the former that identifies it to others. The private keys themselves are very rarely seen by Ethereum users; for the most part, they are stored (in encrypted form) in special files and managed by Ethereum wallet software.
+En los sistemas basados en PKC, como el que utiliza Ethereum, las claves vienen en pares formados por una clave privada (secreta) y una clave pública. La clave pública es similar a un número de cuenta bancaria y la clave privada es similar al PIN secreto; esta última proporciona el control sobre la cuenta y la primera la identifica ante los demás. Los usuarios de Ethereum rara vez ven las claves privadas en sí; en su mayoría, se almacenan (cifradas) en archivos especiales y se administran mediante software de billeteras de Ethereum.
 
-In the payment portion of an Ethereum transaction, the intended recipient is represented by an Ethereum address, which is used in the same way as the beneficiary account details of a bank transfer. As we will see in more detail shortly, an Ethereum address for an EOA is generated from the public key portion of a key pair. However, not all Ethereum addresses represent public–private key pairs; they can also represent contracts, which, as we will see in Chapter 7, are not backed by private keys.
+En la parte del pago de una transacción de Ethereum, el destinatario previsto se representa mediante una dirección de Ethereum, utilizada del mismo modo que los datos de la cuenta beneficiaria de una transferencia bancaria. Como veremos en detalle en breve, una dirección de Ethereum de una EOA se genera a partir de la parte de clave pública de un par de claves. Sin embargo, no todas las direcciones de Ethereum representan pares de claves públicas y privadas; también pueden representar contratos que, como veremos en el capítulo 7, no están respaldados por claves privadas.
 
-In the rest of this chapter, we will:
+En el resto de este capítulo:
 
-- Dive deeper into the fundamentals of cryptography and explore its mathematical underpinnings within Ethereum
-- Examine the processes of key generation, storage, and management
-- Review the various encoding formats used for private keys, public keys, and addresses
-- Investigate the validator key cryptography and the KZG commitment scheme, which represent the most recent updates to Ethereum's cryptographic infrastructure
+- Profundizaremos en los fundamentos de la criptografía y exploraremos sus bases matemáticas dentro de Ethereum
+- Examinaremos los procesos de generación, almacenamiento y administración de claves
+- Revisaremos los diversos formatos de codificación utilizados para las claves privadas, las claves públicas y las direcciones
+- Investigaremos la criptografía de las claves de los validadores y el esquema de compromisos KZG, que representan las actualizaciones más recientes de la infraestructura criptográfica de Ethereum
 
-## PKC and Cryptocurrency
+## PKC y criptomonedas
 
-PKC (also called *asymmetric cryptography*) is a core part of modern-day information security. The *key exchange protocol*, first published in the 1970s by Martin Hellman, Whitfield Diffie, and Ralph Merkle, was a monumental breakthrough that incited the first big wave of public interest in the field of cryptography. Before the 1970s, strong cryptographic knowledge was kept secret by governments.
+La PKC (también llamada *criptografía asimétrica*) es una parte central de la seguridad de la información moderna. El *protocolo de intercambio de claves*, publicado por primera vez en la década de 1970 por Martin Hellman, Whitfield Diffie y Ralph Merkle, fue un avance monumental que provocó la primera gran ola de interés público en el campo de la criptografía. Antes de la década de 1970, los gobiernos mantenían en secreto los conocimientos criptográficos sólidos.
 
-PKC uses unique keys to secure information. These keys are based on mathematical functions that have a special property: it is easy to calculate them but hard to calculate their inverse. Based on these functions, cryptography enables the creation of digital secrets and unforgeable digital signatures, which are secured by the laws of mathematics.
+La PKC utiliza claves únicas para proteger la información. Estas claves se basan en funciones matemáticas con una propiedad especial: es fácil calcularlas, pero difícil calcular su inversa. A partir de estas funciones, la criptografía permite crear secretos digitales y firmas digitales imposibles de falsificar, protegidos por las leyes de las matemáticas.
 
-For example, multiplying two large prime numbers together is trivial. But given the product of two large primes, it is very difficult to find the prime factors (a problem called *prime factorization*). Let's say we present the number 8,018,009 and tell you it is the product of two primes. Finding those two primes is much harder for you than it was for me to multiply them to produce 8,018,009.
+Por ejemplo, multiplicar dos números primos grandes es trivial. Pero, dado el producto de dos primos grandes, es muy difícil encontrar los factores primos (un problema llamado *factorización en primos*). Supongamos que presentamos el número 8,018,009 e indicamos que es el producto de dos primos. Encontrar esos dos primos es mucho más difícil que multiplicarlos para obtener 8,018,009.
 
-Some of these mathematical functions can be inverted easily if you know some secret information. In the preceding example, if I tell you that one of the prime factors is 2,003, you can trivially find the other one with simple division: 8,018,009 ÷ 2,003 = 4,003. Such functions are often called *trapdoor functions* because they are very difficult to invert unless you are given a piece of secret information that can be used as a shortcut to reverse the function.
+Algunas de estas funciones matemáticas pueden invertirse fácilmente si se conoce cierta información secreta. En el ejemplo anterior, si indicamos que uno de los factores primos es 2,003, se puede encontrar trivialmente el otro mediante una división sencilla: 8,018,009 ÷ 2,003 = 4,003. Estas funciones suelen llamarse *funciones de trampilla* porque son muy difíciles de invertir a menos que se proporcione información secreta que pueda utilizarse como atajo para invertir la función.
 
-A more advanced category of mathematical functions that is useful in cryptography is based on arithmetic operations on an *elliptic curve*. In elliptic curve arithmetic, multiplication modulo a prime is simple, but division (the inverse) is practically impossible. This is called the *discrete logarithm problem*, and there are currently no known trapdoors. *Elliptic curve cryptography* is used extensively in modern computer systems and is the basis of Ethereum's (and other cryptocurrencies') use of private keys and digital signatures.
+Una categoría más avanzada de funciones matemáticas útiles en criptografía se basa en operaciones aritméticas sobre una *curva elíptica*. En la aritmética de curvas elípticas, la multiplicación módulo un primo es sencilla, pero la división (la inversa) es prácticamente imposible. Esto se denomina *problema del logaritmo discreto* y actualmente no se conocen trampillas. La *criptografía de curvas elípticas* se utiliza ampliamente en los sistemas informáticos modernos y es la base del uso de claves privadas y firmas digitales en Ethereum (y otras criptomonedas).
 
-> **Note**
+> **Nota**
 >
-> Take a look at the following resources if you're interested in reading more about cryptography and the mathematical functions that are used in modern cryptography:
-> - [Cryptography](https://oreil.ly/wOT_b)
-> - [Trapdoor function](https://oreil.ly/WrxXr)
-> - [Prime factorization](https://oreil.ly/rxAnN)
-> - [Discrete logarithm](https://oreil.ly/pj8PD)
-> - [Elliptic curve cryptography](https://oreil.ly/RP2QF)
+> Consulte los siguientes recursos si le interesa leer más sobre criptografía y las funciones matemáticas utilizadas en la criptografía moderna:
+> - [Criptografía](https://oreil.ly/wOT_b)
+> - [Función de trampilla](https://oreil.ly/WrxXr)
+> - [Factorización en primos](https://oreil.ly/rxAnN)
+> - [Logaritmo discreto](https://oreil.ly/pj8PD)
+> - [Criptografía de curvas elípticas](https://oreil.ly/RP2QF)
 
-In Ethereum, we use PKC to create the public–private key pair we have been talking about in this chapter. They are considered a "pair" because the public key is derived from the private key. Together, they represent an Ethereum account by providing, respectively, a publicly accessible account handle (the address) and private control over access to any ether in the account and over any authentication the account needs when using smart contracts. The private key controls access by being the unique piece of information needed to create digital signatures, which are required to sign transactions to spend any funds in the account. Digital signatures are also used to authenticate owners or users of contracts, as we will see in Chapter 7.
+En Ethereum, utilizamos PKC para crear el par de claves pública y privada del que hemos hablado en este capítulo. Se consideran un "par" porque la clave pública se deriva de la privada. Juntas representan una cuenta de Ethereum al proporcionar, respectivamente, un identificador de cuenta de acceso público (la dirección) y control privado sobre el acceso a cualquier ether de la cuenta y sobre cualquier autenticación que la cuenta necesite al utilizar contratos inteligentes. La clave privada controla el acceso porque es la información única necesaria para crear firmas digitales, requeridas para firmar las transacciones que gastan fondos de la cuenta. Las firmas digitales también se utilizan para autenticar a los propietarios o usuarios de contratos, como veremos en el capítulo 7.
 
-> **Tip**
+> **Consejo**
 >
-> In most wallet implementations, the private and public keys are stored together as a key pair for convenience. However, the public key can be trivially calculated from the private key, so storing only the private key is also possible.
+> En la mayoría de las implementaciones de billeteras, las claves privada y pública se almacenan juntas como un par de claves por comodidad. Sin embargo, la clave pública puede calcularse trivialmente a partir de la privada, por lo que también es posible almacenar solo la clave privada.
 
-A digital signature can be created to sign any message. For Ethereum transactions, the details of the transaction itself are used as the message. The mathematics of cryptography—in this case, elliptic curve cryptography—provides a way for the message (i.e., the transaction details) to be combined with the private key to create a code that can be produced only with knowledge of the private key. That code is called the digital signature.
+Se puede crear una firma digital para firmar cualquier mensaje. En las transacciones de Ethereum, los detalles de la propia transacción se utilizan como mensaje. Las matemáticas de la criptografía, en este caso la criptografía de curvas elípticas, permiten combinar el mensaje (es decir, los detalles de la transacción) con la clave privada para crear un código que solo puede producirse conociendo la clave privada. Ese código se denomina firma digital.
 
-Note that an Ethereum transaction is basically a request to access a particular account with a particular Ethereum address. When a transaction is sent to the Ethereum network in order to move funds or interact with smart contracts, it needs to be sent with a digital signature created with the private key corresponding to the Ethereum address in question. Elliptic curve mathematics means that anyone can verify that a transaction is valid, by checking that the digital signature matches the transaction details and the Ethereum address to which access is being requested. The verification doesn't involve the private key at all; that remains private. However, the verification process determines beyond doubt that the transaction could have come only from someone with the private key that corresponds to the public key behind the Ethereum address. This is the "magic" of PKC.
+Cabe señalar que una transacción de Ethereum es, en esencia, una solicitud de acceso a una cuenta específica con una dirección de Ethereum específica. Cuando se envía una transacción a la red Ethereum para mover fondos o interactuar con contratos inteligentes, debe enviarse con una firma digital creada con la clave privada correspondiente a la dirección de Ethereum en cuestión. Las matemáticas de curvas elípticas permiten que cualquiera verifique que una transacción es válida, al comprobar que la firma digital coincide con los detalles de la transacción y la dirección de Ethereum a la que se solicita acceso. La verificación no involucra en absoluto la clave privada; esta permanece privada. Sin embargo, el proceso de verificación determina sin lugar a dudas que la transacción solo pudo provenir de alguien que tiene la clave privada correspondiente a la clave pública detrás de la dirección de Ethereum. Esta es la "magia" de la PKC.
 
-> **Tip**
+> **Consejo**
 >
-> There is no encryption as part of the Ethereum protocol—all messages that are sent as part of the operation of the Ethereum network can (necessarily) be read by everyone. As such, private keys are used only to create digital signatures for transaction authentication.
+> El cifrado no forma parte del protocolo Ethereum: todos los mensajes enviados como parte del funcionamiento de la red Ethereum pueden (necesariamente) ser leídos por todos. Por tanto, las claves privadas solo se utilizan para crear firmas digitales que autentican las transacciones.
 
-## Private Keys
+## Claves privadas
 
-A private key is simply a number, picked at random. Ownership and control of the private key is the root of user control over all funds associated with the corresponding Ethereum address as well as access to contracts that authorize that address. The private key is used to create signatures required to spend ether by proving ownership of funds used in a transaction. The private key must remain secret at all times because revealing it to third parties is equivalent to giving them control over the ether and contracts secured by that private key. The private key must also be backed up and protected from accidental loss. If it's lost, it cannot be recovered, and the funds secured by it are lost forever, too.
+Una clave privada es simplemente un número elegido al azar. La propiedad y el control de la clave privada son la base del control del usuario sobre todos los fondos asociados con la dirección de Ethereum correspondiente, así como del acceso a los contratos que autorizan esa dirección. La clave privada se utiliza para crear las firmas necesarias para gastar ether al demostrar la propiedad de los fondos utilizados en una transacción. La clave privada debe permanecer secreta en todo momento, porque revelarla a terceros equivale a darles el control del ether y de los contratos protegidos por ella. También debe respaldarse y protegerse contra pérdidas accidentales. Si se pierde, no puede recuperarse, y los fondos que protege también se pierden para siempre.
 
-> **Tip**
+> **Consejo**
 >
-> The Ethereum private key is just a number. One way to pick your private keys randomly is to simply use a coin, pencil, and paper: toss a coin 256 times and you have the binary digits of a random private key you can use in an Ethereum wallet (probably—see the following paragraphs). The public key and address can then be generated from the private key.
+> La clave privada de Ethereum no es más que un número. Una forma de elegir claves privadas al azar es utilizar una moneda, lápiz y papel: lance una moneda 256 veces y tendrá los dígitos binarios de una clave privada aleatoria que podrá utilizar en una billetera de Ethereum (probablemente; consulte los párrafos siguientes). Después pueden generarse la clave pública y la dirección a partir de la clave privada.
 
-The first and most important step in generating keys is to find a secure source of *entropy*, or randomness. Creating an Ethereum private key essentially involves picking a number between 1 and 2^256. The exact method you use to pick that number does not matter as long as it is not predictable or deterministic. Ethereum software uses the underlying operating system's *random number generator* (RNG) to produce 256 random bits. Usually, the OS RNG is initialized by a human source of randomness, which is why you may be asked to wiggle your mouse around for a few seconds or to press random keys on your keyboard. An alternative could be cosmic radiation noise on the computer's microphone channel.
+El primer paso, y el más importante, para generar claves es encontrar una fuente segura de *entropía*, o aleatoriedad. Crear una clave privada de Ethereum consiste esencialmente en elegir un número entre 1 y 2^256. El método exacto utilizado para elegirlo no importa, siempre que no sea predecible ni determinista. El software de Ethereum utiliza el *generador de números aleatorios* (RNG) del sistema operativo subyacente para producir 256 bits aleatorios. Por lo general, el RNG del sistema operativo se inicializa con una fuente humana de aleatoriedad; por eso puede solicitarse mover el ratón durante unos segundos o presionar teclas aleatorias. Una alternativa podría ser el ruido de radiación cósmica en el canal del micrófono de la computadora.
 
-More precisely, a private key can be any nonzero number up to a very large number slightly less than 2^256—a huge 78-digit number, roughly 1.158 × 10^77. The exact number shares the first 38 digits with 2^256 and is defined as the order of the elliptic curve used in Ethereum. To create a private key, we randomly pick a 256-bit number and check that it is within the valid range. In programming terms, this is usually achieved by feeding an even larger string of random bits (collected from a cryptographically secure source of randomness) into a 256-bit hash algorithm such as Keccak-256 or SHA-256, both of which will conveniently produce a 256-bit number. If the result is within the valid range, we have a suitable private key. Otherwise, we simply try again with another random number.
+Más precisamente, una clave privada puede ser cualquier número distinto de cero hasta un número muy grande ligeramente menor que 2^256, un enorme número de 78 dígitos, aproximadamente 1.158 × 10^77. El número exacto comparte los primeros 38 dígitos con 2^256 y se define como el orden de la curva elíptica utilizada en Ethereum. Para crear una clave privada, elegimos al azar un número de 256 bits y comprobamos que esté dentro del rango válido. En términos de programación, esto suele lograrse introduciendo una cadena aún mayor de bits aleatorios (recopilados de una fuente de aleatoriedad criptográficamente segura) en un algoritmo hash de 256 bits como Keccak-256 o SHA-256; ambos producen convenientemente un número de 256 bits. Si el resultado está dentro del rango válido, tenemos una clave privada adecuada. De lo contrario, volvemos a intentarlo con otro número aleatorio.
 
-> **Note**
+> **Nota**
 >
-> The size of Ethereum's private-key space—2^256—is an unfathomably large number. It is approximately 10^77 in decimal—that is, a number with 78 digits. For comparison, the visible universe is estimated to contain 10^80 atoms. Thus, there are almost enough private keys to give every atom in the universe an Ethereum account. If you pick a private key randomly, there is no conceivable way anyone will ever guess it or pick it themselves.
+> El tamaño del espacio de claves privadas de Ethereum, 2^256, es un número inconcebiblemente grande. Es aproximadamente 10^77 en decimal, es decir, un número de 78 dígitos. Como comparación, se estima que el universo visible contiene 10^80 átomos. Por tanto, hay casi suficientes claves privadas para dar una cuenta de Ethereum a cada átomo del universo. Si se elige una clave privada al azar, no existe una forma concebible de que alguien llegue a adivinarla o elegirla por su cuenta.
 
-Note that the process of generating private keys is an offline one; it does not require any communication with the Ethereum network—or indeed, any communication with anyone at all. As such, to pick a number that no one else will ever pick, it needs to be truly random. If you choose the number yourself, the chance that someone else will try it (and then run off with your ether) is too high. Using a bad RNG (like the pseudorandom `rand` function in most programming languages) is even worse because it is even more obvious and even easier to replicate. Just like with passwords for online accounts, the private key needs to be unguessable. Fortunately, you never need to remember your private key, so you can take the best possible approach for picking it: true randomness.
+Cabe señalar que la generación de claves privadas es un proceso sin conexión; no requiere ninguna comunicación con la red Ethereum ni, de hecho, con nadie. Por tanto, para elegir un número que nadie más vaya a elegir, debe ser verdaderamente aleatorio. Si se elige el número por cuenta propia, la probabilidad de que otra persona lo pruebe (y luego se lleve el ether) es demasiado alta. Utilizar un RNG deficiente (como la función seudoaleatoria `rand` de la mayoría de los lenguajes de programación) es aún peor porque resulta todavía más obvio y fácil de replicar. Al igual que las contraseñas de las cuentas en línea, la clave privada debe ser imposible de adivinar. Afortunadamente, nunca es necesario recordarla, por lo que puede adoptarse el mejor método posible para elegirla: la aleatoriedad verdadera.
 
-> **Warning**
+> **Advertencia**
 >
-> Do not write your own code to create a random number or use a "simple" RNG offered by your programming language. Note that JavaScript-based RNGs in browser wallets can be insecure unless backed by OS entropy. It is vital that you use a cryptographically secure pseudorandom number generator (such as CSPRNG) with a seed from a source of sufficient entropy. Study the documentation of the RNG library you choose to make sure it is cryptographically secure. Correct implementation of the CSPRNG library is critical to the security of the keys.
+> No escriba su propio código para crear un número aleatorio ni utilice un RNG "simple" ofrecido por su lenguaje de programación. Los RNG basados en JavaScript de las billeteras de navegador pueden ser inseguros a menos que estén respaldados por la entropía del sistema operativo. Es vital utilizar un generador de números seudoaleatorios criptográficamente seguro (como CSPRNG) con una semilla procedente de una fuente con suficiente entropía. Estudie la documentación de la biblioteca de RNG elegida para asegurarse de que sea criptográficamente segura. La implementación correcta de la biblioteca CSPRNG es esencial para la seguridad de las claves.
 
-The following is a randomly generated private key shown in hexadecimal format (256 bits shown as 64 hexadecimal digits, each 4 bits):
+A continuación se muestra una clave privada generada al azar en formato hexadecimal (256 bits representados como 64 dígitos hexadecimales, cada uno de 4 bits):
 
 ```
 f8f8a2f43c8376ccb0871305060d7b27b0554d2cc72bccf41b2705608452f315
 ```
 
-## Public Keys
+## Claves públicas
 
-An Ethereum public key is a point on an elliptic curve, meaning it is a set of x and y coordinates that satisfy the elliptic curve equation.
+Una clave pública de Ethereum es un punto sobre una curva elíptica, es decir, un conjunto de coordenadas x e y que satisfacen la ecuación de la curva elíptica.
 
-In simpler terms, an Ethereum public key is two numbers, joined together. These numbers are produced from the private key by a calculation that can only go one way. That means that it is trivial to calculate a public key if you have the private key, but you cannot calculate the private key from the public key.
+En términos más sencillos, una clave pública de Ethereum son dos números unidos. Estos números se producen a partir de la clave privada mediante un cálculo que solo puede realizarse en un sentido. Esto significa que es trivial calcular una clave pública si se tiene la privada, pero no se puede calcular la clave privada a partir de la pública.
 
-> **Warning**
+> **Advertencia**
 >
-> MATH is about to happen! Don't panic. If you start to get lost at any point in the following paragraphs, you can skip the next few sections. There are many tools and libraries that will do the math for you.
+> ¡Se vienen las MATEMÁTICAS! No se asuste. Si empieza a perderse en algún punto de los párrafos siguientes, puede saltarse las próximas secciones. Hay muchas herramientas y bibliotecas que harán los cálculos por usted.
 
-The public key is calculated from the private key using *elliptic curve multiplication*, which is practically irreversible: `K = k * G`, where `k` is the private key, `G` is a constant point called the *generator point*, `K` is the resulting public key, and `*` is the special elliptic curve "multiplication" operator. Note that elliptic curve multiplication is not like normal multiplication. It shares functional attributes with normal multiplication, but that is about it. For example, the reverse operation (which would be division for normal numbers), known as "finding the discrete logarithm"—that is, calculating `k` if you know `K`—is as difficult as trying all possible values of `k` (a brute-force search that will likely take more time than this universe will allow for).
+La clave pública se calcula a partir de la privada mediante la *multiplicación de curvas elípticas*, que es prácticamente irreversible: `K = k * G`, donde `k` es la clave privada, `G` es un punto constante llamado *punto generador*, `K` es la clave pública resultante y `*` es el operador especial de "multiplicación" de curvas elípticas. Cabe señalar que la multiplicación de curvas elípticas no es como la multiplicación normal. Comparte atributos funcionales con ella, pero no mucho más. Por ejemplo, la operación inversa (que sería la división para los números normales), conocida como "encontrar el logaritmo discreto", es decir, calcular `k` si se conoce `K`, es tan difícil como probar todos los valores posibles de `k` (una búsqueda por fuerza bruta que probablemente tardará más tiempo del que permitirá este universo).
 
-In simpler terms, arithmetic on the elliptic curve is different from "regular" integer arithmetic. A point (`G`) can be multiplied by an integer (`k`) to produce another point (`K`). But there is no such thing as division, so it is not possible to simply "divide" the public key `K` by the point `G` to calculate the private key `k`. This is the one-way mathematical function described in the previous section "PKC and Cryptocurrency".
+En términos más sencillos, la aritmética sobre la curva elíptica es diferente de la aritmética "normal" de enteros. Un punto (`G`) puede multiplicarse por un entero (`k`) para producir otro punto (`K`). Pero no existe la división, por lo que no es posible simplemente "dividir" la clave pública `K` entre el punto `G` para calcular la clave privada `k`. Esta es la función matemática unidireccional descrita en la sección anterior "PKC y criptomonedas".
 
-> **Note**
+> **Nota**
 >
-> Elliptic curve multiplication is a type of function that cryptographers call a "one-way" function: it is easy to do in one direction (multiplication) and impossible to do in the reverse direction (division). The owner of the private key can easily create the public key and then share it with the world, knowing that no one can reverse the function and calculate the private key from the public key. This mathematical trick becomes the basis for unforgeable and secure digital signatures that prove ownership of Ethereum funds and control of contracts.
+> La multiplicación de curvas elípticas es un tipo de función que los criptógrafos llaman "unidireccional": es fácil realizarla en un sentido (multiplicación) e imposible en el sentido inverso (división). El propietario de la clave privada puede crear fácilmente la clave pública y compartirla con el mundo, sabiendo que nadie puede invertir la función y calcular la clave privada a partir de la pública. Este recurso matemático se convierte en la base de firmas digitales seguras e imposibles de falsificar que demuestran la propiedad de los fondos de Ethereum y el control de los contratos.
 
-Before we demonstrate how to generate a public key from a private key, let's look at elliptic curve cryptography in a bit more detail.
+Antes de demostrar cómo generar una clave pública a partir de una privada, veamos la criptografía de curvas elípticas con un poco más de detalle.
 
-### Elliptic Curve Cryptography Explained
+### Explicación de la criptografía de curvas elípticas
 
-Elliptic curve cryptography is a type of asymmetric or public key cryptography based on the discrete logarithm problem as expressed by addition and multiplication on the points of an elliptic curve. Figure 4-1 is an example of an elliptic curve, similar to that used by Ethereum.
+La criptografía de curvas elípticas es un tipo de criptografía asimétrica o de clave pública basada en el problema del logaritmo discreto, expresado mediante la suma y la multiplicación de puntos sobre una curva elíptica. La figura 4-1 es un ejemplo de curva elíptica, similar a la utilizada por Ethereum.
 
-> **Note**
+> **Nota**
 >
-> Ethereum uses the exact same elliptic curve, called `secp256k1`, as Bitcoin. That makes it possible to reuse many of the elliptic curve libraries and tools from Bitcoin.
+> Ethereum utiliza exactamente la misma curva elíptica que Bitcoin, llamada `secp256k1`. Esto permite reutilizar muchas de las bibliotecas y herramientas de curvas elípticas de Bitcoin.
 
-![An elliptic curve](images/ch4/maet_0401.png)
+![Una curva elíptica](images/ch4/maet_0401.png)
 
-Figure 4-1. An elliptic curve
+Figura 4-1. Una curva elíptica
 
-Ethereum uses a specific elliptic curve and set of mathematical constants, as defined in a standard called `secp256k1`, established by the US National Institute of Standards and Technology (NIST). The `secp256k1` curve is defined by the following function, which produces an elliptic curve:
+Ethereum utiliza una curva elíptica específica y un conjunto de constantes matemáticas, definidos en un estándar llamado `secp256k1`, establecido por el Instituto Nacional de Estándares y Tecnología de Estados Unidos (NIST). La curva `secp256k1` se define mediante la siguiente función, que produce una curva elíptica:
 
 ```
 y^2 = (x^3 + 7) over (Fp)
 ```
 
-or:
+o:
 
 ```
 y^2 mod p = (x^3 + 7) mod p
 ```
 
-The `mod p` (modulo prime number p) indicates that this curve is over a *finite field* of prime order p, also written as Fp, where p = 2^256 – 2^32 – 2^9 – 2^8 – 2^7 – 2^6 – 2^4 – 1, which is a very large prime number.
+`mod p` (módulo el número primo p) indica que esta curva está definida sobre un *campo finito* de orden primo p, también escrito Fp, donde p = 2^256 – 2^32 – 2^9 – 2^8 – 2^7 – 2^6 – 2^4 – 1, que es un número primo muy grande.
 
-Because this curve is defined over a finite field of prime order instead of over the real numbers, it looks like a pattern of dots scattered in two dimensions, which makes it difficult to visualize. However, the math is identical to that of an elliptic curve over real numbers. As an example, Figure 4-2 shows the same elliptic curve over a much smaller finite field of prime order 17, showing a pattern of dots on a grid. The `secp256k1` Ethereum elliptic curve can be thought of as a much more complex pattern of dots on an unfathomably large grid.
+Como esta curva está definida sobre un campo finito de orden primo en lugar de sobre los números reales, parece un patrón de puntos dispersos en dos dimensiones, lo que dificulta visualizarla. Sin embargo, las matemáticas son idénticas a las de una curva elíptica sobre los números reales. Como ejemplo, la figura 4-2 muestra la misma curva elíptica sobre un campo finito mucho más pequeño, de orden primo 17, con un patrón de puntos sobre una cuadrícula. La curva elíptica `secp256k1` de Ethereum puede imaginarse como un patrón de puntos mucho más complejo sobre una cuadrícula inconcebiblemente grande.
 
-![Elliptic curve over a finite field](images/ch4/maet_0402.png)
+![Curva elíptica sobre un campo finito](images/ch4/maet_0402.png)
 
-Figure 4-2. Elliptic curve cryptography: visualizing an elliptic curve over F(p), with p=17
+Figura 4-2. Criptografía de curvas elípticas: visualización de una curva elíptica sobre F(p), con p=17
 
-So for example, the following is a point Q with coordinates (x, y) that is a point on the `secp256k1` curve:
+Por ejemplo, el siguiente punto Q con coordenadas (x, y) es un punto de la curva `secp256k1`:
 
 ```
 Q = (49790390825249384486033144355916864607616083520101638681403973749255924539515, 59574132161899900045862086493921015780032175291755807399284007721050341297360)
 ```
 
-Example 4-1 shows how you can check this yourself using Python. The variables `x` and `y` are the coordinates of the point Q, as in the preceding example. The variable `p` is the prime order of the elliptic curve (the prime that is used for all the modulo operations). The last line of Python is the elliptic curve equation (the `%` operator in Python is the modulo operator). If `x` and `y` are indeed the coordinates of a point on the elliptic curve, then they satisfy the equation and the result is zero. Try it yourself, by typing `python` (or `python3`) on a command line and copying each line (after the prompt `>>>`) from the listing.
+El ejemplo 4-1 muestra cómo comprobarlo con Python. Las variables `x` e `y` son las coordenadas del punto Q, como en el ejemplo anterior. La variable `p` es el orden primo de la curva elíptica (el primo utilizado en todas las operaciones módulo). La última línea de Python es la ecuación de la curva elíptica (el operador `%` de Python es el operador módulo). Si `x` e `y` son realmente las coordenadas de un punto sobre la curva elíptica, satisfacen la ecuación y el resultado es cero. Pruébelo escribiendo `python` (o `python3`) en una línea de comandos y copiando cada línea (después del indicador `>>>`) del listado.
 
-**Example 4-1. Using Python to confirm that this point is on the elliptic curve**
+**Ejemplo 4-1. Uso de Python para confirmar que este punto está sobre la curva elíptica**
 
 ```python
 Python 3.12.4 (main, Jun  6 2024, 18:26:44) [Clang 15.0.0 (clang-1500.3.9.4)] on darwin
@@ -160,351 +160,351 @@ Type "help", "copyright", "credits" or "license" for more information.
 0
 ```
 
-### Elliptic Curve Arithmetic Operations
+### Operaciones aritméticas de curvas elípticas
 
-A lot of elliptic curve math looks and works very much like the integer arithmetic we learned at school. Specifically, we can define an addition operator, which instead of jumping along the number line is jumping to other points on the curve. Once we have the addition operator, we can also define multiplication of a point and a whole number, which is equivalent to repeated addition.
+Gran parte de las matemáticas de curvas elípticas se parece y funciona de forma muy similar a la aritmética de enteros que aprendimos en la escuela. En concreto, podemos definir un operador de suma que, en lugar de saltar por la recta numérica, salta a otros puntos de la curva. Una vez que tenemos el operador de suma, también podemos definir la multiplicación de un punto por un número entero, que equivale a una suma repetida.
 
-Elliptic curve addition is defined such that given two points P1 and P2 on the elliptic curve, there is a third point P3 = P1 + P2, also on the elliptic curve.
+La suma de curvas elípticas se define de modo que, dados dos puntos P1 y P2 sobre la curva elíptica, existe un tercer punto P3 = P1 + P2, también sobre la curva elíptica.
 
-Geometrically, this third point P3 is calculated by drawing a line between P1 and P2. This line will intersect the elliptic curve in exactly one additional place (amazingly). Call this point P3′ = (x, y). Then reflect in the x-axis to get P3 = (x, –y), as you can see in Figure 4-3.
+Geométricamente, este tercer punto P3 se calcula trazando una recta entre P1 y P2. Esta recta intersecará la curva elíptica en exactamente un punto adicional (sorprendentemente). Llamemos a este punto P3′ = (x, y). Luego, reflejémoslo respecto del eje x para obtener P3 = (x, –y), como se ve en la figura 4-3.
 
-![Elliptic curve addition](images/ch4/maet_0403.png)
+![Suma de curvas elípticas](images/ch4/maet_0403.png)
 
-Figure 4-3. Elliptic curve addition: adding two points on an elliptic curve
+Figura 4-3. Suma de curvas elípticas: suma de dos puntos sobre una curva elíptica
 
-If P1 and P2 are the same point, the line "between" P1 and P2 should extend to be the tangent to the curve at this point P1. This tangent will intersect the curve at exactly one new point, as shown in Figure 4-4. You can use techniques from calculus to determine the slope of the tangent line. Curiously, these techniques work, even though we are restricting our interest to points on the curve with two integer coordinates!
+Si P1 y P2 son el mismo punto, la recta "entre" P1 y P2 debe extenderse para ser la tangente a la curva en ese punto P1. Esta tangente intersecará la curva en exactamente un punto nuevo, como se muestra en la figura 4-4. Se pueden utilizar técnicas de cálculo para determinar la pendiente de la recta tangente. Curiosamente, estas técnicas funcionan, ¡aunque restringimos nuestro interés a los puntos de la curva con dos coordenadas enteras!
 
-![Elliptic curve tangent](images/ch4/maet_0404.png)
+![Tangente de una curva elíptica](images/ch4/maet_0404.png)
 
-Figure 4-4. Elliptic curve addition: adding a point to itself
+Figura 4-4. Suma de curvas elípticas: suma de un punto consigo mismo
 
-In elliptic curve math, there is also a point called the *point at infinity*, which roughly corresponds to the role of the number zero in addition. On computers, it's sometimes represented by `x = y = 0` (which doesn't satisfy the elliptic curve equation, but it's an easy separate case that can be checked). There are a couple of special cases that explain the need for the point at infinity.
+En las matemáticas de curvas elípticas también existe un punto llamado *punto en el infinito*, que corresponde aproximadamente al papel del número cero en la suma. En las computadoras, a veces se representa mediante `x = y = 0` (que no satisface la ecuación de la curva elíptica, pero es un caso aparte fácil de comprobar). Hay un par de casos especiales que explican la necesidad del punto en el infinito.
 
-In some cases (e.g., if P1 and P2 have the same x values but different y values, as shown in Figure 4-5), the line will be exactly vertical, in which case P3 = the point at infinity.
+En algunos casos (p. ej., si P1 y P2 tienen los mismos valores de x pero distintos valores de y, como se muestra en la figura 4-5), la recta será exactamente vertical; en ese caso, P3 = el punto en el infinito.
 
-![Point at infinity](images/ch4/maet_0405.png)
+![Punto en el infinito](images/ch4/maet_0405.png)
 
-Figure 4-5. Elliptic curve addition: a special case results in the point at infinity
+Figura 4-5. Suma de curvas elípticas: un caso especial da como resultado el punto en el infinito
 
-If P1 is the point at infinity, then P1 + P2 = P2. Similarly, if P2 is the point at infinity, then P1 + P2 = P1. This shows how the point at infinity plays the role that zero plays in "normal" arithmetic.
+Si P1 es el punto en el infinito, entonces P1 + P2 = P2. Del mismo modo, si P2 es el punto en el infinito, entonces P1 + P2 = P1. Esto muestra cómo el punto en el infinito desempeña el papel del cero en la aritmética "normal".
 
-It turns out that `+` is associative, which means that `(A + B) + C = A + (B + C)`. That means we can write `A + B + C` (without parentheses) without ambiguity.
+Resulta que `+` es asociativo, lo que significa que `(A + B) + C = A + (B + C)`. Esto permite escribir `A + B + C` (sin paréntesis) sin ambigüedad.
 
-Now that we have defined addition, we can define multiplication in the standard way that extends addition. For a point P on the elliptic curve, if k is a whole number, then `k * P = P + P + P + … + P` (k times). Note that k is sometimes (perhaps confusingly) called an exponent in this case.
+Ahora que hemos definido la suma, podemos definir la multiplicación de la manera habitual que extiende la suma. Para un punto P sobre la curva elíptica, si k es un número entero, entonces `k * P = P + P + P + … + P` (k veces). Cabe señalar que en este caso k se denomina a veces exponente (quizá de forma confusa).
 
-### Generating a Public Key
+### Generación de una clave pública
 
-Starting with a private key in the form of a randomly generated number `k`, we multiply it by a predetermined point on the curve called the generator point `G` to produce another point somewhere else on the curve, which is the corresponding public key `K`:
+Partiendo de una clave privada en forma de un número `k` generado al azar, la multiplicamos por un punto predeterminado de la curva llamado punto generador `G` para producir otro punto en otra parte de la curva, que es la clave pública correspondiente `K`:
 
 ```
 K = k * G
 ```
 
-The generator point is specified as part of the `secp256k1` standard; it is the same for all implementations of `secp256k1`, and all keys derived from that curve use the same point `G`. Because the generator point is always the same for all Ethereum users, a private key `k` multiplied with `G` will always result in the same public key `K`. The relationship between `k` and `K` is fixed but can only be calculated in one direction, from `k` to `K`. That's why an Ethereum address (derived from `K`) can be shared with anyone and does not reveal the user's private key (`k`).
+El punto generador se especifica como parte del estándar `secp256k1`; es el mismo para todas las implementaciones de `secp256k1`, y todas las claves derivadas de esa curva utilizan el mismo punto `G`. Como el punto generador siempre es el mismo para todos los usuarios de Ethereum, una clave privada `k` multiplicada por `G` siempre dará como resultado la misma clave pública `K`. La relación entre `k` y `K` es fija, pero solo puede calcularse en un sentido, de `k` a `K`. Por eso una dirección de Ethereum (derivada de `K`) puede compartirse con cualquiera y no revela la clave privada del usuario (`k`).
 
-As we described in the previous section, the multiplication of `k * G` is equivalent to repeated addition, so `G + G + G + … + G`, repeated k times. In summary, to produce a public key `K` from a private key `k`, we add the generator point `G` to itself, k times.
+Como describimos en la sección anterior, la multiplicación `k * G` equivale a una suma repetida, es decir, `G + G + G + … + G`, repetida k veces. En resumen, para producir una clave pública `K` a partir de una clave privada `k`, sumamos el punto generador `G` consigo mismo k veces.
 
-> **Tip**
+> **Consejo**
 >
-> A private key can be converted into a public key, but a public key cannot be converted back into a private key, because the math only works one way.
+> Una clave privada puede convertirse en una clave pública, pero una clave pública no puede volver a convertirse en una clave privada, porque las matemáticas solo funcionan en un sentido.
 
-Let's apply this calculation to find the public key for the specific private key we showed you in the section "Private Keys":
+Apliquemos este cálculo para encontrar la clave pública de la clave privada específica que mostramos en la sección "Claves privadas":
 
 ```
 K = f8f8a2f43c8376ccb0871305060d7b27b0554d2cc72bccf41b2705608452f315 * G
 ```
 
-A cryptographic library can help us calculate `K`, using elliptic curve multiplication. The resulting public key `K` is defined as the point:
+Una biblioteca criptográfica puede ayudarnos a calcular `K` mediante la multiplicación de curvas elípticas. La clave pública `K` resultante se define como el punto:
 
 ```
 K = (x, y)
 ```
 
-where:
+donde:
 
 ```
 x = 6e145ccef1033dea239875dd00dfb4fee6e3348b84985c92f103444683bae07b
 y = 83b5c38e5e2b0c8529d7fa3f64d46daa1ece2d9ac14cab9477d042c84c32ccd0
 ```
-In Ethereum you may see public keys represented as a serialization of 130 hexadecimal characters (65 bytes). This is adopted from a standard serialization format proposed by the industry consortium Standards for Efficient Cryptography Group (SECG), documented in [Standards for Efficient Cryptography (SEC1)](https://oreil.ly/Y_cOQ). The standard defines four possible prefixes that can be used to identify points on an elliptic curve, listed in Table 4-1.
+En Ethereum, las claves públicas pueden representarse como una serialización de 130 caracteres hexadecimales (65 bytes). Esto se adopta de un formato de serialización estándar propuesto por el consorcio industrial Standards for Efficient Cryptography Group (SECG), documentado en [Standards for Efficient Cryptography (SEC1)](https://oreil.ly/Y_cOQ). El estándar define cuatro prefijos posibles que pueden utilizarse para identificar puntos sobre una curva elíptica, enumerados en la tabla 4-1.
 
-**Table 4-1. Serialized elliptic curve public key prefixes**
+**Tabla 4-1. Prefijos de claves públicas de curvas elípticas serializadas**
 
-| Prefix | Meaning | Length (bytes, including prefix) |
+| Prefijo | Significado | Longitud (bytes, incluido el prefijo) |
 |--------|---------|----------------------------------|
-| 0x00 | Point at infinity | 1 |
-| 0x04 | Uncompressed point | 65 |
-| 0x02 | Compressed point with even y | 33 |
-| 0x03 | Compressed point with odd y | 33 |
+| 0x00 | Punto en el infinito | 1 |
+| 0x04 | Punto sin comprimir | 65 |
+| 0x02 | Punto comprimido con y par | 33 |
+| 0x03 | Punto comprimido con y impar | 33 |
 
-Ethereum only uses uncompressed public keys, so the only prefix that is relevant is (hex) `04`. The serialization concatenates the x and y coordinates of the public key:
+Ethereum solo utiliza claves públicas sin comprimir, por lo que el único prefijo relevante es (hex) `04`. La serialización concatena las coordenadas x e y de la clave pública:
 
 ```
 04 + x-coordinate (32 bytes / 64 hex) + y-coordinate (32 bytes / 64 hex)
 ```
 
-Therefore, the public key we calculated earlier is serialized as:
+Por tanto, la clave pública que calculamos anteriormente se serializa así:
 
 ```
 046e145ccef1033dea239875dd00dfb4fee6e3348b84985c92f103444683bae07b83b5c38e5e2b0c8529d7fa3f64d46daa1ece2d9ac14cab9477d042c84c32ccd0
 ```
 
-### Elliptic Curve Libraries
+### Bibliotecas de curvas elípticas
 
-There are a couple of implementations of the `secp256k1` elliptic curve that are used in cryptocurrency-related projects:
+Hay un par de implementaciones de la curva elíptica `secp256k1` utilizadas en proyectos relacionados con criptomonedas:
 
 [**OpenSSL**](https://www.openssl.org)
 
-The OpenSSL library offers a comprehensive set of cryptographic primitives, including a full implementation of `secp256k1`. For example, to derive the public key, the function `EC_POINT_mul` can be used.
+La biblioteca OpenSSL ofrece un conjunto completo de primitivas criptográficas, incluida una implementación completa de `secp256k1`. Por ejemplo, para derivar la clave pública puede utilizarse la función `EC_POINT_mul`.
 
 [**libsecp256k1**](https://oreil.ly/lv84W)
 
-Bitcoin Core's `libsecp256k1` is a C-language implementation of the `secp256k1` elliptic curve and other cryptographic primitives. It was written from scratch to replace OpenSSL in Bitcoin Core software and is considered superior in both performance and security.
+`libsecp256k1` de Bitcoin Core es una implementación en lenguaje C de la curva elíptica `secp256k1` y otras primitivas criptográficas. Se escribió desde cero para reemplazar OpenSSL en el software Bitcoin Core y se considera superior tanto en rendimiento como en seguridad.
 
-## Cryptographic Hash Functions
+## Funciones hash criptográficas
 
-Cryptographic hash functions are used throughout Ethereum. In fact, hash functions are used extensively in almost all cryptographic systems—a fact captured by cryptographer Bruce Schneier, who said, "Much more than encryption algorithms, one-way hash functions are the workhorses of modern cryptography."
+Las funciones hash criptográficas se utilizan en todo Ethereum. De hecho, las funciones hash se utilizan ampliamente en casi todos los sistemas criptográficos, un hecho que expresó el criptógrafo Bruce Schneier al decir: "Mucho más que los algoritmos de cifrado, las funciones hash unidireccionales son las herramientas de trabajo de la criptografía moderna".
 
-In this section, we will discuss hash functions, explore their basic properties, and see how those properties make them so useful in so many areas of modern cryptography. We address hash functions here because they are part of the transformation of Ethereum public keys into addresses. They can also be used to create digital fingerprints, which aid in the verification of data.
+En esta sección, analizaremos las funciones hash, exploraremos sus propiedades básicas y veremos cómo esas propiedades las hacen tan útiles en tantas áreas de la criptografía moderna. Abordamos aquí las funciones hash porque forman parte de la transformación de las claves públicas de Ethereum en direcciones. También pueden utilizarse para crear huellas digitales, que ayudan a verificar los datos.
 
-In simple terms, a *hash function* is any function that can be used to map data of arbitrary size to data of fixed size. The input to a hash function is called a *preimage*, the *message*, or simply the input data. The output is called the *hash*. Cryptographic hash functions are a special subcategory that have specific properties that are useful to secure platforms, such as Ethereum.
+En términos sencillos, una *función hash* es cualquier función que puede utilizarse para transformar datos de tamaño arbitrario en datos de tamaño fijo. La entrada de una función hash se llama *preimagen*, *mensaje* o simplemente datos de entrada. La salida se llama *hash*. Las funciones hash criptográficas son una subcategoría especial con propiedades específicas útiles para proteger plataformas como Ethereum.
 
-A cryptographic hash function is a *one-way hash function* that maps data of arbitrary size to a fixed-size string of bits. The "one-way" nature means that it is computationally infeasible to re-create the input data if one only knows the output hash. The only way to determine a possible input is to conduct a brute-force search, checking each candidate for a matching output; given that the search space is virtually infinite, it is easy to understand the practical impossibility of the task. Even if you find some input data that creates a matching hash, it may not be the original input data: hash functions are "many-to-one" functions. Finding two sets of input data that hash to the same output is called finding a *hash collision*. Roughly speaking, the better the hash function, the rarer hash collisions are. For Ethereum, they are effectively impossible.
+Una función hash criptográfica es una *función hash unidireccional* que transforma datos de tamaño arbitrario en una cadena de bits de tamaño fijo. Su naturaleza "unidireccional" significa que es computacionalmente inviable reconstruir los datos de entrada si solo se conoce el hash de salida. La única forma de determinar una entrada posible es realizar una búsqueda por fuerza bruta, comprobando cada candidato para encontrar una salida coincidente; como el espacio de búsqueda es prácticamente infinito, es fácil comprender la imposibilidad práctica de la tarea. Incluso si se encuentran datos de entrada que crean un hash coincidente, puede que no sean los originales: las funciones hash son funciones de "muchos a uno". Encontrar dos conjuntos de datos de entrada que produzcan el mismo hash de salida se llama encontrar una *colisión de hash*. A grandes rasgos, cuanto mejor es la función hash, más raras son las colisiones. Para Ethereum, son imposibles en la práctica.
 
-Let's take a closer look at the main properties of cryptographic hash functions:
+Veamos con más detalle las principales propiedades de las funciones hash criptográficas:
 
-**Determinism**
+**Determinismo**
 
-A given input message always produces the same hash output.
+Un mensaje de entrada dado siempre produce el mismo hash de salida.
 
-**Verifiability**
+**Verificabilidad**
 
-Computing the hash of a message is efficient (linear complexity).
+Calcular el hash de un mensaje es eficiente (complejidad lineal).
 
-**Noncorrelation**
+**Ausencia de correlación**
 
-A small change to the message (e.g., a 1-bit change) should change the hash output so extensively that it cannot be correlated to the hash of the original message.
+Un pequeño cambio en el mensaje (p. ej., un cambio de 1 bit) debería modificar el hash de salida de forma tan extensa que no pueda correlacionarse con el hash del mensaje original.
 
-**Irreversibility**
+**Irreversibilidad**
 
-Computing the message from its hash is infeasible, equivalent to a brute-force search through all possible messages.
+Calcular el mensaje a partir de su hash es inviable, equivalente a una búsqueda por fuerza bruta entre todos los mensajes posibles.
 
-**Collision protection**
+**Protección contra colisiones**
 
-It should be infeasible to calculate two different messages that produce the same hash output.
+Debería ser inviable calcular dos mensajes diferentes que produzcan el mismo hash de salida.
 
-Resistance to hash collisions is particularly important for avoiding digital signature forgery in Ethereum.
+La resistencia a las colisiones de hash es particularmente importante para evitar la falsificación de firmas digitales en Ethereum.
 
-The combination of these properties makes cryptographic hash functions useful for a broad range of security applications, including:
+La combinación de estas propiedades hace que las funciones hash criptográficas sean útiles para una amplia variedad de aplicaciones de seguridad, entre ellas:
 
-- Data fingerprinting
-- Message integrity (error detection)
-- Proof of work
-- Authentication (password hashing and key stretching)
-- Pseudorandom number generators
-- Message commitment (commit-reveal mechanisms)
-- Unique identifiers
+- Huellas digitales de datos
+- Integridad de mensajes (detección de errores)
+- Prueba de trabajo
+- Autenticación (hash de contraseñas y fortalecimiento de claves)
+- Generadores de números seudoaleatorios
+- Compromisos de mensajes (mecanismos de compromiso y revelación)
+- Identificadores únicos
 
-We will find many of these in Ethereum as we progress through the various layers of the system.
+Encontraremos muchas de estas aplicaciones en Ethereum a medida que avancemos por las distintas capas del sistema.
 
-### Ethereum's Cryptographic Hash Function: Keccak-256
+### La función hash criptográfica de Ethereum: Keccak-256
 
-Ethereum uses the Keccak-256 cryptographic hash function in many places. Keccak-256 was designed as a candidate for the SHA-3 Cryptographic Hash Function Competition held in 2007 by NIST. Keccak was the winning algorithm, which became standardized as Federal Information Processing Standard (FIPS) 202 in 2015.
+Ethereum utiliza la función hash criptográfica Keccak-256 en muchos lugares. Keccak-256 se diseñó como candidata para la competencia de funciones hash criptográficas SHA-3 organizada en 2007 por NIST. Keccak fue el algoritmo ganador y se estandarizó como Federal Information Processing Standard (FIPS) 202 en 2015.
 
-However, during the period when Ethereum was developed, the NIST standardization was not yet finalized. NIST adjusted some of the parameters of Keccak after completion of the standards process, allegedly to improve its efficiency. At the same time, heroic whistleblower Edward Snowden revealed documents implying that NIST may have been improperly influenced by the National Security Agency to intentionally weaken the Dual_EC_DRBG RNG standard, effectively placing a backdoor in the standard RNG. The result of this controversy was a backlash against the proposed changes and a significant delay in the standardization of SHA-3. At the time, the Ethereum Foundation decided to implement the original Keccak algorithm as proposed by its inventors, rather than the SHA-3 standard as modified by NIST.
+Sin embargo, durante el período en que se desarrolló Ethereum, la estandarización de NIST aún no había finalizado. NIST ajustó algunos parámetros de Keccak después de completar el proceso de estandarización, supuestamente para mejorar su eficiencia. Al mismo tiempo, el heroico denunciante Edward Snowden reveló documentos que sugerían que NIST podría haber recibido influencia indebida de la Agencia de Seguridad Nacional para debilitar intencionalmente el estándar de RNG Dual_EC_DRBG, introduciendo en la práctica una puerta trasera en el RNG estándar. Esta controversia provocó un rechazo a los cambios propuestos y un retraso considerable en la estandarización de SHA-3. En ese momento, la Fundación Ethereum decidió implementar el algoritmo Keccak original propuesto por sus inventores, en lugar del estándar SHA-3 modificado por NIST.
 
-> **Warning**
+> **Advertencia**
 >
-> While you may see "SHA-3" mentioned throughout Ethereum documents and code, many—if not all—of those instances actually refer to Keccak-256, not the finalized FIPS-202 SHA-3 standard. The implementation differences are slight, having to do with padding parameters, but they are significant in that Keccak-256 produces different hash outputs than FIPS-202 SHA-3 for the same input.
+> Aunque puede encontrarse "SHA-3" en documentos y código de Ethereum, muchas de esas menciones, si no todas, se refieren en realidad a Keccak-256, no al estándar SHA-3 FIPS-202 finalizado. Las diferencias de implementación son leves y están relacionadas con los parámetros de relleno, pero son significativas porque Keccak-256 produce hashes distintos de los de SHA-3 FIPS-202 para una misma entrada.
 
-### Which Hash Function Am I Using?
+### ¿Qué función hash estoy utilizando?
 
-How can you tell if the software library you are using implements FIPS-202 SHA-3 or Keccak-256, if both might be called "SHA-3"?
+¿Cómo saber si la biblioteca de software utilizada implementa SHA-3 FIPS-202 o Keccak-256, si ambas pueden llamarse "SHA-3"?
 
-An easy way to tell is to use a *test vector*, an expected output for a given input. The test most used for a hash function is the empty input. If you run the hash function with an empty string as input, you should see the following results:
+Una forma sencilla de saberlo es utilizar un *vector de prueba*, una salida esperada para una entrada dada. La prueba más utilizada para una función hash es la entrada vacía. Si se ejecuta la función hash con una cadena vacía como entrada, deberían verse los siguientes resultados:
 
 ```
 Keccak256("") = c5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470
 SHA3("") = a7ffc6f8bf1ed76651c14756a061d662f580ff4de43b49fa82d80a4b80f8434a
 ```
 
-Regardless of what the function is called, you can test it to see whether it is the original Keccak-256 or the final NIST standard FIPS-202 SHA-3 by running this simple test. Remember, Ethereum uses Keccak-256, even though it is often called SHA-3 in the code.
+Independientemente del nombre de la función, puede comprobarse si es Keccak-256 original o el estándar final SHA-3 FIPS-202 de NIST mediante esta prueba sencilla. Recuerde que Ethereum utiliza Keccak-256, aunque a menudo se lo llame SHA-3 en el código.
 
-> **Note**
+> **Nota**
 >
-> Due to the confusion created by the difference between the hash function used in Ethereum (Keccak-256) and the finalized standard (FIP-202 SHA-3), all instances of `sha3` in all code, opcodes, and libraries have been renamed to `keccak256`. See [ERC-59](https://oreil.ly/rTHDv) for details.
+> Debido a la confusión creada por la diferencia entre la función hash utilizada en Ethereum (Keccak-256) y el estándar finalizado (FIP-202 SHA-3), todas las apariciones de `sha3` en todo el código, los códigos de operación y las bibliotecas se han renombrado como `keccak256`. Consulte [ERC-59](https://oreil.ly/rTHDv) para conocer los detalles.
 
-Next, let's examine the first application of Keccak-256 in Ethereum, which is to produce Ethereum addresses from public keys.
+A continuación, examinemos la primera aplicación de Keccak-256 en Ethereum: producir direcciones de Ethereum a partir de claves públicas.
 
-## Ethereum Addresses
+## Direcciones de Ethereum
 
-Ethereum addresses are unique identifiers that are derived from public keys or contracts using the Keccak-256 one-way hash function.
+Las direcciones de Ethereum son identificadores únicos que se derivan de claves públicas o contratos mediante la función hash unidireccional Keccak-256.
 
-In our previous examples, we started with a private key and used elliptic curve multiplication to derive a public key.
+En nuestros ejemplos anteriores, partimos de una clave privada y utilizamos la multiplicación de curvas elípticas para derivar una clave pública.
 
-**Private key k:**
+**Clave privada k:**
 
 ```
 k = f8f8a2f43c8376ccb0871305060d7b27b0554d2cc72bccf41b2705608452f315
 ```
 
-**Public key K (x and y coordinates concatenated and shown as hex):**
+**Clave pública K (coordenadas x e y concatenadas y representadas en hexadecimal):**
 
 ```
 K = 6e145ccef1033dea239875dd00dfb4fee6e3348b84985c92f103444683bae07b83b5c38e5e...
 ```
 
-> **Note**
+> **Nota**
 >
-> It is worth noting that the public key is not formatted with the prefix (hex) `04` when the address is calculated.
+> Cabe señalar que la clave pública no lleva el prefijo (hex) `04` cuando se calcula la dirección.
 
-We use Keccak-256 to calculate the hash of this public key:
+Utilizamos Keccak-256 para calcular el hash de esta clave pública:
 
 ```
 Keccak256(K) = 2a5bc342ed616b5ba5732269001d3f1ef827552ae1114027bd3ecf1f086ba0f9
 ```
 
-Then, we keep only the last 20 bytes (least significant bytes), which is our Ethereum address:
+Luego conservamos solo los últimos 20 bytes (los bytes menos significativos), que constituyen nuestra dirección de Ethereum:
 
 ```
 001d3f1ef827552ae1114027bd3ecf1f086ba0f9
 ```
 
-You will most often see Ethereum addresses with the prefix `0x`, which indicates they are hexadecimal encoded, like this:
+La mayoría de las veces, las direcciones de Ethereum aparecen con el prefijo `0x`, que indica que están codificadas en hexadecimal, así:
 
 ```
 0x001d3f1ef827552ae1114027bd3ecf1f086ba0f9
 ```
 
-### Ethereum Address Formats
+### Formatos de las direcciones de Ethereum
 
-Ethereum addresses are hexadecimal numbers, identifiers derived from the last 20 bytes of the Keccak-256 hash of the public key.
+Las direcciones de Ethereum son números hexadecimales, identificadores derivados de los últimos 20 bytes del hash Keccak-256 de la clave pública.
 
-Unlike Bitcoin addresses, which are encoded in the user interface of all clients to include a built-in checksum to protect against mistyped addresses, Ethereum addresses are presented as raw hexadecimal without any checksum. The rationale behind that decision was that Ethereum addresses would eventually be hidden behind abstractions (such as name services) at higher layers of the system and that checksums should be added at higher layers if necessary.
+A diferencia de las direcciones de Bitcoin, que se codifican en la interfaz de usuario de todos los clientes para incluir una suma de verificación integrada que protege contra errores de escritura, las direcciones de Ethereum se presentan como hexadecimal sin procesar y sin ninguna suma de verificación. El razonamiento detrás de esa decisión era que las direcciones de Ethereum acabarían ocultas tras abstracciones (como servicios de nombres) en capas superiores del sistema, y que las sumas de verificación deberían añadirse en esas capas si fuera necesario.
 
-In reality, these higher layers were developed too slowly, and this design choice led to a number of problems in the early days of the ecosystem, including the loss of funds due to mistyped addresses and input validation errors. Furthermore, because Ethereum name services were developed more slowly than initially expected, alternative encodings were adopted very slowly by wallet developers. We'll look at a few of the encoding options next.
+En realidad, estas capas superiores se desarrollaron demasiado despacio, y esta decisión de diseño provocó diversos problemas en los primeros días del ecosistema, incluida la pérdida de fondos por direcciones mal escritas y errores de validación de entrada. Además, como los servicios de nombres de Ethereum se desarrollaron más despacio de lo esperado inicialmente, los desarrolladores de billeteras adoptaron las codificaciones alternativas con mucha lentitud. A continuación veremos algunas opciones de codificación.
 
-> **Note**
+> **Nota**
 >
-> It's worth mentioning the Ethereum Name Service (ENS), introduced in 2017 by Alex Van de Sande and Nick Johnson. ENS provides an on-chain solution for converting human-readable names, such as `masteringethereum.eth`, into Ethereum addresses.
+> Vale la pena mencionar Ethereum Name Service (ENS), presentado en 2017 por Alex Van de Sande y Nick Johnson. ENS proporciona una solución en la cadena para convertir nombres legibles por humanos, como `masteringethereum.eth`, en direcciones de Ethereum.
 
-### Hex Encoding with Checksum in Capitalization (ERC-55)
+### Codificación hexadecimal con suma de verificación mediante mayúsculas y minúsculas (ERC-55)
 
-Due to the slow deployment of name services, a standard was proposed by [ERC-55](https://oreil.ly/JfgWs). ERC-55 offers a backward-compatible checksum for Ethereum addresses by modifying the capitalization of the hexadecimal address. The idea is that Ethereum addresses are case insensitive and all wallets are supposed to accept Ethereum addresses expressed in capital or lowercase characters, without any difference in interpretation. By modifying the capitalization of the alphabetic characters in the address, we can convey a checksum that can be used to protect the integrity of the address against typing or reading mistakes. Wallets that do not support ERC-55 checksums simply ignore the fact that the address contains mixed capitalization, but those that do support it can validate it and detect errors with a 99.986% accuracy.
+Debido al lento despliegue de los servicios de nombres, se propuso un estándar mediante [ERC-55](https://oreil.ly/JfgWs). ERC-55 ofrece una suma de verificación compatible con versiones anteriores para las direcciones de Ethereum al modificar el uso de mayúsculas y minúsculas de la dirección hexadecimal. La idea es que las direcciones de Ethereum no distinguen entre mayúsculas y minúsculas, y se supone que todas las billeteras aceptan direcciones expresadas con caracteres en mayúsculas o minúsculas sin ninguna diferencia de interpretación. Al modificar las mayúsculas y minúsculas de los caracteres alfabéticos de la dirección, podemos transmitir una suma de verificación que proteja la integridad de la dirección contra errores de escritura o lectura. Las billeteras que no admiten las sumas de verificación ERC-55 simplemente ignoran que la dirección contenga una mezcla de mayúsculas y minúsculas, pero las que sí las admiten pueden validarla y detectar errores con una precisión del 99.986%.
 
-The mixed-capitals encoding is subtle, and you may not notice it at first. Our example address is:
+La codificación que mezcla mayúsculas y minúsculas es sutil y puede pasar inadvertida al principio. Nuestra dirección de ejemplo es:
 
 ```
 0x001d3f1ef827552ae1114027bd3ecf1f086ba0f9
 ```
 
-With an ERC-55 mixed-capitalization checksum it becomes:
+Con una suma de verificación ERC-55 mediante mayúsculas y minúsculas, se convierte en:
 
 ```
 0x001d3F1ef827552Ae1114027BD3ECF1f086bA0F9
 ```
 
-Can you tell the difference? Some of the alphabetic (A–F) characters from the hexadecimal encoding alphabet are now capitals, while others are lowercase.
+¿Se nota la diferencia? Algunos caracteres alfabéticos (A–F) del alfabeto de codificación hexadecimal ahora están en mayúsculas, mientras que otros están en minúsculas.
 
-ERC-55 is quite simple to implement. We take the Keccak-256 hash of the lowercase hexadecimal address. This hash acts as a digital fingerprint of the address, giving us a convenient checksum. Any small change in the input (the address) should cause a big change in the resulting hash (the checksum), allowing us to detect errors effectively. The hash of our address is then encoded in the capitalization of the address itself. Let's break it down, step-by-step:
+ERC-55 es bastante sencillo de implementar. Tomamos el hash Keccak-256 de la dirección hexadecimal en minúsculas. Este hash actúa como una huella digital de la dirección y nos proporciona una suma de verificación conveniente. Cualquier pequeño cambio en la entrada (la dirección) debería causar un gran cambio en el hash resultante (la suma de verificación), lo que nos permite detectar errores eficazmente. Después, el hash de nuestra dirección se codifica mediante las mayúsculas y minúsculas de la propia dirección. Veámoslo paso a paso:
 
-1. Hash the lowercase address, without the `0x` prefix:
+1. Calcular el hash de la dirección en minúsculas, sin el prefijo `0x`:
 
     ```
     Keccak256("001d3f1ef827552ae1114027bd3ecf1f086ba0f9") = 23a69c1653e4ebbb619b0b2cb8a9bad49892a8b9695d9a19d8f673ca991deae1
     ```
 
-2. Capitalize each alphabetic address character if the corresponding hex digit of the hash is greater than or equal to `0x8`. This is easier to show if we line up the address and the hash:
+2. Convertir a mayúscula cada carácter alfabético de la dirección si el dígito hexadecimal correspondiente del hash es mayor o igual que `0x8`. Esto es más fácil de mostrar si alineamos la dirección y el hash:
 
     ```
     Address: 001d3f1ef827552ae1114027bd3ecf1f086ba0f9
     Hash   : 23a69c1653e4ebbb619b0b2cb8a9bad49892a8b9...
     ```
 
-Our address contains an alphabetic character `d` in the fourth position. The fourth character of the hash is `6`, which is less than 8. So, we leave the `d` lowercase. The next alphabetic character in our address is `f`, in the sixth position. The sixth character of the hexadecimal hash is `c`, which is greater than 8. Therefore, we capitalize the `F` in the address, and so on. As you can see, we only use the first 20 bytes (40 hex characters) of the hash as a checksum, since we only have 20 bytes (40 hex characters) in the address to capitalize appropriately.
+Nuestra dirección contiene un carácter alfabético `d` en la cuarta posición. El cuarto carácter del hash es `6`, que es menor que 8. Por tanto, dejamos la `d` en minúscula. El siguiente carácter alfabético de nuestra dirección es `f`, en la sexta posición. El sexto carácter del hash hexadecimal es `c`, que es mayor que 8. Por tanto, convertimos la `F` de la dirección a mayúscula, y así sucesivamente. Como puede verse, solo utilizamos los primeros 20 bytes (40 caracteres hexadecimales) del hash como suma de verificación, ya que solo tenemos 20 bytes (40 caracteres hexadecimales) en la dirección para cambiar apropiadamente a mayúsculas.
 
-Check the resulting mixed-capitals address yourself and see if you can tell which characters were capitalized and which characters they correspond to in the address hash:
+Compruebe la dirección resultante con mayúsculas y minúsculas e intente identificar qué caracteres se convirtieron a mayúsculas y a qué caracteres del hash de la dirección corresponden:
 
 ```
 Address: 001d3F1ef827552Ae1114027BD3ECF1f086bA0F9
 Hash   : 23a69c1653e4ebbb619b0b2cb8a9bad49892a8b9...
 ```
 
-### Detecting an Error in an ERC-55 Encoded Address
+### Detección de un error en una dirección codificada con ERC-55
 
-Now, let's look at how ERC-55 addresses will help us find an error. Let's assume we have printed out an Ethereum address, which is ERC-55 encoded:
+Ahora veamos cómo las direcciones ERC-55 nos ayudan a encontrar un error. Supongamos que hemos impreso una dirección de Ethereum codificada con ERC-55:
 
 ```
 0x001d3F1ef827552Ae1114027BD3ECF1f086bA0F9
 ```
 
-Now let's make a basic mistake in reading that address. The character before the last one is a capital F. For this example, let's assume we misread that as a capital E, and we type the following (incorrect) address into our wallet:
+Ahora cometamos un error básico al leer esa dirección. El penúltimo carácter es una F mayúscula. Para este ejemplo, supongamos que lo leemos erróneamente como una E mayúscula e introducimos la siguiente dirección (incorrecta) en nuestra billetera:
 
 ```
 0x001d3F1ef827552Ae1114027BD3ECF1f086bA0E9
 ```
 
-Fortunately, our wallet is EIP-55 compliant! It notices the mixed capitalization and attempts to validate the address. It converts it to lowercase and calculates the checksum hash:
+¡Afortunadamente, nuestra billetera cumple con EIP-55! Detecta la mezcla de mayúsculas y minúsculas e intenta validar la dirección. La convierte a minúsculas y calcula el hash de suma de verificación:
 
 ```
 Keccak256("001d3f1ef827552ae1114027bd3ecf1f086ba0e9") = 5429b5d9460122fb4b11af9cb88b7bb76d8928862e0a57d46dd18dd8e08a6927
 ```
 
-As you can see, even though the address has only changed by one character (in fact, only one bit, as `e` and `f` are one bit apart), the hash of the address has changed radically. That's the property of hash functions that makes them so useful for checksums!
+Como puede verse, aunque la dirección solo cambió en un carácter (de hecho, solo un bit, ya que `e` y `f` difieren en un bit), su hash cambió radicalmente. ¡Esa es la propiedad de las funciones hash que las hace tan útiles para las sumas de verificación!
 
-Now, let's line up the two and check the capitalization:
+Ahora alineemos ambos y comprobemos las mayúsculas y minúsculas:
 
 ```
 001d3F1ef827552Ae1114027BD3ECF1f086bA0E9
 5429b5d9460122fb4b11af9cb88b7bb76d892886...
 ```
 
-It's all wrong! Several of the alphabetic characters are incorrectly capitalized. Remember that the capitalization is the encoding of the correct checksum.
+¡Todo está mal! Varios caracteres alfabéticos están incorrectamente en mayúsculas. Recuerde que el uso de mayúsculas y minúsculas codifica la suma de verificación correcta.
 
-The capitalization of the address we input doesn't match the checksum just calculated, meaning something has changed in the address, and an error has been introduced.
+Las mayúsculas y minúsculas de la dirección introducida no coinciden con la suma de verificación recién calculada, lo que significa que algo cambió en la dirección y se introdujo un error.
 
-## Validators' Cryptography
+## Criptografía de los validadores
 
-In this section, we're going to explore the cryptography used by validators in the new PoS-based consensus protocol. While the core idea is always to be able to digitally sign messages and verify them, there are interesting requirements that lead to design choices and final implementations that differ from the cryptography used in Ethereum for transactions or addresses.
+En esta sección exploraremos la criptografía utilizada por los validadores en el nuevo protocolo de consenso basado en PoS. Aunque la idea central siempre es poder firmar digitalmente los mensajes y verificarlos, existen requisitos interesantes que llevan a decisiones de diseño e implementaciones finales diferentes de la criptografía utilizada en Ethereum para transacciones o direcciones.
 
-### Introduction
+### Introducción
 
-When Ethereum was using *Ethash*—the PoW consensus algorithm—there was no reason why block proposers—miners at that time—should have signed the blocks they were producing. In fact, PoW-based consensus algorithms don't need to know who's creating the blocks in order to correctly work. If a block proposer misbehaves, the protocol implicitly punishes them by making them waste electric energy and time, thus money.
-Let's take the example of a miner who tries to do a double spend by creating two blocks at the same time. To better understand the core idea behind this "exploit," imagine a miner wants to buy a car and agrees with the dealer to pay in ETH—let's say 10 ETH. The miner then creates two blocks at the same time. Let's suppose they're both valid: in the first one, the miner adds the payment transaction in which they send 10 ETH to the car dealer while in the other block, they don't. The miner is trying to split the chain in two parts.
+Cuando Ethereum utilizaba *Ethash*, el algoritmo de consenso PoW, no había motivo para que los proponentes de bloques, entonces mineros, firmaran los bloques que producían. De hecho, los algoritmos de consenso basados en PoW no necesitan saber quién crea los bloques para funcionar correctamente. Si un proponente de bloques se comporta indebidamente, el protocolo lo castiga implícitamente al hacerle desperdiciar energía eléctrica y tiempo y, por tanto, dinero.
+Tomemos el ejemplo de un minero que intenta realizar un doble gasto creando dos bloques al mismo tiempo. Para comprender mejor la idea central de este "ataque", imaginemos que un minero quiere comprar un automóvil y acuerda con el vendedor pagar en ETH, digamos 10 ETH. El minero crea entonces dos bloques al mismo tiempo. Supongamos que ambos son válidos: en el primero, el minero añade la transacción de pago en la que envía 10 ETH al vendedor, mientras que en el otro bloque no lo hace. El minero intenta dividir la cadena en dos partes.
 
-Depending on (almost) random factors, the car dealer could receive first the block in which the miner paid them 10 ETH. So the car dealer can suppose that the payment went fine. But they don't give the car to the miner yet. In fact, the car dealer knows that in PoW systems, you usually want to wait a bunch of blocks before considering a transaction definitely settled.
+Según factores (casi) aleatorios, el vendedor podría recibir primero el bloque en el que el minero le pagó 10 ETH. Por tanto, puede suponer que el pago se realizó correctamente. Pero todavía no entrega el automóvil al minero. De hecho, sabe que en los sistemas PoW normalmente se espera una cierta cantidad de bloques antes de considerar que una transacción está definitivamente liquidada.
 
-After more or less 12 seconds, a different miner produces a new block on top of the block that doesn't contain the 10 ETH payment. This is completely possible as it usually depends on which block this next miner has received first. Now there is one longer blockchain and, thanks to the *heaviest chain rule*—also known (a bit wrongly) as the *longest chain rule*—that chain is considered the only one that is valid by all the nodes.
+Después de más o menos 12 segundos, otro minero produce un nuevo bloque sobre el bloque que no contiene el pago de 10 ETH. Esto es totalmente posible, ya que suele depender de qué bloque recibió primero este siguiente minero. Ahora hay una blockchain más larga y, gracias a la *regla de la cadena más pesada*, también conocida (de forma un poco incorrecta) como *regla de la cadena más larga*, todos los nodos consideran esa cadena como la única válida.
 
-The car dealer sees that the valid blockchain doesn't contain the block they previously received in which there is the 10 ETH payment, so they consider the payment not done, and they don't give the car to the miner.
+El vendedor observa que la blockchain válida no contiene el bloque que recibió anteriormente con el pago de 10 ETH, por lo que considera que el pago no se realizó y no entrega el automóvil al minero.
 
-Remember that, in PoW systems, miners have to spend real energy and time to produce a valid block that passes the PoW check—that is, the block hash is lower than a dynamic threshold—so the fact that they spend energy and time to create a block and then they see one of their blocks rejected by the entire network is already an implicit punishment. They lost precious energy and time they could have better spent by creating only valid blocks, respecting all the rules and not trying to cheat.
+Recuerde que, en los sistemas PoW, los mineros deben gastar energía y tiempo reales para producir un bloque válido que supere la comprobación PoW, es decir, que el hash del bloque sea menor que un umbral dinámico. Por tanto, el hecho de gastar energía y tiempo para crear un bloque y luego ver que toda la red lo rechaza ya constituye un castigo implícito. Perdieron energía y tiempo valiosos que podrían haber aprovechado mejor creando solo bloques válidos, respetando todas las reglas y sin intentar hacer trampa.
 
-PoS systems don't have this same implicit punishment for block producers (i.e., validators) that misbehave. Instead, they use an explicit method: *slashing*.
+Los sistemas PoS no tienen este mismo castigo implícito para los productores de bloques (es decir, validadores) que se comportan indebidamente. En cambio, utilizan un método explícito: *slashing*.
 
-*Slashing* is the action of punishing a validator who didn't follow the rules by subtracting some (or all) of their staked ETH. This explains why validators have to put a minimum amount of ETH at stake to become active validators. If they don't have anything at stake, the protocol won't be able to punish them if they start to act maliciously.
+El *slashing* es la acción de castigar a un validador que no siguió las reglas restándole parte (o la totalidad) de sus ETH en staking. Esto explica por qué los validadores deben poner una cantidad mínima de ETH en stake para convertirse en validadores activos. Si no tienen nada en stake, el protocolo no podrá castigarlos si comienzan a actuar de forma maliciosa.
 
-Explicitly punishing validators for not following the rules requires knowing exactly what every validator is doing. To do that, every message (including blocks) that validators send must be authenticated with their digital signatures.
+Castigar explícitamente a los validadores por no seguir las reglas requiere saber exactamente qué hace cada uno. Para ello, todos los mensajes (incluidos los bloques) que envían los validadores deben autenticarse con sus firmas digitales.
 
-Let's re-create the analogous example we used previously with the miner. Now we have a validator who is proposing two blocks at the same time. While with PoW, the miner should have spent double the energy and time to produce two valid blocks at the same time, with PoS this is (almost) entirely free.
+Recreemos el ejemplo análogo que utilizamos antes con el minero. Ahora tenemos un validador que propone dos bloques al mismo tiempo. Mientras que con PoW el minero habría tenido que gastar el doble de energía y tiempo para producir dos bloques válidos al mismo tiempo, con PoS esto es (casi) completamente gratuito.
 
-But here is where slashing enters into the scene. *Double-signing* — proposing two blocks at the same time — is a slashable event, so the validator is immediately punished by (in this specific example) destroying all their ETH at stake.
+Pero aquí entra en escena el slashing. La *doble firma*, proponer dos bloques al mismo tiempo, es un evento sujeto a slashing, por lo que se castiga inmediatamente al validador destruyendo (en este ejemplo específico) todos sus ETH en stake.
 
-Now that we know why validators must authenticate all of their messages, we can deep-dive into the cryptography used for that: BLS signatures. In the next section, we'll see the requirements that led to the final decision to use BLS cryptography.
+Ahora que sabemos por qué los validadores deben autenticar todos sus mensajes, podemos profundizar en la criptografía utilizada para ello: las firmas BLS. En la siguiente sección veremos los requisitos que llevaron a la decisión final de utilizar criptografía BLS.
 
-### Requirements
+### Requisitos
 
-The first solution you could think of for this problem—that is, the need to authenticate every message that validators send to one another—is to apply the same digital signature algorithm Ethereum already uses to digitally sign every transaction: the *Elliptic Curve Digital Signature Algorithm* (ECDSA).
+La primera solución que podría pensarse para este problema, es decir, la necesidad de autenticar todos los mensajes que los validadores se envían entre sí, es aplicar el mismo algoritmo de firma digital que Ethereum ya utiliza para firmar digitalmente cada transacción: el *algoritmo de firma digital de curva elíptica* (ECDSA).
 
-But it wouldn't work with the high number of validators Ethereum has—more than one million. In fact, there is a fundamental requirement that this digital signature algorithm should adhere to: it must be possible to condense signatures in order to reduce the space needed for them in the block and lower the time nodes need to spend on validating all validators' signatures.
+Pero no funcionaría con la gran cantidad de validadores que tiene Ethereum, más de un millón. De hecho, existe un requisito fundamental que debe cumplir este algoritmo de firma digital: debe ser posible condensar las firmas para reducir el espacio que necesitan en el bloque y disminuir el tiempo que los nodos deben dedicar a validar las firmas de todos los validadores.
 
-Right now, every validator can cast a vote—a message that needs to be authenticated—once every *epoch*, or 32 *slots* (we'll expand more on this in Chapter 15). These messages need to travel the P2P gossip layer to reach other validators and nodes, be validated by every other node to check that the signature is valid, and be inserted into a block.
+Actualmente, cada validador puede emitir un voto, un mensaje que debe autenticarse, una vez por *época*, o 32 *slots* (ampliaremos esto en el capítulo 15). Estos mensajes deben viajar por la capa de gossip P2P para llegar a otros validadores y nodos, ser validados por todos los demás nodos para comprobar que la firma sea válida e insertarse en un bloque.
 
-It's very easy to spot a bottleneck here: the more validators that join the network, the more messages that nodes need to handle. Even blocks become bigger because they need to reserve more and more space for those validators' signatures.
+Es muy fácil detectar aquí un cuello de botella: cuantos más validadores se unen a la red, más mensajes deben manejar los nodos. Incluso los bloques se hacen más grandes porque deben reservar cada vez más espacio para las firmas de esos validadores.
 
-> **Note**
+> **Nota**
 >
-> You can easily calculate the number of messages that nodes need to handle based on the number of active validators:
+> Se puede calcular fácilmente la cantidad de mensajes que deben manejar los nodos a partir de la cantidad de validadores activos:
 > ```
 > N = number of active validators
 > 1 msg / 1 epoch × N =
@@ -514,7 +514,7 @@ It's very easy to spot a bottleneck here: the more validators that join the netw
 > = 0.0026041667 msg / second × N
 > ```
 >
-> So we have about 0.0026 messages every second that we need to multiply with N, the number of active validators in the network:
+> Por tanto, tenemos unos 0.0026 mensajes por segundo que debemos multiplicar por N, la cantidad de validadores activos en la red:
 >
 > ```
 > N = 1,000 → ~2.6 messages per second
@@ -523,49 +523,49 @@ It's very easy to spot a bottleneck here: the more validators that join the netw
 > N = 1,000,000 → 2,600 messages per second
 > ```
 
-Right now, the Ethereum PoS protocol is handling about 2,600 messages every second.
+Actualmente, el protocolo PoS de Ethereum maneja unos 2,600 mensajes por segundo.
 
-For these reasons, most PoS blockchains have a very small validator set, in the tens or hundreds at maximum. Even the Ethereum initial proposal (see [EIP-1011](https://oreil.ly/pQSCp)) was targeting a maximum of nine hundred validators, with 1,500 ETH as the minimum deposit for being elected in the active validator set.
+Por estas razones, la mayoría de las blockchains PoS tiene un conjunto de validadores muy pequeño, de decenas o, como máximo, cientos. Incluso la propuesta inicial de Ethereum (véase [EIP-1011](https://oreil.ly/pQSCp)) apuntaba a un máximo de novecientos validadores, con 1,500 ETH como depósito mínimo para ser elegido dentro del conjunto de validadores activos.
 
-This would have been the final specification for the Ethereum PoS protocol if Justin Drake, an Ethereum Foundation researcher, didn't come up with the idea of BLS signature aggregation in May 2018 in a [long article published on the ethresearch website](https://oreil.ly/EbBib).
+Esta habría sido la especificación final del protocolo PoS de Ethereum si Justin Drake, investigador de la Fundación Ethereum, no hubiera propuesto la idea de la agregación de firmas BLS en mayo de 2018 en un [extenso artículo publicado en el sitio web ethresearch](https://oreil.ly/EbBib).
 
-### BLS Digital Signatures
+### Firmas digitales BLS
 
-BLS signatures are named after their authors. BLS stands for Boneh–Lynn–Shacham, referring to the three cryptographers Dan Boneh, Ben Lynn, and Hovav Shacham who introduced the signature scheme in their paper titled ["Short Signatures from the Weil Pairing"](https://oreil.ly/cJn6v) in 2001.
+Las firmas BLS llevan el nombre de sus autores. BLS significa Boneh–Lynn–Shacham y hace referencia a los tres criptógrafos Dan Boneh, Ben Lynn y Hovav Shacham, que presentaron el esquema de firmas en su artículo titulado ["Short Signatures from the Weil Pairing"](https://oreil.ly/cJn6v) en 2001.
 
-As ECDSA (which will be further explained in Chapter 6), BLS signatures are still based on elliptic curve cryptography. In particular, Ethereum uses the curve *BLS12-381*, designed by Sean Bowe in 2017 while he was working for the Zcash protocol. It's defined by the following function:
+Al igual que ECDSA (que se explicará con más detalle en el capítulo 6), las firmas BLS también se basan en criptografía de curvas elípticas. En particular, Ethereum utiliza la curva *BLS12-381*, diseñada por Sean Bowe en 2017 mientras trabajaba para el protocolo Zcash. Se define mediante la siguiente función:
 
 ```
 y^2 = x^3 + 4
 ```
 
-over the integers modulo q, where q is a 115-decimal-digits number: `0x1a0111ea397fe69a4b1ba7b6434bacd764774b84f38512bf6730d2a0f6b0f6241eabfffeb153ffffb9feffffffffaaab`.
+sobre los enteros módulo q, donde q es un número de 115 dígitos decimales: `0x1a0111ea397fe69a4b1ba7b6434bacd764774b84f38512bf6730d2a0f6b0f6241eabfffeb153ffffb9feffffffffaaab`.
 
-#### How Does It Work?
+#### ¿Cómo funciona?
 
-The core idea is very similar to how ECDSA works: there is a secret key from which a public key is derived. Then, every message is signed using the secret key, and everyone else can verify its integrity by using the corresponding public key.
+La idea central es muy similar al funcionamiento de ECDSA: existe una clave secreta de la que se deriva una clave pública. Luego, cada mensaje se firma con la clave secreta y todos los demás pueden verificar su integridad mediante la clave pública correspondiente.
 
-The secret key (`sk`) is an integer between 1 and r – 1, where r is this huge number: `0x73eda753299d7d483339d80809a1d80553bda402fffe5bfeffffffff00000001`. It has 77 decimal digits!
+La clave secreta (`sk`) es un entero entre 1 y r – 1, donde r es este enorme número: `0x73eda753299d7d483339d80809a1d80553bda402fffe5bfeffffffff00000001`. ¡Tiene 77 dígitos decimales!
 
-The public key (`pk`) is obtained by doing `sk * g1`, a scalar multiplication of the elliptic curve point, where `g1` is the generator of a group called G1. The `pk` is represented in a compressed and serialized format, resulting in a 48-byte string.
+La clave pública (`pk`) se obtiene mediante `sk * g1`, una multiplicación escalar del punto de la curva elíptica, donde `g1` es el generador de un grupo llamado G1. La `pk` se representa en un formato comprimido y serializado, lo que da una cadena de 48 bytes.
 
-The message (`m`) that is signed is always mapped to an elliptic curve point, which is a member of a different group called G2. You can think of this mapping as a sort of hash function that takes a message `m`—that is, the actual validator's attestation—and outputs a point `H(m)` in G2, represented in its compressed serialized form as a 96-byte string.
+El mensaje (`m`) que se firma siempre se transforma en un punto de una curva elíptica que pertenece a un grupo diferente llamado G2. Esta transformación puede entenderse como una especie de función hash que toma un mensaje `m`, es decir, la atestación real del validador, y produce un punto `H(m)` en G2, representado en su forma serializada comprimida como una cadena de 96 bytes.
 
-Finally, we obtain the signature (σ) of the message `m` by doing `sk * H(m)`, a new elliptic point in G2.
+Por último, obtenemos la firma (σ) del mensaje `m` mediante `sk * H(m)`, un nuevo punto de curva elíptica en G2.
 
-The key differences between ECDSA and BLS lie in the low-level details of the two protocols—that is, in the mathematical techniques they use for verifying the correctness of signatures. In fact, while ECDSA involves mathematical linear calculations, such as scalar multiplication and addition on the elliptic curve, BLS signatures rely on the more complex arithmetic of *elliptic curve bilinear pairings*.
+Las diferencias clave entre ECDSA y BLS se encuentran en los detalles de bajo nivel de ambos protocolos, es decir, en las técnicas matemáticas que utilizan para verificar la corrección de las firmas. De hecho, mientras que ECDSA implica cálculos matemáticos lineales, como la multiplicación escalar y la suma sobre la curva elíptica, las firmas BLS se basan en la aritmética más compleja de los *emparejamientos bilineales de curvas elípticas*.
 
-In fact, a signature σ is valid if and only if the following equation holds true:
+De hecho, una firma σ es válida si y solo si se cumple la siguiente ecuación:
 
 ```
 e(g1,σ) = e(pk, H(m))
 ```
 
-where `e` is an elliptic curve bilinear pairing.
+donde `e` es un emparejamiento bilineal de curvas elípticas.
 
-#### Inside Elliptic Curve Properties
+#### Dentro de las propiedades de las curvas elípticas
 
-Completely understanding the previous equation requires a deep knowledge of elliptic curves, pairings, and all that huge rabbit hole. But an easy way to understand it is to simply follow the steps here. You won't grasp all the details of why and how the pairing has that property, but it can still help you familiarize yourself with it:
+Comprender por completo la ecuación anterior requiere un conocimiento profundo de las curvas elípticas, los emparejamientos y todo ese vasto tema. Pero una forma sencilla de entenderla es seguir los pasos siguientes. No se comprenderán todos los detalles de por qué y cómo el emparejamiento tiene esa propiedad, pero aun así puede ayudar a familiarizarse con ella:
 
 ```
 e(pk, H(m)) = e(sk * g1,H(m)) = ← pk = sk * g1
@@ -574,27 +574,27 @@ e(pk, H(m)) = e(sk * g1,H(m)) = ← pk = sk * g1
 = e(g1,σ) ← σ = sk * H(m)
 ```
 
-As Vitalik Buterin pointed out in a [Medium article](https://oreil.ly/v578s):
+Como señaló Vitalik Buterin en un [artículo de Medium](https://oreil.ly/v578s):
 
-> If you view elliptic curve points as one-way encrypted numbers—`encrypt(p) = p * G = P`, where G is the generator point—then whereas traditional elliptic curve math lets you check linear constraints on the numbers (e.g., if `P = G * p`, `Q = G * q` and `R = G * r`, checking `5 * P + 7 * Q = 11 * R` is really checking that `5 * p + 7 * q = 11 * r`), pairings let you check quadratic constraints (e.g., checking `e(P, Q) * e(G, G * 5) = 1` is really checking that `p * q + 1 * 5 = 0`).
+> Si se consideran los puntos de curvas elípticas como números cifrados de forma unidireccional, `encrypt(p) = p * G = P`, donde G es el punto generador, entonces, mientras las matemáticas tradicionales de curvas elípticas permiten comprobar restricciones lineales sobre los números (p. ej., si `P = G * p`, `Q = G * q` y `R = G * r`, comprobar `5 * P + 7 * Q = 11 * R` es en realidad comprobar que `5 * p + 7 * q = 11 * r`), los emparejamientos permiten comprobar restricciones cuadráticas (p. ej., comprobar `e(P, Q) * e(G, G * 5) = 1` es en realidad comprobar que `p * q + 1 * 5 = 0`).
 
-As you can imagine, more complex arithmetic also means more time to produce and to verify a signature. The only reason Ethereum is using BLS signatures for validators is their extremely important property of *signature aggregation*.
+Como puede imaginarse, una aritmética más compleja también implica más tiempo para producir y verificar una firma. La única razón por la que Ethereum utiliza firmas BLS para los validadores es su importantísima propiedad de *agregación de firmas*.
 
-In fact, if you take two ECDSA signatures and sum them together, you don't obtain a meaningful result. If you try to use that result to prove the integrity of the initially signed message, you won't pass any test.
+De hecho, si se toman dos firmas ECDSA y se suman, no se obtiene un resultado significativo. Si se intenta utilizar ese resultado para demostrar la integridad del mensaje firmado inicialmente, no se superará ninguna prueba.
 
-Instead, if you take two BLS signatures and sum them together, you are simply doing an elliptic curve addition. The result is a new elliptic curve point—in G2—that you can use against the sum of the two correspondent public keys—which is still an elliptic curve point in G1—to correctly verify the integrity of the initially signed message.
+En cambio, si se toman dos firmas BLS y se suman, simplemente se está realizando una suma de curvas elípticas. El resultado es un nuevo punto de curva elíptica, en G2, que puede utilizarse frente a la suma de las dos claves públicas correspondientes, que sigue siendo un punto de curva elíptica en G1, para verificar correctamente la integridad del mensaje firmado inicialmente.
 
-> **Note**
+> **Nota**
 >
-> Aggregate signatures and aggregate public keys are indistinguishable from a single signature and a single public key, so you can use the exact same algorithm to verify the correctness of an aggregated signature.
+> Las firmas agregadas y las claves públicas agregadas son indistinguibles de una firma individual y una clave pública individual, por lo que puede utilizarse exactamente el mismo algoritmo para verificar la corrección de una firma agregada.
 >
-> **Aggregated signature and public key:**
+> **Firma y clave pública agregadas:**
 > ```
 > σagg = σ1 + σ2 + σ3 + … + σn
 > pkagg = pk1 + pk2 + pk3 + … + pkn
 > ```
 >
-> **Aggregated signature verification:**
+> **Verificación de la firma agregada:**
 >
 > ```
 > e(pkagg,H(m)) =
@@ -606,117 +606,117 @@ Instead, if you take two BLS signatures and sum them together, you are simply do
 > = e(g1,σagg)
 >```
 
-#### In Summary
+#### En resumen
 
-Cryptography is really hard; it requires a deep mathematical background. And this book isn't really for cryptographers, so it's fundamental to summarize what we've briefly touched on in the previous sections. We explained how BLS signatures work and why they were chosen as the digital signature algorithm that validators use in the new PoS-based consensus protocol: their aggregation property lets you condense more digital signatures into one, reducing the amount of space needed to store them and the time to validate them without losing any security.
+La criptografía es realmente difícil; requiere una base matemática profunda. Y este libro no está dirigido propiamente a criptógrafos, por lo que es fundamental resumir lo que abordamos brevemente en las secciones anteriores. Explicamos cómo funcionan las firmas BLS y por qué se eligieron como algoritmo de firma digital que utilizan los validadores en el nuevo protocolo de consenso basado en PoS: su propiedad de agregación permite condensar varias firmas digitales en una, lo que reduce el espacio necesario para almacenarlas y el tiempo para validarlas sin perder seguridad.
 
-We can now do a quick example to demonstrate how validators use BLS algorithms in "real life" and how signature aggregation comes into play. Figure 4-6 illustrates a scenario where we have three validators who want to express their votes for a block, block A. So they cast their votes, sign them, and share them with one another.
+Ahora podemos hacer un ejemplo rápido para demostrar cómo los validadores utilizan los algoritmos BLS en la "vida real" y cómo interviene la agregación de firmas. La figura 4-6 ilustra un escenario con tres validadores que quieren expresar sus votos por un bloque, el bloque A. Por tanto, emiten sus votos, los firman y los comparten entre sí.
 
-![BLS signature aggregation example](images/ch4/maet_0406.png)
+![Ejemplo de agregación de firmas BLS](images/ch4/maet_0406.png)
 
-Figure 4-6. BLS signature aggregation: three validators vote and sign
+Figura 4-6. Agregación de firmas BLS: tres validadores votan y firman
 
-Without BLS, you would need to save all three signed votes into the block to store them permanently. With BLS, you can aggregate all three signed votes into a new aggregated vote and store only that into the block.
+Sin BLS, habría que guardar los tres votos firmados en el bloque para almacenarlos de forma permanente. Con BLS, pueden agregarse los tres votos firmados en un nuevo voto agregado y almacenar solo este en el bloque.
 
-This not only saves space but also dramatically reduces the amount of time and computation all Ethereum nodes have to do when validating all signed votes because they can directly validate aggregated ones instead of performing the validation for each single signed vote. And the magic of BLS cryptography is that the aggregated result is no different than a normal signature: that means that verifying the validity of an aggregated signature is no harder than verifying the validity of a single signature. Thus, by significantly reducing the number of signed votes that must be validated, while requiring the same amount of computation to verify each signature, the total amount of computation—and therefore time—that full nodes must perform is much lower than it would be without BLS-aggregated signatures, as shown in Figure 4-7.
+Esto no solo ahorra espacio, sino que también reduce drásticamente la cantidad de tiempo y cómputo que todos los nodos de Ethereum deben dedicar a validar todos los votos firmados, porque pueden validar directamente los agregados en lugar de validar cada voto firmado individual. Y la magia de la criptografía BLS es que el resultado agregado no es diferente de una firma normal: eso significa que verificar la validez de una firma agregada no es más difícil que verificar la validez de una firma individual. Así, al reducir considerablemente la cantidad de votos firmados que deben validarse, manteniendo la misma cantidad de cómputo para verificar cada firma, la cantidad total de cómputo y, por tanto, de tiempo que deben emplear los nodos completos es mucho menor de lo que sería sin firmas agregadas BLS, como se muestra en la figura 4-7.
 
-![BLS aggregation efficiency](images/ch4/maet_0407.png)
+![Eficiencia de la agregación BLS](images/ch4/maet_0407.png)
 
-Figure 4-7. BLS signature aggregation reduces validation time
+Figura 4-7. La agregación de firmas BLS reduce el tiempo de validación
 
-What if a validator doesn't follow the rules? If a validator behaves maliciously—for example, by double-signing, or voting for two different blocks at the same time—the protocol can detect this behavior and punish the validator accordingly, as shown in Figure 4-8.
+¿Qué ocurre si un validador no sigue las reglas? Si un validador se comporta de forma maliciosa, por ejemplo, mediante doble firma o votando por dos bloques diferentes al mismo tiempo, el protocolo puede detectar este comportamiento y castigarlo en consecuencia, como se muestra en la figura 4-8.
 
-![BLS slashing detection](images/ch4/maet_0408.png)
+![Detección de slashing con BLS](images/ch4/maet_0408.png)
 
-Figure 4-8. BLS signatures enable detection of malicious validators
+Figura 4-8. Las firmas BLS permiten detectar validadores maliciosos
 
-In fact, because all votes are digitally signed using the BLS signature scheme, it's trivial to identify validators who are responsible for misbehaviors and slash them accordingly.
+De hecho, como todos los votos están firmados digitalmente mediante el esquema de firmas BLS, es trivial identificar a los validadores responsables de comportamientos indebidos y aplicarles slashing en consecuencia.
 
-## KZG Cryptography
+## Criptografía KZG
 
-On March 13, 2024, Ethereum upgraded to the Cancun-Deneb (Dencun) hard fork. This upgrade contained a lot of changes, but the most important one was definitely the introduction of a new type of transaction: EIP-4844 blob transaction.
+El 13 de marzo de 2024, Ethereum se actualizó al hard fork Cancun-Deneb (Dencun). Esta actualización incluyó muchos cambios, pero el más importante fue sin duda la introducción de un nuevo tipo de transacción: la transacción de blob EIP-4844.
 
-We're not going to deep-dive here into why blob transactions are important to Ethereum's roadmap, as we will do that in much more detail in Chapter 16. Instead, in the next sections we'll explore the cryptography underneath this new type of transaction: *polynomial commitment schemes* and, more specifically, the *KZG commitment scheme*.
+No profundizaremos aquí en por qué las transacciones de blob son importantes para la hoja de ruta de Ethereum, ya que lo haremos con mucho más detalle en el capítulo 16. En cambio, en las próximas secciones exploraremos la criptografía que sustenta este nuevo tipo de transacción: los *esquemas de compromisos polinómicos* y, más específicamente, el *esquema de compromisos KZG*.
 
-### Introduction
+### Introducción
 
-Before looking at polynomial commitment schemes, it's important to understand the problem we're facing and the final goal we want to reach.
+Antes de examinar los esquemas de compromisos polinómicos, es importante comprender el problema al que nos enfrentamos y el objetivo final que queremos alcanzar.
 
-> **Note**
+> **Nota**
 >
-> In this section, we'll briefly mention the term Layer 2s (L2s). While L2s will be properly explained and expanded on in Chapter 16, it can be useful to at least have a quick introduction to them. L2s are a new scaling solution for Ethereum: they are real blockchains, with a unique history and state, that periodically post all their updates and data to the Ethereum mainnet. The rationale is that it must be possible to derive the entire L2 blockchain by looking only at the Ethereum mainnet.
+> En esta sección mencionaremos brevemente el término capas 2 (L2). Aunque las L2 se explicarán debidamente y con más detalle en el capítulo 16, puede resultar útil al menos una breve introducción. Las L2 son una nueva solución de escalabilidad para Ethereum: son blockchains reales, con un historial y un estado únicos, que publican periódicamente todas sus actualizaciones y datos en la red principal de Ethereum. La idea es que debe ser posible derivar toda la blockchain L2 observando únicamente la red principal de Ethereum.
 
-Without going into too much detail, L2s post a lot of data into the Ethereum main chain every day. All this data has to be downloaded and verified by all the nodes in the network. This situation usually leads to a spike in gas fees that, in critical scenarios, can reach $10–$20 just for a single ETH transfer.
+Sin entrar en demasiados detalles, las L2 publican muchos datos en la cadena principal de Ethereum todos los días. Todos los nodos de la red deben descargar y verificar todos estos datos. Esta situación suele provocar un aumento brusco en las comisiones de gas que, en escenarios críticos, pueden alcanzar $10–$20 por una sola transferencia de ETH.
 
-Eventually, instead of posting all this data directly on chain, we only want to store a commitment to it—that is, a cryptographic hash—leaving the full data outside the Ethereum chain. But posting only a hash creates a new problem: all the nodes in the network must ensure that the data that the commitment points to exists somewhere; otherwise, we may have lost critical data.
+Con el tiempo, en lugar de publicar todos estos datos directamente en la cadena, queremos almacenar solo un compromiso criptográfico de ellos, es decir, un hash criptográfico, y dejar los datos completos fuera de la cadena de Ethereum. Pero publicar solo un hash crea un nuevo problema: todos los nodos de la red deben asegurarse de que los datos a los que apunta el compromiso existan en algún lugar; de lo contrario, podríamos haber perdido datos esenciales.
 
-The first (obvious) solution would be to obligate all the nodes to temporarily download the full data so that they can easily verify the commitment is valid—that is, it points to the full data they have. This is where we are at the time of writing this chapter (June 2025).
+La primera solución (obvia) sería obligar a todos los nodos a descargar temporalmente los datos completos para que puedan verificar fácilmente que el compromiso sea válido, es decir, que apunte a los datos completos que tienen. Esta es la situación al momento de escribir este capítulo (junio de 2025).
 
-The long-term solution is to not require all the nodes to download the full data but just a very small part of it. Nodes can then use cryptographic proofs that ensure the data is fully available. These proofs have to be small and need to be verified quickly. The idea is that it's much faster and more lightweight to prove—and verify—that the data is available than it is to download it and directly verify it. This strategy is called *data availability sampling* (DAS), one of the most important areas of research in the Ethereum community.
+La solución a largo plazo consiste en no exigir que todos los nodos descarguen los datos completos, sino solo una parte muy pequeña. Los nodos pueden utilizar entonces pruebas criptográficas que aseguren que los datos estén disponibles en su totalidad. Estas pruebas deben ser pequeñas y verificarse rápidamente. La idea es que demostrar y verificar que los datos estén disponibles es mucho más rápido y liviano que descargarlos y verificarlos directamente. Esta estrategia se denomina *muestreo de disponibilidad de datos* (DAS), una de las áreas de investigación más importantes de la comunidad Ethereum.
 
-To achieve the final goal of DAS, we want a cryptographic system that enables us—all the nodes—to:
+Para alcanzar el objetivo final del DAS, queremos un sistema criptográfico que nos permita a todos los nodos:
 
-- Create a commitment to some data (data you want to prove that exists and is available in its entirety)
-- Generate small proofs for the data related to the previously created commitment
-- Easily verify these proofs
+- Crear un compromiso de ciertos datos (datos cuya existencia y disponibilidad íntegra se quiere demostrar)
+- Generar pruebas pequeñas para los datos relacionados con el compromiso creado anteriormente
+- Verificar fácilmente estas pruebas
 
-This cryptographic system optionally (but ideally) shouldn't reveal much information about the data it refers to.
+Opcionalmente (pero idealmente), este sistema criptográfico no debería revelar mucha información sobre los datos a los que se refiere.
 
-In the next section, we'll explore such a cryptographic system: polynomial commitment schemes and, more specifically, the KZG commitment scheme.
+En la siguiente sección exploraremos un sistema criptográfico de este tipo: los esquemas de compromisos polinómicos y, más específicamente, el esquema de compromisos KZG.
 
-> **Note**
+> **Nota**
 >
-> You may wonder why we're talking about polynomial commitment schemes instead of data commitment schemes. And that's a very good question: our goal is to be able to commit to some data, not to a polynomial. But here is the trick: data can be represented as a polynomial. So if we are able to produce a polynomial commitment scheme, then we're good.
+> Puede surgir la pregunta de por qué hablamos de esquemas de compromisos polinómicos en lugar de esquemas de compromisos de datos. Y es una muy buena pregunta: nuestro objetivo es poder comprometernos con ciertos datos, no con un polinomio. Pero aquí está el truco: los datos pueden representarse como un polinomio. Por tanto, si podemos producir un esquema de compromisos polinómicos, tenemos lo que necesitamos.
 
-### Polynomial Commitment Schemes
+### Esquemas de compromisos polinómicos
 
-A *polynomial commitment scheme* allows a prover to compute a commitment to a polynomial, with the property that this commitment can later be "opened"—evaluated—at any position. The prover can show that the value of the polynomial at a certain position is equal to a claimed value and can generate a proof for that claim. The verifier, having both the commitment and the proof, can verify that the proof is valid if and only if the prover didn't cheat—that is, the committed polynomial actually evaluates to the claimed value at the selected position.
+Un *esquema de compromisos polinómicos* permite que un probador calcule un compromiso de un polinomio, con la propiedad de que este compromiso puede "abrirse", es decir, evaluarse, posteriormente en cualquier posición. El probador puede mostrar que el valor del polinomio en cierta posición es igual a un valor declarado y generar una prueba de esa afirmación. El verificador, con el compromiso y la prueba, puede verificar que la prueba sea válida si y solo si el probador no hizo trampa, es decir, si el polinomio comprometido realmente se evalúa al valor declarado en la posición seleccionada.
 
-#### Introduction to Polynomials
+#### Introducción a los polinomios
 
-We'll talk about polynomials a lot in this section, so it's important to make sure everyone knows what a polynomial is, since it may have been a long time since you studied them in school.
+Hablaremos mucho de polinomios en esta sección, por lo que es importante asegurarnos de que todos sepan qué es un polinomio, ya que puede haber pasado mucho tiempo desde que los estudiaron en la escuela.
 
-A polynomial is a mathematical expression like this:
+Un polinomio es una expresión matemática como esta:
 
 ```
 x^3 + 3x^2 – 9
 ```
 
-where `x` is the variable and all the numbers (1, 3, 0, –9) are the coefficients. Note that we put a 0 as the third coefficient because that polynomial is actually the following one:
+donde `x` es la variable y todos los números (1, 3, 0, –9) son los coeficientes. Cabe señalar que incluimos un 0 como tercer coeficiente porque ese polinomio es en realidad el siguiente:
 
 ```
 x^3 + 3x^2 + 0x – 9
 ```
 
-We'll refer to a polynomial as `p(x)` throughout this section:
+Nos referiremos a un polinomio como `p(x)` a lo largo de esta sección:
 
 ```
 p(x) = x^3 + 3x^2 + 0x – 9
 ```
 
-We'll also need the *degree* `n` of a polynomial. It's the number of the highest power in the polynomial. The degree of our example polynomial is 3. So `n = 3`.
+También necesitaremos el *grado* `n` de un polinomio. Es el número de la potencia más alta del polinomio. El grado del polinomio de nuestro ejemplo es 3. Por tanto, `n = 3`.
 
-The general formula to describe a polynomial is the following:
+La fórmula general para describir un polinomio es la siguiente:
 
 ```
 p(x) = p₀ + p₁x + p₂x² + ... + pₙxⁿ
 ```
 
-Or more formally:
+O, de manera más formal:
 
 ```
 p(x) = Σ pᵢxⁱ  (for i = 0 to n)
 ```
 
-where `n` is the degree of the polynomial and `pi` are all its coefficients.
+donde `n` es el grado del polinomio y `pi` son todos sus coeficientes.
 
-### Using Merkle Trees
+### Uso de árboles de Merkle
 
-Let's start looking at a polynomial commitment scheme using the classical Merkle tree data structure. If you're interested in deep-diving into Merkle trees, we'll expand on them in Chapter 14.
+Comencemos por un esquema de compromisos polinómicos que utiliza la estructura de datos clásica del árbol de Merkle. Si le interesa profundizar en los árboles de Merkle, los ampliaremos en el capítulo 14.
 
-We can commit to a polynomial of degree `n = 2^d – 1`, where `d` is the depth of the Merkle tree, by setting all the leaf elements of the tree equal to all the coefficients `pi` of the polynomial we want to commit to.
+Podemos comprometernos con un polinomio de grado `n = 2^d – 1`, donde `d` es la profundidad del árbol de Merkle, haciendo que todos los elementos hoja del árbol sean iguales a todos los coeficientes `pi` del polinomio con el que queremos comprometernos.
 
-Have a look at the following example:
+Veamos el siguiente ejemplo:
 
 ```
 p(x) = x^7 + 5x^5 – 2x^4 + 3
@@ -724,206 +724,206 @@ n = 7 ← degree of p(x)
 d = 3 ← depth of the required Merkle tree
 ```
 
-Figure 4-9 shows the polynomial commitment scheme applied to this example, using Merkle roots as the core cryptographic primitive.
+La figura 4-9 muestra el esquema de compromisos polinómicos aplicado a este ejemplo, utilizando raíces de Merkle como primitiva criptográfica central.
 
-![Merkle tree polynomial commitment](images/ch4/maet_0409.png)
+![Compromiso polinómico con árbol de Merkle](images/ch4/maet_0409.png)
 
-Figure 4-9. Polynomial commitment using Merkle trees
+Figura 4-9. Compromiso polinómico mediante árboles de Merkle
 
-The final commitment is the Merkle root we obtain by constructing the full Merkle tree.
-Now let's say we want to prove (to a verifier) that `p(1) = 7`. This statement is true because if you take `p(x)` and set `x = 1`, you can easily calculate that the polynomial at that position evaluates to 7.
+El compromiso final es la raíz de Merkle que obtenemos al construir el árbol de Merkle completo.
+Ahora supongamos que queremos demostrar (a un verificador) que `p(1) = 7`. Esta afirmación es verdadera porque, si se toma `p(x)` y se establece `x = 1`, puede calcularse fácilmente que el polinomio evaluado en esa posición da 7.
 
-To prove our assertion that `p(1) = 7`, we need to send to the verifier:
+Para demostrar nuestra afirmación de que `p(1) = 7`, debemos enviar al verificador:
 
-- The statement we want to prove: `p(1) = 7`
-- The Merkle root—that is, the commitment to the polynomial `p(x)`
-- All the coefficients `pi` of the polynomial
+- La afirmación que queremos demostrar: `p(1) = 7`
+- La raíz de Merkle, es decir, el compromiso del polinomio `p(x)`
+- Todos los coeficientes `pi` del polinomio
 
-This way, the verifier can take all the coefficients `pi` and calculate the value of the polynomial when `x = 1`. Here, the verifier verifies that our assertion is actually true. Then, the verifier takes all the coefficients `pi` and computes the Merkle tree, comparing their Merkle root with the one we provided to them. Here, they verify that the polynomial we committed to initially is actually the same one we sent to them.
+Así, el verificador puede tomar todos los coeficientes `pi` y calcular el valor del polinomio cuando `x = 1`. Aquí verifica que nuestra afirmación sea realmente verdadera. Luego toma todos los coeficientes `pi` y calcula el árbol de Merkle, comparando su raíz de Merkle con la que le proporcionamos. Aquí verifica que el polinomio con el que nos comprometimos inicialmente sea realmente el mismo que le enviamos.
 
-To recap the properties of polynomial commitment using Merkle trees, we have the following:
+Para recapitular las propiedades del compromiso polinómico mediante árboles de Merkle, tenemos lo siguiente:
 
-**Commitment size**
+**Tamaño del compromiso**
 
-The commitment is the Merkle root, which is a single hash, usually 32 bytes long.
+El compromiso es la raíz de Merkle, que es un solo hash, normalmente de 32 bytes de longitud.
 
-**Proof size**
+**Tamaño de la prueba**
 
-To prove an evaluation, we need to send all the coefficients `pi` of the polynomial. That means the proof size is linear in the degree `n` of the polynomial.
+Para demostrar una evaluación, debemos enviar todos los coeficientes `pi` del polinomio. Esto significa que el tamaño de la prueba es lineal respecto del grado `n` del polinomio.
 
-**Verifier complexity**
+**Complejidad del verificador**
 
-The verifier has to do linear work (in the degree of the polynomial) to completely verify our assertion. In fact, the verifier has all the coefficients `pi` and has to compute both the Merkle tree and the evaluation of the polynomial at the claimed point.
+El verificador debe realizar un trabajo lineal (respecto del grado del polinomio) para verificar por completo nuestra afirmación. De hecho, tiene todos los coeficientes `pi` y debe calcular tanto el árbol de Merkle como la evaluación del polinomio en el punto declarado.
 
-**Scheme privacy**
+**Privacidad del esquema**
 
-The scheme doesn't hide anything about the polynomial as the prover sends all its coefficients `pi`.
+El esquema no oculta nada del polinomio, ya que el probador envía todos sus coeficientes `pi`.
 
-These properties are not ideal because the degree `n` of the polynomial could be very big in the real Ethereum protocol, and the bandwidth required to send all its coefficients on the network is too high. Also, we would like a protocol that lets the prover reveal as little information as possible regarding the committed polynomial.
+Estas propiedades no son ideales porque el grado `n` del polinomio podría ser muy grande en el protocolo real de Ethereum, y el ancho de banda necesario para enviar todos sus coeficientes por la red es demasiado alto. Además, nos gustaría un protocolo que permita al probador revelar la menor cantidad posible de información sobre el polinomio comprometido.
 
-Luckily, there is a scheme that satisfies all our requirements, and this is where KZG enters the scene.
+Afortunadamente, existe un esquema que satisface todos nuestros requisitos, y aquí es donde entra en escena KZG.
 
-### KZG Commitment
+### Compromiso KZG
 
-KZG is an acronym that stands for Kate, Zaverucha, and Goldberg, the names of its three authors. These cryptographers introduced this commitment scheme in their 2010 paper ["Constant-Size Commitments to Polynomials and Their Applications"](https://oreil.ly/JnEc0).
+KZG es una sigla de Kate, Zaverucha y Goldberg, los nombres de sus tres autores. Estos criptógrafos presentaron este esquema de compromisos en su artículo de 2010 ["Constant-Size Commitments to Polynomials and Their Applications"](https://oreil.ly/JnEc0).
 
-#### The trusted setup
+#### La configuración de confianza
 
-The KZG commitment scheme requires the presence of a *trusted setup*. You can view it as a common knowledge base shared with all the participants of a cryptographic protocol—that is, both prover and verifier. It's called a trusted setup because, in order to produce that common knowledge base, some participants need to generate random numbers (secrets), encrypt them, and create the final data. Then, they must delete the secrets to ensure the protocol remains safe. Since these participants need to be trusted to delete their secrets, this whole ceremony is called a trusted setup.
+El esquema de compromisos KZG requiere una *configuración de confianza*. Puede entenderse como una base de conocimiento común compartida con todos los participantes de un protocolo criptográfico, es decir, tanto el probador como el verificador. Se llama configuración de confianza porque, para producir esa base de conocimiento común, algunos participantes deben generar números aleatorios (secretos), cifrarlos y crear los datos finales. Luego deben eliminar los secretos para garantizar que el protocolo siga siendo seguro. Como es necesario confiar en que estos participantes eliminen sus secretos, toda esta ceremonia se denomina configuración de confianza.
 
-Modern setups usually use the [*Powers-of-Tau*](https://oreil.ly/uaS5x) setup, which has a 1-of-N trust model. That means we need only one honest actor for the entire trusted setup to be considered safe.
+Las configuraciones modernas suelen utilizar la configuración [*Powers-of-Tau*](https://oreil.ly/uaS5x), que tiene un modelo de confianza de 1 de N. Esto significa que solo necesitamos un actor honesto para considerar segura toda la configuración de confianza.
 
-The Ethereum KZG trusted setup ceremony involved more than 140,000 different participants, as you can see in Figure 4-10.
+La ceremonia de configuración de confianza KZG de Ethereum involucró a más de 140,000 participantes diferentes, como puede verse en la figura 4-10.
 
-![KZG trusted setup ceremony](images/ch4/maet_0410.png)
+![Ceremonia de configuración de confianza KZG](images/ch4/maet_0410.png)
 
-Figure 4-10. Ethereum KZG trusted setup ceremony participants
+Figura 4-10. Participantes de la ceremonia de configuración de confianza KZG de Ethereum
 
-More specifically the trusted setup generates the elements `[s^i]₁` and `[s^i]₂` for `i = 0, 1, … , n – 1`, where:
+Más específicamente, la configuración de confianza genera los elementos `[s^i]₁` y `[s^i]₂` para `i = 0, 1, … , n – 1`, donde:
 
-- `s` is the trusted setup secret that no one knows (made by the sum of secrets that each participant has generated)
-- `[s^i]₁` and `[s^i]₂` are actually elliptic curve points (respectively in curves G1 and G2)
-- `n` is the order of the polynomial
+- `s` es el secreto de la configuración de confianza que nadie conoce (formado por la suma de los secretos que generó cada participante)
+- `[s^i]₁` y `[s^i]₂` son en realidad puntos de curvas elípticas (respectivamente en las curvas G1 y G2)
+- `n` es el orden del polinomio
 
-> **Tip**
+> **Consejo**
 >
-> When you see something inside square braces, that represents an elliptic curve point.
+> Cuando aparece algo entre corchetes, representa un punto de una curva elíptica.
 
-#### The commitment
+#### El compromiso
 
-As you can see, the KZG commitment scheme involves (again) elliptic curves and pairings, something we have already seen for BLS digital signatures.
+Como puede verse, el esquema de compromisos KZG involucra (de nuevo) curvas elípticas y emparejamientos, algo que ya vimos para las firmas digitales BLS.
 
-Remember that on elliptic curves, if you have a secret number `a`, you can obtain an elliptic curve point `[a]` with an elliptic curve multiplication:
+Recuerde que, en las curvas elípticas, si se tiene un número secreto `a`, puede obtenerse un punto de curva elíptica `[a]` mediante una multiplicación de curvas elípticas:
 
 ```
 [a]₁ = aG₁
 ```
 
-And it's computationally impossible to go back. Thus, if you have only `[a]`, you cannot obtain the secret `a`.
+Y es computacionalmente imposible volver atrás. Por tanto, si solo se tiene `[a]`, no puede obtenerse el secreto `a`.
 
-Even though neither the prover nor the verifier knows `s`, the trusted-setup secret, they can still do certain operations on it:
+Aunque ni el probador ni el verificador conocen `s`, el secreto de la configuración de confianza, aun así pueden realizar ciertas operaciones sobre él:
 
 ```
 c[s^i]₁ = cs^iG₁ = [cs^i]₁  ← elliptic curve multiplication; c is an integer number
 c[s^i]₁ + d[s^i]₁ = (cs^i + ds^i)G₁ = [cs^i + ds^i]₁  ← elliptic curve points addition
 ```
 
-So, if `p(x) = p₀ + p₁x + p₂x² + ... + pₙxⁿ` is a polynomial, the prover can compute:
+Por tanto, si `p(x) = p₀ + p₁x + p₂x² + ... + pₙxⁿ` es un polinomio, el probador puede calcular:
 
 ```
 [p(s)]₁ = [p₀ + p₁s₁ + p₂s²₁ + ... + pₙsⁿ₁] = p₀ + p₁[s]₁ + p₂[s²]₁ + ... + pₙ[sⁿ]₁
 ```
 
-Since `[s^i]₁` is part of the trusted setup, and therefore it's common knowledge, the prover is able to evaluate the polynomial at a secret point `s` that no one knows. Sounds magic, right? Be careful of one important thing, though: the output of the previous operation is not an integer number; instead, it's an elliptic curve point. That `[p(s)]₁` elliptic curve point is our KZG commitment to the polynomial `p(x)`.
+Como `[s^i]₁` forma parte de la configuración de confianza y, por tanto, es de conocimiento común, el probador puede evaluar el polinomio en un punto secreto `s` que nadie conoce. Suena a magia, ¿verdad? Sin embargo, hay que tener cuidado con algo importante: la salida de la operación anterior no es un número entero, sino un punto de curva elíptica. Ese punto de curva elíptica `[p(s)]₁` es nuestro compromiso KZG del polinomio `p(x)`.
 
-#### Soundness of KZG: Why the Prover Can't Fake the Commitment
+#### Solidez de KZG: por qué el probador no puede falsificar el compromiso
 
-Can the prover, without knowing the secret `s`, find a different polynomial `q(x) != p(x)` so that they have the same KZG commitment: `[q(s)]₁ = [p(s)]₁`? If so, the prover would be able to make the verifier think that they know a polynomial `p` even if that's not true.
+¿Puede el probador, sin conocer el secreto `s`, encontrar un polinomio diferente `q(x) != p(x)` que tenga el mismo compromiso KZG: `[q(s)]₁ = [p(s)]₁`? De ser así, podría hacer creer al verificador que conoce un polinomio `p` aunque no fuera cierto.
 
-Assume they can, so there is a polynomial `r(x) = p(x) – q(x)` not constant of degree `n`. Since `q(x) != p(x)`, that means that `r(x)` has at most `n` zeros—that is, `r(x) = 0` in at most `n` positions. This is a fundamental property of algebra. You can easily verify that it holds true for all the basic geometric shapes you studied in school: lines (polynomials of degree 1) have one zero, parabolas (polynomials of degree 2) have at most two, and so on.
+Supongamos que puede hacerlo, de modo que existe un polinomio `r(x) = p(x) – q(x)` no constante de grado `n`. Como `q(x) != p(x)`, esto significa que `r(x)` tiene a lo sumo `n` ceros, es decir, `r(x) = 0` en a lo sumo `n` posiciones. Esta es una propiedad fundamental del álgebra. Puede verificarse fácilmente que se cumple para todas las formas geométricas básicas estudiadas en la escuela: las rectas (polinomios de grado 1) tienen un cero, las parábolas (polinomios de grado 2) tienen a lo sumo dos, y así sucesivamente.
 
-The only way the prover can achieve `q(s) = p(s)` is by making `r(x) = p(x) - q(x) = 0` in as many places as possible. But they can choose up to `n` zeros, as we said previously.
+La única manera en que el probador puede lograr `q(s) = p(s)` es haciendo que `r(x) = p(x) - q(x) = 0` en tantas posiciones como sea posible. Pero puede elegir hasta `n` ceros, como dijimos anteriormente.
 
-Since the prover doesn't know `s`, it's extremely unlikely that they will be able to guess it. In fact, `n` (order of the polynomial) << `p` (order of elliptic curves).
+Como el probador no conoce `s`, es extremadamente improbable que pueda adivinarlo. De hecho, `n` (orden del polinomio) << `p` (orden de las curvas elípticas).
 
-If `n = 228` and `p = 2^256`, the probability that `s` is one of the selected zeros is `2 × 10^-69`.
+Si `n = 228` y `p = 2^256`, la probabilidad de que `s` sea uno de los ceros seleccionados es `2 × 10^-69`.
 
-So we can say that, while there exist many polynomials with the same commitment `C = [p(s)]₁`, they are impossible to compute. This is a *computational binding*.
+Por tanto, podemos decir que, aunque existen muchos polinomios con el mismo compromiso `C = [p(s)]₁`, es imposible calcularlos. Esto es una *vinculación computacional*.
 
-So far, we are able to commit to a polynomial `p(x)` by evaluating it at a secret point `s`, but we're still missing a way to prove that the initial prover's assertion `p(z) = y` is true without sending all the coefficients `pi` to the verifier. Here again is where elliptic curve pairings come in handy.
+Hasta ahora podemos comprometernos con un polinomio `p(x)` evaluándolo en un punto secreto `s`, pero todavía nos falta una forma de demostrar que la afirmación inicial del probador `p(z) = y` sea verdadera sin enviar todos los coeficientes `pi` al verificador. Aquí es donde vuelven a resultar útiles los emparejamientos de curvas elípticas.
 
-### KZG Proof
+### Prueba KZG
 
-To understand the final KZG proof, we need to recall some important properties of polynomials.
+Para comprender la prueba KZG final, debemos recordar algunas propiedades importantes de los polinomios.
 
-A polynomial `p(x)` is divisible by `(x – z)` if it has a zero in `z`. This is very easy to understand. Take the polynomial `p(x) = x² – 4` that can also be represented as `p(x) = (x + 2)(x – 2)`. Since `p(2) = 4 – 4 = 0`, `p(x)` is divisible by `(x – 2)`.
+Un polinomio `p(x)` es divisible por `(x – z)` si tiene un cero en `z`. Esto es muy fácil de comprender. Tomemos el polinomio `p(x) = x² – 4`, que también puede representarse como `p(x) = (x + 2)(x – 2)`. Como `p(2) = 4 – 4 = 0`, `p(x)` es divisible por `(x – 2)`.
 
-The opposite is also true. A polynomial `p(x)` has a zero in `z` if `p(x)` is divisible by `(x – z)`. Take the same example we used before and you can easily demonstrate that.
+Lo contrario también es cierto. Un polinomio `p(x)` tiene un cero en `z` si `p(x)` es divisible por `(x – z)`. Con el mismo ejemplo anterior puede demostrarse fácilmente.
 
-Remember that we (as the prover) want to prove that `p(z) = y`. At this point, we take the polynomial `p(x) – y`. This polynomial evaluates to zero at `x = z`, so we can use the properties described previously—in particular, the fact that since `p(x) – y` has a zero in `z`, then it is divisible by `(x – z)`.
+Recuerde que nosotros (como probador) queremos demostrar que `p(z) = y`. En este punto, tomamos el polinomio `p(x) – y`. Este polinomio se evalúa a cero en `x = z`, por lo que podemos utilizar las propiedades descritas anteriormente, en particular, el hecho de que, como `p(x) – y` tiene un cero en `z`, es divisible por `(x – z)`.
 
-So we can compute the quotient polynomial `q(x)`:
+Por tanto, podemos calcular el polinomio cociente `q(x)`:
 
 ```
 q(x) = [p(x) – y] / (x – z)
 ```
 
-which we can write in the equivalent form:
+que podemos escribir en la forma equivalente:
 
 ```
 q(x)(x – z) = p(x) – y
 ```
 
-> **Note**
+> **Nota**
 >
-> It's very important to note here that the quotient polynomial `q(x)` is only possible to compute because `p(x) – y` is divisible by `x – z`. Otherwise, it would be impossible as we would always have a remainder.
+> Es muy importante señalar aquí que solo es posible calcular el polinomio cociente `q(x)` porque `p(x) – y` es divisible por `x – z`. De lo contrario, sería imposible porque siempre tendríamos un resto.
 >
-> To understand this better, let's look at an example. Take again the polynomial `p(x) = (x + 2)(x – 2)`. Since this polynomial is divisible by `(x + 2)`, we can compute the quotient polynomial:
+> Para comprenderlo mejor, veamos un ejemplo. Tomemos de nuevo el polinomio `p(x) = (x + 2)(x – 2)`. Como este polinomio es divisible por `(x + 2)`, podemos calcular el polinomio cociente:
 >
 > ```
 > q(x) = p(x) / (x + 2) = [(x + 2)(x – 2)] / (x + 2) = x – 2
 > ```
-> If we tried to divide by `(x – 3)`, we wouldn't be able to obtain the quotient polynomial. You can try using the previous example if you want…
+> Si intentáramos dividir por `(x – 3)`, no podríamos obtener el polinomio cociente. Puede intentarlo con el ejemplo anterior si lo desea…
 
-Now we're fully ready to generate our proof. In fact, a KZG proof for the assertion `p(z) = y` is `π = [q(s)]₁`. Basically, it's the (elliptic curve point) quotient polynomial evaluated at the secret point `s`.
+Ahora estamos completamente preparados para generar nuestra prueba. De hecho, una prueba KZG para la afirmación `p(z) = y` es `π = [q(s)]₁`. Básicamente, es el polinomio cociente evaluado en el punto secreto `s` (como punto de curva elíptica).
 
-The verifier checks the validity of this proof by computing the following equation:
+El verificador comprueba la validez de esta prueba calculando la siguiente ecuación:
 
 ```
 e(π, [s – z]₂) = e(C – [y]₁, H)
 ```
 
-where:
+donde:
 
-- `π = [q(s)]₁` is the KZG proof
-- `C = [p(s)]₁` is the commitment to the polynomial `p(x)`
-- `H` is the generator of the group G2, known to both prover and verifier
+- `π = [q(s)]₁` es la prueba KZG
+- `C = [p(s)]₁` es el compromiso del polinomio `p(x)`
+- `H` es el generador del grupo G2, conocido tanto por el probador como por el verificador
 
-Let's prove that this cryptographic scheme is both:
+Demostremos que este esquema criptográfico tiene ambas propiedades:
 
-**Correct**
+**Corrección**
 
-If the prover follows all the rules, then they must be able to produce a valid proof that the verifier should be able to correctly verify.
+Si el probador sigue todas las reglas, debe poder producir una prueba válida que el verificador debería poder verificar correctamente.
 
-**Sound**
+**Solidez**
 
-The prover cannot trick the verifier by computing a fake proof—that is, the prover cannot make the verifier believe that `p(z) = y′` for some `y′ != y`.
+El probador no puede engañar al verificador calculando una prueba falsa, es decir, no puede hacerle creer que `p(z) = y′` para algún `y′ != y`.
 
-#### Correctness
+#### Corrección
 
-If we take the verifier equation and write it to the pairing group, basically computing the pairing operation, we get:
+Si tomamos la ecuación del verificador y la escribimos en el grupo de emparejamiento, básicamente calculando la operación de emparejamiento, obtenemos:
 
 ```
 [q(s)(s – z)]ₜ = [p(s) – y]ₜ
 ```
 
-where `T` is a a multiplicative subgroup of a finite field extension.
+donde `T` es un subgrupo multiplicativo de una extensión de campo finito.
 
-You can just see that this equation is the exact same equation we calculated before:
+Puede verse que esta ecuación es exactamente la misma que calculamos antes:
 
 ```
 q(x)(x – z) = p(x) – y
 ```
 
-evaluated at the secret point `s`. The only difference is that we have elliptic curve points instead of numbers.
+evaluada en el punto secreto `s`. La única diferencia es que tenemos puntos de curvas elípticas en lugar de números.
 
-That equation always holds true by construction. And that's it for the correctness part.
+Esa ecuación siempre se cumple por construcción. Y eso es todo en cuanto a la corrección.
 
-#### Soundness
+#### Solidez
 
-Can the prover fake it? That means: can the prover claim that `p(z) = y′` even though that's not true and still pass the verifier check?
+¿Puede el probador falsificarla? Es decir, ¿puede afirmar que `p(z) = y′` aunque no sea cierto y aun así superar la comprobación del verificador?
 
-To try to do that, the verifier has two options:
+Para intentarlo, el verificador tiene dos opciones:
 
-1. The verifier can try to follow the normal procedure, just changing the claimed value `y′`. So, they have to compute the quotient polynomial by dividing `p(x) – y′` by `(x – z)`. But that's impossible because `p(z) – y′ != 0`—polynomial division is not doable here. You may wonder: what if the prover is able to choose a `y′ != y` so that `p(x) – y′ = 0`? Actually, we have already given an answer in a previous note, which is that the probability is near zero. The prover is not able to compute such a `y′`. This first solution is not a concrete option.
+1. El verificador puede intentar seguir el procedimiento normal cambiando solo el valor declarado `y′`. Por tanto, debe calcular el polinomio cociente dividiendo `p(x) – y′` por `(x – z)`. Pero eso es imposible porque `p(z) – y′ != 0`; aquí no puede realizarse la división polinómica. Puede surgir la pregunta: ¿y si el probador puede elegir un `y′ != y` tal que `p(x) – y′ = 0`? De hecho, ya respondimos en una nota anterior que la probabilidad es cercana a cero. El probador no puede calcular tal `y′`. Esta primera solución no es una opción concreta.
 
-2. The verifier can directly work on the elliptic curve when constructing the proof. In fact, if they are able to generate the proof:
+2. El verificador puede trabajar directamente sobre la curva elíptica al construir la prueba. De hecho, si puede generar la prueba:
 
    ```
    π′ = [C – y′] / [s – z]₂
    ```
 
-   then they can prove whatever they want:
+   entonces puede demostrar lo que quiera:
 
    ```
    e(π′, [s – z]₂) = e(C – [y′]₁, H) →
@@ -932,140 +932,140 @@ To try to do that, the verifier has two options:
    → C - y` = C - y`  ← This is always true.
    ```
 
-   But again, computing that proof is computationally impossible for the prover as that requires knowledge of `s`, which is the secret of the trusted setup and no one knows its value.
+   Pero, nuevamente, calcular esa prueba es computacionalmente imposible para el probador, ya que requiere conocer `s`, el secreto de la configuración de confianza cuyo valor nadie conoce.
 
-### KZG Properties
+### Propiedades de KZG
 
-To recap the properties of polynomial commitment using the KZG proof system, we have:
+Para recapitular las propiedades del compromiso polinómico mediante el sistema de pruebas KZG, tenemos:
 
-**Commitment size**
+**Tamaño del compromiso**
 
-The commitment is a single group element of an elliptic curve that admits pairing—for example, with curve BLS12_381, this is 48 bytes long in its compressed form.
+El compromiso es un único elemento de grupo de una curva elíptica que admite emparejamientos; por ejemplo, con la curva BLS12_381, tiene una longitud de 48 bytes en su forma comprimida.
 
-**Proof size**
+**Tamaño de la prueba**
 
-The proof size is independent of the size of the polynomial `p(x)` we commit to. It's always one single group element of an elliptic curve.
+El tamaño de la prueba es independiente del tamaño del polinomio `p(x)` con el que nos comprometemos. Siempre es un único elemento de grupo de una curva elíptica.
 
-**Verifier complexity**
+**Complejidad del verificador**
 
-Verification is also independent of the size of the polynomial and only requires two (elliptic curve) group multiplications and two pairings.
+La verificación también es independiente del tamaño del polinomio y solo requiere dos multiplicaciones de grupo (de curva elíptica) y dos emparejamientos.
 
-**Scheme privacy**
+**Privacidad del esquema**
 
-The scheme is able to mostly hide the polynomial `p(x)` that the prover commits to. In fact, while with Merkle trees the prover has to send all the coefficients, with KZG they need to only send the quotient polynomial evaluated at the secret point `s`, even though it's an elliptic curve point and not an integer number.
+El esquema puede ocultar en gran medida el polinomio `p(x)` con el que se compromete el probador. De hecho, mientras que con los árboles de Merkle el probador debe enviar todos los coeficientes, con KZG solo necesita enviar el polinomio cociente evaluado en el punto secreto `s`, aunque se trata de un punto de curva elíptica y no de un número entero.
 
-### Multiproofs
+### Pruebas múltiples
 
-We were able to prove a single evaluation of a polynomial `p(x)`, but we can do more. We can prove the evaluation of a polynomial at any number of points and prove while still using the same proof size.
+Pudimos demostrar una sola evaluación de un polinomio `p(x)`, pero podemos hacer más. Podemos demostrar la evaluación de un polinomio en cualquier cantidad de puntos y hacerlo manteniendo el mismo tamaño de prueba.
 
-Let's see how this works. We want to prove that for every `zᵢ`, `p(x)` evaluates to `yᵢ`:
+Veamos cómo funciona. Queremos demostrar que, para cada `zᵢ`, `p(x)` se evalúa a `yᵢ`:
 
 ```
 (z₀, y₀), (z₁, y₁), …, (zₖ₋₁, yₖ₋₁)
 ```
 
-We can always find a polynomial of degree lower than `k` that passes through all these points. This is an algebraic property, and there also is a mathematical formula that generates that polynomial, which is called the *interpolation polynomial* `I(x)`:
+Siempre podemos encontrar un polinomio de grado menor que `k` que pase por todos estos puntos. Esta es una propiedad algebraica, y también existe una fórmula matemática que genera ese polinomio, llamado *polinomio de interpolación* `I(x)`:
 
 ```
 I(x) = Σ yᵢ · ∏ (x – zⱼ)/(zᵢ – zⱼ)  (for i,j = 0 to k-1, j ≠ i)
 ```
 
-Although this sounds hard, it's actually pretty easy to grasp. Let's say we have two distinct points, as shown in Figure 4-11:
+Aunque suene difícil, es bastante fácil de comprender. Supongamos que tenemos dos puntos distintos, como se muestra en la figura 4-11:
 
 ```
 A = (1, 0)
 B = (2, 1)
 ```
 
-![Two points on a coordinate plane](images/ch4/maet_0411.png)
+![Dos puntos en un plano de coordenadas](images/ch4/maet_0411.png)
 
-Figure 4-11. Two distinct points A and B
+Figura 4-11. Dos puntos distintos A y B
 
-It's easy to understand that there is a line—a polynomial of degree 1 (which is less than two, the number of points)—that goes through both A and B.
+Es fácil comprender que existe una recta, un polinomio de grado 1 (menor que dos, la cantidad de puntos), que pasa tanto por A como por B.
 
-That line is:
+Esa recta es:
 
 ```
 I(x) = x – 1
 ```
 
-Figure 4-12 better illustrates this.
+La figura 4-12 lo ilustra mejor.
 
-![Line through two points](images/ch4/maet_0412.png)
+![Recta que pasa por dos puntos](images/ch4/maet_0412.png)
 
-Figure 4-12. The interpolation polynomial (line) passing through points A and B
+Figura 4-12. El polinomio de interpolación (recta) que pasa por los puntos A y B
 
-Here, we used our intuition, but we can use the formula to prove that the result is the same. Remember that we have `k = 2`:
+Aquí utilizamos nuestra intuición, pero podemos utilizar la fórmula para demostrar que el resultado es el mismo. Recuerde que tenemos `k = 2`:
 
 ```
 I(x) = y₀ · (x – z₁)/(z₀ – z₁) + y₁ · (x – z₀)/(z₁ – z₀)
      = 0 · (x – 2)/(1 – 2) + 1 · (x – 1)/(2 – 1)
      = 0 + (x – 1) = x – 1
 ```
-Since the prover wants to prove that `p(x)` goes through all those points mentioned at the start of this section, and we assume that's true—that is, the prover is trustworthy—`p(x) – I(x)` is zero at each `z₀, z₁, …, zₖ₋₁` point.
+Como el probador quiere demostrar que `p(x)` pasa por todos los puntos mencionados al inicio de esta sección, y suponemos que eso es cierto, es decir, que el probador es confiable, `p(x) – I(x)` es cero en cada punto `z₀, z₁, …, zₖ₋₁`.
 
-That means it's divisible by `(x – z₀)(x – z₁)...(x – zₖ₋₁)`. We call this polynomial `Z(x)` the *zerofier*.
+Esto significa que es divisible por `(x – z₀)(x – z₁)...(x – zₖ₋₁)`. Llamamos a este polinomio `Z(x)` el *polinomio anulador*.
 
-Now, we proceed with the usual method. The prover computes the quotient polynomial `q(x)`:
+Ahora procedemos con el método habitual. El probador calcula el polinomio cociente `q(x)`:
 
 ```
 q(x) = [p(x) – I(x)] / Z(x)
 ```
 
-and generates the proof `π = [q(s)]₁`. Note that this proof is the usual (single elliptic curve point) KZG proof.
+y genera la prueba `π = [q(s)]₁`. Cabe señalar que esta es la prueba KZG habitual (un único punto de curva elíptica).
 
-To check the validity of this proof, the verifier needs to:
+Para comprobar la validez de esta prueba, el verificador debe:
 
-1. Compute `I(x)` by applying the formula previously described and then calculating `[I(s)]₁`.
-2. Compute `Z(x)` and then calculate `[Z(s)]₂`. Note that the verifier can compute `Z(x)` because they know all the claimed points (and values) that the prover wants to prove.
-3. And then apply the usual equivalence check:
+1. Calcular `I(x)` aplicando la fórmula descrita anteriormente y luego calcular `[I(s)]₁`.
+2. Calcular `Z(x)` y luego calcular `[Z(s)]₂`. Cabe señalar que el verificador puede calcular `Z(x)` porque conoce todos los puntos (y valores) declarados que el probador quiere demostrar.
+3. Y luego aplicar la comprobación de equivalencia habitual:
 
 ```
 e(π, [Z(s)]₂) = e(C – [I(s)]₁, H)
 ```
 
-by writing the equation in the pairing group:
+escribiendo la ecuación en el grupo de emparejamiento:
 
 ```
 q(s)Z(s) = p(s) – I(s)
 ```
 
-That's the same equation we had when the prover computed the quotient polynomial before, with the only difference that here it's evaluated at the secret point `s`.
+Esa es la misma ecuación que teníamos cuando el probador calculó anteriormente el polinomio cociente, con la única diferencia de que aquí se evalúa en el punto secreto `s`.
 
-### In Summary
+### En resumen
 
-Let's summarize the entire prover↔verifier flow in the KZG commitment scheme.
+Resumamos todo el flujo probador↔verificador del esquema de compromisos KZG.
 
-We start with the prover, who has knowledge of some data. They immediately encode this data into a polynomial, as shown in Figure 4-13.
+Comenzamos con el probador, que conoce ciertos datos. Inmediatamente codifica estos datos en un polinomio, como se muestra en la figura 4-13.
 
-![Prover encodes data as polynomial](images/ch4/maet_0413.png)
+![El probador codifica los datos como un polinomio](images/ch4/maet_0413.png)
 
-Figure 4-13. The prover encodes the data into a polynomial p
+Figura 4-13. El probador codifica los datos en un polinomio p
 
-The goal of the prover is to convince the verifier that they know a certain piece of data, now encoded as a polynomial. However, the prover does not want to reveal the entire dataset. Instead, they want the verifier to be able to verify specific claims about the data. In particular, the prover wants the verifier to confirm that the polynomial evaluates to the expected values at specific points, as shown in Figure 4-14.
+El objetivo del probador es convencer al verificador de que conoce ciertos datos, ahora codificados como un polinomio. Sin embargo, no quiere revelar todo el conjunto de datos. En cambio, quiere que el verificador pueda verificar afirmaciones específicas sobre ellos. En particular, quiere que el verificador confirme que el polinomio se evalúa a los valores esperados en puntos específicos, como se muestra en la figura 4-14.
 
-![Prover wants to prove specific evaluations](images/ch4/maet_0414.png)
+![El probador quiere demostrar evaluaciones específicas](images/ch4/maet_0414.png)
 
-Figure 4-14. The prover wants to prove the evaluation of the polynomial at specific points
+Figura 4-14. El probador quiere demostrar la evaluación del polinomio en puntos específicos
 
-To achieve this goal, the prover computes the KZG commitment of the polynomial and sends it to the verifier, as shown in Figure 4-15.
+Para alcanzar este objetivo, el probador calcula el compromiso KZG del polinomio y lo envía al verificador, como se muestra en la figura 4-15.
 
-![Prover computes and sends commitment](images/ch4/maet_0415.png)
+![El probador calcula y envía el compromiso](images/ch4/maet_0415.png)
 
-Figure 4-15. The prover computes KZG commitment C and sends it to the verifier
+Figura 4-15. El probador calcula el compromiso KZG C y lo envía al verificador
 
-Then, the prover needs to compute the KZG proof for all evaluations that they want to prove to the verifier, as shown in Figure 4-16.
+Luego, el probador debe calcular la prueba KZG de todas las evaluaciones que quiere demostrar al verificador, como se muestra en la figura 4-16.
 
-![Prover computes KZG proofs](images/ch4/maet_0416.png)
+![El probador calcula pruebas KZG](images/ch4/maet_0416.png)
 
-Figure 4-16. The prover computes the KZG proof of different evaluations of the polynomials and sends it to the verifier
+Figura 4-16. El probador calcula la prueba KZG de diferentes evaluaciones de los polinomios y la envía al verificador
 
-Now, it's the verifier's turn. To make sure that the prover is honest, the verifier needs to compute the elliptic curve pairing check using the information that the prover has previously sent, along with the trusted setup, as you can see in Figure 4-17.
+Ahora es el turno del verificador. Para asegurarse de que el probador sea honesto, debe calcular la comprobación de emparejamiento de curvas elípticas utilizando la información enviada previamente por el probador, junto con la configuración de confianza, como puede verse en la figura 4-17.
 
-![Verifier checks the proofs](images/ch4/maet_0417.png)
+![El verificador comprueba las pruebas](images/ch4/maet_0417.png)
 
-Figure 4-17. The verifier checks the validity of the evaluations through an elliptic curve pairing operation
+Figura 4-17. El verificador comprueba la validez de las evaluaciones mediante una operación de emparejamiento de curvas elípticas
 
-## Conclusion
+## Conclusión
 
-We provided a survey of PKC and focused on the use of public and private keys in Ethereum and of cryptographic tools, such as hash functions, in the creation and verification of Ethereum addresses. We also looked at digital signatures and how they can show ownership of a private key without revealing that key. In Chapter 5, we’ll put these ideas together and look at how wallets can be used to manage collections of keys.
+Presentamos un panorama de la PKC y nos enfocamos en el uso de claves públicas y privadas en Ethereum y de herramientas criptográficas, como las funciones hash, en la creación y verificación de direcciones de Ethereum. También examinamos las firmas digitales y cómo pueden demostrar la propiedad de una clave privada sin revelarla. En el capítulo 5, reuniremos estas ideas y veremos cómo pueden utilizarse las billeteras para administrar colecciones de claves.

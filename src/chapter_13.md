@@ -1,97 +1,97 @@
-# Chapter 13. Decentralized Finance
+# Capítulo 13. Finanzas descentralizadas
 
-Ethereum's smart contracts have opened up a world of possibilities beyond simple cryptocurrency transactions. *Decentralized finance* (DeFi) takes this to the next level by creating a complete financial ecosystem that operates entirely on the blockchain. Imagine traditional financial services like lending, borrowing, trading, and investing but without the need for banks, brokers, or any centralized authority. Instead, smart contracts on the Ethereum blockchain handle everything, bringing about a new era of financial autonomy and innovation.
+Los contratos inteligentes de Ethereum han abierto un mundo de posibilidades más allá de las simples transacciones con criptomonedas. Las *finanzas descentralizadas* (DeFi) llevan esto al siguiente nivel al crear un ecosistema financiero completo que opera íntegramente en la blockchain. Imaginemos servicios financieros tradicionales como otorgar y obtener préstamos, operar e invertir, pero sin necesidad de bancos, corredores ni ninguna autoridad centralizada. En su lugar, los contratos inteligentes en la blockchain de Ethereum se encargan de todo, dando paso a una nueva era de autonomía e innovación financieras.
 
-This decentralized approach democratizes access to financial services and introduces a level of transparency and security that is often missing in traditional finance. Every transaction on the blockchain is publicly recorded and immutable, allowing anyone to verify the authenticity and integrity of the data. This level of transparency reduces the risk of fraud and corruption, creating a more trustworthy financial environment.
+Este enfoque descentralizado democratiza el acceso a los servicios financieros e introduce un nivel de transparencia y seguridad que suele faltar en las finanzas tradicionales. Cada transacción en la blockchain queda registrada públicamente y es inmutable, lo que permite que cualquiera verifique la autenticidad e integridad de los datos. Este nivel de transparencia reduce el riesgo de fraude y corrupción y crea un entorno financiero más confiable.
 
-DeFi also opens opportunities for financial inclusion on a global scale. In regions where traditional banking infrastructure is underdeveloped or inaccessible, DeFi provides a viable alternative. People can participate in the global economy using just a smartphone and an internet connection. This capability can potentially uplift millions by providing access to credit, savings accounts, and investment opportunities that were previously out of reach. The programmability of Ethereum's smart contracts allows for the creation of complex financial instruments and services that are difficult or impossible to implement in the traditional financial system.
+DeFi también abre oportunidades de inclusión financiera a escala global. En regiones donde la infraestructura bancaria tradicional está poco desarrollada o es inaccesible, DeFi ofrece una alternativa viable. Las personas pueden participar en la economía global con solo un teléfono inteligente y una conexión a internet. Esta capacidad podría mejorar las condiciones de vida de millones de personas al brindarles acceso a crédito, cuentas de ahorro y oportunidades de inversión que antes estaban fuera de su alcance. La programabilidad de los contratos inteligentes de Ethereum permite crear instrumentos y servicios financieros complejos que son difíciles o imposibles de implementar en el sistema financiero tradicional.
 
-Currently, the primary users of DeFi are probably not the underbanked or unbanked populations of developing countries, but rather individuals from first-world nations looking to capitalize on the highly speculative nature of cryptocurrencies. While there will always be room for speculation, it's important to ensure that inclusive financial products are accessible to everyone worldwide.
+Actualmente, los principales usuarios de DeFi probablemente no sean las poblaciones con acceso limitado o nulo a servicios bancarios de los países en desarrollo, sino personas de países del primer mundo que buscan aprovechar la naturaleza altamente especulativa de las criptomonedas. Aunque siempre habrá espacio para la especulación, es importante asegurar que los productos financieros inclusivos sean accesibles para todas las personas del mundo.
 
-## DeFi Versus Traditional Finance
+## DeFi frente a las finanzas tradicionales
 
-DeFi is the cryptopunk response to the traditional financial (TradFi) system, representing a field that is still evolving but has already found its niche of dedicated users and innovative builders. The distinction between DeFi and TradFi is complex. However, the most significant differences lie in the mediums of exchange and the inherent properties of the blockchain, such as openness and transparency. DeFi primarily uses cryptocurrencies, which are often decentralized to varying degrees, while TradFi relies on fiat currencies, which are always centralized to the maximum degree.
+DeFi es la respuesta cryptopunk al sistema financiero tradicional (TradFi) y representa un campo que sigue evolucionando, pero que ya ha encontrado su nicho de usuarios comprometidos y creadores innovadores. La distinción entre DeFi y TradFi es compleja. Sin embargo, las diferencias más importantes radican en los medios de intercambio y las propiedades inherentes de la blockchain, como la apertura y la transparencia. DeFi utiliza principalmente criptomonedas, que suelen estar descentralizadas en distintos grados, mientras que TradFi depende de monedas fíat, que siempre están centralizadas al máximo.
 
-TradFi systems often have high barriers to entry. Opening a bank account, obtaining a loan, or investing in financial markets typically requires significant documentation and compliance with various regulatory requirements. This process can exclude large segments of the global population, particularly those in underbanked regions. This can be seen in Figure 13-1.
+Los sistemas TradFi suelen tener barreras de entrada elevadas. Abrir una cuenta bancaria, obtener un préstamo o invertir en los mercados financieros normalmente requiere abundante documentación y el cumplimiento de diversos requisitos regulatorios. Este proceso puede excluir a grandes segmentos de la población mundial, en particular a quienes viven en regiones con acceso limitado a servicios bancarios. Esto puede verse en la Figura 13-1.
 
-![Traditional finance versus DeFi loan requirements](images/ch13/maet_1301.png)
+![Requisitos para préstamos en las finanzas tradicionales frente a DeFi](images/ch13/maet_1301.png)
 
-Figure 13-1. Traditional finance versus DeFi loan requirements
+Figura 13-1. Requisitos para préstamos en las finanzas tradicionales frente a DeFi
 
-A regular user needs many prerequisites to open a loan application, such as an ID, a provable physical address, a Social Security number, a bank account, signed documents, and a good credit score. Even with all these, the request might still be denied, and if it is approved, that will probably take a long time to happen.
+Un usuario común necesita cumplir muchos requisitos previos para iniciar una solicitud de préstamo, como una identificación, una dirección física comprobable, un número de Seguro Social, una cuenta bancaria, documentos firmados y un buen puntaje crediticio. Incluso con todo esto, la solicitud podría ser rechazada y, si se aprueba, probablemente transcurra mucho tiempo hasta que eso ocurra.
 
-In DeFi, only three prerequisites are needed: a phone, an internet connection, and enough assets to overcollateralize the loan. Once these are in place, the loan is instant, decentralized, and permissionless.
+En DeFi solo se necesitan tres requisitos previos: un teléfono, una conexión a internet y suficientes activos para sobregarantizar el préstamo. Una vez cumplidos, el préstamo es instantáneo, descentralizado y sin permiso.
 
-DeFi, by design, is more accessible. Anyone with an internet connection can interact with DeFi protocols, which opens financial services to billions of people who are excluded from the traditional system. The high accessibility of DeFi makes it difficult or impossible to apply TradFi's mechanisms for assessing creditworthiness and resolving fraud, which some view as a drawback and others as an improvement.
+Por diseño, DeFi es más accesible. Cualquier persona con una conexión a internet puede interactuar con los protocolos DeFi, lo que abre los servicios financieros a miles de millones de personas excluidas del sistema tradicional. La gran accesibilidad de DeFi dificulta o imposibilita aplicar los mecanismos de TradFi para evaluar la solvencia crediticia y resolver fraudes, algo que algunos consideran una desventaja y otros, una mejora.
 
-Another fascinating aspect of DeFi is its ability to create new financial instruments that are impossible within the traditional financial system. For example, flash loans allow users to borrow funds without collateral as long as the loan is repaid within the same transaction. This capability, which is unique to DeFi, opens a range of possibilities for arbitrage, collateral swaps, and other complex financial maneuvers that simply cannot be replicated in TradFi.
+Otro aspecto fascinante de DeFi es su capacidad para crear nuevos instrumentos financieros imposibles dentro del sistema financiero tradicional. Por ejemplo, los préstamos flash permiten a los usuarios obtener fondos prestados sin garantía, siempre que devuelvan el préstamo dentro de la misma transacción. Esta capacidad, exclusiva de DeFi, abre un abanico de posibilidades para el arbitraje, los intercambios de garantías y otras maniobras financieras complejas que sencillamente no pueden replicarse en TradFi.
 
-## DeFi Primitives
+## Primitivas de DeFi
 
-While cryptocurrencies like Bitcoin aim to improve and decentralize the concept of money, DeFi projects build on this foundation to decentralize and improve financial services. To fully grasp the financial services offered by DeFi, it is essential to understand several key concepts.
+Mientras que criptomonedas como Bitcoin buscan mejorar y descentralizar el concepto de dinero, los proyectos DeFi se apoyan en esta base para descentralizar y mejorar los servicios financieros. Para comprender plenamente los servicios financieros que ofrece DeFi, es esencial entender varios conceptos clave.
 
-### Acceptability of Tokens in DeFi
+### Aceptabilidad de los tokens en DeFi
 
-In Ethereum's DeFi ecosystem, each token operates as a distinct contract. This can cause confusion for beginners since there may be tokens with similar names and functions that are, in reality, entirely different forms of money.
+En el ecosistema DeFi de Ethereum, cada token opera como un contrato distinto. Esto puede causar confusión entre principiantes, ya que puede haber tokens con nombres y funciones similares que, en realidad, son formas de dinero completamente diferentes.
 
-Take, for instance, the Arbitrum rollup on Ethereum, where two tokens, USDC.e and USDC, appear almost identical but differ significantly in terms of risk and acceptability. Both USDC.e and USDC aim to maintain a value pegged to one dollar. However, USDC is natively issued on the Arbitrum chain, while USDC.e is a bridged version of USDC, representing tokens that have been transferred from another chain to Arbitrum.
+Tomemos, por ejemplo, el rollup Arbitrum en Ethereum, donde dos tokens, USDC.e y USDC, parecen casi idénticos, pero difieren significativamente en términos de riesgo y aceptabilidad. Tanto USDC.e como USDC buscan mantener un valor vinculado a un dólar. Sin embargo, USDC se emite de forma nativa en la cadena Arbitrum, mientras que USDC.e es una versión de USDC transferida mediante un puente, que representa tokens trasladados de otra cadena a Arbitrum.
 
-The risk profiles of these two tokens are markedly different. USDC.e carries all the inherent risks of USDC but adds the additional risk associated with the bridging process, such as the potential for smart contract vulnerabilities. Acceptability, defined by how widely a coin or token is accepted across various DeFi financial services, also varies between the two. Some protocols may only support USDC.e, others may exclusively support USDC, and some may accept both.
+Los perfiles de riesgo de estos dos tokens son marcadamente diferentes. USDC.e conlleva todos los riesgos inherentes de USDC, pero añade el riesgo adicional asociado al proceso de transferencia mediante un puente, como la posibilidad de vulnerabilidades en los contratos inteligentes. La aceptabilidad, definida por cuán ampliamente se acepta una moneda o un token en diversos servicios financieros DeFi, también varía entre ambos. Algunos protocolos pueden admitir solo USDC.e, otros pueden admitir exclusivamente USDC y algunos pueden aceptar ambos.
 
-### Decentralized Exchanges
+### Plataformas de intercambio descentralizadas
 
-A *decentralized exchange* (DEX) is a platform where you can trade cryptocurrencies directly with other users without needing a central authority or intermediary. Instead of relying on a company to facilitate the trades, DEXs use smart contracts to manage transactions automatically. This allows you to maintain control of your funds.
+Una *plataforma de intercambio descentralizada* (DEX) es una plataforma donde se pueden intercambiar criptomonedas directamente con otros usuarios sin necesidad de una autoridad central ni un intermediario. En lugar de depender de una empresa para facilitar las operaciones, las DEX usan contratos inteligentes para gestionar las transacciones automáticamente. Esto permite mantener el control de los fondos.
 
-#### The Evolution of DEXs
+#### La evolución de las DEX
 
-If you have ever traded on a centralized exchange, you are familiar with the order book model. In this model, buy and sell orders are listed with the prices users are willing to pay or accept. When a buy order matches a sell order, the trade is executed. The order book shows all pending orders, allowing traders to see market depth and liquidity.
+Quien haya operado en una plataforma de intercambio centralizada conoce el modelo de libro de órdenes. En este modelo, las órdenes de compra y venta se enumeran con los precios que los usuarios están dispuestos a pagar o aceptar. Cuando una orden de compra coincide con una de venta, se ejecuta la operación. El libro de órdenes muestra todas las órdenes pendientes, lo que permite a los operadores ver la profundidad y la liquidez del mercado.
 
-On chain, this model never really caught on because blockchains are much slower and more expensive to use than traditional websites. The latency in trading on the order book and the need to pay for the transaction of every order made the user experience terrible. In 2017–2018, EtherDelta attempted to implement an on-chain order book, and a few other pure order book models were tried afterward, but they didn't gain much traction.
+En la cadena, este modelo nunca llegó a afianzarse porque las blockchains son mucho más lentas y costosas de usar que los sitios web tradicionales. La latencia al operar en el libro de órdenes y la necesidad de pagar la transacción de cada orden hacían que la experiencia del usuario fuera terrible. En 2017–2018, EtherDelta intentó implementar un libro de órdenes en la cadena, y después se probaron otros modelos puros de libro de órdenes, pero no lograron mucha adopción.
 
-Bancor was the first to pioneer the *automated market maker* (AMM) model. Unlike the order book model, AMMs don't rely on buyers and sellers placing orders. Instead, they use liquidity pools, where users provide pairs of tokens.[^1] The prices are determined by a formula based on the ratio of tokens in the pool. This model allows for continuous liquidity and trading.
+Bancor fue pionero en el modelo de *creador de mercado automatizado* (AMM). A diferencia del modelo de libro de órdenes, los AMM no dependen de que compradores y vendedores coloquen órdenes. En su lugar, usan pools de liquidez donde los usuarios aportan pares de tokens.[^1] Los precios se determinan mediante una fórmula basada en la proporción de tokens del pool. Este modelo permite mantener la liquidez y las operaciones de forma continua.
 
-Uniswap significantly improved and popularized the AMM model with its simple yet effective *x × y = k* formula, where the product of the quantities of the two tokens remains constant. In this formula, *x* and *y* represent the quantities of the two tokens in the pool, and *k* is a constant value. When a trade is made, the quantities of the tokens change, but the product of the two quantities remains the same, ensuring that the pool always provides liquidity. This innovation made trading more accessible and efficient on decentralized exchanges.
+Uniswap mejoró significativamente y popularizó el modelo AMM con su fórmula sencilla pero eficaz *x × y = k*, donde el producto de las cantidades de los dos tokens permanece constante. En esta fórmula, *x* e *y* representan las cantidades de los dos tokens del pool y *k* es un valor constante. Cuando se realiza una operación, las cantidades de tokens cambian, pero el producto de las dos cantidades permanece igual, lo que asegura que el pool siempre proporcione liquidez. Esta innovación hizo que operar en plataformas de intercambio descentralizadas fuera más accesible y eficiente.
 
-[^1]: The tokens might not always be in pairs because some liquidity pools can have three or more tokens, but the most common and simplest arrangement is in pairs.
+[^1]: Los tokens no siempre tienen que estar en pares, porque algunos pools de liquidez pueden tener tres o más tokens, pero la disposición más común y sencilla es en pares.
 
-A DEX enables anyone to become a market maker by providing liquidity and earning fees for their contributions. As long as there is sufficient liquidity, trades can occur quickly and without the need for permission from a central authority, as can be seen in Figure 13-2.[^2]
+Una DEX permite que cualquiera se convierta en creador de mercado al aportar liquidez y obtener comisiones por sus aportes. Mientras haya suficiente liquidez, las operaciones pueden realizarse rápidamente y sin necesidad de permiso de una autoridad central, como puede verse en la Figura 13-2.[^2]
 
-[^2]: From Figure 13-2, it may appear that BTC is natively exchangeable on DEXs. However, this is not the case. BTC on DEXs is often represented by derivative contracts like Wrapped Bitcoin (WBTC), which are assets pegged to the price of BTC but carrying significantly more risk than native BTC on the BTC blockchain. Native assets are typically only available on their respective native chains. In this example, the BTC used in the pool is not native BTC but a derivative, similar to how stablecoins represent fiat money.
+[^2]: A partir de la Figura 13-2, podría parecer que BTC se puede intercambiar de forma nativa en las DEX. Sin embargo, no es así. En las DEX, BTC suele estar representado por contratos derivados como Wrapped Bitcoin (WBTC), que son activos vinculados al precio de BTC, pero que conllevan un riesgo significativamente mayor que el BTC nativo en la blockchain de BTC. Los activos nativos normalmente solo están disponibles en sus respectivas cadenas nativas. En este ejemplo, el BTC utilizado en el pool no es BTC nativo, sino un derivado, de forma similar a como las stablecoins representan dinero fíat.
 
-![Decentralized exchange liquidity pool](images/ch13/maet_1302.png)
+![Pool de liquidez de una plataforma de intercambio descentralizada](images/ch13/maet_1302.png)
 
-Figure 13-2. Decentralized exchange liquidity pool
+Figura 13-2. Pool de liquidez de una plataforma de intercambio descentralizada
 
-#### Impermanent Loss
+#### Pérdida impermanente
 
-Providing liquidity on a DEX is not risk free. Beyond smart contract hacks, there's a more subtle risk called *impermanent loss*. To understand impermanent loss, we first need to grasp the basic Uniswap V2 pool model.
+Aportar liquidez en una DEX no está exento de riesgos. Además de los hackeos de contratos inteligentes, existe un riesgo más sutil llamado *pérdida impermanente*. Para entender la pérdida impermanente, primero necesitamos comprender el modelo básico de pool de Uniswap V2.
 
-Many popular DEXs, like Uniswap V2, use the constant product formula *x × y = k*, where *x* and *y* are the quantities of two tokens in a liquidity pool and *k* is a constant. The price of a token is determined by the ratio of the tokens in the pool. For example, if a pool contains 100 USDC and 10 ETH, the price of 1 ETH is 100 ÷ 10 = 10 USDC. If the pool changes to 200 USDC and 10 ETH (due to trades), the price of 1 ETH becomes 200 ÷ 10 = 20 USDC.
+Muchas DEX populares, como Uniswap V2, usan la fórmula de producto constante *x × y = k*, donde *x* e *y* son las cantidades de dos tokens en un pool de liquidez y *k* es una constante. El precio de un token se determina por la proporción de tokens del pool. Por ejemplo, si un pool contiene 100 USDC y 10 ETH, el precio de 1 ETH es 100 ÷ 10 = 10 USDC. Si el pool cambia a 200 USDC y 10 ETH (debido a operaciones), el precio de 1 ETH pasa a ser 200 ÷ 10 = 20 USDC.
 
-This formula is a simplified way to understand how pools work. By providing liquidity, you act as a market maker. When users buy ETH from the pool, you sell ETH and receive USDC; when they sell ETH, you buy ETH and give USDC. In return, you earn trading fees. However, this process exposes you to impermanent loss, which occurs when the price of the tokens in the pool changes compared to when you deposited them. If the price of ETH rises or falls significantly, the value of your pool holdings may be less than if you had simply held the original tokens, even though you collect fees.
+Esta fórmula es una manera simplificada de entender cómo funcionan los pools. Al aportar liquidez, se actúa como creador de mercado. Cuando los usuarios compran ETH del pool, se vende ETH y se recibe USDC; cuando venden ETH, se compra ETH y se entrega USDC. A cambio, se obtienen comisiones por las operaciones. Sin embargo, este proceso expone a la pérdida impermanente, que ocurre cuando el precio de los tokens del pool cambia respecto del momento en que se depositaron. Si el precio de ETH sube o baja significativamente, el valor de las tenencias en el pool puede ser menor que si se hubieran conservado los tokens originales, aunque se cobren comisiones.
 
-This openness also presents a significant challenge for DEXs. Since anyone can create a blockchain and launch a DEX, there are now more than one hundred DEXs (likely many more) across various blockchains. This abundance fragments liquidity, making swaps—where users exchange one cryptocurrency for another—less efficient than they would be on platforms with consolidated liquidity. This fragmentation can lead to higher *slippage*, which is the difference between the expected price of a trade and the actual price at which the trade is executed. High slippage occurs when there is insufficient liquidity, causing trades to be executed at less favorable prices than anticipated.
+Esta apertura también presenta un desafío importante para las DEX. Como cualquiera puede crear una blockchain y lanzar una DEX, ahora existen más de cien DEX (probablemente muchas más) en diversas blockchains. Esta abundancia fragmenta la liquidez y hace que los intercambios, en los que los usuarios cambian una criptomoneda por otra, sean menos eficientes de lo que serían en plataformas con liquidez consolidada. Esta fragmentación puede provocar un mayor *deslizamiento*, que es la diferencia entre el precio esperado de una operación y el precio real al que se ejecuta. Un deslizamiento elevado ocurre cuando no hay suficiente liquidez, lo que hace que las operaciones se ejecuten a precios menos favorables de lo previsto.
 
-#### Why the Constant Product Formula Works
+#### Por qué funciona la fórmula de producto constante
 
-The elegance of the *x × y = k* formula lies in its mathematical shape: a hyperbola. This isn't just a coincidence—it's a deliberate design choice that protects liquidity pools from being completely drained.
+La elegancia de la fórmula *x × y = k* reside en su forma matemática: una hipérbola. Esto no es una simple coincidencia, sino una decisión de diseño deliberada que protege a los pools de liquidez de ser vaciados por completo.
 
-**The Problem with Linear Pricing**
+**El problema de los precios lineales**
 
-Imagine if a DEX used a simple linear (constant) pricing formula instead, where swapping 1 ETH always gives you exactly 2 USDC regardless of how much liquidity remains. This creates a very bad trading environment: whenever that fixed rate differs from the price on the rest of the market, arbitrageurs have an incentive to trade against the pool until one side of the reserves is exhausted:
+Imaginemos que una DEX usara en su lugar una fórmula de precios lineal (constante) sencilla, donde intercambiar 1 ETH siempre diera exactamente 2 USDC, sin importar cuánta liquidez quedara. Esto crea un entorno de negociación muy desfavorable: cada vez que esa tasa fija difiere del precio en el resto del mercado, quienes realizan arbitraje tienen un incentivo para operar contra el pool hasta agotar uno de los lados de las reservas:
 
-1. If the pool underprices ETH relative to the market (as in our 2 USDC per ETH example when ETH trades far higher elsewhere), anyone can keep swapping USDC for ETH until the pool’s ETH is effectively gone.
-2. If instead the pool overprices ETH, traders sell ETH into the pool and drain USDC the same way.
-3. The pool does not rebalance itself from trade flow alone: reserves stay skewed toward one token until one asset is depleted, because the quoted price never adjusts to remaining liquidity.
+1. Si el pool fija un precio de ETH inferior al del mercado (como en nuestro ejemplo de 2 USDC por ETH cuando ETH cotiza mucho más alto en otros lugares), cualquiera puede seguir intercambiando USDC por ETH hasta que prácticamente no quede ETH en el pool.
+2. Si, en cambio, el pool fija un precio de ETH demasiado alto, los operadores venden ETH al pool y agotan USDC de la misma manera.
+3. El pool no se reequilibra únicamente por el flujo de operaciones: las reservas permanecen sesgadas hacia un token hasta que se agota un activo, porque el precio cotizado nunca se ajusta a la liquidez restante.
 
-This is why fixed-price or linear curves are fundamentally unsuitable for AMMs—they allow complete pool drainage.
+Por eso las curvas de precio fijo o lineales son fundamentalmente inadecuadas para los AMM: permiten vaciar el pool por completo.
 
-**The Hyperbola Solution**
+**La solución de la hipérbola**
 
-The constant product formula *x × y = k* produces a hyperbolic curve that has a critical property: it never touches either axis. As you try to buy more and more of one token, the price increases exponentially, making it mathematically impossible to drain either token to zero.
+La fórmula de producto constante *x × y = k* produce una curva hiperbólica que tiene una propiedad crítica: nunca toca ninguno de los ejes. A medida que se intenta comprar cada vez más de un token, el precio aumenta exponencialmente, lo que hace matemáticamente imposible reducir a cero cualquiera de los tokens.
 
 ```
-Token Y (e.g., USDC)
+Token Y (p. ej., USDC)
     │
 200 ┤·
     │ ·
@@ -99,230 +99,230 @@ Token Y (e.g., USDC)
 150 ┤   ·
     │    ·
     │     ·
-100 ┤       ·    ← x × y = k (hyperbola)
+100 ┤       ·    ← x × y = k (hipérbola)
     │         ·
     │           ··
  50 ┤              ···
     │                  ······
     │                          ·················
-  0 ┼────────────────────────────────────────────→ Token X (e.g., ETH)
+  0 ┼────────────────────────────────────────────→ Token X (p. ej., ETH)
     0        50       100       150       200
 ```
 
-Consider a pool with 100 ETH and 200 USDC (k = 20,000):
+Consideremos un pool con 100 ETH y 200 USDC (k = 20,000):
 
-- **Swapping 1 ETH for USDC**: You receive approximately 1.98 USDC (close to the 1:2 ratio)
-- **Swapping 50 ETH for USDC**: You receive only 66.67 USDC (not 100 as a linear model would suggest)
-- **Trying to get all 200 USDC**: You would need to provide infinite ETH
+- **Intercambiar 1 ETH por USDC**: se reciben aproximadamente 1.98 USDC (cerca de la proporción 1:2)
+- **Intercambiar 50 ETH por USDC**: se reciben solo 66.67 USDC (no 100, como sugeriría un modelo lineal)
+- **Intentar obtener los 200 USDC**: sería necesario aportar una cantidad infinita de ETH
 
-The formula for calculating output is:
+La fórmula para calcular la cantidad de salida es:
 
 ```
 Δy = (y × Δx) / (x + Δx)
 ```
 
-Where *Δx* is the input amount and *Δy* is the output amount. As *Δx* approaches infinity, *Δy* approaches *y* (the total reserve) but never reaches it.
+Donde *Δx* es la cantidad de entrada y *Δy* es la cantidad de salida. A medida que *Δx* tiende a infinito, *Δy* se aproxima a *y* (la reserva total), pero nunca la alcanza.
 
-This asymptotic behavior is what makes AMMs secure. The larger the trade relative to the pool size, the worse the exchange rate becomes. This creates *slippage*—the difference between the expected price and the actual execution price—which naturally discourages trades that would significantly deplete the pool.
+Este comportamiento asintótico es lo que hace seguros a los AMM. Cuanto mayor sea la operación en relación con el tamaño del pool, peor será la tasa de intercambio. Esto crea *deslizamiento*, la diferencia entre el precio esperado y el precio real de ejecución, que desalienta de forma natural las operaciones que agotarían significativamente el pool.
 
-The hyperbolic curve ensures that liquidity pools are self-protecting: the scarcer a token becomes, the more expensive it gets, creating an economic barrier that prevents complete drainage. This elegant mathematical property is what made Uniswap's simple formula revolutionary in enabling trustless, permissionless trading.
+La curva hiperbólica asegura que los pools de liquidez se protejan a sí mismos: cuanto más escaso se vuelve un token, más caro resulta, lo que crea una barrera económica que impide vaciarlo por completo. Esta elegante propiedad matemática fue lo que hizo revolucionaria la sencilla fórmula de Uniswap al permitir operaciones sin necesidad de confianza ni permiso.
 
-> **Note**
+> **Nota**
 >
-> Uniswap, which is arguably one of the most significant projects in the current DeFi landscape, was inspired by a 2016 Reddit post by Vitalik Buterin. Hayden Adams, who reportedly had no prior coding experience, took a year to develop Uniswap V1 using the Vyper programming language.
+> Uniswap, que podría considerarse uno de los proyectos más importantes del panorama actual de DeFi, se inspiró en una publicación de Vitalik Buterin en Reddit de 2016. Hayden Adams, quien según se informa no tenía experiencia previa en programación, dedicó un año a desarrollar Uniswap V1 con el lenguaje de programación Vyper.
 
-### Lending Markets
+### Mercados de préstamos
 
-A *lending market* or *money market* is a decentralized platform that facilitates the lending and borrowing of cryptocurrencies, using smart contracts to automate and secure the entire process. Unlike traditional financial systems, lending markets operate without intermediaries like banks, providing a more transparent and efficient way to handle loans.
+Un *mercado de préstamos* o *mercado monetario* es una plataforma descentralizada que facilita otorgar y obtener préstamos en criptomonedas mediante contratos inteligentes que automatizan y aseguran todo el proceso. A diferencia de los sistemas financieros tradicionales, los mercados de préstamos operan sin intermediarios como los bancos y ofrecen una manera más transparente y eficiente de gestionar préstamos.
 
-In a lending market, users who want to earn interest on their crypto assets can deposit their funds into a lending pool. These deposits contribute to the overall liquidity of the platform. Lenders earn interest on their deposits, with rates often determined algorithmically based on the supply and demand within the pool. The more demand there is for borrowing, the higher the interest rates are, incentivizing more lenders to contribute their assets to the pool.
+En un mercado de préstamos, los usuarios que quieren obtener intereses sobre sus criptoactivos pueden depositar sus fondos en un pool de préstamos. Estos depósitos contribuyen a la liquidez general de la plataforma. Los prestamistas obtienen intereses sobre sus depósitos, con tasas que suelen determinarse algorítmicamente según la oferta y la demanda dentro del pool. Cuanta más demanda de préstamos haya, mayores serán las tasas de interés, lo que incentiva a más prestamistas a aportar sus activos al pool.
 
-Borrowers, on the other hand, can access these funds by providing collateral, which is typically worth more than the amount they wish to borrow. This overcollateralization is critical in lending to mitigate the risk of default, primarily because most crypto assets are very volatile and could leave the lending market with bad debt[^3] if the loan were not overcollateralized. The collateral is locked in a smart contract, ensuring that if the borrower fails to repay the loan, the collateral can be liquidated to cover the outstanding amount.
+Los prestatarios, por su parte, pueden acceder a estos fondos al aportar una garantía que normalmente vale más que la cantidad que desean pedir prestada. Esta sobregarantía es crucial en los préstamos para mitigar el riesgo de incumplimiento, principalmente porque la mayoría de los criptoactivos son muy volátiles y podrían dejar al mercado de préstamos con deuda incobrable[^3] si el préstamo no estuviera sobregarantizado. La garantía queda bloqueada en un contrato inteligente, lo que asegura que, si el prestatario no devuelve el préstamo, pueda liquidarse para cubrir el importe pendiente.
 
-[^3]: Bad debt occurs when a borrower defaults on a loan and the remaining collateral is insufficient to cover the owed amount. This can happen because of sudden market volatility or improper collateral valuation. Unlike liquidation, where collateral is sold to cover the debt, bad debt remains uncollectible, causing a loss to the lending protocol and its users.
+[^3]: La deuda incobrable ocurre cuando un prestatario incumple un préstamo y la garantía restante es insuficiente para cubrir el importe adeudado. Esto puede suceder por volatilidad repentina del mercado o por una valoración incorrecta de la garantía. A diferencia de la liquidación, en la que se vende la garantía para cubrir la deuda, la deuda incobrable permanece sin poder cobrarse, lo que causa una pérdida al protocolo de préstamos y sus usuarios.
 
-This system protects lenders and ensures that the lending pool remains solvent. A simplified version of this can be seen in Figure 13-3: the lender provides liquidity and collects annual interest paid by the borrower, who withdraws the provided liquidity.
+Este sistema protege a los prestamistas y asegura que el pool de préstamos siga siendo solvente. En la Figura 13-3 puede verse una versión simplificada: el prestamista aporta liquidez y cobra intereses anuales pagados por el prestatario, quien retira la liquidez aportada.
 
-![Lending market basic flow](images/ch13/maet_1303.png)
+![Flujo básico de un mercado de préstamos](images/ch13/maet_1303.png)
 
-Figure 13-3. Lending market basic flow
+Figura 13-3. Flujo básico de un mercado de préstamos
 
-The interest rates in lending markets are dynamic, fluctuating based on market conditions. The platform's algorithms continuously adjust rates to balance the supply of available funds and the demand for loans. This creates an efficient and responsive financial ecosystem where both lenders and borrowers can benefit from fair market-driven rates.
+Las tasas de interés en los mercados de préstamos son dinámicas y fluctúan según las condiciones del mercado. Los algoritmos de la plataforma ajustan continuamente las tasas para equilibrar la oferta de fondos disponibles y la demanda de préstamos. Esto crea un ecosistema financiero eficiente y con capacidad de respuesta donde tanto prestamistas como prestatarios pueden beneficiarse de tasas justas determinadas por el mercado.
 
-Collateralization ratios are another important aspect of lending markets. These ratios determine the amount of collateral needed to secure a loan. For instance, a common collateralization ratio might be 150%, meaning that to borrow $100 worth of cryptocurrency, a borrower would need to deposit at least $150 worth of collateral, as shown in Figure 13-4. This ensures that there is a buffer to absorb potential losses from price volatility.
+Los índices de garantía son otro aspecto importante de los mercados de préstamos. Estos índices determinan la cantidad de garantía necesaria para respaldar un préstamo. Por ejemplo, un índice de garantía común podría ser del 150%, lo que significa que, para obtener un préstamo de $100 en criptomonedas, un prestatario necesitaría depositar al menos $150 en garantías, como se muestra en la Figura 13-4. Esto asegura que haya un margen para absorber posibles pérdidas por la volatilidad de los precios.
 
-![Lending market collateralization](images/ch13/maet_1304.png)
+![Garantías de un mercado de préstamos](images/ch13/maet_1304.png)
 
-Figure 13-4. Lending market collateralization
+Figura 13-4. Garantías de un mercado de préstamos
 
-If the value of the collateral falls below a certain threshold, the platform's smart contracts initiate a liquidation process. This involves selling the collateral to repay the loan, thus protecting the lenders from potential losses. Liquidation mechanisms are essential for maintaining the stability and solvency of the lending pool.
+Si el valor de la garantía cae por debajo de un umbral determinado, los contratos inteligentes de la plataforma inician un proceso de liquidación. Esto implica vender la garantía para devolver el préstamo y proteger así a los prestamistas de posibles pérdidas. Los mecanismos de liquidación son esenciales para mantener la estabilidad y solvencia del pool de préstamos.
 
-#### Incentives in DeFi
+#### Incentivos en DeFi
 
-Most aspects of DeFi are open and rely heavily on proper incentives to function effectively. For instance, the liquidation process in most lending markets depends on users continuously monitoring for loans that can be liquidated. When they identify such loans, they proceed to liquidate them. To motivate users to perform these tasks, they receive a portion of the liquidated amount as a reward.
+La mayoría de los aspectos de DeFi son abiertos y dependen en gran medida de incentivos adecuados para funcionar eficazmente. Por ejemplo, el proceso de liquidación en la mayoría de los mercados de préstamos depende de que los usuarios vigilen continuamente si hay préstamos que puedan liquidarse. Cuando identifican estos préstamos, proceden a liquidarlos. Para motivar a los usuarios a realizar estas tareas, reciben una parte del importe liquidado como recompensa.
 
-This concept of incentivization is a fundamental part of blockchain and DeFi. Many mechanisms within these systems are designed around game theory principles to ensure that participants act in ways that maintain and improve the network's functionality and security. Incentives align user actions with the overall goals of the protocol, creating a self-sustaining ecosystem.
+Este concepto de incentivos es una parte fundamental de la blockchain y DeFi. Muchos mecanismos de estos sistemas se diseñan en torno a principios de teoría de juegos para asegurar que los participantes actúen de maneras que mantengan y mejoren la funcionalidad y seguridad de la red. Los incentivos alinean las acciones de los usuarios con los objetivos generales del protocolo y crean un ecosistema autosostenible.
 
-As with most things in DeFi, composability is key. On their own, lending markets may not seem particularly impressive, especially since most require overcollateralization to request a loan. However, when you combine the ability to request a loan with other DeFi primitives, you unlock a powerful aggregation that can achieve a variety of outcomes.
+Como ocurre con la mayoría de las cosas en DeFi, la composabilidad es clave. Por sí solos, los mercados de préstamos pueden no parecer especialmente impresionantes, sobre todo porque la mayoría exige sobregarantías para solicitar un préstamo. Sin embargo, al combinar la capacidad de solicitar un préstamo con otras primitivas de DeFi, se obtiene una combinación potente que puede lograr diversos resultados.
 
-For example, you can re-create a financial instrument called *shorting* by combining a lending market with a DEX. Shorting is a strategy used when you expect the price of an asset to drop. Essentially, you borrow the asset and sell it at the current price, hoping to buy it back later at a lower price, return the borrowed asset, and pocket the difference.
+Por ejemplo, se puede recrear un instrumento financiero llamado *venta en corto* al combinar un mercado de préstamos con una DEX. La venta en corto es una estrategia que se usa cuando se espera que el precio de un activo baje. En esencia, se pide prestado el activo y se vende al precio actual, con la esperanza de volver a comprarlo más adelante a un precio menor, devolver el activo prestado y quedarse con la diferencia.
 
-Here's how you can achieve a short in DeFi:
+Así se puede lograr una posición corta en DeFi:
 
-1. **Collateralize Asset A**: deposit Asset A as collateral in a lending market.
+1. **Aportar el activo A como garantía**: depositar el activo A como garantía en un mercado de préstamos.
 
-2. **Take a loan for Asset B**: borrow Asset B, which you want to short.
+2. **Obtener un préstamo del activo B**: pedir prestado el activo B, sobre el que se quiere abrir una posición corta.
 
-3. **Sell Asset B on a DEX**: sell the borrowed Asset B on a decentralized exchange.
+3. **Vender el activo B en una DEX**: vender el activo B prestado en una plataforma de intercambio descentralizada.
 
-By doing this, you effectively short Asset B with a leverage of 1x.[^4] If the price of Asset B drops, you can buy it back at the lower price, repay the loan, and keep the difference, as shown in Figure 13-5. This demonstrates how the composability of DeFi protocols can re-create traditional financial strategies in a decentralized environment.
+Al hacer esto, se abre efectivamente una posición corta sobre el activo B con un apalancamiento de 1x.[^4] Si el precio del activo B baja, se puede volver a comprar al precio menor, devolver el préstamo y conservar la diferencia, como se muestra en la Figura 13-5. Esto demuestra cómo la composabilidad de los protocolos DeFi puede recrear estrategias financieras tradicionales en un entorno descentralizado.
 
-[^4]: The short position's size is directly related to the borrowed amount.
+[^4]: El tamaño de la posición corta está directamente relacionado con el importe prestado.
 
-![Shorting strategy using DeFi](images/ch13/maet_1305.png)
+![Estrategia de venta en corto mediante DeFi](images/ch13/maet_1305.png)
 
-Figure 13-5. Shorting strategy using DeFi
+Figura 13-5. Estrategia de venta en corto mediante DeFi
 
-The applications for a lending market are extensive and may not be immediately apparent. You may wonder: why take an overcollateralized loan when you have the money? Why not just use your own funds? In some scenarios, that would be true. However, lending markets combined with DEXs can re-create financial instruments and even allow for "longing" an asset instead of shorting it. Another benefit of lending markets is the ability to avoid taxable events. In many jurisdictions, borrowing an asset is not considered a taxable event, whereas selling an asset is.
+Las aplicaciones de un mercado de préstamos son extensas y pueden no resultar evidentes de inmediato. Cabe preguntarse: ¿por qué obtener un préstamo sobregarantizado cuando se tiene el dinero? ¿Por qué no usar los fondos propios? En algunos escenarios, eso sería cierto. Sin embargo, los mercados de préstamos combinados con las DEX pueden recrear instrumentos financieros e incluso permitir abrir una posición larga sobre un activo en lugar de una posición corta. Otro beneficio de los mercados de préstamos es la posibilidad de evitar hechos imponibles. En muchas jurisdicciones, pedir prestado un activo no se considera un hecho imponible, mientras que venderlo sí.
 
-The potential uses of lending markets are vast and go beyond the scope of this book. However, lending markets improve capital efficiency and, when combined with other protocols, provide users with significant flexibility. There are also lending markets that do not require overcollateralization, although they currently lack significant traction.
+Los posibles usos de los mercados de préstamos son vastos y exceden el alcance de este libro. Sin embargo, los mercados de préstamos mejoran la eficiencia del capital y, al combinarse con otros protocolos, ofrecen a los usuarios una flexibilidad considerable. También existen mercados de préstamos que no requieren sobregarantías, aunque actualmente no tienen una adopción significativa.
 
-### Oracles
+### Oráculos
 
-An oracle for Ethereum, which we discussed in detail in Chapter 11, is a service that brings real-world data onto the blockchain, allowing smart contracts to interact with external information. For example, it can provide price data for cryptocurrencies, weather conditions, or sports scores, enabling smart contracts to execute based on this external data.
+Un oráculo para Ethereum, que analizamos en detalle en el Capítulo 11, es un servicio que lleva datos del mundo real a la blockchain y permite que los contratos inteligentes interactúen con información externa. Por ejemplo, puede proporcionar datos de precios de criptomonedas, condiciones meteorológicas o resultados deportivos, lo que permite ejecutar contratos inteligentes basándose en estos datos externos.
 
-Oracles are essential for many aspects of DeFi, including the security of lending markets. In these markets, the price of a token can be sourced from DEXs. However, relying solely on these exchanges can make the lending market vulnerable to flash-loan attacks. In such an attack, an attacker borrows a large sum of money, manipulates the price of a coin or token on a DEX, and exploits this price change for profit.
+Los oráculos son esenciales para muchos aspectos de DeFi, incluida la seguridad de los mercados de préstamos. En estos mercados, el precio de un token puede obtenerse de las DEX. Sin embargo, depender únicamente de estas plataformas de intercambio puede hacer que el mercado de préstamos sea vulnerable a ataques con préstamos flash. En uno de estos ataques, un atacante pide prestada una gran suma de dinero, manipula el precio de una moneda o un token en una DEX y aprovecha ese cambio de precio para obtener ganancias.
 
-Another vital function of oracles is their ability to bring pseudorandom numbers on chain. Since Ethereum is deterministic, every computation must produce the same result every time, enabling nodes to validate every block and transaction consistently. However, this deterministic nature means that true randomness cannot exist within Ethereum's components. For instance, if you were building a casino platform, generating random numbers would be essential. Using block timestamps, hashes, or transaction counts to create pseudorandom numbers is one method, but this approach is vulnerable to attacks since block proposers could predict or manipulate these properties in advance to exploit the casino.
+Otra función vital de los oráculos es su capacidad para llevar números seudoaleatorios a la cadena. Como Ethereum es determinista, cada cómputo debe producir el mismo resultado cada vez, lo que permite que los nodos validen todos los bloques y transacciones de forma coherente. Sin embargo, esta naturaleza determinista significa que no puede existir verdadera aleatoriedad dentro de los componentes de Ethereum. Por ejemplo, si se construyera una plataforma de casino, generar números aleatorios sería esencial. Un método consiste en usar marcas de tiempo de bloques, hashes o cantidades de transacciones para crear números seudoaleatorios, pero este enfoque es vulnerable a ataques, ya que los proponentes de bloques podrían predecir o manipular estas propiedades de antemano para aprovecharse del casino.
 
-Oracles let the Ethereum blockchain use external data, opening up a lot more possibilities for different applications.
+Los oráculos permiten que la blockchain de Ethereum use datos externos, lo que abre muchas más posibilidades para distintas aplicaciones.
 
-> **Tip**  
+> **Consejo**  
 >
-> From this description, it may seem that oracles are a central entity, making DeFi, which is supposed to be decentralized, dependent on them. However, while some aspects of DeFi do rely on oracles, the oracles themselves are often highly decentralized and do not have a single point of failure.
+> A partir de esta descripción, podría parecer que los oráculos son una entidad central y que hacen que DeFi, que se supone descentralizada, dependa de ellos. Sin embargo, aunque algunos aspectos de DeFi sí dependen de oráculos, los propios oráculos suelen estar muy descentralizados y no tienen un único punto de falla.
 
 ### Stablecoins
 
-*Stablecoins* are a type of cryptocurrency designed to maintain a stable value, typically pegged to a reserve asset like the US dollar, the euro, or a basket of goods. They aim to combine the benefits of cryptocurrencies, such as security and decentralization, with the stability of traditional fiat currencies.
+Las *stablecoins* son un tipo de criptomoneda diseñado para mantener un valor estable, normalmente vinculado a un activo de reserva como el dólar estadounidense, el euro o una canasta de bienes. Buscan combinar los beneficios de las criptomonedas, como la seguridad y la descentralización, con la estabilidad de las monedas fíat tradicionales.
 
-Stablecoins achieve their stability via different mechanisms. *Fiat-collateralized stablecoins* are backed by reserves of fiat currency held in banks or other trusted custodians. For instance, each USDC or USDT token is usually backed by an equivalent amount in US dollars (USD).
+Las stablecoins logran su estabilidad mediante distintos mecanismos. Las *stablecoins respaldadas por moneda fíat* están respaldadas por reservas de moneda fíat mantenidas en bancos u otros custodios de confianza. Por ejemplo, cada token USDC o USDT suele estar respaldado por una cantidad equivalente de dólares estadounidenses (USD).
 
-*Cryptocollateralized stablecoins* take a different approach by being backed by other cryptocurrencies. Given the volatile nature of crypto assets, these stablecoins are often overcollateralized to ensure that they can maintain their peg. A well-known example is MakerDAO's DAI,[^5] where users lock up Ethereum or other cryptocurrencies as collateral to mint DAI. The overcollateralization provides a buffer against the volatility of the underlying assets.
+Las *stablecoins respaldadas por criptomonedas* adoptan un enfoque distinto al estar respaldadas por otras criptomonedas. Dada la naturaleza volátil de los criptoactivos, estas stablecoins suelen estar sobregarantizadas para asegurar que puedan mantener su paridad. Un ejemplo conocido es DAI de MakerDAO,[^5] donde los usuarios bloquean Ethereum u otras criptomonedas como garantía para acuñar DAI. La sobregarantía proporciona un margen frente a la volatilidad de los activos subyacentes.
 
-[^5]: MakerDAO is now Sky, and DAI is now USDS.
+[^5]: MakerDAO ahora es Sky y DAI ahora es USDS.
 
-Then there are *algorithmic stablecoins*, which do not rely on collateral but instead use algorithms and smart contracts to manage the supply of the stablecoin to keep its value stable. These stablecoins adjust the supply based on market demand, expanding or contracting to maintain the target price. TerraUSD (UST) was a notable example of an algorithmic stablecoin, although it faced significant issues, which led to its collapse.
+También están las *stablecoins algorítmicas*, que no dependen de garantías, sino que usan algoritmos y contratos inteligentes para gestionar la oferta de la stablecoin y mantener estable su valor. Estas stablecoins ajustan la oferta según la demanda del mercado, expandiéndola o contrayéndola para mantener el precio objetivo. TerraUSD (UST) fue un ejemplo destacado de stablecoin algorítmica, aunque enfrentó problemas importantes que llevaron a su colapso.
 
-There has not been a successful and well-capitalized algorithmic stablecoin; every attempt at building one either failed catastrophically or did not find product-market fit.
+No ha habido una stablecoin algorítmica exitosa y bien capitalizada; todos los intentos de construir una fracasaron de manera catastrófica o no encontraron un ajuste entre producto y mercado.
 
-Stablecoins also contribute significantly to liquidity in DEXs. By providing a stable and predictable asset, they facilitate smoother trading and better market efficiency. Traders can easily move in and out of positions without worrying about price fluctuations, which is important for efficient market operations.
+Las stablecoins también contribuyen significativamente a la liquidez en las DEX. Al ofrecer un activo estable y predecible, facilitan operaciones más fluidas y una mayor eficiencia del mercado. Los operadores pueden entrar y salir de posiciones fácilmente sin preocuparse por las fluctuaciones de precios, lo que es importante para el funcionamiento eficiente del mercado.
 
-#### Limitations of Fiat-Collateralized Stablecoins
+#### Limitaciones de las stablecoins respaldadas por moneda fíat
 
-An interesting concept is that stablecoins like USDC or USDT, which can be redeemed for dollars on platforms like Coinbase and Bitfinex, respectively, have a limited potential for growth in terms of market cap size. *Market cap*, or market capitalization, is the total value of all the coins in circulation, calculated by multiplying the current price of the coin by the total supply.
+Un concepto interesante es que las stablecoins como USDC o USDT, que pueden canjearse por dólares en plataformas como Coinbase y Bitfinex, respectivamente, tienen un potencial de crecimiento limitado en cuanto a su capitalización de mercado. La *capitalización de mercado* es el valor total de todas las monedas en circulación, calculado al multiplicar el precio actual de la moneda por la oferta total.
 
-The reason for this limitation is that if the total value of the stablecoin on a particular blockchain exceeds the cost of attacking that blockchain, it creates significant incentives for malicious actors to attempt an attack. This is because the potential rewards of compromising the blockchain could outweigh the costs, making it a real and quantifiable risk.
+El motivo de esta limitación es que, si el valor total de la stablecoin en una blockchain determinada supera el costo de atacar esa blockchain, se crean incentivos importantes para que actores maliciosos intenten un ataque. Esto se debe a que las posibles recompensas por comprometer la blockchain podrían superar los costos, lo que lo convierte en un riesgo real y cuantificable.
 
-Fortunately, attacking a robust and secure blockchain like Ethereum is neither easy nor cheap. The high cost and the complexity of such an attack provide strong deterrents. However, it's important to always keep this concept in mind when considering the scalability and security of stablecoins on any blockchain.
+Afortunadamente, atacar una blockchain robusta y segura como Ethereum no es fácil ni barato. El alto costo y la complejidad de un ataque de este tipo actúan como fuertes disuasivos. Sin embargo, es importante tener siempre presente este concepto al considerar la escalabilidad y seguridad de las stablecoins en cualquier blockchain.
 
-### Liquid Staking
+### Staking líquido
 
-*Liquid staking* is a mechanism that allows users to stake their cryptocurrency assets in a PoS network while retaining the liquidity of those assets. Typically, when tokens are staked, they are locked up and cannot be accessed or traded until the staking period is over. Liquid staking solves this problem by issuing a derivative token that represents the staked assets. This derivative token can be traded, transferred, or used in other DeFi protocols, enabling users to maintain liquidity while still earning staking rewards.
+El *staking líquido* es un mecanismo que permite a los usuarios hacer staking de sus criptoactivos en una red PoS y conservar la liquidez de esos activos. Normalmente, cuando se hace staking de tokens, estos quedan bloqueados y no se puede acceder a ellos ni negociarlos hasta que termina el período de staking. El staking líquido resuelve este problema al emitir un token derivado que representa los activos en staking. Este token derivado puede negociarse, transferirse o usarse en otros protocolos DeFi, lo que permite a los usuarios mantener la liquidez mientras siguen obteniendo recompensas de staking.
 
-For example, if you stake ETH on a liquid staking platform, you might receive a derivative token like stETH. While your ETH remains staked and continues to earn rewards, the stETH token can be freely traded or used in other DeFi activities, providing the benefits of staking without losing access to your funds.
+Por ejemplo, si se hace staking de ETH en una plataforma de staking líquido, se podría recibir un token derivado como stETH. Mientras el ETH permanece en staking y sigue generando recompensas, el token stETH puede negociarse libremente o usarse en otras actividades DeFi, lo que brinda los beneficios del staking sin perder acceso a los fondos.
 
-> **Note**  
+> **Nota**  
 >
-> A new type of derivative is emerging that is similar to liquid staking, known as *liquid restaking*. With protocols like EigenLayer, tokens are not only staked for the Ethereum chain but are also used to secure other services in a process called restaking. This new development has raised concerns about potentially overloading the Ethereum consensus mechanism.
+> Está surgiendo un nuevo tipo de derivado similar al staking líquido, conocido como *restaking líquido*. Con protocolos como EigenLayer, los tokens no solo se usan para hacer staking en la cadena Ethereum, sino también para asegurar otros servicios en un proceso llamado restaking. Este nuevo desarrollo ha suscitado preocupaciones sobre una posible sobrecarga del mecanismo de consenso de Ethereum.
 
-The token received, such as stETH issued by Lido, acts like a stablecoin pegged to the price of ETH. This means it carries not only the typical risks associated with stablecoins, such as those pegged to the dollar, but additional risks related to slashing. Liquid staking protocols take the ETH deposited by users, create validator nodes, and earn staking rewards, which are then redistributed to the holders of the derivative token. This process introduces the risk of slashing, where part of the staked ETH could be lost if the validator nodes fail to operate correctly.
+El token recibido, como stETH emitido por Lido, actúa como una stablecoin vinculada al precio de ETH. Esto significa que conlleva no solo los riesgos típicos asociados a las stablecoins, como las vinculadas al dólar, sino también riesgos adicionales relacionados con el slashing. Los protocolos de staking líquido toman el ETH depositado por los usuarios, crean nodos validadores y obtienen recompensas de staking, que luego se redistribuyen a los tenedores del token derivado. Este proceso introduce el riesgo de slashing, por el que podría perderse parte del ETH en staking si los nodos validadores no operan correctamente.
 
-Beyond these risks, liquid staking might create systemic risks for the blockchain itself. For example, at the time of writing, Lido has 29% of all staked ETH. If this percentage increases to 33% or higher, that could pose significant problems.[^6] In June 2022, there was a vote in the Lido DAO to limit Lido's staking power and prevent it from surpassing the 33% mark to avoid potential systemic risk for Ethereum. Unfortunately, the vote did not pass.
+Más allá de estos riesgos, el staking líquido podría crear riesgos sistémicos para la propia blockchain. Por ejemplo, al momento de escribir este libro, Lido tiene el 29% de todo el ETH en staking. Si este porcentaje aumenta al 33% o más, podría plantear problemas importantes.[^6] En junio de 2022 hubo una votación en la DAO de Lido para limitar el poder de staking de Lido e impedir que superara el umbral del 33%, con el fin de evitar un posible riesgo sistémico para Ethereum. Lamentablemente, la propuesta no fue aprobada.
 
-[^6]: If any staker has more than 33% of the staked ETH, they could in theory attack the chain and stop the finalization process.
+[^6]: Si algún participante que hace staking tiene más del 33% del ETH en staking, en teoría podría atacar la cadena y detener el proceso de finalidad.
 
-> **Note**  
+> **Nota**  
 >
-> There was also controversy surrounding the vote since most of the opposition came from just a few wallets.
+> También hubo controversia en torno a la votación, ya que la mayor parte de la oposición provino de unas pocas billeteras.
 
-### Real-World Assets
+### Activos del mundo real
 
-In the context of DeFi, *real-world assets* (RWAs) refer to tangible or traditional financial assets that are tokenized and brought onto the blockchain. These can include anything from real estate and commodities to stocks, bonds, and even fine art. The tokenization of these assets involves converting their value into digital tokens that can be traded, lent, or borrowed on blockchain platforms.
+En el contexto de DeFi, los *activos del mundo real* (RWA) son activos tangibles o financieros tradicionales que se tokenizan y se llevan a la blockchain. Pueden incluir desde bienes raíces y materias primas hasta acciones, bonos e incluso obras de arte. La tokenización de estos activos implica convertir su valor en tokens digitales que pueden negociarse, prestarse o pedirse prestados en plataformas de blockchain.
 
-RWAs are somewhat controversial because they often require a custodian, which contradicts the trustless principle of blockchains. This sector is one of the last in DeFi to truly emerge, and so far, there haven't been any major issues with RWA protocols. Despite going against the core ethos of crypto, RWAs unlock numerous new possibilities.
+Los RWA son algo controvertidos porque suelen requerir un custodio, lo que contradice el principio de las blockchains de no requerir confianza. Este sector es uno de los últimos en surgir realmente en DeFi y, hasta ahora, no ha habido problemas importantes con los protocolos de RWA. A pesar de ir en contra de los principios fundamentales de las criptomonedas, los RWA abren numerosas posibilidades nuevas.
 
-One significant application of RWAs has been bringing bonds on chain, allowing users to access the relative risk-free rate. This has enabled non-US citizens to access the 5% interest rates that were available in the United States in 2023–2024. Another valuable use for RWAs is the fractionalization of tokenized assets, such as owning a fraction of real estate.
+Una aplicación importante de los RWA ha sido llevar bonos a la cadena, lo que permite a los usuarios acceder a la tasa relativamente libre de riesgo. Esto ha permitido que personas que no son ciudadanas estadounidenses accedan a las tasas de interés del 5% disponibles en Estados Unidos en 2023–2024. Otro uso valioso de los RWA es el fraccionamiento de activos tokenizados, como poseer una fracción de un inmueble.
 
-Given that this sector is still in its infancy, we have yet to uncover all its potential. However, the risks associated with custodianship are real and concerning.
+Dado que este sector todavía está en sus primeras etapas, aún no hemos descubierto todo su potencial. Sin embargo, los riesgos asociados a la custodia son reales y preocupantes.
 
-### Bridges and Omnichain Protocols
+### Puentes y protocolos omnichain
 
-As the blockchain ecosystem evolves, a wide variety of networks with unique features and benefits has developed. However, these networks often operate in isolation, which limits the seamless transfer of assets and data between them. Bridges and omnichain protocols aim to solve this problem by facilitating cross-chain interactions, ultimately creating a more interconnected blockchain ecosystem.
+A medida que evoluciona el ecosistema de blockchain, se ha desarrollado una gran variedad de redes con características y beneficios únicos. Sin embargo, estas redes suelen operar de forma aislada, lo que limita la transferencia fluida de activos y datos entre ellas. Los puentes y los protocolos omnichain buscan resolver este problema al facilitar interacciones entre cadenas y crear, en última instancia, un ecosistema de blockchain más interconectado.
 
-> **Note**  
+> **Nota**  
 >
-> Bridges are often very centralized because most blockchains are agnostic about the state of other chains. When transferring funds from chain A to chain B, there is typically a central authority that approves the bridging operation and unlocks the liquidity on chain B. This centralization is one of the reasons why bridges are among the most frequently hacked protocols in DeFi.
+> Los puentes suelen estar muy centralizados porque la mayoría de las blockchains desconocen el estado de otras cadenas. Al transferir fondos de la cadena A a la cadena B, normalmente hay una autoridad central que aprueba la operación del puente y desbloquea la liquidez en la cadena B. Esta centralización es una de las razones por las que los puentes se encuentran entre los protocolos más hackeados de DeFi.
 
-*Bridges* are specialized protocols that facilitate the transfer of assets and data between different blockchains, as shown in Figure 13-6. They act as connectors, allowing tokens and other digital assets to move from one chain to another. For instance, if you want to transfer your tokens from Ethereum to Binance Smart Chain (BSC), you would use a bridge.
+Los *puentes* son protocolos especializados que facilitan la transferencia de activos y datos entre distintas blockchains, como se muestra en la Figura 13-6. Actúan como conectores y permiten que los tokens y otros activos digitales pasen de una cadena a otra. Por ejemplo, si se quieren transferir tokens de Ethereum a Binance Smart Chain (BSC), se usaría un puente.
 
-![Bridge connecting two blockchains](images/ch13/maet_1306.png)
+![Puente que conecta dos blockchains](images/ch13/maet_1306.png)
 
-Figure 13-6. Bridge connecting two blockchains
+Figura 13-6. Puente que conecta dos blockchains
 
-There are many different models for bridging tokens from one chain to another. Every bridge uses a specific model. The most common are as follows:
+Existen muchos modelos diferentes para transferir tokens de una cadena a otra mediante puentes. Cada puente usa un modelo específico. Los más comunes son los siguientes:
 
-**Wrapped-token bridges (lock and mint)**
+**Puentes de tokens envueltos (bloqueo y acuñación)**
 
-In this model, a bridge receives tokens on chain A, locks them in a smart contract, and mints a wrapped (or "proprietary") token on chain B. The wrapped token acts as a receipt representing the locked tokens. To retrieve the original tokens, the wrapped token is burned on chain B, unlocking the tokens on chain A.
+En este modelo, un puente recibe tokens en la cadena A, los bloquea en un contrato inteligente y acuña un token envuelto (o "propietario") en la cadena B. El token envuelto actúa como un recibo que representa los tokens bloqueados. Para recuperar los tokens originales, se quema el token envuelto en la cadena B, lo que desbloquea los tokens en la cadena A.
 
-For example, suppose you use the "Mastering Bridge" to transfer ETH from Ethereum to BSC. You send ETH to the bridge's smart contract on Ethereum, and the bridge mints a wrapped token, such as "MasteringETH," on BSC. To return to Ethereum, you burn MasteringETH on BSC, and the bridge releases the original ETH. These wrapped tokens often need to be swapped on a DEX to obtain the native token on chain B.
+Por ejemplo, supongamos que se usa "Mastering Bridge" para transferir ETH de Ethereum a BSC. Se envía ETH al contrato inteligente del puente en Ethereum y el puente acuña un token envuelto, como "MasteringETH", en BSC. Para regresar a Ethereum, se quema MasteringETH en BSC y el puente libera el ETH original. Estos tokens envueltos suelen tener que intercambiarse en una DEX para obtener el token nativo en la cadena B.
 
-**Mint and burn**
+**Acuñación y quema**
 
-This model is commonly used by projects that control their token's minting and burning functions. Instead of locking tokens, the bridge burns tokens on chain A (reducing the supply) and mints an equivalent amount on chain B. This requires the project to have authority over the token's smart contract. For example, a project could burn ETH-based tokens on Ethereum and mint the same token on BSC, maintaining the total supply across chains.
+Este modelo se usa comúnmente en proyectos que controlan las funciones de acuñación y quema de sus tokens. En lugar de bloquear tokens, el puente quema tokens en la cadena A (reduciendo la oferta) y acuña una cantidad equivalente en la cadena B. Esto requiere que el proyecto tenga autoridad sobre el contrato inteligente del token. Por ejemplo, un proyecto podría quemar tokens basados en ETH en Ethereum y acuñar el mismo token en BSC, manteniendo la oferta total entre cadenas.
 
-**Liquidity bridges**
+**Puentes de liquidez**
 
-The most common type, liquidity bridges rely on pools of tokens on multiple chains. When you bridge a token, the bridge uses its liquidity to send you the equivalent token on the destination chain, typically for a fee. Unlike wrapped-token bridges, no new tokens are minted; the bridge already holds tokens on both chains.
+El tipo más común, los puentes de liquidez, depende de pools de tokens en múltiples cadenas. Cuando se transfiere un token mediante un puente, este usa su liquidez para enviar el token equivalente en la cadena de destino, normalmente a cambio de una comisión. A diferencia de los puentes de tokens envueltos, no se acuñan tokens nuevos; el puente ya posee tokens en ambas cadenas.
 
-Following the earlier example, if you bridge ETH from Ethereum to BSC, you send ETH to the bridge on Ethereum. The bridge then releases ETH from its liquidity pool on BSC. If the bridge doesn't control minting, it must maintain sufficient liquidity on BSC to facilitate transfers. This model is popular because of its simplicity but depends on the bridge's ability to manage liquidity securely.
+Siguiendo el ejemplo anterior, si se transfiere ETH de Ethereum a BSC mediante un puente, se envía ETH al puente en Ethereum. Luego, el puente libera ETH de su pool de liquidez en BSC. Si el puente no controla la acuñación, debe mantener suficiente liquidez en BSC para facilitar las transferencias. Este modelo es popular por su sencillez, pero depende de la capacidad del puente para gestionar la liquidez de forma segura.
 
-*Omnichain protocols*, discussed in Chapter 11 as cross-chain messaging protocols, extend the concept of cross-chain interactions by enabling seamless communication and interoperability across multiple blockchains simultaneously. These protocols aim to create a unified layer where different blockchains can interact without friction, allowing the transfer of assets, data, and even smart contract functionalities across chains. Figure 13-7 demonstrates a simple omnichain messaging protocol that allows users to initiate a swap on Ethereum and complete the swap, receiving the funds, on BSC.
+Los *protocolos omnichain*, analizados en el Capítulo 11 como protocolos de mensajería entre cadenas, amplían el concepto de interacciones entre cadenas al permitir una comunicación e interoperabilidad fluidas entre múltiples blockchains de forma simultánea. Estos protocolos buscan crear una capa unificada donde distintas blockchains puedan interactuar sin fricciones y permitir la transferencia de activos, datos e incluso funcionalidades de contratos inteligentes entre cadenas. La Figura 13-7 muestra un protocolo sencillo de mensajería omnichain que permite a los usuarios iniciar un intercambio en Ethereum y completarlo, recibiendo los fondos, en BSC.
 
-![Omnichain protocol example](images/ch13/maet_1307.png)
+![Ejemplo de protocolo omnichain](images/ch13/maet_1307.png)
 
-Figure 13-7. Omnichain protocol example
+Figura 13-7. Ejemplo de protocolo omnichain
 
-## (De)centralized Finance
+## Finanzas (des)centralizadas
 
-Decentralization is always difficult to define, and more often than not, it's more of a way to express a desired outcome than to describe a reality. Most DeFi protocols are not truly decentralized; they often rely on addresses with significant privileges or decisions made by a core development team, creating a centralization of power within a supposedly decentralized system.
+La descentralización siempre es difícil de definir y, la mayoría de las veces, es más una forma de expresar un resultado deseado que de describir una realidad. La mayoría de los protocolos DeFi no están verdaderamente descentralizados; suelen depender de direcciones con privilegios importantes o de decisiones tomadas por un equipo central de desarrollo, lo que crea una centralización del poder dentro de un sistema supuestamente descentralizado.
 
-DeFi is still in its early stages, and it's up to early adopters to shape its future and steer it in the right direction. While decentralization is the objective, it's important to recognize that it is not always the current reality. Emerging markets like DeFi can benefit from some degree of centralization to make decisions and implement changes quickly. This centralized decision making can provide the agility needed to adapt and grow in a rapidly evolving environment.
+DeFi sigue en sus primeras etapas, y depende de quienes la adoptan primero dar forma a su futuro y encaminarla en la dirección correcta. Aunque la descentralización es el objetivo, es importante reconocer que no siempre es la realidad actual. Los mercados emergentes como DeFi pueden beneficiarse de cierto grado de centralización para tomar decisiones e implementar cambios rápidamente. Esta toma de decisiones centralizada puede proporcionar la agilidad necesaria para adaptarse y crecer en un entorno que evoluciona con rapidez.
 
-As DeFi continues to mature, the objective should be to progressively reduce centralization and shift toward a more decentralized model. Early adopters are very significant in this transition, balancing the current need for efficiency and rapid decision making with the ultimate vision of decentralization. By understanding and addressing the inherent trade-offs, the DeFi community can guide the system's evolution to better align with its foundational principles of openness, transparency, and inclusivity.
+A medida que DeFi siga madurando, el objetivo debería ser reducir progresivamente la centralización y avanzar hacia un modelo más descentralizado. Quienes adoptan DeFi primero tienen gran importancia en esta transición, al equilibrar la necesidad actual de eficiencia y decisiones rápidas con la visión final de descentralización. Al comprender y abordar las disyuntivas inherentes, la comunidad DeFi puede orientar la evolución del sistema para que se ajuste mejor a sus principios fundacionales de apertura, transparencia e inclusión.
 
-## Risks and Challenges in DeFi
+## Riesgos y desafíos de DeFi
 
-DeFi comes with its own set of risks and challenges, which are often misunderstood by users, including experts. Every DeFi protocol carries specific economic risks and general smart contract risks. Additionally, depending on the degree of decentralization, there can be custodian risks or centralization problems.
+DeFi conlleva su propio conjunto de riesgos y desafíos, que los usuarios, incluidos los expertos, suelen malinterpretar. Cada protocolo DeFi presenta riesgos económicos específicos y riesgos generales de los contratos inteligentes. Además, según el grado de descentralización, puede haber riesgos de custodia o problemas de centralización.
 
-Smart contract risks are easier to generalize: smart contracts can be hacked, and custodians can act maliciously or make mistakes. Economic risks are more complex and specific to each DeFi primitive or protocol. For example, the risk in a lending market is liquidation, which can sometimes occur wrongfully if the market does not use a proper oracle. The risk in providing liquidity to a DEX is impermanent loss. For stablecoins or liquid staking, the primary risk is the loss of the peg.
+Los riesgos de los contratos inteligentes son más fáciles de generalizar: los contratos inteligentes pueden ser hackeados y los custodios pueden actuar de forma maliciosa o cometer errores. Los riesgos económicos son más complejos y específicos de cada primitiva o protocolo DeFi. Por ejemplo, el riesgo en un mercado de préstamos es la liquidación, que a veces puede ocurrir indebidamente si el mercado no usa un oráculo adecuado. El riesgo al aportar liquidez a una DEX es la pérdida impermanente. En las stablecoins o el staking líquido, el principal riesgo es la pérdida de la paridad.
 
-Understanding all the risks involved with a DeFi protocol before using it is crucial. Beyond risks, DeFi faces significant challenges. Many protocols are forks of existing ones, attempting to "vampire attack" incumbents without offering real innovation. This not only fragments liquidity and users but also dilutes the overall effectiveness of the ecosystem.
+Es crucial comprender todos los riesgos involucrados en un protocolo DeFi antes de usarlo. Más allá de los riesgos, DeFi enfrenta desafíos importantes. Muchos protocolos son bifurcaciones de otros existentes que intentan realizar un "ataque vampiro" contra los ya establecidos sin ofrecer una innovación real. Esto no solo fragmenta la liquidez y los usuarios, sino que también diluye la eficacia general del ecosistema.
 
-Liquidity is essential for most protocols. While they may function well in a booming market, they often degrade significantly during downturns. Most DeFi protocols are not self-sufficient and tend to work only when usage is incentivized, either because users are not genuinely interested in the product or because the costs outweigh the gains.
+La liquidez es esencial para la mayoría de los protocolos. Aunque pueden funcionar bien en un mercado en auge, suelen deteriorarse significativamente durante las caídas. La mayoría de los protocolos DeFi no son autosuficientes y tienden a funcionar solo cuando se incentiva su uso, ya sea porque los usuarios no están realmente interesados en el producto o porque los costos superan las ganancias.
 
-While DeFi shows some product-market fit, its future remains uncertain. It could evolve into a compelling piece of global infrastructure, which is the most likely outcome, or remain a niche market for a select group of users.
+Aunque DeFi muestra cierto ajuste entre producto y mercado, su futuro sigue siendo incierto. Podría convertirse en una pieza atractiva de la infraestructura global, que es el resultado más probable, o seguir siendo un mercado de nicho para un grupo selecto de usuarios.
 
-One significant challenge for DeFi is regulation. The regulatory environment varies greatly across countries and regulatory bodies, with most regulators opposing a fully decentralized system. While regulators cannot directly stop such systems—if a smart contract is immutable and deployed on chain, regulators cannot intervene directly—they can target developers and users, making it difficult for them to use these smart contracts.
+Un desafío importante para DeFi es la regulación. El entorno regulatorio varía mucho entre países y organismos reguladores, y la mayoría de los reguladores se opone a un sistema completamente descentralizado. Aunque los reguladores no pueden detener directamente estos sistemas, ya que no pueden intervenir directamente si un contrato inteligente es inmutable y está desplegado en la cadena, sí pueden actuar contra desarrolladores y usuarios, dificultándoles el uso de estos contratos inteligentes.
 
-A case in point is Tornado Cash, whose developer, Alexey Pertsev, was jailed for 64 months in the Netherlands. He was arrested in August 2022 on charges of money laundering, following the US Department of the Treasury's blocklisting of Tornado Cash for its alleged use by the North Korean hacking group Lazarus to launder illicit funds. The Tornado Cash protocol remains available, but its liquidity has significantly decreased, leading to a poorer user experience. Additionally, addresses using Tornado Cash are flagged on centralized exchanges, complicating its use.
+Un ejemplo es Tornado Cash, cuyo desarrollador, Alexey Pertsev, fue condenado a 64 meses de prisión en los Países Bajos. Fue arrestado en agosto de 2022 acusado de lavado de dinero, después de que el Departamento del Tesoro de Estados Unidos incluyera a Tornado Cash en su lista de bloqueo por su presunto uso por parte del grupo de hackers norcoreano Lazarus para lavar fondos ilícitos. El protocolo Tornado Cash sigue disponible, pero su liquidez ha disminuido significativamente, lo que empeora la experiencia del usuario. Además, las direcciones que usan Tornado Cash son marcadas en las plataformas de intercambio centralizadas, lo que complica su uso.
 
-Similar situations are occurring in other ecosystems. For example, developers of the Samourai Wallet have also faced legal actions. This pattern illustrates that while regulators cannot attack the blockchain itself, they can target its users and developers.
+En otros ecosistemas están ocurriendo situaciones similares. Por ejemplo, los desarrolladores de Samourai Wallet también han enfrentado acciones legales. Este patrón ilustra que, aunque los reguladores no pueden atacar la propia blockchain, sí pueden actuar contra sus usuarios y desarrolladores.
 
-> **Note**  
+> **Nota**  
 >
-> Although the authors of this book may not have the legal expertise to fully understand the cases involving Samourai Wallet or Tornado Cash and other similar instances, we do not support legal actions taken against individuals for writing decentralized code. Code should remain free, and the creator of a tool should not be punished for its misuse by others. Hopefully, no more developers will have to face such unjust consequences.
+> Aunque los autores de este libro quizá no tengan los conocimientos jurídicos necesarios para comprender plenamente los casos relacionados con Samourai Wallet o Tornado Cash y otras situaciones similares, no apoyamos las acciones legales contra personas por escribir código descentralizado. El código debe seguir siendo libre, y quien crea una herramienta no debería ser castigado por el uso indebido que otros hagan de ella. Esperamos que ningún desarrollador más tenga que enfrentar consecuencias tan injustas.
 
-## Conclusion
+## Conclusión
 
-DeFi enables users to be more flexible with their money, creating new opportunities and innovative financial primitives, such as flash loans. As an emerging market within the crypto space, DeFi is rapidly developing but has yet to find a proper market fit beyond token exchanges, stablecoins, and derivative creation.
+DeFi permite a los usuarios ser más flexibles con su dinero y crea nuevas oportunidades y primitivas financieras innovadoras, como los préstamos flash. Como mercado emergente dentro del espacio de las criptomonedas, DeFi se desarrolla rápidamente, pero aún no ha encontrado un ajuste adecuado al mercado más allá de los intercambios de tokens, las stablecoins y la creación de derivados.

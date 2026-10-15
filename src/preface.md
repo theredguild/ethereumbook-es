@@ -1,104 +1,104 @@
-# Preface
+# Prefacio
 
-This book is a collaboration between me (Carlo Parisi, aka Blackie), Alessandro Mazza, and Niccolò Pozzolini. The first edition, which of course heavily influenced our work, was written between 2016 and 2019 by Andreas M. Antonopoulos and Dr. Gavin Wood.
+Este libro es una colaboración entre mí (Carlo Parisi, también conocido como Blackie), Alessandro Mazza y Niccolò Pozzolini. La primera edición, que por supuesto influyó mucho en nuestro trabajo, fue escrita entre 2016 y 2019 por Andreas M. Antonopoulos y el Dr. Gavin Wood.
 
-In November 2023, a series of very fortunate coincidences brought Andreas and me together in Glasgow. There, after a few beers and a few autographs, I asked him if he had any intention of writing a second edition of *Mastering Ethereum*. This was because, even though the first edition is a masterpiece, it hasn't aged well; it was published in 2019, back when Ethereum was still using proof of work and had a very different roadmap.
+En noviembre de 2023, una serie de coincidencias muy afortunadas nos reunió a Andreas y a mí en Glasgow. Allí, después de unas cervezas y unos autógrafos, le pregunté si tenía intención de escribir una segunda edición de *Mastering Ethereum*. La razón era que, aunque la primera edición es una obra maestra, no ha envejecido bien; se publicó en 2019, cuando Ethereum todavía utilizaba prueba de trabajo y tenía una hoja de ruta muy diferente.
 
-Andreas's response was that he wasn't planning to write a second edition, but our conversation ended up sparking the idea that led me to take on this project. Less than a day after our meeting in Glasgow, I was talking with O'Reilly about the possibility of writing a second edition.
+Andreas respondió que no tenía planes de escribir una segunda edición, pero nuestra conversación terminó dando lugar a la idea que me llevó a asumir este proyecto. Menos de un día después de nuestro encuentro en Glasgow, ya estaba hablando con O'Reilly sobre la posibilidad de escribir una segunda edición.
 
-I immediately knew this would be a big and important task. While I was honored by the opportunity, I was also afraid I might not be able to do a good enough job. I've been a fan of Andreas's work for years; he's the reason I was able to understand Bitcoin as deeply as I did back in 2014–2015, so I knew I needed help.
+Supe de inmediato que sería una tarea grande e importante. Aunque la oportunidad era un honor, también temía no poder hacer un trabajo lo suficientemente bueno. Soy admirador del trabajo de Andreas desde hace años; gracias a él pude comprender Bitcoin con tanta profundidad allá por 2014–2015, así que sabía que necesitaba ayuda.
 
-The first person who came to mind was Alessandro. He was involved in the project within the first few hours. As soon as the opportunity became real, I texted and asked if he wanted to join me. He instantly and happily said yes (without knowing any of the conditions or even whether it was a paid job).
+La primera persona en la que pensé fue Alessandro. Se involucró en el proyecto desde las primeras horas. En cuanto la oportunidad se hizo realidad, le envié un mensaje y le pregunté si quería acompañarme. Aceptó de inmediato y con entusiasmo (sin conocer ninguna de las condiciones ni siquiera si sería un trabajo remunerado).
 
-Niccolò was a bit harder to convince. It took a full month of rejections to get him on board. Luckily, I'm very stubborn and wasn't willing to take no for an answer. After one month, he finally agreed. With that, our full team was ready, and the *Mastering Ethereum: Second Edition* project was officially launched.
+Fue un poco más difícil convencer a Niccolò. Hizo falta un mes entero de negativas para que se sumara. Por suerte, soy muy terco y no estaba dispuesto a aceptar un no como respuesta. Después de un mes, finalmente aceptó. Con eso, nuestro equipo estaba completo y el proyecto *Mastering Ethereum: Second Edition* se puso en marcha oficialmente.
 
-I hope that every reader of this book gains at least a bit of knowledge from it. *Mastering Ethereum* was a book that taught me—and thousands of others—so much, and we worked hard to maintain that same level of quality. It took two years of research and writing to complete, and I'd be lying if I said it was easy.
+Espero que cada persona que lea este libro aprenda al menos un poco. *Mastering Ethereum* fue un libro que nos enseñó muchísimo a mí y a miles de personas más, y trabajamos mucho para mantener ese mismo nivel de calidad. Completarlo llevó dos años de investigación y escritura, y mentiría si dijera que fue fácil.
 
-We're also very proud to be an all-Italian team on this project. Hopefully, that brings some pride to the Italian crypto community as well.
+También estamos muy orgullosos de que todo el equipo de este proyecto sea italiano. Esperamos que eso también sea motivo de orgullo para la comunidad cripto italiana.
 
-## How to Use This Book
+## Cómo usar este libro
 
-The book is intended to serve both as a reference manual and as a cover-to-cover exploration of Ethereum. The first two chapters offer a gentle introduction, suitable for novice users, and the examples in those chapters can be completed by anyone with a bit of technical skill. Those two chapters will give you a good grasp of the basics and allow you to use the fundamental tools of Ethereum. Parts of Chapter 3 and beyond are intended for programmers and include many technical topics and programming examples, but they still should be understandable by anyone, for the most part.
+El libro está pensado tanto como manual de referencia como para explorar Ethereum de principio a fin. Los dos primeros capítulos ofrecen una introducción gradual, adecuada para principiantes, y cualquier persona con un poco de habilidad técnica puede completar sus ejemplos. Esos dos capítulos permiten comprender bien los conceptos básicos y utilizar las herramientas fundamentales de Ethereum. Algunas partes del capítulo 3 y de los siguientes están dirigidas a quienes programan e incluyen muchos temas técnicos y ejemplos de programación, pero aun así deberían resultar comprensibles para cualquier persona, en su mayor parte.
 
-To serve as both a reference manual and a cover-to-cover narrative about Ethereum, the book inevitably contains some duplication. Some topics, such as gas, have to be introduced early enough for the rest of the topics to make sense but are also examined in depth in their own sections.
+Para servir tanto de manual de referencia como de relato sobre Ethereum que se lee de principio a fin, el libro inevitablemente contiene algunas repeticiones. Algunos temas, como el gas, deben presentarse lo suficientemente pronto para que el resto tenga sentido, pero también se examinan a fondo en sus propias secciones.
 
-Finally, the book's index allows readers to find very specific topics and the relevant sections with ease, by keyword.
+Por último, el índice del libro permite encontrar con facilidad temas muy específicos y las secciones correspondientes mediante palabras clave.
 
-## Intended Audience
+## Público al que está dirigido
 
-This book is mostly intended for everyone. This book will teach you how smart contract blockchains work, how to use them, and how to develop smart contracts and decentralized applications with them. The first few chapters are also suitable as an in-depth introduction to Ethereum for beginners.
+Este libro está dirigido, en gran medida, a todo el mundo. Enseña cómo funcionan las blockchains de contratos inteligentes, cómo utilizarlas y cómo desarrollar contratos inteligentes y aplicaciones descentralizadas con ellas. Los primeros capítulos también son adecuados como introducción detallada a Ethereum para principiantes.
 
-## Code Examples
+## Ejemplos de código
 
-The examples are illustrated in Solidity, Vyper, and JavaScript, using the command line of a Unix-like operating system. All the code snippets can be replicated on most operating systems with a minimal installation of compilers, interpreters, and libraries for the corresponding languages. Where necessary, we provide basic installation instructions and step-by-step examples of the output of those instructions.
+Los ejemplos se presentan en Solidity, Vyper y JavaScript, utilizando la línea de comandos de un sistema operativo similar a Unix. Todos los fragmentos de código se pueden reproducir en la mayoría de los sistemas operativos con una instalación mínima de compiladores, intérpretes y bibliotecas para los lenguajes correspondientes. Cuando es necesario, proporcionamos instrucciones básicas de instalación y ejemplos paso a paso de la salida de esas instrucciones.
 
-All the code snippets use real values and calculations where possible, so you can build from example to example and see the same results in any code you write to calculate the same values. For example, the private keys and corresponding public keys and addresses are all real. The sample transactions, contracts, blocks, and blockchain references have all been introduced to the actual Ethereum blockchain and are part of the public ledger, so you can review them.
+Todos los fragmentos de código utilizan valores y cálculos reales siempre que es posible, para que se pueda avanzar de un ejemplo a otro y obtener los mismos resultados en cualquier código que se escriba para calcular los mismos valores. Por ejemplo, las claves privadas y sus claves públicas y direcciones correspondientes son todas reales. Las transacciones, los contratos, los bloques y las referencias a la blockchain de los ejemplos se han incorporado a la blockchain real de Ethereum y forman parte del registro público, por lo que se pueden consultar.
 
-## Ethereum Addresses and Transactions in this Book
+## Direcciones y transacciones de Ethereum en este libro
 
-The Ethereum addresses, transactions, keys, QR codes, and blockchain data used in this book are, for the most part, real. That means you can browse the blockchain, look at the transactions offered as examples, retrieve them with your own scripts or programs, and so forth.
+Las direcciones de Ethereum, las transacciones, las claves, los códigos QR y los datos de la blockchain utilizados en este libro son, en su mayoría, reales. Esto significa que se puede explorar la blockchain, examinar las transacciones que se ofrecen como ejemplos, recuperarlas con scripts o programas propios, etcétera.
 
-However, note that the private keys used to construct the addresses printed in this book have been "burned." This means that if you send money to any of these addresses, the money will be either lost forever or (more likely) appropriated, since anyone who reads the book can take it using the private keys printed herein.
+Sin embargo, hay que tener en cuenta que las claves privadas utilizadas para generar las direcciones que aparecen en este libro han sido "quemadas". Esto significa que, si se envía dinero a cualquiera de estas direcciones, se perderá para siempre o (lo más probable) alguien se apropiará de él, ya que cualquier persona que lea el libro puede tomarlo utilizando las claves privadas que aquí aparecen.
 
-> **Warning**  
+> **Advertencia**  
 >
-> Do not send money to any of the addresses in this book. Your money will be taken by another reader or lost forever.
+> No se debe enviar dinero a ninguna de las direcciones de este libro. Otra persona que lo lea tomará ese dinero o se perderá para siempre.
 
-## Conventions Used in This Book
+## Convenciones utilizadas en este libro
 
-The following typographical conventions are used in this book:
+En este libro se utilizan las siguientes convenciones tipográficas:
 
-*Italic*
+*Cursiva*
 
-Indicates new terms, URLs, email addresses, filenames, and file extensions.
+Indica términos nuevos, URLs, direcciones de correo electrónico, nombres de archivo y extensiones de archivo.
 
-`Constant width`
+`Ancho fijo`
 
-Used for program listings, as well as within paragraphs to refer to program elements such as variable or function names, databases, data types, environment variables, statements, and keywords.
+Se utiliza para los listados de código, así como dentro de los párrafos para hacer referencia a elementos de los programas, como nombres de variables o funciones, bases de datos, tipos de datos, variables de entorno, sentencias y palabras reservadas.
 
-**`Constant width bold`**
+**`Ancho fijo en negrita`**
 
-Shows commands or other text that should be typed literally by the user.
+Indica comandos u otro texto que se debe escribir literalmente.
 
-*`Constant width italic`*
+*`Ancho fijo en cursiva`*
 
-Shows text that should be replaced with user-supplied values or by values determined by context.
+Indica texto que se debe reemplazar por valores proporcionados por quien lo utiliza o por valores determinados por el contexto.
 
-> **Tip**  
+> **Consejo**  
 >
-> This element signifies a tip or suggestion.
+> Este elemento señala un consejo o una sugerencia.
 
-> **Note**  
+> **Nota**  
 >
-> This element signifies a general note.
+> Este elemento señala una nota general.
 
-> **Warning**  
+> **Advertencia**  
 >
-> This element indicates a warning or caution.
+> Este elemento indica una advertencia o precaución.
 
-## Using Code Examples
+## Uso de los ejemplos de código
 
-In our commitment to collaboration, we worked with O'Reilly Media to make this book available under a Creative Commons license.
+Como parte de nuestro compromiso con la colaboración, trabajamos con O'Reilly Media para que este libro estuviera disponible bajo una licencia Creative Commons.
 
-If you have a technical question or a problem using the code examples, please send an email to <support@oreilly.com>.
+Si surge alguna pregunta técnica o algún problema al utilizar los ejemplos de código, se puede enviar un correo electrónico a <support@oreilly.com>.
 
-This book is here to help you get your job done. In general, if example code is offered with this book, you may use it in your programs and documentation. You do not need to contact us for permission unless you're reproducing a significant portion of the code. For example, writing a program that uses several chunks of code from this book does not require permission. Selling or distributing examples from O'Reilly books does require permission. Answering a question by citing this book and quoting example code does not require permission. Incorporating a significant amount of example code from this book into your product's documentation does require permission.
+Este libro tiene como objetivo ayudar a realizar el trabajo. En general, si se ofrece código de ejemplo con este libro, se puede utilizar en programas y documentación propios. No es necesario contactarnos para solicitar permiso, a menos que se reproduzca una parte considerable del código. Por ejemplo, escribir un programa que utilice varios fragmentos de código de este libro no requiere permiso. Vender o distribuir ejemplos de libros de O'Reilly sí requiere permiso. Responder una pregunta citando este libro y reproduciendo código de ejemplo no requiere permiso. Incorporar una cantidad considerable de código de ejemplo de este libro en la documentación de un producto sí requiere permiso.
 
-We appreciate, but generally do not require, attribution. An attribution usually includes the title, author, publisher, and ISBN. For example: "*Mastering Ethereum*, 2nd ed., by Andreas M. Antonopoulos, Gavin Wood, Carlo Parisi, Alessandro Mazza, and Niccolò Pozzolini (O'Reilly). Copyright 2026 Carlo Parisi, Alessandro Mazza, and Niccolò Pozzolini, 978-1-098-16842-1."
+Agradecemos la atribución, aunque por lo general no la exigimos. Una atribución suele incluir el título, los autores, la editorial y el ISBN. Por ejemplo: "*Mastering Ethereum*, 2nd ed., by Andreas M. Antonopoulos, Gavin Wood, Carlo Parisi, Alessandro Mazza, and Niccolò Pozzolini (O'Reilly). Copyright 2026 Carlo Parisi, Alessandro Mazza, and Niccolò Pozzolini, 978-1-098-16842-1."
 
-If you feel your use of code examples falls outside fair use or the permission given above, feel free to contact us at permissions@oreilly.com.
+Si se considera que el uso de los ejemplos de código queda fuera del uso legítimo o del permiso otorgado anteriormente, se puede contactar con nosotros en permissions@oreilly.com.
 
 ## O'Reilly Online Learning
 
-> **Note**  
+> **Nota**  
 >
-> For more than 40 years, O'Reilly Media has provided technology and business training, knowledge, and insight to help companies succeed.
+> Desde hace más de 40 años, O'Reilly Media ofrece formación, conocimientos y perspectivas sobre tecnología y negocios para ayudar a las empresas a tener éxito.
 
-Our unique network of experts and innovators share their knowledge and expertise through books, articles, and our online learning platform. O'Reilly's online learning platform gives you on-demand access to live training courses, in-depth learning paths, interactive coding environments, and a vast collection of text and video from O'Reilly and 200+ other publishers. For more information, visit [oreilly.com](https://oreilly.com).
+Nuestra singular red de especialistas e innovadores comparte sus conocimientos y experiencia a través de libros, artículos y nuestra plataforma de aprendizaje en línea. La plataforma de aprendizaje en línea de O'Reilly brinda acceso bajo demanda a cursos de formación en vivo, rutas de aprendizaje detalladas, entornos de programación interactivos y una amplia colección de textos y videos de O'Reilly y de otras 200+ editoriales. Para obtener más información, se puede visitar [oreilly.com](https://oreilly.com).
 
-## How to Contact Us
+## Cómo contactarnos
 
-Please address comments and questions concerning this book to the publisher:
+Los comentarios y las preguntas sobre este libro deben dirigirse a la editorial:
 
 O'Reilly Media, Inc.
 
@@ -106,9 +106,9 @@ O'Reilly Media, Inc.
 
 Santa Rosa, CA 95401
 
-800-889-8969 (in the United States or Canada)
+800-889-8969 (en Estados Unidos o Canadá)
 
-707-827-7019 (international or local)
+707-827-7019 (internacional o local)
 
 707-829-0104 (fax)
 
@@ -116,87 +116,87 @@ Santa Rosa, CA 95401
 
 [oreilly.com/about/contact.html](https://oreilly.com/about/contact.html)
 
-We have a web page for this book, where we list errata and any additional information. You can access this page at [https://oreil.ly/MasteringEthereum2e](https://oreil.ly/MasteringEthereum2e).
+Tenemos una página web de este libro, donde publicamos las erratas y cualquier información adicional. Se puede acceder a ella en [https://oreil.ly/MasteringEthereum2e](https://oreil.ly/MasteringEthereum2e).
 
-For news and information about our books and courses, visit [https://oreilly.com](https://oreilly.com).
+Para conocer las novedades y obtener información sobre nuestros libros y cursos, se puede visitar [https://oreilly.com](https://oreilly.com).
 
-Find us on [LinkedIn](https://linkedin.com/company/oreilly-media)
+Estamos en [LinkedIn](https://linkedin.com/company/oreilly-media)
 
-Watch us on [YouTube](https://youtube.com/oreillymedia)
+Nuestros videos están en [YouTube](https://youtube.com/oreillymedia)
 
-## Contacting Carlo
+## Cómo contactar a Carlo
 
-Subscribe to Carlo's channel on [YouTube](https://www.youtube.com/@BlackieCrypto)
+Suscripción al canal de Carlo en [YouTube](https://www.youtube.com/@BlackieCrypto)
 
-Follow Carlo on [Twitter/X]( https://x.com/ManInBlackie)
+Seguir a Carlo en [Twitter/X]( https://x.com/ManInBlackie)
 
-Connect with Carlo on [LinkedIn](https://www.linkedin.com/in/carloparisis)
+Conectar con Carlo en [LinkedIn](https://www.linkedin.com/in/carloparisis)
 
-Email: <carlo.parisi01234@gmail.com>
+Correo electrónico: <carlo.parisi01234@gmail.com>
 
-## Contacting Alessandro
+## Cómo contactar a Alessandro
 
-Follow Alessandro on [GitHub](https://github.com/alessandromazza98)
+Seguir a Alessandro en [GitHub](https://github.com/alessandromazza98)
 
-Connect with Alessandro on [LinkedIn](https://www.linkedin.com/in/alessandro-mazza-a8b181320)
+Conectar con Alessandro en [LinkedIn](https://www.linkedin.com/in/alessandro-mazza-a8b181320)
 
-Follow Alessandro on [Twitter/X (Italian profile)](https://x.com/alessandromazza)
+Seguir a Alessandro en [Twitter/X (perfil en italiano)](https://x.com/alessandromazza)
 
-Follow Alessandro on [Twitter/X (English profile)](https://x.com/alemaz98)
+Seguir a Alessandro en [Twitter/X (perfil en inglés)](https://x.com/alemaz98)
 
-Subscribe to Alessandro's [YouTube channel](https://www.youtube.com/@alessandro-mazza)
+Suscripción al [canal de YouTube](https://www.youtube.com/@alessandro-mazza) de Alessandro
 
-## Contacting Niccolò
+## Cómo contactar a Niccolò
 
-Follow Niccolò on [Twitter/X](https://x.com/idrocortisone)
+Seguir a Niccolò en [Twitter/X](https://x.com/idrocortisone)
 
-Connect with Niccolò on [LinkedIn](https://www.linkedin.com/in/niccolo-pozzolini)
+Conectar con Niccolò en [LinkedIn](https://www.linkedin.com/in/niccolo-pozzolini)
 
-## Acknowledgments by Carlo
+## Agradecimientos de Carlo
 
-I owe a lot of what has happened in my career and personal life to Andreas's work. Thanks to the first edition of *Mastering Bitcoin*, I was able, back in 2014 and 2015, to truly understand the potential of Bitcoin. Because of that, I decided to pursue a career in crypto. At the time, there weren't many complete resources available, so *Mastering Bitcoin* was an incredible gift to the entire community. I wouldn't have the career I have today and probably my life would be very different if it weren't for that incredible work. The same goes for *Mastering Ethereum*. For this reason, Andreas, thank you so much.
+Debo gran parte de lo que ha sucedido en mi carrera y en mi vida personal al trabajo de Andreas. Gracias a la primera edición de *Mastering Bitcoin*, pude comprender de verdad el potencial de Bitcoin allá por 2014 y 2015. Por eso, decidí dedicarme profesionalmente al mundo cripto. En aquel entonces, no había muchos recursos completos disponibles, así que *Mastering Bitcoin* fue un regalo increíble para toda la comunidad. No tendría la carrera que tengo hoy y probablemente mi vida sería muy diferente si no fuera por esa obra increíble. Lo mismo ocurre con *Mastering Ethereum*. Por esta razón, Andreas, muchísimas gracias.
 
-Thank you to Nicola Luigi Guglielmo Di Nanna, my high school computer science professor. Without you, I probably would not have discovered my passion for programming and, subsequently, for blockchains. They say a good professor can change a student's life; you certainly did. Thank you for sharing your passion for computer science and for being such an inspiring role model.
+Gracias a Nicola Luigi Guglielmo Di Nanna, mi profesor de ciencias de la computación en la escuela secundaria. Sin ti, probablemente no habría descubierto mi pasión por la programación y, posteriormente, por las blockchains. Dicen que un buen profesor puede cambiar la vida de un estudiante; tú sin duda lo hiciste. Gracias por compartir tu pasión por las ciencias de la computación y por ser un ejemplo tan inspirador.
 
-Thank you also to Alessandro and Niccolò, who helped so much in writing this book, and to all of our incredible tech reviewers.
+Gracias también a Alessandro y Niccolò, que ayudaron tanto a escribir este libro, y a todos nuestros increíbles revisores técnicos.
 
-Thank you to Michelle Smith and Shira Evans from O'Reilly, who supported us every step of the way.
+Gracias a Michelle Smith y Shira Evans, de O'Reilly, que nos apoyaron en cada paso del camino.
 
-Thank you to the Italian community, particularly my own community on Discord, YouTube, and Twitter, which gave me the confidence to take on this and many other projects.
+Gracias a la comunidad italiana, en particular a mi propia comunidad en Discord, YouTube y Twitter, que me dio la confianza para asumir este y muchos otros proyectos.
 
-Thank you to the amazing Ethereum community. We wouldn't have been able to do as much research—or write as deeply—without your ongoing support and contributions.
+Gracias a la maravillosa comunidad de Ethereum. No habríamos podido investigar tanto ni escribir con tanta profundidad sin su apoyo y sus contribuciones constantes.
 
-And last but not least, thank you to my wonderful family, who supported me in everything I did and allowed me to freely explore my passions and interests.
+Y, por último, pero no por ello menos importante, gracias a mi maravillosa familia, que me apoyó en todo lo que hice y me permitió explorar libremente mis pasiones e intereses.
 
-## Acknowledgments by Alessandro
+## Agradecimientos de Alessandro
 
-There are so many things I'm grateful for. First of all, I'd like to thank Carlo for reaching out to me and giving me the amazing opportunity to write this book. I still remember the first time we met in person, in Catanzaro, Italy.
+Hay tantas cosas por las que estoy agradecido. En primer lugar, me gustaría agradecer a Carlo por contactarme y darme la increíble oportunidad de escribir este libro. Todavía recuerdo la primera vez que nos conocimos en persona, en Catanzaro, Italia.
 
-Thank you to my university professor, Dr. Luca Giuzzi, for allowing me to dedicate my thesis to Bitcoin and the Schnorr digital signature algorithm. That was the beginning of my career in the cryptocurrency space.
+Gracias a mi profesor universitario, el Dr. Luca Giuzzi, por permitirme dedicar mi tesis a Bitcoin y al algoritmo de firma digital de Schnorr. Ese fue el comienzo de mi carrera en el ámbito de las criptomonedas.
 
-A heartfelt thank you to my Italian community, who gave me confidence and indirectly brought me to where I am today. I probably wouldn't have met Carlo if it weren't for their support.
+Un agradecimiento de corazón a mi comunidad italiana, que me dio confianza e indirectamente me llevó a donde estoy hoy. Probablemente no habría conocido a Carlo si no fuera por su apoyo.
 
-Thank you to O'Reilly, and in particular to Shira Evans and Michelle Smith, who guided us throughout this journey. Their meticulous coordination and support, along with the help of all the reviewers, made this book possible.
+Gracias a O'Reilly, y en particular a Shira Evans y Michelle Smith, que nos guiaron a lo largo de este recorrido. Su meticulosa coordinación y su apoyo, junto con la ayuda de todos los revisores, hicieron posible este libro.
 
-Finally, I want to thank my family and my girlfriend, Alessandra, for always supporting and loving me.
+Por último, quiero agradecer a mi familia y a mi novia, Alessandra, por apoyarme y quererme siempre.
 
-## Acknowledgments by Niccolò
+## Agradecimientos de Niccolò
 
-I want to thank Carlo for giving me the chance to write this book with him. Over the past two years, we've worked on many projects together and shared plenty of laughs, trips abroad, and now this book. Working with you has made this journey both fun and rewarding.
+Quiero agradecer a Carlo por darme la oportunidad de escribir este libro con él. Durante los últimos dos años, hemos trabajado juntos en muchos proyectos y compartido muchas risas, viajes al extranjero y, ahora, este libro. Trabajar contigo ha hecho que este recorrido sea divertido y gratificante.
 
-I'm grateful to Andreas and Gavin for creating the first version of *Mastering Ethereum*. Their book opened my eyes to the world of blockchain and has done the same for so many others. Their work helped build and grow this amazing blockchain community that we're all part of today.
+Estoy agradecido con Andreas y Gavin por crear la primera versión de *Mastering Ethereum*. Su libro me abrió los ojos al mundo de la blockchain y ha hecho lo mismo por muchas otras personas. Su trabajo ayudó a construir y hacer crecer esta maravillosa comunidad de la blockchain de la que todos formamos parte hoy.
 
-A big thank you to Michelle Smith and Shira Evans from O'Reilly for supporting us from start to finish. You helped us with all the paperwork, kept us on schedule, and guided us through the whole process of making this book a reality.
+Muchísimas gracias a Michelle Smith y Shira Evans, de O'Reilly, por apoyarnos de principio a fin. Nos ayudaron con todos los trámites, nos mantuvieron dentro de los plazos y nos guiaron durante todo el proceso de hacer realidad este libro.
 
-To my family, my friends, and my girlfriend, Giuditta, I can't thank you enough for always being there for me. During the many months of writing, you put up with my busy schedule and stress. You listened when I needed to talk through ideas, you understood when I couldn't make it to gatherings because of deadlines, and you kept encouraging me when things got tough. Your constant support gave me the strength and focus to keep going. The book you're holding isn't just my work; it exists because of the love and support you've always shown me.
+A mi familia, mis amigos y mi novia, Giuditta, nunca podré agradecerles lo suficiente que siempre estén a mi lado. Durante los muchos meses de escritura, soportaron mi agenda apretada y mi estrés. Me escucharon cuando necesitaba conversar sobre ideas, comprendieron cuando no podía asistir a reuniones por los plazos de entrega y siguieron animándome cuando las cosas se ponían difíciles. Su apoyo constante me dio la fuerza y la concentración necesarias para seguir adelante. El libro que tienen en sus manos no es solo mi trabajo; existe gracias al cariño y al apoyo que siempre me han demostrado.
 
-## Contributions
+## Contribuciones
 
-We'd all like to thank our tech reviewers:
+Todos queremos agradecer a nuestros revisores técnicos:
 
 - Ben Edgington
 - Caleb Lent
 - Brian Wu
 - Gonçalo Magalhães
 
-They have helped us immensely in improving the quality of the book. Thank you so much to our wonderful tech reviewers.
+Nos han ayudado enormemente a mejorar la calidad del libro. Muchísimas gracias a nuestros maravillosos revisores técnicos.

@@ -1,52 +1,52 @@
-# Chapter 9. Smart Contract Security
+# Capítulo 9. Seguridad de los contratos inteligentes
 
-Security is one of the most important considerations when writing smart contracts. In the field of smart contract programming, mistakes are costly and easily exploited. In this chapter, we will look at security best practices and design patterns as well as *security antipatterns*, which are practices and patterns that can introduce vulnerabilities into smart contracts.
+La seguridad es una de las consideraciones más importantes al escribir contratos inteligentes. En el campo de la programación de contratos inteligentes, los errores son costosos y fáciles de explotar. En este capítulo, veremos buenas prácticas de seguridad y patrones de diseño, así como *antipatrones de seguridad*, que son prácticas y patrones que pueden introducir vulnerabilidades en los contratos inteligentes.
 
-As with other programs, a smart contract will execute exactly what is written, which is not always what the programmer intended. Furthermore, all smart contracts are public, and any user can interact with them simply by creating a transaction. Any vulnerability can be exploited, and losses are almost always impossible to recover. It is therefore critical to follow best practices and use well-tested design patterns.
+Como ocurre con otros programas, un contrato inteligente ejecutará exactamente lo que está escrito, que no siempre coincide con lo que pretendía quien lo programó. Además, todos los contratos inteligentes son públicos y cualquier usuario puede interactuar con ellos con solo crear una transacción. Cualquier vulnerabilidad puede explotarse, y las pérdidas casi siempre son imposibles de recuperar. Por lo tanto, es fundamental seguir buenas prácticas y utilizar patrones de diseño bien probados.
 
-Think of robust development as the first layer in a “Swiss cheese model” of security. Each layer of protection acts like a slice of Swiss cheese: none is flawless on its own, but together they create a stronger defense. The very first layer is following solid development practices: using reliable design patterns, writing clear and intentional code, and actively avoiding known pitfalls. This foundational layer gives us the best start in securing our contracts from vulnerabilities. Beyond this, other layers like testing, code reviews, and bug bounties add extra protection, but it all begins with our development practices.
+Pensemos en el desarrollo robusto como la primera capa de un "modelo del queso suizo" de seguridad. Cada capa de protección actúa como una rebanada de queso suizo: ninguna es perfecta por sí sola, pero juntas crean una defensa más sólida. La primera capa consiste en seguir prácticas de desarrollo sólidas: utilizar patrones de diseño confiables, escribir código claro y deliberado, y evitar activamente los errores conocidos. Esta capa fundamental nos brinda el mejor punto de partida para proteger nuestros contratos de las vulnerabilidades. Más allá de ella, otras capas, como las pruebas, las revisiones de código y las recompensas por errores, agregan protección adicional, pero todo comienza con nuestras prácticas de desarrollo.
 
-## Security Best Practices
+## Buenas prácticas de seguridad
 
-*Defensive programming* is a style of programming that is particularly well suited to smart contracts. It emphasizes the following, all of which are best practices:
+La *programación defensiva* es un estilo de programación especialmente adecuado para los contratos inteligentes. Hace hincapié en los siguientes aspectos, todos ellos buenas prácticas:
 
-**Minimalism/simplicity**
+**Minimalismo/simplicidad**
 
-Before even writing code, it’s worth stepping back to question whether every component is really needed. Can the design be simplified? Are certain data structures introducing unnecessary surface area? Once the architecture is settled, we should still go back through the code with a critical eye, looking for opportunities to reduce lines, eliminate edge cases, or drop nonessential features. Simpler contracts are easier to reason about, test, and audit. And while some DeFi protocols legitimately grow into a few thousand lines, it’s still worth being skeptical when someone boasts about the size of their codebase. More code often means more bugs, not more value.
+Incluso antes de escribir código, vale la pena tomar distancia y preguntarse si realmente se necesita cada componente. ¿Se puede simplificar el diseño? ¿Ciertas estructuras de datos introducen una superficie innecesaria? Una vez definida la arquitectura, aun así deberíamos volver a revisar el código con mirada crítica, buscando oportunidades para reducir líneas, eliminar casos límite o descartar funciones no esenciales. Los contratos más simples son más fáciles de razonar, probar y auditar. Y aunque algunos protocolos DeFi crecen legítimamente hasta alcanzar unos miles de líneas, sigue siendo conveniente mantener el escepticismo cuando alguien presume del tamaño de su base de código. Más código suele significar más errores, no más valor.
 
-**Code reuse**
+**Reutilización de código**
 
-Try not to reinvent the wheel. If a library or contract already exists that does most of what you need, reuse it. [OpenZeppelin](https://www.openzeppelin.com), for instance, offers a suite of contracts that are widely adopted, thoroughly tested, and continuously reviewed by the community. Within your own code, follow the DRY principle: don’t repeat yourself. If you see any snippet of code repeated more than once, ask yourself whether it could be written as a function or library and reused. Code that has been battle-tested across many deployments is almost always more secure than something you’ve just written, no matter how confident you feel about it. Beware of “not invented here” syndrome, where you are tempted to “improve” a feature or component by building it from scratch. The security risk is often greater than the improvement value. Reuse isn’t laziness. It’s smart, defensive engineering.
+Procure no reinventar la rueda. Si ya existe una biblioteca o un contrato que hace la mayor parte de lo que necesita, reutilícelo. [OpenZeppelin](https://www.openzeppelin.com), por ejemplo, ofrece un conjunto de contratos ampliamente adoptados, probados a fondo y revisados continuamente por la comunidad. Dentro de su propio código, siga el principio DRY: no se repita. Si ve un fragmento de código repetido más de una vez, pregúntese si podría escribirse como una función o biblioteca y reutilizarse. El código que ha sido probado en la práctica en muchos despliegues casi siempre es más seguro que algo que acaba de escribir, por mucha confianza que le tenga. Tenga cuidado con el síndrome de "no se inventó aquí", que lleva a sentir la tentación de "mejorar" una función o un componente construyéndolo desde cero. El riesgo de seguridad suele superar el valor de la mejora. Reutilizar no es pereza. Es ingeniería defensiva inteligente.
 
-**Code quality**
+**Calidad del código**
 
-Smart contract code is unforgiving. Every bug can lead to monetary loss. You should not treat smart contract programming the same way you do general-purpose programming. Writing a DApp in Solidity is not like creating a web widget in JavaScript. Rather, you should apply rigorous engineering and software development methodologies as you would in aerospace engineering or any similarly unforgiving discipline. Once you “launch” your code, there is little you can do to fix any problems. And even if the code is upgradable, you often have very little time to respond if anything goes wrong. If someone spots a bug in your project before you do, the exploit will likely unfold in a single transaction or just a few, meaning the damage is done within seconds, long before you can intervene.
+El código de los contratos inteligentes no perdona. Cada error puede provocar pérdidas monetarias. No se debe tratar la programación de contratos inteligentes igual que la programación de propósito general. Escribir una DApp en Solidity no es como crear un widget web en JavaScript. Por el contrario, se deben aplicar metodologías rigurosas de ingeniería y desarrollo de software, como se haría en ingeniería aeroespacial o en cualquier disciplina con una tolerancia a los errores igualmente escasa. Una vez que "lanza" su código, hay poco que pueda hacer para solucionar los problemas. E incluso si el código se puede actualizar, suele haber muy poco tiempo para responder si algo sale mal. Si alguien detecta un error en su proyecto antes que usted, es probable que la explotación se produzca en una sola transacción o en unas pocas, lo que significa que el daño ocurre en segundos, mucho antes de que pueda intervenir.
 
-**Readability/auditability**
+**Legibilidad/auditabilidad**
 
-Your code should be clear and easy to comprehend. The easier it is to read, the easier it is to audit. Smart contracts are public: everyone can read the bytecode, and anyone skilled enough can reverse-engineer it. Therefore, it is beneficial to develop your work in public, using collaborative and open source methodologies, to draw upon the collective wisdom of the developer community and benefit from the highest common denominator of open source development. You should write code that is well documented and easy to read, following the style and naming conventions that are part of the Ethereum community.
+Su código debe ser claro y fácil de comprender. Cuanto más fácil sea leerlo, más fácil será auditarlo. Los contratos inteligentes son públicos: todo el mundo puede leer el bytecode, y cualquiera con suficiente conocimiento puede aplicarle ingeniería inversa. Por lo tanto, conviene desarrollar su trabajo de forma pública, con metodologías colaborativas y de código abierto, para aprovechar el conocimiento colectivo de la comunidad de desarrolladores y beneficiarse del máximo denominador común del desarrollo de código abierto. Debe escribir código bien documentado y fácil de leer, siguiendo las convenciones de estilo y nomenclatura de la comunidad de Ethereum.
 
-**Test coverage**
+**Cobertura de pruebas**
 
-Test everything you can. Smart contracts run in a public execution environment, where anyone can execute them with whatever input they want. You should never assume that input, such as function arguments, is well formed or properly bounded or that it has a benign purpose. Test all arguments to make sure they are within expected ranges and are properly formatted before allowing execution of your code to continue.
+Pruebe todo lo que pueda. Los contratos inteligentes se ejecutan en un entorno de ejecución público, donde cualquiera puede ejecutarlos con las entradas que quiera. Nunca se debe suponer que las entradas, como los argumentos de las funciones, están bien formadas o debidamente acotadas, ni que tienen un propósito benigno. Verifique todos los argumentos para asegurarse de que estén dentro de los rangos esperados y tengan el formato adecuado antes de permitir que continúe la ejecución de su código.
 
-## Security Risks and Antipatterns
+## Riesgos y antipatrones de seguridad
 
-As a smart contract programmer, you should be familiar with the most common security risks, so you can detect and avoid the programming patterns that leave your contracts exposed to these risks. In the next several sections, we will look at different security risks, examples of how vulnerabilities can arise, and countermeasures or preventative solutions that can be used to address them.
+Quien programa contratos inteligentes debe conocer los riesgos de seguridad más comunes para poder detectar y evitar los patrones de programación que dejan los contratos expuestos a esos riesgos. En las próximas secciones, veremos distintos riesgos de seguridad, ejemplos de cómo pueden surgir vulnerabilidades y contramedidas o soluciones preventivas que pueden utilizarse para abordarlas.
 
-The following antipatterns are often combined to execute an exploit, much like in Web2 security. Real-world exploits are usually more complex than the examples in this chapter.
+Los siguientes antipatrones suelen combinarse para ejecutar un ataque, de manera muy similar a lo que ocurre en la seguridad de Web2. Los ataques reales suelen ser más complejos que los ejemplos de este capítulo.
 
-### Reentrancy
+### Reentrada
 
-One of the features of Ethereum smart contracts is their ability to call and utilize code from other external contracts. Contracts also typically handle ether and as such, often send ether to various external user addresses. These operations require the contracts to submit external calls. These external calls can be hijacked by attackers, who can force the contracts to execute further code (through a callback: either a fallback function or some hook, usually `transfer`), including calls back into themselves. Attacks of this kind were used in the infamous and still remembered DAO hack from 2016. Even after all these years, [we’re still seeing a lot of attacks exploiting this vulnerability](https://oreil.ly/87VUR), even though it’s pretty straightforward to spot and inexpensive to fix.
+Una de las características de los contratos inteligentes de Ethereum es su capacidad para llamar y utilizar código de otros contratos externos. Los contratos también suelen manejar ether y, por ello, a menudo envían ether a diversas direcciones de usuarios externos. Estas operaciones requieren que los contratos realicen llamadas externas. Los atacantes pueden secuestrar estas llamadas externas y obligar a los contratos a ejecutar más código mediante una llamada de retorno: ya sea una función fallback o algún hook, por lo general `transfer`, incluidas llamadas de vuelta a sí mismos. Se utilizaron ataques de este tipo en el tristemente célebre y aún recordado ataque a The DAO de 2016. Incluso después de todos estos años, [seguimos viendo muchos ataques que explotan esta vulnerabilidad](https://oreil.ly/87VUR), aunque es bastante sencilla de detectar y económica de corregir.
 
-#### The vulnerability
+#### La vulnerabilidad
 
-This type of attack happens when an attacker manages to take control during the execution of another contract before that contract has finished updating its state. Since the contract is still in the middle of its process, it has not yet updated its state (e.g., critical variables). The attacker can then “reenter” the contract at this vulnerable moment, taking advantage of the inconsistent state to trigger actions that weren’t intended or expected. This reentry allows the attacker to bypass safeguards, manipulate data, or drain funds, all because the contract hasn’t fully settled into a safe, consistent state yet.
+Este tipo de ataque ocurre cuando un atacante logra tomar el control durante la ejecución de otro contrato antes de que ese contrato haya terminado de actualizar su estado. Como el contrato todavía está en medio de su proceso, aún no ha actualizado su estado, por ejemplo, variables críticas. El atacante puede entonces "reentrar" en el contrato en ese momento vulnerable y aprovechar el estado inconsistente para desencadenar acciones que no se pretendían ni se esperaban. Esta reentrada permite al atacante eludir las medidas de protección, manipular datos o vaciar los fondos, todo porque el contrato todavía no ha alcanzado por completo un estado seguro y consistente.
 
-Reentrancy can be tricky to grasp without a practical example. Take a look at the simple vulnerable contract in Example 9-1, which acts as an Ethereum vault that allows depositors to withdraw only 1 ether per week.
+La reentrada puede ser difícil de comprender sin un ejemplo práctico. Observe el sencillo contrato vulnerable del ejemplo 9-1, que funciona como una bóveda de Ethereum que permite a los depositantes retirar solo 1 ether por semana.
 
-**Example 9-1. EtherStore: a contract vulnerable to reentrancy**
+**Ejemplo 9-1. EtherStore: un contrato vulnerable a la reentrada**
 
 ```solidity
 1 contract EtherStore {
@@ -66,23 +66,23 @@ Reentrancy can be tricky to grasp without a practical example. Take a look at th
 15        }
 16      (bool res, ) = address(msg.sender).call{value: _amt}("");
 17        require(res, "Transfer failed");
-18      balances[msg.sender] -= _amt; // assume Solidity <0.8: underflow wraps (exploitable); Solidity >=0.8: reverts here
+18      balances[msg.sender] -= _amt; // se supone Solidity <0.8: el subdesbordamiento ajusta el valor de forma cíclica (explotable); Solidity >=0.8: revierte aquí
 19        lastWithdrawTime[msg.sender] = block.timestamp;
 20    }
 21 }
 ```
 
-This contract has two public functions, `depositFunds` and `withdrawFunds`. The `depositFunds` function simply increments the sender’s balance. The `withdrawFunds` function allows the sender to withdraw their balance. This function is intended to succeed only if a withdrawal has not occurred in the last week.
+Este contrato tiene dos funciones públicas, `depositFunds` y `withdrawFunds`. La función `depositFunds` solo incrementa el saldo del remitente. La función `withdrawFunds` permite al remitente retirar su saldo. Esta función está diseñada para tener éxito solo si no se ha realizado un retiro en la última semana.
 
-The vulnerability is in line 16, where the contract sends the user their requested amount of ether. Consider an attacker who has created the contract in Example 9-2.
+La vulnerabilidad está en la línea 16, donde el contrato envía al usuario la cantidad de ether que solicitó. Consideremos a un atacante que ha creado el contrato del ejemplo 9-2.
 
-**Example 9-2. Attack.sol: a contract used to exploit the reentrancy vulnerability in the EtherStore contract**
+**Ejemplo 9-2. Attack.sol: un contrato utilizado para explotar la vulnerabilidad de reentrada del contrato EtherStore**
 
 ```solidity
 1 contract Attack {
 2  EtherStore public etherStore;
 3
-4  // initialize the etherStore variable with the contract address
+4  // inicializar la variable etherStore con la dirección del contrato
 5  constructor(address _etherStoreAddress) {
 6      etherStore = EtherStore(_etherStoreAddress);
 7  }
@@ -90,9 +90,9 @@ The vulnerability is in line 16, where the contract sends the user their request
 9  function attackEtherStore() public payable {
 10      // attack to the nearest ether
 11      require(msg.value >= 1 ether, "no bal");
-12      // send eth to the depositFunds() function
+12      // enviar eth a la función depositFunds()
 13      etherStore.depositFunds{value: 1 ether}();
-14      // start the magic
+14      // comenzar la magia
 15      etherStore.withdrawFunds();
 16  }
 17
@@ -100,57 +100,57 @@ The vulnerability is in line 16, where the contract sends the user their request
 19      payable(msg.sender).transfer(address(this).balance);
 20  }
 21
-22  // receive function - the fallback() function would have worked out too
+22  // función receive: la función fallback() también habría funcionado
 23  receive() external payable {
 24      if (address(etherStore).balance >= 1 ether) {
-25          // reentrant call to victim contract
+25          // llamada reentrante al contrato víctima
 26          etherStore.withdrawFunds();
 27      }
 28  }
 29 }
 ```
 
-How might the exploit occur? First, the attacker would create the malicious contract (let’s say at the address `0x0...123`) with the `EtherStore`’s contract address as the sole constructor parameter. This would initialize and point the public variable `etherStore` to the contract to be attacked.
+¿Cómo podría ocurrir el ataque? Primero, el atacante crearía el contrato malicioso, digamos en la dirección `0x0...123`, con la dirección del contrato `EtherStore` como único parámetro del constructor. Esto inicializaría la variable pública `etherStore` y la haría apuntar al contrato que se va a atacar.
 
-The attacker would then call the `attackEtherStore` function, with some amount of ether greater than or equal to 1—let’s assume 1 ether for the time being. In this example, we will also assume a number of other users have deposited ether into this contract, so its current balance is 10 ether. The following will then occur:
+Después, el atacante llamaría a la función `attackEtherStore` con alguna cantidad de ether mayor o igual que 1; supongamos por ahora 1 ether. En este ejemplo, también supondremos que varios usuarios más han depositado ether en este contrato, por lo que su saldo actual es de 10 ether. A continuación, ocurrirá lo siguiente:
 
-- *Attack.sol*, line 13: The `depositFunds` function of the `EtherStore` contract will be called with a `msg.value` of `1 ether` (and a lot of gas). The sender (`msg.sender`) will be the malicious contract (`0x0...123`). Thus, `balances[0x0..123] = 1 ether`.
-- *Attack.sol*, line 15: The malicious contract will then call the `withdrawFunds` function of the `EtherStore` contract. This will pass the requirement (line 11 of the `EtherStore` contract) as no previous withdrawals have been made.
-- *EtherStore.sol*, line 16: The contract will send `1 ether` back to the malicious contract.
-- *Attack.sol*, line 23: The payment to the malicious contract will then execute the `receive` function.
-- *Attack.sol*, line 24: The total balance of the `EtherStore` contract was 10 ether and is now 9 ether, so this `if` statement passes.
-- *Attack.sol*, line 26: The fallback function calls the `EtherStore` `withdrawFunds` function again and *reenters* the `EtherStore` contract.
-- *EtherStore.sol*, line 10: In this second call to `withdrawFunds`, the attacking contract’s balance is still 1 ether as line 18 has not yet been executed. Thus, we still have `balances[0x0..123] = 1 ether`. This is also the case for the `lastWithdrawTime` variable. Again, we pass the requirement.
-- *EtherStore.sol*, line 16: The attacking contract withdraws another `1 ether`.
-- Reenter the EtherStore contract until it is no longer the case that `EtherStore.balance >= 1`, as dictated by line 24 in *Attack.sol*.
-- *Attack.sol*, line 24: Once there is less than 1 ether left in the `EtherStore` contract, this `if` statement will fail. This will then allow lines 17–19 of the `EtherStore` contract to be executed (for each call to the `withdrawFunds` function).
-- *EtherStore.sol*, lines 18 and 19: The `balances` and `lastWithdrawTime` mappings will be set, and the execution will end.
+- *Attack.sol*, línea 13: se llamará a la función `depositFunds` del contrato `EtherStore` con un `msg.value` de `1 ether` y mucho gas. El remitente (`msg.sender`) será el contrato malicioso (`0x0...123`). Por lo tanto, `balances[0x0..123] = 1 ether`.
+- *Attack.sol*, línea 15: el contrato malicioso llamará entonces a la función `withdrawFunds` del contrato `EtherStore`. Se cumplirá el requisito de la línea 11 del contrato `EtherStore`, ya que no se han realizado retiros previos.
+- *EtherStore.sol*, línea 16: el contrato enviará `1 ether` de vuelta al contrato malicioso.
+- *Attack.sol*, línea 23: el pago al contrato malicioso ejecutará entonces la función `receive`.
+- *Attack.sol*, línea 24: el saldo total del contrato `EtherStore` era de 10 ether y ahora es de 9 ether, por lo que se cumple esta condición `if`.
+- *Attack.sol*, línea 26: la función fallback llama de nuevo a la función `withdrawFunds` de `EtherStore` y *reentra* en el contrato `EtherStore`.
+- *EtherStore.sol*, línea 10: en esta segunda llamada a `withdrawFunds`, el saldo del contrato atacante sigue siendo de 1 ether, ya que la línea 18 todavía no se ha ejecutado. Por lo tanto, aún tenemos `balances[0x0..123] = 1 ether`. Lo mismo ocurre con la variable `lastWithdrawTime`. De nuevo, cumplimos el requisito.
+- *EtherStore.sol*, línea 16: el contrato atacante retira otro `1 ether`.
+- Reentrar en el contrato EtherStore hasta que deje de cumplirse `EtherStore.balance >= 1`, como establece la línea 24 de *Attack.sol*.
+- *Attack.sol*, línea 24: una vez que quede menos de 1 ether en el contrato `EtherStore`, esta condición `if` no se cumplirá. Esto permitirá entonces que se ejecuten las líneas 17–19 del contrato `EtherStore` para cada llamada a la función `withdrawFunds`.
+- *EtherStore.sol*, líneas 18 y 19: se establecerán los mappings `balances` y `lastWithdrawTime`, y la ejecución terminará.
 
-The final result is that the attacker has withdrawn all ether from the `EtherStore` contract in a single transaction.
+El resultado final es que el atacante ha retirado todo el ether del contrato `EtherStore` en una sola transacción.
 
-While native ether transfers intercepted by fallback functions are a common vector for reentrancy attacks, they are not the only mechanism that can introduce this risk. Several token standards, like ERC-721 and ERC-777, include callback mechanisms that can also enable reentrancy attacks. For instance, ERC-721’s `safeTransfer` function ensures that token transfers to contracts call the recipient’s `onERC721Received` function. Similarly, ERC-777 tokens allow hooks to be invoked via the `tokensReceived` function during transfers.
+Aunque las transferencias de ether nativo interceptadas por funciones fallback son un vector común de ataques de reentrada, no son el único mecanismo que puede introducir este riesgo. Varios estándares de tokens, como ERC-721 y ERC-777, incluyen mecanismos de llamadas de retorno que también pueden permitir ataques de reentrada. Por ejemplo, la función `safeTransfer` de ERC-721 garantiza que las transferencias de tokens a contratos llamen a la función `onERC721Received` del destinatario. De manera similar, los tokens ERC-777 permiten invocar hooks mediante la función `tokensReceived` durante las transferencias.
 
-#### Beyond the Classic Reentrancy Pattern
-Reentrancy attacks aren’t limited to a single function or contract. While classic reentrancy involves reentering the same function before it finishes, there are variations that are harder to spot, such as cross-function reentrancy, cross-contract reentrancy, and, the trickiest of all, read-only reentrancy.
-Read-only reentrancy takes advantage of contracts that depend on view functions of other contracts. These functions don’t modify state but return data that other contracts rely on, often without reentrancy protection. The problem occurs when a reentrant call lets an attacker temporarily put the target contract into an inconsistent state, allowing them to use another contract (the victim) to query this unstable state through a view function.
-Let’s look at how it plays out:
-1. The attacker’s contract interacts with a vulnerable contract—let’s call it Contract A—which can be reentered. This contract holds data that other protocols rely on.
-2. Contract A triggers a callback to the attacker’s contract, allowing the attacker’s contract logic to run.
-3. While still in the fallback, the attacker’s contract calls a different protocol, Contract B, which is connected to Contract A and depends on the data it provides.
-4. Contract B, unaware of any issues, reads data from Contract A. However, the state of Contract A is outdated because it hasn’t finished updating yet.
-By the time this cycle ends, the attacker has already exploited Contract B by leveraging the outdated data from Contract A and then lets the callback and original call in Contract A complete as normal. The process is illustrated in Figure 9-1.
-![Read-only reentrancy](images/ch9/maet_0901.png)
+#### Más allá del patrón clásico de reentrada
+Los ataques de reentrada no se limitan a una sola función o contrato. Aunque la reentrada clásica implica volver a entrar en la misma función antes de que termine, existen variantes más difíciles de detectar, como la reentrada entre funciones, la reentrada entre contratos y, la más difícil de todas, la reentrada de solo lectura.
+La reentrada de solo lectura aprovecha los contratos que dependen de funciones de vista de otros contratos. Estas funciones no modifican el estado, pero devuelven datos de los que dependen otros contratos, a menudo sin protección contra reentrada. El problema ocurre cuando una llamada reentrante permite a un atacante poner temporalmente el contrato objetivo en un estado inconsistente, lo que le permite utilizar otro contrato, la víctima, para consultar este estado inestable mediante una función de vista.
+Veamos cómo se desarrolla:
+1. El contrato del atacante interactúa con un contrato vulnerable, al que llamaremos Contrato A, en el que se puede reentrar. Este contrato mantiene datos de los que dependen otros protocolos.
+2. El Contrato A desencadena una llamada de retorno al contrato del atacante, lo que permite ejecutar la lógica del contrato del atacante.
+3. Mientras aún está en la función fallback, el contrato del atacante llama a un protocolo diferente, el Contrato B, que está conectado al Contrato A y depende de los datos que este proporciona.
+4. El Contrato B, sin advertir ningún problema, lee datos del Contrato A. Sin embargo, el estado del Contrato A está desactualizado porque todavía no ha terminado de actualizarse.
+Para cuando termina este ciclo, el atacante ya ha explotado el Contrato B aprovechando los datos desactualizados del Contrato A y luego deja que la llamada de retorno y la llamada original del Contrato A se completen normalmente. El proceso se ilustra en la figura 9-1.
+![Reentrada de solo lectura](images/ch9/maet_0901.png)
 
-**Figure 9-1.** Read-only reentrancy
+**Figura 9-1.** Reentrada de solo lectura
 
-The key here is that Contract B trusts the data from Contract A, but Contract A’s state hasn’t caught up, allowing the attacker to exploit the lag. This type of attack is harder to defend against because developers often don’t protect view functions with reentrancy locks, thinking they are safe since they don’t modify state.
-Read-only reentrancy teaches us that even read-only functions can be dangerous when they’re relied upon by external contracts.
+La clave es que el Contrato B confía en los datos del Contrato A, pero el estado del Contrato A aún no se ha actualizado, lo que permite al atacante aprovechar el desfase. Es más difícil defenderse de este tipo de ataque porque los desarrolladores a menudo no protegen las funciones de vista con bloqueos de reentrada, al pensar que son seguras porque no modifican el estado.
+La reentrada de solo lectura nos enseña que incluso las funciones de solo lectura pueden ser peligrosas cuando otros contratos dependen de ellas.
 
-#### Preventative techniques
+#### Técnicas preventivas
 
-The first best practice to follow in order to prevent reentrancy issues is sticking to the check-effect-interaction pattern when writing smart contracts. This pattern is about ensuring that all changes to state variables happen before interacting with external contracts. For instance, in the *EtherStore.sol* contract, the lines that modify state variables should appear before any external calls. The goal is to ensure that any piece of code interacting with external addresses is the last thing executed in the function. This prevents external contracts from interfering with the internal state upon reentering because the necessary updates have already been made.
+La primera buena práctica para prevenir problemas de reentrada es apegarse al patrón de comprobación-efecto-interacción al escribir contratos inteligentes. Este patrón consiste en asegurar que todos los cambios en las variables de estado ocurran antes de interactuar con contratos externos. Por ejemplo, en el contrato *EtherStore.sol*, las líneas que modifican variables de estado deben aparecer antes de cualquier llamada externa. El objetivo es asegurar que cualquier fragmento de código que interactúe con direcciones externas sea lo último que se ejecute en la función. Esto impide que los contratos externos interfieran con el estado interno al reentrar, porque las actualizaciones necesarias ya se han realizado.
 
-Another useful technique is applying a reentrancy lock. A *reentrancy lock* is a simple state variable that “locks” the contract while it’s executing a function, preventing other external calls from interrupting. This can be implemented with a modifier like this:
+Otra técnica útil es aplicar un bloqueo de reentrada. Un *bloqueo de reentrada* es una variable de estado sencilla que "bloquea" el contrato mientras ejecuta una función, impidiendo que otras llamadas externas lo interrumpan. Esto puede implementarse con un modificador como este:
 
 ```solidity
 contract EtherStore {
@@ -172,23 +172,23 @@ contract EtherStore {
 }
 ```
 
-In this example, the `nonReentrant` modifier uses the lock variable to prevent the `withdrawFunds` function from being reentered while it’s still running. The `nonReentrant` modifier locks the contract when it starts and unlocks it once the function finishes. However, we shouldn’t reinvent the wheel. Instead of crafting our own reentrancy locks, it’s better to rely on well-tested libraries like OpenZeppelin’s ReentrancyGuard. These libraries provide secure, gas-optimized solutions.
+En este ejemplo, el modificador `nonReentrant` utiliza la variable de bloqueo para impedir que se vuelva a entrar en la función `withdrawFunds` mientras aún se está ejecutando. El modificador `nonReentrant` bloquea el contrato al comenzar y lo desbloquea cuando termina la función. Sin embargo, no deberíamos reinventar la rueda. En lugar de crear nuestros propios bloqueos de reentrada, es mejor recurrir a bibliotecas bien probadas como ReentrancyGuard de OpenZeppelin. Estas bibliotecas proporcionan soluciones seguras y optimizadas en consumo de gas.
 
-> **Note**
+> **Nota**
 >
-> With the advent of transient storage on Ethereum in Solidity 0.8.24, OpenZeppelin has introduced ReentrancyGuardTransient, a new variant of ReentrancyGuard that leverages transient storage for significantly lower gas costs. Transient storage, enabled by [EIP-1153](https://oreil.ly/fRvKl), provides a cheaper way to store data that’s needed only for the duration of a single transaction, making it ideal for reentrancy guards and similar temporary logic. However, ReentrancyGuardTransient can be used only on chains where EIP-1153 is available, so make sure your target chain supports this feature before implementing it.
+> Con la llegada del almacenamiento transitorio a Ethereum en Solidity 0.8.24, OpenZeppelin introdujo ReentrancyGuardTransient, una nueva variante de ReentrancyGuard que aprovecha el almacenamiento transitorio para reducir considerablemente los costos de gas. El almacenamiento transitorio, habilitado por [EIP-1153](https://oreil.ly/fRvKl), proporciona una manera más económica de almacenar datos que se necesitan solo durante una única transacción, lo que lo hace ideal para protecciones contra reentrada y lógica temporal similar. Sin embargo, ReentrancyGuardTransient solo puede utilizarse en cadenas donde EIP-1153 esté disponible, por lo que debe asegurarse de que la cadena objetivo admita esta característica antes de implementarla.
 
-One more approach is to use Solidity’s built-in `transfer` and `send` functions to send ether. These functions forward only a limited amount of gas (2,300 units), which typically is not enough for the receiving contract to execute a reentrant call, so they are a simple way to guard against reentrancy. However, they come with notable drawbacks. If the recipient is a smart contract with nonmalicious logic in its fallback or receive function, the transfer might fail, potentially locking funds. This risk is becoming more relevant with the introduction of EIP-7702, which allows EOAs to have attached code, including fallback logic. As more EOAs adopt this capability, transactions using `transfer` or `send` are more likely to revert during regular execution of the transactions due to insufficient gas. And from a security perspective, this approach isn’t future proof: if a future hard fork reduces the gas cost of certain operations, 2,300 units might become sufficient to reenter, breaking assumptions that were previously safe. So, while `transfer` and `send` can still be helpful in narrow cases, we need to use them with caution and not rely on them as our primary defense.
+Otro enfoque es utilizar las funciones integradas `transfer` y `send` de Solidity para enviar ether. Estas funciones solo reenvían una cantidad limitada de gas (2,300 unidades), que normalmente no basta para que el contrato receptor ejecute una llamada reentrante, por lo que son una forma sencilla de protegerse contra la reentrada. Sin embargo, tienen inconvenientes importantes. Si el destinatario es un contrato inteligente con lógica no maliciosa en su función fallback o receive, la transferencia podría fallar y posiblemente bloquear los fondos. Este riesgo adquiere mayor relevancia con la introducción de EIP-7702, que permite que las EOA tengan código asociado, incluida lógica fallback. A medida que más EOA adopten esta capacidad, será más probable que las transacciones que usan `transfer` o `send` reviertan durante su ejecución normal debido a gas insuficiente. Y desde el punto de vista de la seguridad, este enfoque no es resistente a cambios futuros: si un hard fork futuro reduce el costo de gas de ciertas operaciones, 2,300 unidades podrían llegar a ser suficientes para reentrar, invalidando supuestos que antes eran seguros. Por eso, aunque `transfer` y `send` todavía pueden resultar útiles en casos limitados, debemos utilizarlas con cautela y no depender de ellas como defensa principal.
 
-Read-only and cross-contract reentrancy deserve special attention: these exploits can be tricky because they might involve two separate protocols, making coordinated prevention a challenge. When our project relies on external protocols for data, we need to dig into how the combined logic works. Even if each project is secure on its own, vulnerabilities can pop up during integration.
+La reentrada de solo lectura y la reentrada entre contratos merecen especial atención: estos ataques pueden ser difíciles de abordar porque podrían involucrar dos protocolos separados, lo que dificulta la prevención coordinada. Cuando nuestro proyecto depende de protocolos externos para obtener datos, debemos profundizar en cómo funciona la lógica combinada. Incluso si cada proyecto es seguro por sí solo, pueden surgir vulnerabilidades durante la integración.
 
-#### Real-world example: The DAO attack
+#### Ejemplo real: el ataque a The DAO
 
-Reentrancy played a major role in the DAO attack that occurred in 2016 and was one of the major hacks during the early development of Ethereum. At the time, the contract held more than $150 million, 15% of the circulating supply of ether. To revert the effects of the hack, the Ethereum community ultimately opted for a hard fork that split the Ethereum blockchain. As a result, Ethereum Classic (ETC) continued as the original chain, while the forked version with updated rules to reverse the hack became the Ethereum we know today.
+La reentrada tuvo un papel importante en el ataque a The DAO de 2016, uno de los mayores ataques durante el desarrollo inicial de Ethereum. En ese momento, el contrato contenía más de $150 millones, el 15% del suministro circulante de ether. Para revertir los efectos del ataque, la comunidad de Ethereum finalmente optó por un hard fork que dividió la blockchain de Ethereum. Como resultado, Ethereum Classic (ETC) continuó como la cadena original, mientras que la versión bifurcada con reglas actualizadas para revertir el ataque se convirtió en el Ethereum que conocemos hoy.
 
-#### Real-world example: Libertify
+#### Ejemplo real: Libertify
 
-A recent exploit where reentrancy was the sole attack vector is the July 2023 case involving Libertify, a DeFi protocol that was breached for $400,000. Let’s check the code of the exploited function and see how it happened:
+Un ataque reciente en el que la reentrada fue el único vector de ataque es el caso de julio de 2023 que involucró a Libertify, un protocolo DeFi del que se sustrajeron $400,000. Revisemos el código de la función explotada y veamos cómo ocurrió:
 
 ```solidity
 function _deposit(
@@ -198,13 +198,13 @@ function _deposit(
     uint256 nav
 ) private returns (uint256 shares) {
         /*
-        validations
+        validaciones
     */
     uint256 returnAmount = 0;
     uint256 swapAmount = 0;
     if (BASIS_POINT_MAX > invariant) {
         swapAmount = assetsToToken1(assets);
-        returnAmount = userSwap( // External call
+        returnAmount = userSwap( // Llamada externa
             data,
             address(this),
             swapAmount,
@@ -212,7 +212,7 @@ function _deposit(
             address(other)
         );
     }
-    uint256 supply = totalSupply(); // State update
+    uint256 supply = totalSupply(); // Actualización de estado
     if (0 < supply) {
         uint256 valueToken0 = getValueInNumeraire(
             asset,
@@ -240,26 +240,26 @@ function _deposit(
 }
 ```
 
-This is a classic example of a reentrancy issue—you don’t see one this straightforward very often these days! The core problem here was the lack of reentrancy protection. The `userSwap()` function allowed the attacker to reenter the `deposit()` function before the original call updated `totalSupply`. This meant the attacker could mint more shares than they were actually owed, exploiting the contract for a profit.
+Este es un ejemplo clásico de un problema de reentrada. ¡Hoy en día no se ve uno tan directo muy a menudo! El problema central era la falta de protección contra reentrada. La función `userSwap()` permitía al atacante volver a entrar en la función `deposit()` antes de que la llamada original actualizara `totalSupply`. Esto significaba que el atacante podía acuñar más participaciones de las que realmente le correspondían, explotando el contrato para obtener una ganancia.
 
 ### DELEGATECALL
 
-The `CALL` and `DELEGATECALL` opcodes are useful for allowing Ethereum developers to modularize their code. Standard external message calls to contracts are handled by the `CALL` opcode, which executes the code in the context of the *called* contract. In contrast, `DELEGATECALL` runs the code from another contract, but in the context of the *calling* contract. That means the storage, `msg.sender`, and `msg.value` all remain unchanged. A helpful way to think about `DELEGATECALL` is that the calling contract is temporarily borrowing the bytecode of the called contract and executing it as if it were its own. This enables powerful patterns like proxy contracts and libraries, where you deploy reusable logic once and reuse it across many contracts. Although the differences between these two opcodes are simple and intuitive, the use of `DELEGATECALL` can lead to subtle and unexpected behavior, especially when it comes to storage layout. For further reading, see Loi.Luu’s [Ethereum Stack Exchange question on this topic](https://oreil.ly/GJOUl) and the [Solidity docs](https://oreil.ly/gA7vg).
+Los códigos de operación `CALL` y `DELEGATECALL` permiten a los desarrolladores de Ethereum modularizar su código. El código de operación `CALL` gestiona las llamadas externas de mensaje estándar a los contratos y ejecuta el código en el contexto del contrato *llamado*. En cambio, `DELEGATECALL` ejecuta el código de otro contrato, pero en el contexto del contrato *que realiza la llamada*. Eso significa que el almacenamiento persistente, `msg.sender` y `msg.value` permanecen sin cambios. Una manera útil de entender `DELEGATECALL` es que el contrato que realiza la llamada toma prestado temporalmente el bytecode del contrato llamado y lo ejecuta como si fuera propio. Esto permite patrones potentes, como los contratos proxy y las bibliotecas, en los que se despliega lógica reutilizable una vez y se reutiliza en muchos contratos. Aunque las diferencias entre estos dos códigos de operación son simples e intuitivas, el uso de `DELEGATECALL` puede generar comportamientos sutiles e inesperados, especialmente en lo referente a la disposición del almacenamiento persistente. Para más información, consulte la [pregunta de Loi.Luu sobre este tema en Ethereum Stack Exchange](https://oreil.ly/GJOUl) y la [documentación de Solidity](https://oreil.ly/gA7vg).
 
-#### The vulnerability
+#### La vulnerabilidad
 
-As a result of the context-preserving nature of `DELEGATECALL`, building vulnerability-free custom libraries is not as easy as you might think. The code in libraries themselves can be secure and vulnerability free; however, when it is run in the context of another application, new vulnerabilities can arise. Let’s see a fairly complex example of this, using Fibonacci numbers. Consider the library in Example 9-3, which can generate the Fibonacci sequence and sequences of similar form. (Note: this code was modified from [*https://oreil.ly/EHjOb*](https://oreil.ly/EHjOb).)
+Debido a que `DELEGATECALL` conserva el contexto, crear bibliotecas personalizadas sin vulnerabilidades no es tan fácil como podría pensarse. El código de las bibliotecas puede ser seguro y estar libre de vulnerabilidades; sin embargo, cuando se ejecuta en el contexto de otra aplicación, pueden surgir nuevas vulnerabilidades. Veamos un ejemplo bastante complejo que utiliza números de Fibonacci. Consideremos la biblioteca del ejemplo 9-3, que puede generar la sucesión de Fibonacci y sucesiones de forma similar. (Nota: este código se modificó a partir de [*https://oreil.ly/EHjOb*](https://oreil.ly/EHjOb).)
 
-**Example 9-3. FibonacciLib: a faulty implementation of a custom library**
+**Ejemplo 9-3. FibonacciLib: una implementación defectuosa de una biblioteca personalizada**
 
 ```solidity
-1 // library contract - calculates Fibonacci-like numbers
+1 // contrato de biblioteca: calcula números de tipo Fibonacci
 2 contract FibonacciLib {
-3     // initializing the standard Fibonacci sequence
+3     // inicializar la sucesión de Fibonacci estándar
 4     uint256 public start;
 5     uint256 public calculatedFibNumber;
 6
-7     // modify the zeroth number in the sequence
+7     // modificar el número de índice cero de la sucesión
 8     function setStart(uint256 _start) public {
 9         start = _start;
 10     }
@@ -276,35 +276,35 @@ As a result of the context-preserving nature of `DELEGATECALL`, building vulnera
 21 }
 ```
 
-This library provides a function that can generate the *n*th Fibonacci number in the sequence. It allows users to change the starting number of the sequence (`start`) and calculate the *n*th Fibonacci-like number in this new sequence.
+Esta biblioteca proporciona una función que puede generar el *n*-ésimo número de Fibonacci de la sucesión. Permite a los usuarios cambiar el número inicial de la sucesión (`start`) y calcular el *n*-ésimo número de tipo Fibonacci de esta nueva sucesión.
 
-Let us now consider a contract that utilizes this library:
+Consideremos ahora un contrato que utiliza esta biblioteca:
 
 ```solidity
 contract FibonacciBalance {
     address public fibonacciLibrary;
-    // the current Fibonacci number to withdraw
+    // el número de Fibonacci actual que se retirará
     uint256 public calculatedFibNumber;
-    // the starting Fibonacci sequence number
+    // el número inicial de la sucesión de Fibonacci
     uint256 public start = 3;
     uint256 public withdrawalCounter;
-    // the Fibonacci function selector
+    // el selector de la función de Fibonacci
     bytes4 constant fibSig = bytes4(keccak256("setFibonacci(uint256)"));
-    // constructor - loads the contract with ether
+    // constructor: carga el contrato con ether
     constructor(address _fibonacciLibrary) payable {
         fibonacciLibrary = _fibonacciLibrary;
     }
     function withdraw() public {
         withdrawalCounter += 1;
-        // calculate the Fibonacci number for the current withdrawal user
-        // this sets calculatedFibNumber
+        // calcular el número de Fibonacci para el usuario del retiro actual
+        // esto establece calculatedFibNumber
         (bool success, ) = fibonacciLibrary.delegatecall(
             abi.encodeWithSelector(fibSig, withdrawalCounter)
         );
         require(success, "Delegatecall failed");
         payable(msg.sender).transfer(calculatedFibNumber * 1 ether);
     }
-    // allow users to call Fibonacci library functions
+    // permitir a los usuarios llamar a las funciones de la biblioteca Fibonacci
     fallback() external {
         (bool success, ) = fibonacciLibrary.delegatecall(msg.data);
         require(success, "Delegatecall failed");
@@ -312,70 +312,70 @@ contract FibonacciBalance {
 }
 ```
 
-This contract allows a participant to withdraw ether from the contract, with the amount of ether being equal to the Fibonacci number corresponding to the participant’s withdrawal order—that is, the first participant gets 1 ether, the second also gets 1, the third gets 2, the fourth gets 3, the fifth 5, and so on (until the balance of the contract is less than the Fibonacci number being withdrawn).
+Este contrato permite a un participante retirar ether del contrato, con una cantidad de ether igual al número de Fibonacci correspondiente al orden de retiro del participante; es decir, el primer participante recibe 1 ether, el segundo también recibe 1, el tercero recibe 2, el cuarto recibe 3, el quinto 5, y así sucesivamente, hasta que el saldo del contrato sea menor que el número de Fibonacci que se retira.
 
-There are a number of elements in this contract that may require some explanation. First, there is an interesting-looking variable: `fibSig`. This holds the first 4 bytes of the Keccak-256 hash of the string `"setFibonacci(uint256)"`. This is known as the [*function selector*](https://oreil.ly/u9uaH) and is put into calldata to specify which function of a smart contract will be called. It is used in the `delegatecall` on line 18 to specify that we wish to run the `setFibonacci(uint256)` function. The calldata also includes the parameter we are passing to the function. Second, we assume that the address for the FibonacciLib library is correctly referenced in the constructor.
+Hay varios elementos de este contrato que pueden requerir una explicación. Primero, hay una variable de aspecto interesante: `fibSig`. Contiene los primeros 4 bytes del hash Keccak-256 de la cadena `"setFibonacci(uint256)"`. Esto se conoce como el [*selector de función*](https://oreil.ly/u9uaH) y se coloca en calldata para especificar qué función de un contrato inteligente se llamará. Se utiliza en el `delegatecall` de la línea 18 para especificar que deseamos ejecutar la función `setFibonacci(uint256)`. Calldata también incluye el parámetro que pasamos a la función. Segundo, suponemos que la dirección de la biblioteca FibonacciLib está referenciada correctamente en el constructor.
 
-Can you spot any errors in this contract? If you were to deploy this contract, fill it with ether, and call `withdraw`, it would likely revert.
+¿Puede detectar algún error en este contrato? Si desplegara este contrato, lo llenara de ether y llamara a `withdraw`, probablemente revertiría.
 
-You may have noticed that the state variable `start` is used in both the library and the main calling contract. In the library contract, `start` is used to specify the beginning of the Fibonacci sequence and is set to `0`, whereas it is set to `3` in the calling contract. You may also have noticed that the fallback function in the `FibonacciBalance` contract allows all calls to be passed to the library contract, which allows for the `setStart` function of the library contract to be called. Recalling that we preserve the state of the contract, it may seem that this function would allow you to change the state of the `start` variable in the local `FibonacciBalance` contract. If so, this would allow you to withdraw more ether since the resulting `calculatedFibNumber` is dependent on the `start` variable (as seen in the library contract). In actual fact, the `setStart` function does not (and cannot) modify the `start` variable in the `FibonacciBalance` contract. The underlying vulnerability in this contract is significantly worse than just modifying the `start` variable.
+Quizá haya notado que la variable de estado `start` se utiliza tanto en la biblioteca como en el contrato principal que realiza la llamada. En el contrato de biblioteca, `start` se utiliza para especificar el inicio de la sucesión de Fibonacci y se establece en `0`, mientras que en el contrato que realiza la llamada se establece en `3`. También puede haber notado que la función fallback del contrato `FibonacciBalance` permite pasar todas las llamadas al contrato de biblioteca, lo que permite llamar a la función `setStart` de este. Recordando que conservamos el estado del contrato, podría parecer que esta función permitiría cambiar el estado de la variable `start` en el contrato local `FibonacciBalance`. De ser así, esto permitiría retirar más ether, ya que el `calculatedFibNumber` resultante depende de la variable `start`, como se ve en el contrato de biblioteca. En realidad, la función `setStart` no modifica ni puede modificar la variable `start` del contrato `FibonacciBalance`. La vulnerabilidad subyacente de este contrato es considerablemente peor que simplemente modificar la variable `start`.
 
-Before discussing the actual issue, let’s take a quick detour to understand how state variables actually get stored in contracts. *State* or *storage variables* (variables that persist over individual transactions) are placed into *slots* sequentially as they are introduced in the contract. (There are some complexities here; consult the [Solidity docs](https://oreil.ly/LzV7L) for a more thorough understanding.)
+Antes de analizar el problema real, hagamos una breve pausa para entender cómo se almacenan realmente las variables de estado en los contratos. Las *variables de estado* o *de almacenamiento persistente*, que persisten entre transacciones individuales, se colocan en *slots* de forma secuencial a medida que se introducen en el contrato. (Hay algunas complejidades aquí; consulte la [documentación de Solidity](https://oreil.ly/LzV7L) para comprenderlo con mayor profundidad.)
 
-As an example, let’s look at the library contract. It has two state variables: `start` and `calculatedFibNumber`. The first variable, `start`, is stored in the contract’s storage at `slot[0]` (i.e., the first slot). The second variable, `calculatedFibNumber`, is placed in the next available storage slot, `slot[1]`. The function `setStart` takes an input and sets `start` to whatever the input was. This function therefore sets `slot[0]` to whatever input we provide in the `setStart` function. Similarly, the `setFibonacci` function sets `calculatedFibNumber` to the result of `fibonacci(n)`. Again, this is simply setting storage `slot[1]` to the value of `fibonacci(n)`.
+Como ejemplo, observemos el contrato de biblioteca. Tiene dos variables de estado: `start` y `calculatedFibNumber`. La primera variable, `start`, se guarda en el almacenamiento persistente del contrato en `slot[0]`, es decir, el primer slot. La segunda variable, `calculatedFibNumber`, se coloca en el siguiente slot de almacenamiento disponible, `slot[1]`. La función `setStart` toma una entrada y establece `start` en el valor de esa entrada. Por lo tanto, esta función establece `slot[0]` en cualquier entrada que proporcionemos a la función `setStart`. De manera similar, la función `setFibonacci` establece `calculatedFibNumber` en el resultado de `fibonacci(n)`. De nuevo, esto simplemente establece el `slot[1]` del almacenamiento persistente en el valor de `fibonacci(n)`.
 
-Now, let’s look at the `FibonacciBalance` contract. Storage `slot[0]` now corresponds to the `fibonacciLibrary` address, and `slot[1]` corresponds to `calculatedFibNumber`. It is in this incorrect mapping that the vulnerability occurs: `delegatecall` *preserves contract context*. This means that code that is executed via `delegatecall` will act on the state (i.e., storage) of the calling contract.
+Ahora observemos el contrato `FibonacciBalance`. El `slot[0]` del almacenamiento persistente corresponde ahora a la dirección `fibonacciLibrary`, y `slot[1]` corresponde a `calculatedFibNumber`. La vulnerabilidad aparece en esta correspondencia incorrecta: `delegatecall` *conserva el contexto del contrato*. Esto significa que el código ejecutado mediante `delegatecall` actuará sobre el estado, es decir, el almacenamiento persistente, del contrato que realiza la llamada.
 
-Now notice that in `withdraw` on line 18 we execute `fibonacciLibrary.delegatecall(abi.encodeWithSelector(fibSig, withdrawalCounter))`. This calls the `setFibonacci` function, which, as we discussed, modifies storage `slot[1]`, which in our current context is `calculatedFibNumber`. This is as expected (i.e., after execution, `calculatedFibNumber` is modified). However, recall that the `start` variable in the `FibonacciLib` contract is located in storage `slot[0]`, which is the `fibonacciLibrary` address in the current contract. This means that the function `fibonacci` will give an unexpected result. This is because it references `start` (`slot[0]`), which in the current calling context is the `fibonacciLibrary` address (which will often be quite large, when interpreted as a `uint`). Thus, it is likely that the `withdraw` function will revert since it will not contain `uint(fibonacciLibrary)` amount of ether, which is what `calculatedFibNumber` will return.
+Observe ahora que en `withdraw`, en la línea 18, ejecutamos `fibonacciLibrary.delegatecall(abi.encodeWithSelector(fibSig, withdrawalCounter))`. Esto llama a la función `setFibonacci`, que, como comentamos, modifica el `slot[1]` del almacenamiento persistente, que en nuestro contexto actual es `calculatedFibNumber`. Esto es lo esperado; es decir, después de la ejecución, `calculatedFibNumber` se modifica. Sin embargo, recuerde que la variable `start` del contrato `FibonacciLib` se encuentra en el `slot[0]` del almacenamiento persistente, que es la dirección `fibonacciLibrary` en el contrato actual. Esto significa que la función `fibonacci` dará un resultado inesperado. Se debe a que hace referencia a `start` (`slot[0]`), que en el contexto actual de la llamada es la dirección `fibonacciLibrary`, que a menudo será bastante grande al interpretarse como un `uint`. Por lo tanto, es probable que la función `withdraw` revierta, ya que no contendrá la cantidad de ether `uint(fibonacciLibrary)`, que es lo que devolverá `calculatedFibNumber`.
 
-Even worse, the `FibonacciBalance` contract allows users to call all of the `fibonacciLibrary` functions via the fallback function at line 25. As we discussed earlier, this includes the `setStart` function. We discussed that this function allows anyone to modify or set storage `slot[0]`. In this case, storage `slot[0]` is the `fibonacciLibrary` address. Therefore, an attacker could create a malicious contract, convert the address to a `uint256` (this can be done in Python easily using `int('<address>',16)`), and then call `setStart(<attack_contract_address_as_uint>)`. This will change `fibonacciLibrary` to the address of the attack contract. Then, whenever a user calls `withdraw` or the fallback function, the malicious contract will run (which can steal the entire balance of the contract) because we’ve modified the actual address for `fibonacciLibrary`. An example of such an attack contract would be:
+Peor aún, el contrato `FibonacciBalance` permite a los usuarios llamar a todas las funciones de `fibonacciLibrary` mediante la función fallback de la línea 25. Como vimos antes, esto incluye la función `setStart`. Explicamos que esta función permite a cualquiera modificar o establecer el `slot[0]` del almacenamiento persistente. En este caso, el `slot[0]` es la dirección `fibonacciLibrary`. Por lo tanto, un atacante podría crear un contrato malicioso, convertir la dirección a un `uint256` (esto puede hacerse fácilmente en Python mediante `int('<address>',16)`) y luego llamar a `setStart(<attack_contract_address_as_uint>)`. Esto cambiará `fibonacciLibrary` a la dirección del contrato atacante. Entonces, cada vez que un usuario llame a `withdraw` o a la función fallback, se ejecutará el contrato malicioso, que puede robar todo el saldo del contrato, porque hemos modificado la dirección real de `fibonacciLibrary`. Un ejemplo de un contrato atacante de este tipo sería:
 
 ```solidity
 contract Attack {
-    uint256 private storageSlot0; // corresponds to fibonacciLibrary
-    uint256 private storageSlot1; // corresponds to calculatedFibNumber
-    // fallback - this will run if a specified function is not found
+    uint256 private storageSlot0; // corresponde a fibonacciLibrary
+    uint256 private storageSlot1; // corresponde a calculatedFibNumber
+    // fallback: esto se ejecutará si no se encuentra una función especificada
     fallback() external {
-        storageSlot1 = 0; // we set calculatedFibNumber to 0, so if withdraw
-        // is called we don’t send out any ether
-        payable(<attacker_address>).transfer(this.balance); // we take all the ether
+        storageSlot1 = 0; // establecemos calculatedFibNumber en 0, por lo que si se llama a withdraw
+        // no enviamos ningún ether
+        payable(<attacker_address>).transfer(this.balance); // tomamos todo el ether
     }
 }
 ```
 
-Notice that this attack contract modifies the `calculatedFibNumber` by changing storage `slot[1]`. In principle, an attacker could modify any other storage slots they choose to perform all kinds of attacks on this contract. We encourage you to put these contracts into [Remix](https://remix.ethereum.org) and experiment with different attack contracts and state changes through these `delegatecall` functions.
+Observe que este contrato atacante modifica `calculatedFibNumber` cambiando el `slot[1]` del almacenamiento persistente. En principio, un atacante podría modificar cualquier otro slot que eligiera para realizar todo tipo de ataques contra este contrato. Le recomendamos colocar estos contratos en [Remix](https://remix.ethereum.org) y experimentar con distintos contratos atacantes y cambios de estado mediante estas funciones `delegatecall`.
 
-It is also important to notice that when we say that `delegatecall` is state preserving, we are not talking about the variable names of the contract but rather the actual storage slots to which those names point. As you can see from this example, a simple mistake can lead to an attacker hijacking the entire contract and its ether.
+También es importante notar que, cuando decimos que `delegatecall` conserva el estado, no hablamos de los nombres de las variables del contrato, sino de los slots reales del almacenamiento persistente a los que apuntan esos nombres. Como se ve en este ejemplo, un simple error puede llevar a que un atacante tome el control de todo el contrato y de su ether.
 
-#### Preventative techniques
+#### Técnicas preventivas
 
-Solidity provides the `library` keyword for implementing library contracts (see the [docs](https://oreil.ly/K7kF1) for further details). This ensures that the library contract is stateless and non-self-destructible. Forcing libraries to be stateless mitigates the complexities of storage context demonstrated in this section. Stateless libraries also prevent attacks wherein attackers modify the state of the library directly in order to affect the contracts that depend on the library’s code. As a general rule of thumb, when you are using `DELEGATECALL`, pay careful attention to the possible calling context of both the library contract and the calling contract and, whenever possible, build stateless libraries.
+Solidity proporciona la palabra reservada `library` para implementar contratos de biblioteca (consulte la [documentación](https://oreil.ly/K7kF1) para más detalles). Esto garantiza que el contrato de biblioteca no tenga estado ni pueda autodestruirse. Obligar a que las bibliotecas no tengan estado mitiga las complejidades del contexto de almacenamiento persistente demostradas en esta sección. Las bibliotecas sin estado también evitan ataques en los que los atacantes modifican directamente el estado de la biblioteca para afectar a los contratos que dependen de su código. Como regla general, al utilizar `DELEGATECALL`, preste mucha atención al posible contexto de llamada tanto del contrato de biblioteca como del contrato que realiza la llamada y, siempre que sea posible, construya bibliotecas sin estado.
 
-#### Real-world example: Parity multisig wallet (second hack)
+#### Ejemplo real: billetera multifirma de Parity (segundo ataque)
 
-The second Parity multisig wallet hack is an example of how well-written library code can be exploited if it is run outside its intended context. There are a number of good explanations of this hack, such as [“Parity Multisig Hacked. Again”](https://oreil.ly/OLt5Q). To add to these references, let’s explore the contracts that were exploited.
+El segundo ataque a la billetera multifirma de Parity es un ejemplo de cómo puede explotarse código de biblioteca bien escrito si se ejecuta fuera del contexto previsto. Hay varias buenas explicaciones de este ataque, como [“Parity Multisig Hacked. Again”](https://oreil.ly/OLt5Q). Para complementar estas referencias, exploremos los contratos que fueron explotados.
 
-Since the exploit is seven years old, the following code snippets have been updated to reflect the syntax of recent Solidity versions, making them easier to read and understand.
+Como el ataque ocurrió hace siete años, los siguientes fragmentos de código se actualizaron para reflejar la sintaxis de versiones recientes de Solidity, lo que facilita su lectura y comprensión.
 
-The library contract is as follows:
+El contrato de biblioteca es el siguiente:
 
 ```solidity
 1 contract WalletLibrary is WalletEvents {
 2
 3   ...
 4
-5   // throw unless the contract is not yet initialized.
+5   // lanzar un error salvo que el contrato aún no esté inicializado.
 6   modifier only_uninitialized { if (m_numOwners > 0) revert(); _; }
 7
-8   // constructor - just pass on the owner array to multiowned and
-9   // the limit to daylimit
+8   // constructor: solo pasar el arreglo de propietarios a multiowned y
+9   // el límite a daylimit
 10   function initWallet(address[] memory _owners, uint256 _required, uint256
 11        _daylimit) public only_uninitialized {
 12     initDaylimit(_daylimit);
 13     initMultiowned(_owners, _required);
 14   }
 15
-16   // kills the contract sending everything to `_to`.
+16   // destruye el contrato y envía todo a `_to`.
 17   function kill(address _to) onlymanyowners(keccak256(msg.data)) external {
 18     selfdestruct(_to);
 19   }
@@ -385,18 +385,18 @@ The library contract is as follows:
 23 }
 ```
 
-And here’s the wallet contract:
+Y este es el contrato de billetera:
 
 ```solidity
 1 contract Wallet is WalletEvents {
 2
 3   ...
 4
-5   // METHODS
+5   // MÉTODOS
 6
-7   // gets called when no other function matches
+7   // se llama cuando ninguna otra función coincide
 8   fallback() external payable {
-9     // just being sent some cash?
+9     // ¿solo se está enviando algo de dinero?
 10     if (msg.value > 0)
 11       Deposit(msg.sender, msg.value);
 12     else if (msg.data.length > 0)
@@ -405,51 +405,51 @@ And here’s the wallet contract:
 15
 16   ...
 17
-18   // FIELDS
+18   // CAMPOS
 19   address constant _walletLibrary =
 20     0xcafecafecafecafecafecafecafecafecafecafe;
 21 }
 ```
 
-Notice that the `Wallet` contract essentially passes all calls to the `WalletLibrary` contract via a delegate call. The constant `_walletLibrary` address in this code snippet acts as a placeholder for the actually deployed `WalletLibrary` contract (which was at `0x863DF6BFa4469f3ead0bE8f9F2AAE51c91A907b4`).
+Observe que el contrato `Wallet` esencialmente pasa todas las llamadas al contrato `WalletLibrary` mediante una llamada delegada. La dirección constante `_walletLibrary` de este fragmento de código sirve como marcador de posición del contrato `WalletLibrary` realmente desplegado, que estaba en `0x863DF6BFa4469f3ead0bE8f9F2AAE51c91A907b4`.
 
-The intended operation of these contracts was to have a simple, low-cost, deployable `Wallet` contract whose codebase and main functionality were in the `WalletLibrary` contract. Unfortunately, the `WalletLibrary` contract is itself a contract and maintains its own state. Can you see why this might be an issue?
+El funcionamiento previsto de estos contratos consistía en tener un contrato `Wallet` sencillo, de bajo costo y desplegable, cuya base de código y funcionalidad principal estuvieran en el contrato `WalletLibrary`. Por desgracia, el contrato `WalletLibrary` es en sí mismo un contrato y mantiene su propio estado. ¿Puede ver por qué esto podría ser un problema?
 
-It is possible to send calls to the `WalletLibrary` contract itself. Specifically, the `WalletLibrary` contract could be initialized and become owned. In fact, a user did this, calling the `initWallet` function on the `WalletLibrary` contract and becoming an owner of the library contract. The same user subsequently called the `kill` function. Because the user was an owner of the library contract, the modifier passed, and the library contract self-destructed. As all `Wallet` contracts in existence refer to this library contract and contain no method to change this reference, all of their functionality, including the ability to withdraw ether, was lost along with the `WalletLibrary` contract. As a result, all ether in all Parity multisig wallets of this type instantly became lost or permanently unrecoverable.
+Es posible enviar llamadas al propio contrato `WalletLibrary`. En concreto, el contrato `WalletLibrary` podía inicializarse y pasar a tener un propietario. De hecho, un usuario lo hizo: llamó a la función `initWallet` del contrato `WalletLibrary` y se convirtió en propietario del contrato de biblioteca. Posteriormente, el mismo usuario llamó a la función `kill`. Como el usuario era propietario del contrato de biblioteca, se cumplió el modificador y el contrato de biblioteca se autodestruyó. Como todos los contratos `Wallet` existentes hacen referencia a este contrato de biblioteca y no contienen ningún método para cambiar esa referencia, toda su funcionalidad, incluida la capacidad de retirar ether, se perdió junto con el contrato `WalletLibrary`. Como resultado, todo el ether de todas las billeteras multifirma de Parity de este tipo se perdió al instante o se volvió irrecuperable de forma permanente.
 
-> **Note**
+> **Nota**
 >
-> The exploiter later [appeared on GitHub](https://oreil.ly/VVgnm), leaving the memorable comment, “I accidentally killed it.” He claimed to be a newcomer to Ethereum who had been experimenting with smart contracts.
+> El autor del ataque [apareció más tarde en GitHub](https://oreil.ly/VVgnm), donde dejó el memorable comentario: "Lo destruí por accidente". Afirmó ser un recién llegado a Ethereum que había estado experimentando con contratos inteligentes.
 
-### Entropy Illusion
+### Ilusión de entropía
 
-All transactions on the Ethereum blockchain are *deterministic state transition* operations. This means that every transaction modifies the global state of the Ethereum ecosystem in a calculable way, with no uncertainty. This has the fundamental implication that there is no source of entropy or randomness in Ethereum. In the early days, finding a decentralized way to create randomness was a big challenge. But over the years, we’ve developed some solid solutions to solve this problem.
+Todas las transacciones de la blockchain de Ethereum son operaciones de *transición de estado determinista*. Esto significa que cada transacción modifica el estado global del ecosistema de Ethereum de una manera calculable, sin incertidumbre. Esto tiene una implicación fundamental: no hay ninguna fuente de entropía o aleatoriedad en Ethereum. Al principio, encontrar una manera descentralizada de crear aleatoriedad era un gran desafío. Pero, con los años, hemos desarrollado algunas soluciones sólidas para resolver este problema.
 
-#### The vulnerability
+#### La vulnerabilidad
 
-When developers build smart contracts on Ethereum, they often need a source of randomness, whether for games, lotteries, or other features that require unpredictability. The challenge is that Ethereum, as a blockchain, is inherently deterministic: every node must reach the same result to maintain consensus. So introducing true randomness requires a bit of creativity.
+Cuando los desarrolladores construyen contratos inteligentes en Ethereum, a menudo necesitan una fuente de aleatoriedad, ya sea para juegos, loterías u otras funciones que requieren imprevisibilidad. El desafío es que Ethereum, como blockchain, es inherentemente determinista: cada nodo debe llegar al mismo resultado para mantener el consenso. Por eso, introducir verdadera aleatoriedad requiere algo de creatividad.
 
-One approach many developers have resorted to is using block variables (such as block hashes, timestamps, or block numbers) as seeds to generate random numbers. These values may appear random, but they are actually controlled by the validator proposing the current block. For example, imagine a DApp where the outcome of a game is based on whether the next block hash ends in an even number. A validator could manipulate the process: if they are about to propose a block and the hash doesn’t fit their desired outcome, they could, for example, change the transaction order to change the block hash in a favorable way.
+Un enfoque al que muchos desarrolladores han recurrido es utilizar variables de bloque, como hashes de bloques, marcas de tiempo o números de bloque, como semillas para generar números aleatorios. Estos valores pueden parecer aleatorios, pero en realidad los controla el validador que propone el bloque actual. Por ejemplo, imagine una DApp en la que el resultado de un juego dependa de si el hash del siguiente bloque termina en un número par. Un validador podría manipular el proceso: si está por proponer un bloque y el hash no se ajusta al resultado que desea, podría, por ejemplo, cambiar el orden de las transacciones para cambiar el hash del bloque de manera favorable.
 
-Validator manipulation isn’t the only risk when deriving randomness from block variables. Other smart contracts are aware of the value of these block variables, enabling them to interact with a vulnerable contract only when the outcome is favorable.
+La manipulación por parte de validadores no es el único riesgo al derivar aleatoriedad de variables de bloque. Otros contratos inteligentes conocen el valor de estas variables de bloque, lo que les permite interactuar con un contrato vulnerable solo cuando el resultado es favorable.
 
-#### Preventative techniques
+#### Técnicas preventivas
 
-Compared to the past, Ethereum developers now have reliable methods for generating randomness: `PREVRANDAO` and *verifiable random functions* (VRFs).
+A diferencia del pasado, los desarrolladores de Ethereum ahora cuentan con métodos confiables para generar aleatoriedad: `PREVRANDAO` y las *funciones aleatorias verificables* (VRF).
 
-VRFs are cryptographic proofs ensuring that the randomness generated is fair and unbiased. VRFs are supported by multiple providers, such as Chainlink. The VRF generates a random number along with a proof that verifies its fairness. This proof is verifiable by anyone, ensuring that the randomness is secure. VRFs have become a standard decentralized solution for securely obtaining randomness in smart contracts.
+Las VRF son pruebas criptográficas que garantizan que la aleatoriedad generada sea justa y sin sesgos. Múltiples proveedores, como Chainlink, admiten VRF. La VRF genera un número aleatorio junto con una prueba que verifica su imparcialidad. Cualquiera puede verificar esta prueba, lo que garantiza que la aleatoriedad sea segura. Las VRF se han convertido en una solución descentralizada estándar para obtener aleatoriedad de forma segura en contratos inteligentes.
 
-Another solid option is the `PREVRANDAO` opcode, introduced to Ethereum with the transition to PoS. This opcode is used to obtain the `PREVRANDAO` value, which originates from the Randao process, an integral component of PoS block production. Essentially, Randao is a collective effort by validators to generate randomness by each contributing a piece of data. `PREVRANDAO` is the result of this process from the previous block, and it serves as a reliable source of randomness. It’s trustworthy because manipulating the `PREVRANDAO` value would require compromising a significant number of validators, making such exploitation impractical and economically unfeasible. Developers can use this value in their contracts, but they should keep in mind that `PREVRANDAO` represents the value from the previous block, which is already known. To avoid this value being predictable at the time of commitment, smart contracts should instead commit to the `PREVRANDAO` value of a future block. This way, the value won’t be known when the commitment is made.
+Otra opción sólida es el código de operación `PREVRANDAO`, introducido en Ethereum con la transición a PoS. Este código de operación se utiliza para obtener el valor `PREVRANDAO`, que se origina en el proceso Randao, un componente integral de la producción de bloques de PoS. En esencia, Randao es un esfuerzo colectivo de los validadores para generar aleatoriedad mediante la contribución de un dato por parte de cada uno. `PREVRANDAO` es el resultado de este proceso del bloque anterior y sirve como una fuente confiable de aleatoriedad. Es confiable porque manipular el valor `PREVRANDAO` requeriría comprometer a un número significativo de validadores, lo que hace que esa explotación sea impráctica y económicamente inviable. Los desarrolladores pueden utilizar este valor en sus contratos, pero deben tener presente que `PREVRANDAO` representa el valor del bloque anterior, que ya es conocido. Para evitar que este valor sea predecible al momento de comprometerse, los contratos inteligentes deberían, en cambio, comprometerse con el valor `PREVRANDAO` de un bloque futuro. De esta manera, el valor no se conocerá cuando se asuma el compromiso.
 
-> **Warning**
+> **Advertencia**
 >
-> Randao can be manipulated if an attacker gains control of the proposers assigned to the final slots in an epoch. To decide if `PREVRANDAO` is a reliable choice for generating randomness in your smart contract, you should carefully weigh the costs and benefits of its manipulation. Although tampering with Randao can be expensive, if your contract involves valuable assets, it’s safer to use a decentralized oracle solution instead.
+> Randao puede manipularse si un atacante obtiene el control de los proponentes asignados a los últimos slots de una época. Para decidir si `PREVRANDAO` es una opción confiable para generar aleatoriedad en su contrato inteligente, debe evaluar cuidadosamente los costos y beneficios de manipularlo. Aunque alterar Randao puede resultar costoso, si su contrato involucra activos valiosos, es más seguro utilizar en su lugar una solución de oráculo descentralizada.
 
-With solutions like `PREVRANDAO` and VRFs widely documented and accessible, it’s uncommon nowadays to see developers using insecure block variables as a randomness source. However, mistakes still occur when shortcuts are taken or when developers are unaware of these tools.
+Con soluciones como `PREVRANDAO` y las VRF ampliamente documentadas y accesibles, hoy en día es poco común ver que los desarrolladores utilicen variables de bloque inseguras como fuente de aleatoriedad. Sin embargo, todavía se cometen errores cuando se toman atajos o cuando los desarrolladores desconocen estas herramientas.
 
-#### Real-world example: Fomo3D
+#### Ejemplo real: Fomo3D
 
-Fomo3D was an Ethereum lottery game where players bought “keys” to extend a timer, competing to be the last buyer when the timer hit zero to win the prize pool. It included an airdrop feature with poor randomness, as shown in the following code:
+Fomo3D era un juego de lotería de Ethereum en el que los jugadores compraban "llaves" para extender un temporizador y competían por ser el último comprador cuando el temporizador llegara a cero para ganar el fondo de premios. Incluía una función de airdrop con aleatoriedad deficiente, como se muestra en el siguiente código:
 
 ```solidity
 function airdrop()
@@ -476,17 +476,17 @@ function airdrop()
     }
 ```
 
-A malicious contract would know in advance the values used to compute the seed, allowing it to trigger the `airdrop` function only when it would result in a win. It’s no surprise the contract was exploited.
+Un contrato malicioso conocería de antemano los valores utilizados para calcular la semilla, lo que le permitiría activar la función `airdrop` solo cuando fuera a resultar en una victoria. No sorprende que el contrato haya sido explotado.
 
-### Unchecked CALL Return Values
+### Valores de retorno de CALL sin comprobar
 
-There are a number of ways to perform external calls in Solidity. Sending ether to external accounts is commonly performed via the `transfer` method. However, the `send` function can also be used, and for more versatile external calls, the `CALL` opcode can be directly employed in Solidity. The `call` and `send` functions return a Boolean indicating whether the call succeeded or failed. Thus, these functions have a simple caveat, in that the transaction that executes these functions will not revert if the external call (initialized by `call` or `send`) fails; rather, the functions will simply return `false`. A common error is that the developer expects a revert to occur if the external call fails and does not check the return value.
+Hay varias formas de realizar llamadas externas en Solidity. El envío de ether a cuentas externas suele realizarse mediante el método `transfer`. Sin embargo, también puede utilizarse la función `send` y, para llamadas externas más versátiles, puede emplearse directamente el código de operación `CALL` en Solidity. Las funciones `call` y `send` devuelven un booleano que indica si la llamada tuvo éxito o falló. Por lo tanto, estas funciones tienen una salvedad sencilla: la transacción que las ejecuta no revertirá si la llamada externa, iniciada por `call` o `send`, falla; en cambio, las funciones simplemente devolverán `false`. Un error común es que el desarrollador espere que se produzca una reversión si la llamada externa falla y no compruebe el valor de retorno.
 
-#### The vulnerability
+#### La vulnerabilidad
 
-Consider the contract in Example 9-4.
+Consideremos el contrato del ejemplo 9-4.
 
-**Example 9-4. Vulnerable Lotto contract**
+**Ejemplo 9-4. Contrato Lotto vulnerable**
 
 ```solidity
 1 contract Lotto {
@@ -495,7 +495,7 @@ Consider the contract in Example 9-4.
 4     address public winner;
 5     uint256 public winAmount;
 6
-7     // ... extra functionality here
+7     // ... funcionalidad adicional aquí
 8
 9     function sendToWinner() public {
 10         require(!payedOut);
@@ -510,21 +510,21 @@ Consider the contract in Example 9-4.
 19 }
 ```
 
-This represents a Lotto-like contract, where a `winner` receives `winAmount` of ether, which typically leaves a little left over for anyone to withdraw. The vulnerability exists on line 11, where a `send` is used without checking the response. In this trivial example, a `winner` whose transaction fails (either by running out of gas or by being a contract that intentionally throws in the fallback function) allows `payedOut` to be set to `true` regardless of whether ether was sent or not. In this case, anyone can withdraw the `winner`’s winnings via the `withdrawLeftOver` function.
+Esto representa un contrato similar a una lotería, donde un `winner` recibe `winAmount` de ether, lo que normalmente deja un pequeño sobrante que cualquiera puede retirar. La vulnerabilidad existe en la línea 11, donde se utiliza `send` sin comprobar la respuesta. En este ejemplo trivial, un `winner` cuya transacción falla, ya sea por quedarse sin gas o por ser un contrato que lanza intencionalmente un error en la función fallback, permite que `payedOut` se establezca en `true` independientemente de si se envió ether o no. En este caso, cualquiera puede retirar las ganancias de `winner` mediante la función `withdrawLeftOver`.
 
-#### Preventative techniques
+#### Técnicas preventivas
 
-The first line of defense is always to check the return value of the `send` function and low-level calls, with no exceptions. Nowadays, any static analysis tool will flag this issue, making it hard to overlook.
+La primera línea de defensa siempre es comprobar el valor de retorno de la función `send` y de las llamadas de bajo nivel, sin excepciones. Hoy en día, cualquier herramienta de análisis estático señalará este problema, por lo que es difícil pasarlo por alto.
 
-When sending ether, we need to carefully consider which method to use. If we want the transaction to automatically revert on failure, `transfer` might seem appealing because it handles failure by default. But since both `send` and `transfer` forward only 2,300 gas units, they can easily fail when the recipient (whether a contract or, now with EIP-7702, even an EOA) has any fallback logic. Given this evolving context, the safer and more flexible approach is to use `call` instead, explicitly check its return value, and manage errors accordingly. That gives us full control over gas forwarding and keeps our contracts compatible with a wider range of recipients.
+Al enviar ether, debemos considerar cuidadosamente qué método utilizar. Si queremos que la transacción revierta automáticamente en caso de falla, `transfer` puede parecer atractiva porque maneja las fallas de forma predeterminada. Pero, como tanto `send` como `transfer` reenvían solo 2,300 unidades de gas, pueden fallar fácilmente cuando el destinatario, ya sea un contrato o, ahora con EIP-7702, incluso una EOA, tiene alguna lógica fallback. Ante este contexto cambiante, el enfoque más seguro y flexible es utilizar `call` en su lugar, comprobar explícitamente su valor de retorno y gestionar los errores según corresponda. Esto nos da control total sobre el reenvío de gas y mantiene nuestros contratos compatibles con una mayor variedad de destinatarios.
 
-#### Real-world example: Etherpot and King of the Ether
+#### Ejemplo real: Etherpot y King of the Ether
 
-[Etherpot](https://oreil.ly/_-iC-) was a smart contract lottery, not too dissimilar to the contract in Example 9-4. The downfall of this contract was primarily due to incorrect use of block hashes (only the last 256 block hashes are usable; see “Predefined Global Variables and Functions”). However, this contract also suffered from an unchecked `call` value.
+[Etherpot](https://oreil.ly/_-iC-) era una lotería de contrato inteligente, no muy distinta del contrato del ejemplo 9-4. La caída de este contrato se debió principalmente al uso incorrecto de hashes de bloques (solo se pueden utilizar los últimos 256 hashes de bloques; véase "Variables y funciones globales predefinidas"). Sin embargo, este contrato también tenía un valor de `call` sin comprobar.
 
-Consider the function `cash` in Example 9-5: again, the following code snippet has been updated to reflect the syntax of recent Solidity versions.
+Consideremos la función `cash` del ejemplo 9-5: de nuevo, el siguiente fragmento de código se actualizó para reflejar la sintaxis de versiones recientes de Solidity.
 
-**Example 9-5. Lotto.sol: code snippet**
+**Ejemplo 9-5. Lotto.sol: fragmento de código**
 
 ```solidity
 1 function cash(uint256 roundIndex, uint256 subpotIndex) public {
@@ -536,145 +536,145 @@ Consider the function `cash` in Example 9-5: again, the following code snippet h
 7        return;
 8    if(rounds[roundIndex].isCashed[subpotIndex])
 9        return;
-10    //Subpots can only be cashed once. This is to prevent double payouts
+10    //Los subfondos solo pueden cobrarse una vez. Esto evita pagos duplicados
 11    address winner = calculateWinner(roundIndex,subpotIndex);
 12    uint256 subpot = getSubpot(roundIndex);
 13    payable(winner).send(subpot);
 14    rounds[roundIndex].isCashed[subpotIndex] = true;
-15    //Mark the round as cashed
+15    //Marcar la ronda como cobrada
 16 }
 ```
 
-Notice that on line 13, the `send` function’s return value is not checked, and the following line then sets a Boolean indicating that the winner has been sent their funds. This bug can allow a state where the winner does not receive their ether but the state of the contract can indicate that the winner has already been paid.
+Observe que en la línea 13 no se comprueba el valor de retorno de la función `send`, y la siguiente línea establece un booleano que indica que los fondos se han enviado al ganador. Este error puede permitir un estado en el que el ganador no recibe su ether, pero el estado del contrato puede indicar que ya se le pagó.
 
-A more serious version of this bug occurred in the [King of the Ether](https://oreil.ly/4zLMH) contract. An excellent [postmortem](https://oreil.ly/U8ckx) of this contract has been written that details how an unchecked, failed `send` could be used to attack the contract.
+Una versión más grave de este error ocurrió en el contrato [King of the Ether](https://oreil.ly/4zLMH). Se escribió un excelente [análisis posterior al incidente](https://oreil.ly/U8ckx) de este contrato que detalla cómo podía utilizarse un `send` fallido y sin comprobar para atacar el contrato.
 
-#### The ERC-20 case
+#### El caso de ERC-20
 
-When dealing with ERC-20 tokens in Solidity, simply checking the return value of token transfers isn’t enough to ensure safe interactions. This is because not all ERC-20 tokens strictly follow the ERC-20 standard, especially older tokens. Some tokens return a Boolean value upon completion of a transfer rather than revert or throw exceptions directly when the operation fails. Others might not return any value at all, leading to ambiguous behavior when interacting with them using the standard methods. Tether (USDT) is a prominent example of a widespread token that does not fully conform to the ERC-20 standard.
+Al trabajar con tokens ERC-20 en Solidity, comprobar únicamente el valor de retorno de las transferencias de tokens no basta para garantizar interacciones seguras. Esto se debe a que no todos los tokens ERC-20 siguen estrictamente el estándar ERC-20, especialmente los más antiguos. Algunos tokens devuelven un valor booleano al completar una transferencia en lugar de revertir o lanzar excepciones directamente cuando la operación falla. Otros podrían no devolver ningún valor, lo que genera un comportamiento ambiguo al interactuar con ellos mediante los métodos estándar. Tether (USDT) es un ejemplo destacado de un token de uso extendido que no cumple por completo el estándar ERC-20.
 
-To mitigate this, we use libraries like OpenZeppelin’s SafeERC20. This library wraps standard ERC-20 operations (like `transfer`, `transferFrom`, and `approve`) in a way that gracefully handles these variations. If a token returns `false`, the library ensures that the transaction is reverted, and if a token doesn’t return a value, the library assumes the operation succeeded if no revert occurred.
+Para mitigar esto, utilizamos bibliotecas como SafeERC20 de OpenZeppelin. Esta biblioteca envuelve las operaciones estándar de ERC-20, como `transfer`, `transferFrom` y `approve`, de una manera que maneja adecuadamente estas variaciones. Si un token devuelve `false`, la biblioteca garantiza que la transacción revierta y, si un token no devuelve ningún valor, la biblioteca supone que la operación tuvo éxito si no se produjo ninguna reversión.
 
-### Race Conditions and Front-Running
+### Condiciones de carrera y front-running
 
-To really grasp this vulnerability, let’s briefly revisit how transactions work in Ethereum. When we send a transaction, it’s broadcast to the network of nodes and placed in the mempool, a kind of waiting room for pending transactions. Validators then pick up these transactions from the mempool to build a block. Transactions within a block are executed sequentially in a specific order, and because each transaction changes the blockchain’s global state, the outcome of a transaction can vary depending on its position in the block. This transaction ordering is important because it can significantly affect the results of transaction execution.
+Para comprender bien esta vulnerabilidad, repasemos brevemente cómo funcionan las transacciones en Ethereum. Cuando enviamos una transacción, se difunde a la red de nodos y se coloca en la mempool, una especie de sala de espera para las transacciones pendientes. Después, los validadores toman estas transacciones de la mempool para construir un bloque. Las transacciones de un bloque se ejecutan de forma secuencial en un orden específico y, como cada transacción cambia el estado global de la blockchain, el resultado de una transacción puede variar según su posición en el bloque. Este ordenamiento de transacciones es importante porque puede afectar considerablemente los resultados de su ejecución.
 
-> **Note**
+> **Nota**
 >
-> In practice, controlling a transaction’s position in the block mostly comes down to payment. Originally, you could influence ordering simply by offering a higher gas price. Today, thanks to the Flashbots infrastructure implementing builder-proposer separation (which isn’t yet part of Ethereum natively), users can submit bundles of transactions in a specific order and bid for their inclusion via off-chain relay systems. These processes—both the legacy mempool-based system and the new builder-based one—are covered in more detail in Chapter 6.
+> En la práctica, controlar la posición de una transacción en el bloque se reduce, en gran medida, al pago. Originalmente, se podía influir en el orden con solo ofrecer un precio de gas más alto. Hoy, gracias a la infraestructura de Flashbots que implementa la separación entre constructores y proponentes, que aún no forma parte nativa de Ethereum, los usuarios pueden enviar paquetes de transacciones en un orden específico y pujar por su inclusión mediante sistemas de retransmisión fuera de la cadena. Estos procesos, tanto el sistema anterior basado en mempool como el nuevo basado en constructores, se abordan con más detalle en el capítulo 6.
 
-#### The vulnerability
+#### La vulnerabilidad
 
-*Front-running* is the practice of exploiting this sequential execution by inserting other transactions into the block in a way that benefits the front-runner. Essentially, someone watches for pending transactions that could affect the market or a specific contract and then submits their own transaction to get processed before the original. By doing so, they can capitalize on the information from the pending transaction, often to the detriment of the original sender. It’s important that our code accounts for this dynamic and is designed to be resilient against changes in transaction order within a block.
+El *front-running* es la práctica de aprovechar esta ejecución secuencial insertando otras transacciones en el bloque de una manera que beneficie a quien lo realiza. En esencia, alguien observa transacciones pendientes que podrían afectar al mercado o a un contrato específico y luego envía su propia transacción para que se procese antes que la original. De esta forma, puede aprovechar la información de la transacción pendiente, a menudo en perjuicio del remitente original. Es importante que nuestro código tenga en cuenta esta dinámica y esté diseñado para resistir cambios en el orden de las transacciones dentro de un bloque.
 
-Let’s see how this could work with a simple example. Consider the contract shown in Example 9-6.
+Veamos cómo podría funcionar con un ejemplo sencillo. Consideremos el contrato que se muestra en el ejemplo 9-6.
 
-**Example 9-6. FindThisHash: a contract vulnerable to front-running**
+**Ejemplo 9-6. FindThisHash: un contrato vulnerable al front-running**
 
 ```solidity
 contract FindThisHash {
     bytes32 constant public hash =
       0xb5b5b97fafd9855eec9b41f74dfb6c38f5951141f9a3ecd7f44d5479b630ee0a;
-    constructor() payable {} // load with ether
+    constructor() payable {} // cargar con ether
     function solve(string memory solution) public {
-        // If you can find the pre-image of the hash, receive 1000 ether
+        // Si puede encontrar la preimagen del hash, recibe 1000 ether
         require(hash == keccak256(abi.encodePacked(solution)));
         payable(msg.sender).transfer(1000 ether);
     }
 }
 ```
 
-Say this contract has 1,000 ether. The user who can find the preimage of the SHA-3 hash `0xb5b5b97fafd9855eec9b41f74dfb6c38f5951141f9a3ecd7f44d​5479b630ee0a` can submit the solution and retrieve the 1,000 ether. Let’s say one user figures out that the solution is `Ethereum!`. They call `solve` with `Ethereum!` as the parameter. Unfortunately, an attacker spotted the transaction in the mempool, checked its validity, and then submitted an equivalent transaction with higher priority in the block. The original transaction will revert since the attacker’s transaction will be processed first.
+Supongamos que este contrato tiene 1,000 ether. El usuario que pueda encontrar la preimagen del hash SHA-3 `0xb5b5b97fafd9855eec9b41f74dfb6c38f5951141f9a3ecd7f44d​5479b630ee0a` puede enviar la solución y retirar los 1,000 ether. Supongamos que un usuario descubre que la solución es `Ethereum!`. Llama a `solve` con `Ethereum!` como parámetro. Por desgracia, un atacante detectó la transacción en la mempool, comprobó su validez y luego envió una transacción equivalente con mayor prioridad en el bloque. La transacción original revertirá porque la transacción del atacante se procesará primero.
 
-#### Preventative techniques
+#### Técnicas preventivas
 
-Front-running vulnerabilities can appear in various forms, often depending on the specific logic of the smart contract or protocol. Whenever an operation can be exploited by means of transaction ordering, we have a front-running vulnerability. Therefore, the solutions are usually tailored to the specific problem. For instance, automated market maker (AMM) protocols address this issue by allowing users to set a minimum number of tokens they must receive during a swap. While this doesn’t prevent front-running entirely, it severely limits the potential profit an attacker can extract, reducing the damage and protecting users from extreme slippage.
+Las vulnerabilidades de front-running pueden aparecer de diversas formas, a menudo según la lógica específica del contrato inteligente o del protocolo. Siempre que una operación pueda explotarse mediante el ordenamiento de transacciones, tenemos una vulnerabilidad de front-running. Por lo tanto, las soluciones suelen adaptarse al problema específico. Por ejemplo, los protocolos de creadores de mercado automatizados (AMM) abordan este problema permitiendo a los usuarios establecer una cantidad mínima de tokens que deben recibir durante un intercambio. Aunque esto no evita por completo el front-running, limita considerablemente la ganancia potencial que un atacante puede extraer, lo que reduce el daño y protege a los usuarios de un deslizamiento extremo.
 
-Another general technique is the use of a commit-reveal scheme. In this approach, users first submit a transaction containing hidden information, typically represented as a hash (the commit phase). Once this transaction is included into a block, the user follows up with a second transaction that reveals the actual data (the reveal phase). This method effectively prevents front-running because attackers can’t see the details of the initial transaction until it’s too late to act on it. The trade-off, however, is that it requires two separate transactions, which means higher costs and added latency. In addition to the poorer user experience, the required delay between transactions can be a practical limitation in time-sensitive applications.
+Otra técnica general es utilizar un esquema de compromiso y revelación. En este enfoque, los usuarios primero envían una transacción que contiene información oculta, normalmente representada como un hash, en la fase de compromiso. Una vez incluida esta transacción en un bloque, el usuario envía una segunda transacción que revela los datos reales, en la fase de revelación. Este método evita eficazmente el front-running porque los atacantes no pueden ver los detalles de la transacción inicial hasta que es demasiado tarde para actuar sobre ella. La contrapartida, sin embargo, es que requiere dos transacciones separadas, lo que implica costos más altos y mayor latencia. Además de una peor experiencia de usuario, la demora requerida entre transacciones puede ser una limitación práctica en aplicaciones sensibles al tiempo.
 
-#### Real-world example: AMM and minAmountOut
+#### Ejemplo real: AMM y minAmountOut
 
-Let’s explore a common real-world front-running vulnerability. It occurs when smart contracts integrating AMM protocols perform swaps that don’t set a minimum number of tokens to receive, making the said swaps susceptible to front-running attacks. If the minimum number of tokens to receive isn’t set properly (or is left too low), the swap transaction becomes vulnerable to sandwich attacks, a specific type of front-running.
+Exploremos una vulnerabilidad común de front-running en el mundo real. Ocurre cuando los contratos inteligentes que integran protocolos AMM realizan intercambios que no establecen una cantidad mínima de tokens que recibir, lo que hace que esos intercambios sean susceptibles a ataques de front-running. Si la cantidad mínima de tokens que recibir no se establece correctamente, o se deja demasiado baja, la transacción de intercambio se vuelve vulnerable a ataques sándwich, un tipo específico de front-running.
 
-Here’s how the sandwich attack unfolds: a front-runner monitors pending transactions in the mempool and spots our swap transaction that doesn’t enforce a minimum amount out. The attacker submits a buy transaction just before our swap to artificially inflate the token price. Our transaction then goes through at this inflated price, resulting in fewer tokens than we might have expected. On top of that, our transaction further inflates the price. Immediately afterward, the attacker sells their tokens at this higher price, bringing the price back down and profiting from the price difference created by our transaction. This strategy “sandwiches” our transaction between their two trades, hence the name *sandwich attack*. To fix the issue, smart contracts integrating AMMs need to fetch the real asset price from a trusted source like an oracle (even time-weight average price based), then compute and enforce a precise minimum amount out when performing a swap.
+Así se desarrolla el ataque sándwich: quien realiza front-running monitorea las transacciones pendientes en la mempool y detecta nuestra transacción de intercambio que no exige una cantidad mínima de salida. El atacante envía una transacción de compra justo antes de nuestro intercambio para inflar artificialmente el precio del token. Nuestra transacción se ejecuta entonces a ese precio inflado, lo que resulta en menos tokens de los que podríamos haber esperado. Además, nuestra transacción infla aún más el precio. Inmediatamente después, el atacante vende sus tokens a ese precio más alto, hace que el precio vuelva a bajar y obtiene ganancias de la diferencia de precio creada por nuestra transacción. Esta estrategia coloca nuestra transacción entre sus dos operaciones como en un sándwich, de ahí el nombre de *ataque sándwich*. Para solucionar el problema, los contratos inteligentes que integran AMM deben obtener el precio real del activo de una fuente confiable, como un oráculo, incluso uno basado en el precio promedio ponderado por tiempo, y luego calcular y exigir una cantidad mínima de salida precisa al realizar un intercambio.
 
-### Denial of Service
+### Denegación de servicio
 
-This category is very broad but fundamentally consists of attacks where users can render a contract or part of it inoperable for a period of time or, in some cases, permanently. This can trap funds in these contracts forever, as was the case described in “Real-world example: Parity multisig wallet (second hack)”.
+Esta categoría es muy amplia, pero consiste fundamentalmente en ataques en los que los usuarios pueden dejar un contrato o parte de él inoperante durante un período de tiempo o, en algunos casos, de forma permanente. Esto puede atrapar los fondos de estos contratos para siempre, como ocurrió en el caso descrito en "Ejemplo real: billetera multifirma de Parity (segundo ataque)".
 
-#### The vulnerability
+#### La vulnerabilidad
 
-There are various ways a contract can become inoperable. Here we highlight just a few less-obvious Solidity coding patterns that can lead to DoS vulnerabilities.
+Un contrato puede volverse inoperante de varias maneras. Aquí destacamos solo algunos patrones de programación de Solidity menos evidentes que pueden provocar vulnerabilidades de DoS.
 
-#### Looping through externally manipulated mappings or arrays
+#### Iterar sobre mappings o arreglos manipulados externamente
 
-This pattern typically appears when an owner wishes to distribute tokens to investors with a `distribute`-like function, as in the contract in Example 9-7.
+Este patrón suele aparecer cuando un propietario desea distribuir tokens a inversores con una función similar a `distribute`, como en el contrato del ejemplo 9-7.
 
-**Example 9-7. DistributeTokens contract**
+**Ejemplo 9-7. Contrato DistributeTokens**
 
 ```solidity
 1 contract DistributeTokens {
-2     address public owner; // gets set somewhere
-3     address[] investors; // array of investors
-4     uint[] investorTokens; // the amount of tokens each investor gets
+2     address public owner; // se establece en algún lugar
+3     address[] investors; // arreglo de inversores
+4     uint[] investorTokens; // la cantidad de tokens que recibe cada inversor
 5
-6     // ... extra functionality, including transfertoken()
+6     // ... funcionalidad adicional, incluida transfertoken()
 7
 8     function invest() public payable {
 9         investors.push(msg.sender);
-10         investorTokens.push(msg.value * 5); // 5 times the wei sent
+10         investorTokens.push(msg.value * 5); // 5 veces los wei enviados
 11         }
 12
 13     function distribute() public {
-14         require(msg.sender == owner); // only owner
+14         require(msg.sender == owner); // solo el propietario
 15         for(uint256 i = 0; i < investors.length; i++) {
-16             // here transferToken(to,amount) transfers "amount" of
-17             // tokens to the address "to"
+16             // aquí transferToken(to,amount) transfiere "amount" de
+17             // tokens a la dirección "to"
 18             transferToken(investors[i],investorTokens[i]);
 19         }
 20     }
 21 }
 ```
 
-Notice that the loop in this contract runs over an array that can be artificially inflated. An attacker can create many user accounts, making the `investors` array very large. The risk isn’t just the loop itself but also the cumulative gas cost of the operations inside it, like `transferToken` or any other logic. Each additional iteration adds to the total gas used, and if the array gets large enough, the gas required to complete the loop can exceed the block gas limit. At that point, the `distribute` function effectively becomes unusable.
+Observe que el bucle de este contrato recorre un arreglo que puede inflarse artificialmente. Un atacante puede crear muchas cuentas de usuario y hacer que el arreglo `investors` sea muy grande. El riesgo no es solo el bucle en sí, sino también el costo acumulativo de gas de las operaciones que contiene, como `transferToken` o cualquier otra lógica. Cada iteración adicional aumenta el gas total utilizado y, si el arreglo crece lo suficiente, el gas necesario para completar el bucle puede superar el límite de gas del bloque. En ese punto, la función `distribute` se vuelve, en la práctica, inutilizable.
 
-> **Note**
+> **Nota**
 >
-> This kind of DoS isn’t limited to state-changing functions. Even read-only view functions can become inaccessible if they loop over large arrays. While calling them doesn’t consume gas on chain, RPC endpoints enforce their own arbitrary gas caps on `eth_call` executions. So if a view function runs enough logic to exceed those limits, the RPC call would fail.
+> Este tipo de DoS no se limita a las funciones que cambian el estado. Incluso las funciones de vista de solo lectura pueden volverse inaccesibles si recorren arreglos grandes. Aunque llamarlas no consume gas en la cadena, los puntos de acceso RPC imponen sus propios límites arbitrarios de gas a las ejecuciones de `eth_call`. Por eso, si una función de vista ejecuta suficiente lógica como para superar esos límites, la llamada RPC fallaría.
 
-#### Progressing state based on external calls
+#### Avanzar de estado según llamadas externas
 
-Contracts are sometimes written such that progressing to a new state requires sending ether to an address or waiting for some input from an external source. These patterns can lead to DoS when the external call fails or is prevented for external reasons. In the example of sending ether, a user can create a contract that does not accept ether. If a contract requires ether to be sent in order to progress to a new state, the contract will never achieve the new state since ether can never be sent to the user’s contract that does not accept ether.
+A veces, los contratos se escriben de modo que avanzar a un nuevo estado requiere enviar ether a una dirección o esperar alguna entrada de una fuente externa. Estos patrones pueden provocar DoS cuando la llamada externa falla o se impide por razones externas. En el ejemplo del envío de ether, un usuario puede crear un contrato que no acepte ether. Si un contrato requiere que se envíe ether para avanzar a un nuevo estado, el contrato nunca alcanzará ese nuevo estado, ya que nunca se podrá enviar ether al contrato del usuario que no acepta ether.
 
-#### Unexpected issues
+#### Problemas inesperados
 
-DoS issues can pop up in unexpected ways, and they don’t always involve malicious attacks. Sometimes, a contract’s functionality can be disrupted just by unforeseen events. For instance, if a smart contract relies on an owner’s private key to call specific privileged functions and that key gets lost or compromised, we’re in trouble. Without that key, those crucial functions become permanently inaccessible, which might stall the entire contract’s operations. Imagine an initial coin offering (ICO) contract where the owner must call a function to finalize the sale. If the key is lost, no one can call it, and tokens will stay locked forever.
+Los problemas de DoS pueden aparecer de maneras inesperadas y no siempre implican ataques maliciosos. A veces, la funcionalidad de un contrato puede verse interrumpida simplemente por acontecimientos imprevistos. Por ejemplo, si un contrato inteligente depende de la clave privada de un propietario para llamar a funciones privilegiadas específicas y esa clave se pierde o se ve comprometida, tenemos un problema. Sin esa clave, esas funciones cruciales se vuelven permanentemente inaccesibles, lo que podría detener todas las operaciones del contrato. Imagine un contrato de oferta inicial de monedas (ICO) en el que el propietario deba llamar a una función para finalizar la venta. Si se pierde la clave, nadie podrá llamarla y los tokens permanecerán bloqueados para siempre.
 
-Another example of an unexpected disruption comes from ether sent to a contract without its knowledge or intention. Ether can be “forced” into a contract using a method called `selfdestruct` (now deprecated) or even by sending ether before the contract is deployed to its predetermined address. If a contract assumes it controls the accounting of all ether it receives through its own functions, it might not know what to do with these uninvited funds, leading to unintended behavior. It’s like getting money in your bank account you didn’t expect—sometimes it’s nice, but it could also mean your account balance is off, and any system relying on that exact number can start acting up.
+Otro ejemplo de interrupción inesperada proviene del ether enviado a un contrato sin que este lo sepa ni lo pretenda. Se puede "forzar" la entrada de ether en un contrato mediante un método llamado `selfdestruct`, ahora obsoleto, o incluso enviando ether antes de que el contrato se despliegue en su dirección predeterminada. Si un contrato supone que controla la contabilidad de todo el ether que recibe a través de sus propias funciones, podría no saber qué hacer con estos fondos no solicitados, lo que provocaría un comportamiento no deseado. Es como recibir dinero inesperado en su cuenta bancaria: a veces es agradable, pero también podría significar que el saldo de su cuenta no cuadra y que cualquier sistema que dependa de esa cifra exacta puede empezar a funcionar mal.
 
-#### Preventative techniques
+#### Técnicas preventivas
 
-Since DoS issues appear in different forms, the solutions are also usually situation specific.
+Como los problemas de DoS aparecen de distintas formas, las soluciones también suelen ser específicas de cada situación.
 
-Long lists that risk hitting the block gas limit are a fairly common situation, so we can give some suggestions for dealing with this. In the first example, contracts should not loop through data structures that can be artificially manipulated by external users. A withdrawal pattern is recommended, whereby each of the investors call a `withdraw` function to claim tokens independently (pull-over-push pattern). For functions iterating over long lists, a good solution is to implement a pagination feature.
+Las listas largas que corren el riesgo de alcanzar el límite de gas del bloque son una situación bastante común, por lo que podemos dar algunas sugerencias para abordarla. En el primer ejemplo, los contratos no deberían recorrer estructuras de datos que puedan ser manipuladas artificialmente por usuarios externos. Se recomienda un patrón de retiro, en el que cada inversor llame a una función `withdraw` para reclamar tokens de forma independiente, un patrón que prioriza los retiros sobre los envíos. Para las funciones que recorren listas largas, una buena solución es implementar una función de paginación.
 
-The generic solution for DoS is to research as much as you can what could go wrong and implement safeguards.
+La solución genérica para DoS es investigar todo lo posible qué podría salir mal e implementar medidas de protección.
 
-#### Real-world example: ZKsync Era Gemholic funds lock
+#### Ejemplo real: bloqueo de fondos de Gemholic en ZKsync Era
 
-As we just said, the most unexpected errors can lead to a DoS issue in a smart contract. A recent example involves Gemholic, a project that deployed a smart contract on ZKsync Era, an Ethereum L2 solution. Gemholic faced a major problem when it couldn’t access 921 ETH (approximately $1.7 million) raised in a token sale. The root cause? The smart contract relied on the `transfer()` function, which is not supported by ZKsync Era. Although ZKsync Era is compatible with much of the EVM functionality, it isn’t fully EVM equivalent, meaning some features, like `transfer()`, don’t work as they would on the Ethereum mainnet. This incompatibility resulted in Gemholic’s funds being stuck because the smart contract wasn’t able to withdraw the ether as intended. Fortunately, ZKsync’s team was able to step in and develop what they described as an “elegant solution” to unlock the funds, allowing Gemholic to access them again. Unfortunately, the specifics of this “elegant solution” remain undisclosed.
+Como acabamos de decir, los errores más inesperados pueden provocar un problema de DoS en un contrato inteligente. Un ejemplo reciente involucra a Gemholic, un proyecto que desplegó un contrato inteligente en ZKsync Era, una solución L2 de Ethereum. Gemholic enfrentó un problema importante cuando no pudo acceder a 921 ETH, aproximadamente $1.7 millones, recaudados en una venta de tokens. ¿La causa raíz? El contrato inteligente dependía de la función `transfer()`, que ZKsync Era no admite. Aunque ZKsync Era es compatible con gran parte de la funcionalidad de la EVM, no es totalmente equivalente a la EVM, lo que significa que algunas características, como `transfer()`, no funcionan como lo harían en la red principal de Ethereum. Esta incompatibilidad hizo que los fondos de Gemholic quedaran atrapados porque el contrato inteligente no podía retirar el ether como estaba previsto. Afortunadamente, el equipo de ZKsync pudo intervenir y desarrollar lo que describió como una "solución elegante" para desbloquear los fondos y permitir que Gemholic volviera a acceder a ellos. Por desgracia, los detalles de esta "solución elegante" siguen sin divulgarse.
 
-### Floating Point and Precision
+### Punto flotante y precisión
 
-As of this writing, v0.8.29 of Solidity doesn’t fully support fixed-point and floating-point numbers. This design choice stems from blockchain’s fundamental need for determinism: every node in the network must reach identical results from the same inputs to maintain consensus. Unfortunately, floating-point arithmetic is inherently nondeterministic across different hardware architectures, possibly producing subtly different results from identical calculations.
+Al momento de escribir este libro, la versión v0.8.29 de Solidity no admite por completo los números de punto fijo y de punto flotante. Esta decisión de diseño surge de la necesidad fundamental de determinismo de la blockchain: cada nodo de la red debe alcanzar resultados idénticos a partir de las mismas entradas para mantener el consenso. Por desgracia, la aritmética de punto flotante es inherentemente no determinista entre distintas arquitecturas de hardware y puede producir resultados sutilmente diferentes a partir de cálculos idénticos.
 
-Since blockchain applications require absolute determinism to prevent network forks and maintain security, Solidity forces developers to implement floating-point representations using integer types. While this approach is more cumbersome and prone to errors if not implemented correctly, it ensures that financial calculations and smart contract logic produce identical results across all nodes in the network.
+Como las aplicaciones de blockchain requieren un determinismo absoluto para evitar bifurcaciones de la red y mantener la seguridad, Solidity obliga a los desarrolladores a implementar representaciones de punto flotante mediante tipos enteros. Aunque este enfoque es más engorroso y propenso a errores si no se implementa correctamente, garantiza que los cálculos financieros y la lógica de los contratos inteligentes produzcan resultados idénticos en todos los nodos de la red.
 
-#### The vulnerability
+#### La vulnerabilidad
 
-Fixed-point numbers are not yet fully supported by Solidity. They can be declared but cannot be assigned to or from, meaning that developers are required to implement their own using the standard integer data types. There are a number of pitfalls developers can run into during this process. We will try to highlight some of these in this section. Let’s begin with a code example (Example 9-8).
+Solidity todavía no admite por completo los números de punto fijo. Pueden declararse, pero no se les pueden asignar valores ni asignar valores a partir de ellos, lo que significa que los desarrolladores deben implementar los suyos utilizando los tipos de datos enteros estándar. Los desarrolladores pueden encontrarse con varios problemas durante este proceso. Intentaremos destacar algunos de ellos en esta sección. Comencemos con un ejemplo de código, el ejemplo 9-8.
 
-**Example 9-8. FunWithNumbers**
+**Ejemplo 9-8. FunWithNumbers**
 
 ```solidity
 1 contract FunWithNumbers {
@@ -683,7 +683,7 @@ Fixed-point numbers are not yet fully supported by Solidity. They can be declare
 4    mapping(address => uint) public balances;
 5
 6    function buyTokens() public payable {
-7        // convert wei to eth, then multiply by token rate
+7        // convertir wei a eth y luego multiplicar por la tasa de tokens
 8        uint256 tokens = msg.value/weiPerEth*tokensPerEth;
 9        balances[msg.sender] += tokens;
 10    }
@@ -697,27 +697,27 @@ Fixed-point numbers are not yet fully supported by Solidity. They can be declare
 18 }
 ```
 
-This simple token-buying and -selling contract has some obvious problems. Although the mathematical calculations for buying and selling tokens are correct, the lack of floating-point numbers will give erroneous results. For example, when buying tokens on line 8, if the value is less than 1 ether, the initial division will result in 0, leaving the result of the final multiplication as `0` (e.g., 200 wei divided by `1e18` `weiPerEth` equals 0). Similarly, when selling tokens, any number of tokens less than 10 will also result in 0 ether. In fact, rounding here is always down, so selling 29 tokens will result in 2 ether (29 tokens / 10 `tokensPerEth` = 2.9, which rounded down resolves to 2).
+Este sencillo contrato de compra y venta de tokens tiene algunos problemas evidentes. Aunque los cálculos matemáticos para comprar y vender tokens son correctos, la falta de números de punto flotante dará resultados erróneos. Por ejemplo, al comprar tokens en la línea 8, si el valor es menor que 1 ether, la división inicial dará 0 y dejará el resultado de la multiplicación final en `0`; por ejemplo, 200 wei divididos por `1e18` `weiPerEth` es igual a 0. De manera similar, al vender tokens, cualquier cantidad de tokens menor que 10 también dará 0 ether. De hecho, aquí el redondeo siempre es hacia abajo, por lo que vender 29 tokens dará 2 ether (29 tokens / 10 `tokensPerEth` = 2.9, que redondeado hacia abajo resulta en 2).
 
-The issue with this contract is that the precision is only to the nearest ether (i.e., 1e18 wei). This can get tricky when dealing with decimals in [ERC-20](https://oreil.ly/YzzyU) tokens when you need higher precision. In practical cases, the precision losses may seem small, but they can easily be amplified and exploited. Flash loans, for example, allow attackers to borrow large amounts of capital with no up-front cost, making it possible to exploit even minor inconsistencies.
+El problema de este contrato es que la precisión solo llega al ether entero más cercano, es decir, 1e18 wei. Esto puede complicarse al trabajar con decimales en tokens [ERC-20](https://oreil.ly/YzzyU) cuando se necesita mayor precisión. En los casos prácticos, las pérdidas de precisión pueden parecer pequeñas, pero pueden amplificarse y explotarse fácilmente. Los préstamos flash, por ejemplo, permiten a los atacantes tomar prestadas grandes cantidades de capital sin costo inicial, lo que hace posible explotar incluso inconsistencias menores.
 
-#### Preventative techniques
+#### Técnicas preventivas
 
-Keeping the right precision in your smart contracts is very important, especially when dealing with ratios and rates that reflect economic decisions. You should ensure that any ratios or rates you are using allow for large numerators in fractions. For example, we used the rate `tokensPerEth` in our example. It would have been better to use `weiPerTokens`, which would be a large number. To calculate the corresponding number of tokens, we could do `msg.value/weiPerTokens`. This would give a more precise result.
+Mantener la precisión adecuada en sus contratos inteligentes es muy importante, especialmente al trabajar con razones y tasas que reflejan decisiones económicas. Debe asegurarse de que cualquier razón o tasa que utilice permita numeradores grandes en las fracciones. Por ejemplo, utilizamos la tasa `tokensPerEth` en nuestro ejemplo. Habría sido mejor utilizar `weiPerTokens`, que sería un número grande. Para calcular la cantidad correspondiente de tokens, podríamos hacer `msg.value/weiPerTokens`. Esto daría un resultado más preciso.
 
-Another tactic is to be mindful of order of operations. In our example, the calculation to purchase tokens was `msg.value/weiPerEth*tokenPerEth`. Notice that the division occurs before the multiplication. Solidity, unlike some languages, guarantees to perform operations in the order in which they are written. This example would have achieved a greater precision if the calculation performed the multiplication first and then the division: `msg.value*tokenPerEth/weiPerEth`.
+Otra táctica es prestar atención al orden de las operaciones. En nuestro ejemplo, el cálculo para comprar tokens era `msg.value/weiPerEth*tokenPerEth`. Observe que la división ocurre antes que la multiplicación. Solidity, a diferencia de algunos lenguajes, garantiza que las operaciones se realicen en el orden en que están escritas. Este ejemplo habría logrado mayor precisión si el cálculo hubiera realizado primero la multiplicación y luego la división: `msg.value*tokenPerEth/weiPerEth`.
 
-Finally, when defining arbitrary precision for numbers, it can be a good idea to convert values to higher precision, perform all mathematical operations, and then convert back down to the precision required for output. Typically, `uint256`s are used as they are optimal for gas usage; these give us approximately 60 orders of magnitude in their range, some of which can be dedicated to the precision of mathematical operations. It is better to keep all variables in high precision in Solidity and convert back to lower precision in external apps. This is essentially how the `decimals` variable works in ERC-20 token contracts: when we send 1,000 USDT on MetaMask, we are actually sending 1,000,000,000 units of USDT, which is 1,000 multiplied by USDT’s decimals (1e6).
+Por último, al definir una precisión arbitraria para los números, puede ser conveniente convertir los valores a una precisión mayor, realizar todas las operaciones matemáticas y luego volver a convertirlos a la precisión requerida para la salida. Normalmente se utilizan tipos `uint256`, ya que son óptimos en cuanto al consumo de gas; estos nos dan aproximadamente 60 órdenes de magnitud en su rango, algunos de los cuales pueden dedicarse a la precisión de las operaciones matemáticas. Es mejor mantener todas las variables con alta precisión en Solidity y convertirlas a una precisión menor en las aplicaciones externas. Así es, en esencia, como funciona la variable `decimals` en los contratos de tokens ERC-20: cuando enviamos 1,000 USDT en MetaMask, en realidad enviamos 1,000,000,000 unidades de USDT, que son 1,000 multiplicados por los decimales de USDT (1e6).
 
-To see an example of how to handle math operations with increased precision, let’s bring in Wad and Ray mathematics. A *Wad* represents a decimal number with 18 digits of precision, aligning perfectly with the 18 decimals common for ERC-20 tokens like ether. This makes it ideal for representing token balances, ensuring we have enough accuracy during computations. A *Ray*, on the other hand, goes even further with 27 digits of precision, useful for calculations of ratios very close to zero. The first Solidity fixed-point math library, known as DS-Math, provided a structure for working with these high-precision numbers.
+Para ver un ejemplo de cómo manejar operaciones matemáticas con mayor precisión, introduzcamos la matemática de Wad y Ray. Un *Wad* representa un número decimal con 18 dígitos de precisión, que se ajusta perfectamente a los 18 decimales comunes en tokens ERC-20 como ether. Esto lo hace ideal para representar saldos de tokens, ya que garantiza suficiente exactitud durante los cálculos. Un *Ray*, en cambio, va aún más lejos con 27 dígitos de precisión, útiles para calcular razones muy cercanas a cero. La primera biblioteca de matemática de punto fijo de Solidity, conocida como DS-Math, proporcionó una estructura para trabajar con estos números de alta precisión.
 
-The developers at MakerDAO originally created Wad and Ray specifically for their project’s needs. Given ether’s 18-decimal standard—and the fact that most ERC-20 tokens also follow this convention, although there are plenty of exceptions—Wad was perfect for the main financial units, while Ray was reserved for cases where precise fractional adjustments were needed. And while DS-Math pioneered this approach, many more libraries are now available for precise Solidity math operations. Aave’s WadRayMath, Solmate’s FixedPointMathLib, and OpenZeppelin’s Math library are just a few options available today.
+Los desarrolladores de MakerDAO crearon originalmente Wad y Ray específicamente para las necesidades de su proyecto. Dado el estándar de 18 decimales de ether, y el hecho de que la mayoría de los tokens ERC-20 también siguen esta convención, aunque hay muchas excepciones, Wad era perfecto para las unidades financieras principales, mientras que Ray se reservaba para los casos que requerían ajustes fraccionarios precisos. Y aunque DS-Math fue pionera en este enfoque, ahora hay muchas más bibliotecas disponibles para operaciones matemáticas precisas en Solidity. WadRayMath de Aave, FixedPointMathLib de Solmate y la biblioteca Math de OpenZeppelin son solo algunas de las opciones disponibles hoy.
 
-#### Real-world example: ERC-4626 inflation attack
+#### Ejemplo real: ataque de inflación de ERC-4626
 
-We will now see a precision-loss vulnerability commonly exploited in the wild, using a simplified version of OpenZeppelin’s ERC-4626 implementation. ERC-4626 is a tokenized vault standard that lets users deposit assets (like USDT) into a vault and receive shares representing their portion of the vault’s assets. Example 9-9 is a simplified version of the contract we’re working with.
+Ahora veremos una vulnerabilidad de pérdida de precisión que se explota comúnmente en la práctica, utilizando una versión simplificada de la implementación ERC-4626 de OpenZeppelin. ERC-4626 es un estándar de bóvedas tokenizadas que permite a los usuarios depositar activos, como USDT, en una bóveda y recibir participaciones que representan su parte de los activos de la bóveda. El ejemplo 9-9 es una versión simplificada del contrato con el que trabajamos.
 
-**Example 9-9. Simplified version of the original ERC4626 OpenZeppelin implementation**
+**Ejemplo 9-9. Versión simplificada de la implementación original de ERC4626 de OpenZeppelin**
 
 ```solidity
 1 abstract contract ERC4626 is ERC20, IERC4626 {
@@ -764,93 +764,93 @@ We will now see a precision-loss vulnerability commonly exploited in the wild, u
 38 }
 ```
 
-Now, let’s examine how the attack plays out.
+Ahora examinemos cómo se desarrolla el ataque.
 
-An attacker, keeping a close eye on newly created ERC-4626 vaults, sees one pop up. They waste no time and deposit a tiny amount, just one unit of the vault’s asset, to mint a share for themselves. At this point, the total assets in the vault are just one (because that’s all the attacker deposited), and the total supply of shares is also one (because the attacker minted one share).
+Un atacante que vigila de cerca las bóvedas ERC-4626 recién creadas ve aparecer una. Sin perder tiempo, deposita una cantidad diminuta, solo una unidad del activo de la bóveda, para acuñar una participación para sí mismo. En este punto, los activos totales de la bóveda son solo uno, porque eso es todo lo que el atacante depositó, y el suministro total de participaciones también es uno, porque el atacante acuñó una participación.
 
-Here’s where things get sneaky. The attacker now waits for another user to deposit a significant amount—let’s say 1,000 USDT. But before the legitimate transaction goes through, the attacker jumps in and front-runs the deposit by directly transferring 1,000 USDT to the vault contract. Importantly, the attacker doesn’t use the vault’s `deposit` function; they just call `USDT.transfer()`. This “donation” of 1,000 USDT inflates the vault’s `totalAssets()` to 1000e6 + 1, while the `totalSupply()` of shares remains 1. Keep in mind that 1,000 USDT are actually accounted as 1,000e6, which is 1,000 multiplied by USDT’s decimals (1e6).
+Aquí es donde comienza el engaño. El atacante espera ahora a que otro usuario deposite una cantidad significativa, digamos 1,000 USDT. Pero antes de que se ejecute la transacción legítima, el atacante se adelanta al depósito mediante front-running, transfiriendo directamente 1,000 USDT al contrato de la bóveda. Es importante notar que el atacante no utiliza la función `deposit` de la bóveda; solo llama a `USDT.transfer()`. Esta "donación" de 1,000 USDT infla el `totalAssets()` de la bóveda a 1000e6 + 1, mientras que el `totalSupply()` de participaciones sigue siendo 1. Recuerde que 1,000 USDT en realidad se contabilizan como 1,000e6, que son 1,000 multiplicados por los decimales de USDT (1e6).
 
-When the victim’s deposit finally gets processed, the smart contract tries to calculate how many shares to mint for the user. Remember, the formula for calculating shares is:
+Cuando finalmente se procesa el depósito de la víctima, el contrato inteligente intenta calcular cuántas participaciones acuñar para el usuario. Recuerde que la fórmula para calcular las participaciones es:
 
 (assets × supply) / `totalAssets()`
 
-In our case, the victim is depositing 1,000e6 USDT, and the formula becomes:
+En nuestro caso, la víctima deposita 1,000e6 USDT y la fórmula se convierte en:
 
 1,000e6 × 1 / (1,000e6 + 1) = 0.999
 
-Because of the rounding-down mechanism, this results in zero shares. The victim gets nothing for their 1,000 USDT deposit.
+Debido al mecanismo de redondeo hacia abajo, esto da como resultado cero participaciones. La víctima no recibe nada por su depósito de 1,000 USDT.
 
-Meanwhile the attacker, still holding their one share, can now burn that share and withdraw the total vault balance, which is 2,000 USDT. The attacker walks away with all the funds while the victim is left empty-handed.
+Mientras tanto, el atacante, que aún conserva su única participación, ahora puede quemarla y retirar el saldo total de la bóveda, que es de 2,000 USDT. El atacante se lleva todos los fondos mientras la víctima se queda con las manos vacías.
 
-> **Note**
+> **Nota**
 >
-> OpenZeppelin has since updated its ERC-4626 implementation to prevent this attack by introducing both a virtual offset and a decimal offset. The decimal offset increases the number of decimal places used for vault shares, which helps minimize rounding errors and makes precision-loss attacks less profitable. The virtual offset adds virtual assets and shares to the exchange-rate calculation, limiting the attacker’s ability to manipulate the initial conversion rate and protecting the vault from dead-share creation.
+> Desde entonces, OpenZeppelin actualizó su implementación ERC-4626 para prevenir este ataque mediante la introducción tanto de un desplazamiento virtual como de un desplazamiento decimal. El desplazamiento decimal aumenta la cantidad de posiciones decimales utilizadas para las participaciones de la bóveda, lo que ayuda a minimizar los errores de redondeo y hace menos rentables los ataques de pérdida de precisión. El desplazamiento virtual agrega activos y participaciones virtuales al cálculo de la tasa de cambio, lo que limita la capacidad del atacante para manipular la tasa de conversión inicial y protege la bóveda de la creación de participaciones muertas.
 
-### Price Manipulation
+### Manipulación de precios
 
-Accurate asset pricing is essential for DeFi protocols to operate smoothly. These systems depend on price oracles to deliver current asset values. Think of an *oracle* as a data feed that supplies real-world information to smart contracts. Price manipulation attacks focus on these oracles—thus, not the smart contract’s code itself but the data that the contracts depend on. This manipulation can significantly change the behavior of DeFi protocols, creating arbitrage opportunities that wouldn’t normally exist. The outcome? An attacker can exploit the system to make substantial profits.
+La valoración precisa de los activos es esencial para que los protocolos DeFi funcionen sin problemas. Estos sistemas dependen de oráculos de precios para obtener los valores actuales de los activos. Pensemos en un *oráculo* como una fuente de datos que suministra información del mundo real a los contratos inteligentes. Los ataques de manipulación de precios se centran en estos oráculos; por lo tanto, no en el código del contrato inteligente en sí, sino en los datos de los que dependen los contratos. Esta manipulación puede cambiar considerablemente el comportamiento de los protocolos DeFi y crear oportunidades de arbitraje que normalmente no existirían. ¿El resultado? Un atacante puede explotar el sistema para obtener ganancias sustanciales.
 
-#### The vulnerability
+#### La vulnerabilidad
 
-Imagine this simple scenario: an attacker finds a lending protocol that relies on an insecure oracle for its pricing. By manipulating the price of an asset to make it appear lower than it actually is, the attacker can borrow more of that asset than they should be able to. They then sell the borrowed asset at its true market price, making a profit. The root of this vulnerability lies in the reliance on on-chain price metrics, which can be manipulated, to determine asset prices. The manipulation is often amplified using *flash loans*: instant and collateral-free loans that must be repaid within the same transaction block.
+Imagine este escenario sencillo: un atacante encuentra un protocolo de préstamos que depende de un oráculo inseguro para fijar sus precios. Al manipular el precio de un activo para que parezca más bajo de lo que realmente es, el atacante puede tomar prestada una cantidad de ese activo mayor de la que debería poder obtener. Después vende el activo prestado a su verdadero precio de mercado y obtiene una ganancia. La raíz de esta vulnerabilidad es la dependencia de métricas de precios en la cadena, que pueden manipularse, para determinar los precios de los activos. La manipulación suele amplificarse mediante *préstamos flash*: préstamos instantáneos y sin garantía que deben devolverse dentro del mismo bloque de transacciones.
 
-#### Preventative techniques
+#### Técnicas preventivas
 
-When we need to determine a price, our best bet is to use decentralized oracles like Chainlink, RedStone, Pyth, and many others. Because these oracles are decentralized, that makes them much harder to compromise since an attacker would need to control more than 50% of the nodes in the network. They do have their limitations, though. For instance, they may not be available for every asset. In such cases, we can turn to a time-weighted average price (TWAP) oracle.
+Cuando necesitamos determinar un precio, nuestra mejor opción es utilizar oráculos descentralizados como Chainlink, RedStone, Pyth y muchos otros. Como estos oráculos son descentralizados, es mucho más difícil comprometerlos, ya que un atacante necesitaría controlar más del 50% de los nodos de la red. Sin embargo, tienen sus limitaciones. Por ejemplo, podrían no estar disponibles para todos los activos. En esos casos, podemos recurrir a un oráculo de precio promedio ponderado por tiempo (TWAP).
 
-TWAP oracles derive asset prices from on-chain data with some added security. They function by calculating the average price of an asset over a defined time frame, such as the past five minutes. By excluding the current block from their calculations, TWAP oracles effectively protect against flash-loan attacks. However, TWAP oracles aren’t completely immune to manipulation by a well-funded attacker. The key here is to adjust the period length: the longer the period, the more capital an attacker would need to manipulate the price. But a longer period also means the TWAP price might diverge more from the actual market price. Therefore, it’s important to fine-tune the TWAP based on the specific needs and risk profile of the project.
+Los oráculos TWAP derivan los precios de los activos de datos en la cadena con cierta seguridad adicional. Funcionan calculando el precio promedio de un activo durante un intervalo definido, como los últimos cinco minutos. Al excluir el bloque actual de sus cálculos, los oráculos TWAP protegen eficazmente contra ataques de préstamos flash. Sin embargo, no son completamente inmunes a la manipulación por parte de un atacante bien financiado. La clave es ajustar la duración del período: cuanto más largo sea, más capital necesitaría un atacante para manipular el precio. Pero un período más largo también significa que el precio TWAP podría alejarse más del precio real de mercado. Por lo tanto, es importante ajustar cuidadosamente el TWAP según las necesidades específicas y el perfil de riesgo del proyecto.
 
-Regardless of the oracle we use, we shouldn’t blindly trust the data it provides. It’s a good practice to regularly verify the oracle data against other sources. For instance, we could write a script that compares the oracle prices with prices from other sources and flags any significant discrepancies. If such differences are found, the protocol can be paused to prevent further issues.
+Independientemente del oráculo que utilicemos, no debemos confiar ciegamente en los datos que proporciona. Es una buena práctica verificar regularmente los datos del oráculo contra otras fuentes. Por ejemplo, podríamos escribir un script que compare los precios del oráculo con los de otras fuentes y señale cualquier discrepancia significativa. Si se encuentran esas diferencias, puede pausarse el protocolo para prevenir más problemas.
 
-#### Prototype example: Reliance on AMM on-chain data
+#### Ejemplo prototípico: dependencia de datos de AMM en la cadena
 
-Often, the vulnerable oracle module is part of the protocol itself, as we will see in this example. A common exploit scenario occurs when a smart contract derives asset prices directly from on-chain AMM protocols like Uniswap. Imagine a Uniswap V2 pool with reserves of 4,000 USDC and 1 ETH. A smart contract might assume that 1 ETH is worth 4,000 USDC. However, this assumption can be very risky if the inferred price is used for further state-changing operations. In such a case, an attacker could take out a flash loan to perform a large swap, altering the pool’s balance and thus changing the inferred price of ETH. The vulnerable protocol, relying on this manipulated price, will then be exploited by the attacker.
+A menudo, el módulo de oráculo vulnerable forma parte del propio protocolo, como veremos en este ejemplo. Un escenario común de ataque ocurre cuando un contrato inteligente deriva los precios de los activos directamente de protocolos AMM en la cadena como Uniswap. Imagine un pool de Uniswap V2 con reservas de 4,000 USDC y 1 ETH. Un contrato inteligente podría suponer que 1 ETH vale 4,000 USDC. Sin embargo, este supuesto puede ser muy riesgoso si el precio inferido se utiliza para operaciones posteriores que cambian el estado. En ese caso, un atacante podría obtener un préstamo flash para realizar un intercambio grande, alterar el saldo del pool y, por lo tanto, cambiar el precio inferido de ETH. El atacante explotará entonces el protocolo vulnerable que depende de este precio manipulado.
 
-Fortunately, this specific attack vector is well known. Although it’s not exploited as frequently as it once was, it still shows up in high-profile incidents. In May 2025, for example, Mobius Token was exploited for $2.1 million. Although the immediate trigger was a faulty multiplication by `10^18` in the `mint` function, the contract also contained a separate but equally critical vulnerability: it relied on on-chain metrics to compute the BNB/USDT price, exposing it to manipulation. Even if the math bug had been absent, the contract would still have been exploited in a short time. You might be wondering how code like this made it to production, ending up securing so much total value locked (TVL). The team had chosen not to publish the contract’s source code, assuming that keeping it hidden would provide safety—another reminder that security through obscurity doesn’t work, especially when the stakes are so high.
+Afortunadamente, este vector de ataque específico es bien conocido. Aunque no se explota con tanta frecuencia como antes, sigue apareciendo en incidentes de alto perfil. En mayo de 2025, por ejemplo, Mobius Token sufrió un ataque por $2.1 millones. Aunque el desencadenante inmediato fue una multiplicación incorrecta por `10^18` en la función `mint`, el contrato también contenía una vulnerabilidad separada, pero igualmente crítica: dependía de métricas en la cadena para calcular el precio BNB/USDT, lo que lo exponía a la manipulación. Incluso sin el error matemático, el contrato habría sido explotado en poco tiempo. Quizá se pregunte cómo llegó un código así a producción y terminó protegiendo tanto valor total bloqueado (TVL). El equipo había decidido no publicar el código fuente del contrato, suponiendo que mantenerlo oculto brindaría seguridad; otro recordatorio de que la seguridad por oscuridad no funciona, especialmente cuando hay tanto en juego.
 
-> **Note**
+> **Nota**
 >
-> Using prices inferred from on-chain data is risky only when these prices are applied to state-changing operations. If the prices are solely for informational purposes, such as in a view function that frontends use to fetch data, then the attack isn’t feasible. However, if an external contract retrieves the price from such a view function and then uses it for state-changing operations, it is vulnerable to manipulation.
+> Utilizar precios inferidos de datos en la cadena es riesgoso solo cuando esos precios se aplican a operaciones que cambian el estado. Si los precios tienen un propósito exclusivamente informativo, como en una función de vista que los frontends utilizan para obtener datos, entonces el ataque no es viable. Sin embargo, si un contrato externo obtiene el precio de una función de vista de ese tipo y luego lo utiliza para operaciones que cambian el estado, es vulnerable a la manipulación.
 
-#### Real-world example: Mango Markets
+#### Ejemplo real: Mango Markets
 
-In the Mango Markets exploit, a trader took advantage of the platform’s price manipulation vulnerabilities to extract more than $116 million. By using $10 million across two wallets, the attacker opened 483 million Mango perpetual futures (MNGO-PERPs) at a price of 3.8 cents each. They then purchased $4 million worth of MNGO on three separate exchanges, driving the oracle-reported price up by 2,300%. Using this inflated perp position as collateral, the attacker borrowed $116 million from Mango Markets, leaving significant bad debt and fleeing with the funds. As commonly happens with price-manipulation exploits, this wasn’t a hack but rather a manipulation of the system’s mechanics, exploiting Mango’s liquidity without breaking any of its underlying code.
+En el ataque a Mango Markets, un operador aprovechó las vulnerabilidades de manipulación de precios de la plataforma para extraer más de $116 millones. Utilizando $10 millones repartidos en dos billeteras, el atacante abrió 483 millones de futuros perpetuos de Mango (MNGO-PERPs) a un precio de 3.8 centavos cada uno. Después compró $4 millones en MNGO en tres plataformas de intercambio distintas, lo que hizo subir el precio informado por el oráculo un 2,300%. Utilizando esta posición inflada en perpetuos como garantía, el atacante tomó prestados $116 millones de Mango Markets, dejó una deuda incobrable significativa y huyó con los fondos. Como suele ocurrir con los ataques de manipulación de precios, no fue una intrusión, sino una manipulación de la mecánica del sistema que aprovechó la liquidez de Mango sin vulnerar su código subyacente.
 
-#### Negotiating with Exploiters
-Exploiters and protocols often negotiate directly on chain to decide how much of the stolen funds the exploiter should return in exchange for the protocol agreeing to drop any charges. While these deals are common, they likely hold little legal weight in court. Typically, protocols offer a bounty of around 10% to the exploiter, meaning if the exploiter returns 90% of the stolen funds, the protocol will agree to stop pursuing them. Although these types of negotiations are common, what happened in this case was particularly remarkable.
-After the exploit, the attacker proposed a deal to Mango Markets’ DAO: they would return most of the stolen funds if the community agreed to cover some bad debt that had previously been taken on to save another Solana project, Solend. In response, the Mango team put forth a second proposal that would see the attacker return up to $67 million while keeping $47 million as a kind of bug bounty. The agreement included a waiver of any claims related to bad debt and a commitment not to pursue criminal charges or freeze the attacker’s funds once the tokens were returned. The first proposal got rejected, while the second one passed. This led to Mango Markets tweeting on October 15 that $67 million in assets had indeed been returned.
-Things took a legal turn when one of the attackers revealed himself on Twitter, calling the exploit a “highly profitable trading strategy” and claiming it was all done within the protocol’s intended design. But US authorities saw it differently and arrested him on charges of market manipulation. Mango Markets then filed a civil suit, arguing that the agreement should be void because it was made under duress, and it sought $47 million in damages. Since DAOs are a relatively new concept legally, the case has caught a lot of attention and could set a precedent for how decentralized organizations handle legal disputes.
-In a twist that perfectly captures crypto’s wild legal landscape, the attacker actually won his fraud case in May 2025: the judge ruled that you can’t defraud a permissionless protocol with no terms of service. But here’s the kicker: when authorities searched his devices during the original Mango Markets investigation, they discovered more than 1,200 images and videos of child sexual abuse material, and he’s now serving four-plus years for that, proving that even brilliant DeFi exploits can’t save you from violations of basic human decency.
+#### Negociar con los atacantes
+Los atacantes y los protocolos suelen negociar directamente en la cadena para decidir qué proporción de los fondos robados debe devolver el atacante a cambio de que el protocolo acepte retirar cualquier cargo. Aunque estos acuerdos son comunes, probablemente tengan poco peso legal ante los tribunales. Normalmente, los protocolos ofrecen al atacante una recompensa de alrededor del 10%, lo que significa que, si devuelve el 90% de los fondos robados, el protocolo aceptará dejar de perseguirlo. Aunque este tipo de negociaciones es común, lo ocurrido en este caso fue particularmente notable.
+Después del ataque, el atacante propuso un acuerdo a la DAO de Mango Markets: devolvería la mayor parte de los fondos robados si la comunidad aceptaba cubrir cierta deuda incobrable que se había asumido previamente para salvar a otro proyecto de Solana, Solend. En respuesta, el equipo de Mango presentó una segunda propuesta según la cual el atacante devolvería hasta $67 millones y conservaría $47 millones como una especie de recompensa por errores. El acuerdo incluía una renuncia a cualquier reclamación relacionada con la deuda incobrable y un compromiso de no presentar cargos penales ni congelar los fondos del atacante una vez devueltos los tokens. La primera propuesta fue rechazada, mientras que la segunda fue aprobada. Esto llevó a Mango Markets a publicar en Twitter el 15 de octubre que efectivamente se habían devuelto $67 millones en activos.
+El asunto tomó un giro judicial cuando uno de los atacantes reveló su identidad en Twitter, calificó el ataque como una "estrategia de negociación altamente rentable" y afirmó que todo se había hecho dentro del diseño previsto del protocolo. Pero las autoridades de Estados Unidos lo vieron de otra manera y lo arrestaron por cargos de manipulación de mercado. Mango Markets presentó entonces una demanda civil, argumentando que el acuerdo debía ser nulo porque se había celebrado bajo coacción, y reclamó $47 millones por daños y perjuicios. Como las DAO son un concepto relativamente nuevo desde el punto de vista jurídico, el caso ha atraído mucha atención y podría sentar un precedente sobre cómo las organizaciones descentralizadas manejan las disputas legales.
+En un giro que refleja a la perfección el turbulento panorama jurídico de las criptomonedas, el atacante ganó su caso por fraude en mayo de 2025: el juez dictaminó que no se puede defraudar a un protocolo sin permiso que no tiene términos de servicio. Pero aquí está lo sorprendente: cuando las autoridades registraron sus dispositivos durante la investigación original de Mango Markets, descubrieron más de 1,200 imágenes y videos de material de abuso sexual infantil, y ahora cumple una condena de más de cuatro años por ello, lo que demuestra que ni siquiera los ataques brillantes a DeFi pueden librar a alguien de las consecuencias de vulnerar la decencia humana más básica.
 
-### Improper Input Validation
+### Validación incorrecta de entradas
 
-One major vulnerability often overlooked is improper input validation. When input from users or external sources isn’t properly validated, the consequences for smart contracts can vary widely, ranging from minor issues to significant loss of funds. Proper input validation helps protect against both malicious actors who might manipulate the contract’s behavior and genuine mistakes made by users or administrators, which could otherwise lead to loss of funds. If we don’t take the right precautions, a seemingly innocent oversight can result in significant issues in the contract’s execution.
+Una vulnerabilidad importante que suele pasarse por alto es la validación incorrecta de entradas. Cuando las entradas de usuarios o fuentes externas no se validan adecuadamente, las consecuencias para los contratos inteligentes pueden variar mucho, desde problemas menores hasta pérdidas significativas de fondos. La validación adecuada de entradas ayuda a proteger tanto de actores maliciosos que podrían manipular el comportamiento del contrato como de errores genuinos de usuarios o administradores que, de otro modo, podrían provocar pérdidas de fondos. Si no tomamos las precauciones adecuadas, un descuido aparentemente inocente puede causar problemas importantes en la ejecución del contrato.
 
-#### The vulnerability
+#### La vulnerabilidad
 
-At its core, improper input validation occurs when a smart contract doesn’t thoroughly check the data or parameters it receives before processing them. If we don’t make sure that certain values meet specific conditions, we open the door for both genuine user mistakes and potential attacks. Users might accidentally input incorrect data, while attackers could intentionally feed our contracts unexpected data. This can bypass the intended logic and lead to unexpected state changes, causing our contracts to behave unpredictably.
+En esencia, la validación incorrecta de entradas ocurre cuando un contrato inteligente no comprueba a fondo los datos o parámetros que recibe antes de procesarlos. Si no nos aseguramos de que ciertos valores cumplan condiciones específicas, abrimos la puerta tanto a errores genuinos de los usuarios como a posibles ataques. Los usuarios podrían ingresar accidentalmente datos incorrectos, mientras que los atacantes podrían proporcionar deliberadamente datos inesperados a nuestros contratos. Esto puede eludir la lógica prevista y provocar cambios de estado inesperados, haciendo que nuestros contratos se comporten de manera impredecible.
 
-A simple instance of this vulnerability occurs when a setter function doesn’t verify that an address isn’t the zero address before setting it as a recipient for funds. If we mistakenly set the zero address as the recipient, funds sent to the zero address will be locked forever, making them irretrievable.
+Un caso sencillo de esta vulnerabilidad ocurre cuando una función de asignación no verifica que una dirección no sea la dirección cero antes de establecerla como destinataria de fondos. Si por error establecemos la dirección cero como destinataria, los fondos enviados a ella quedarán bloqueados para siempre y serán irrecuperables.
 
-A common and dangerous misconception in smart contract development is the belief that keeping the source code private will somehow protect it from exploitation. We’ve previously discussed in this chapter why security through obscurity doesn’t work, and this principle applies to input validation as well. Developers sometimes leave functions unprotected, assuming they won’t be discovered if the code isn’t published. But attackers can and do reverse-engineer contract bytecode to identify sensitive and unprotected functions. For instance, several closed-source MEV bots have been exploited through unprotected flash-loan callbacks, leading to millions in losses. Hiding the code doesn’t hide the risk.
+Una idea errónea común y peligrosa en el desarrollo de contratos inteligentes es creer que mantener privado el código fuente lo protegerá de alguna manera contra la explotación. Ya hemos analizado en este capítulo por qué la seguridad por oscuridad no funciona, y este principio también se aplica a la validación de entradas. A veces, los desarrolladores dejan funciones sin proteger, suponiendo que no se descubrirán si el código no se publica. Pero los atacantes pueden aplicar ingeniería inversa al bytecode de los contratos, y lo hacen, para identificar funciones sensibles y sin protección. Por ejemplo, varios bots MEV de código cerrado han sido explotados mediante llamadas de retorno de préstamos flash sin protección, lo que provocó pérdidas millonarias. Ocultar el código no oculta el riesgo.
 
-#### Preventative techniques
+#### Técnicas preventivas
 
-So, how do we guard against improper input validation? The first step is simple: never assume that the inputs we receive are valid. Whether the input is coming from an EOA, another contract, or sometimes even the same contract, it should be rigorously checked. We need to validate not just input lengths but also edge cases and boundary conditions like minimum and maximum values. A classic edge case we shouldn’t overlook is the zero value.
+Entonces, ¿cómo nos protegemos de la validación incorrecta de entradas? El primer paso es sencillo: nunca suponer que las entradas que recibimos son válidas. Ya sea que la entrada provenga de una EOA, de otro contrato o, a veces, incluso del mismo contrato, debe comprobarse rigurosamente. Debemos validar no solo las longitudes de las entradas, sino también los casos límite y las condiciones de frontera, como los valores mínimos y máximos. Un caso límite clásico que no debemos pasar por alto es el valor cero.
 
-Reusable validation logic is a key part of writing secure and maintainable smart contracts. We can implement these validation blocks using either modifiers or internal functions, depending on what fits best. Modifiers are particularly useful for attaching preconditions or postconditions to multiple functions in a consistent and declarative way. For example, we might use a modifier to ensure that a function’s input isn’t the zero address or to check that the caller has the right permissions before executing a sensitive operation. Internal functions can achieve the same goals and sometimes offer more flexibility, especially when validation depends on complex logic or needs to return values.
+La lógica de validación reutilizable es una parte clave de la escritura de contratos inteligentes seguros y mantenibles. Podemos implementar estos bloques de validación mediante modificadores o funciones internas, según lo que se ajuste mejor. Los modificadores son especialmente útiles para asociar precondiciones o poscondiciones a múltiples funciones de forma coherente y declarativa. Por ejemplo, podríamos utilizar un modificador para asegurar que la entrada de una función no sea la dirección cero o para comprobar que quien realiza la llamada tenga los permisos adecuados antes de ejecutar una operación sensible. Las funciones internas pueden lograr los mismos objetivos y a veces ofrecen mayor flexibilidad, especialmente cuando la validación depende de lógica compleja o necesita devolver valores.
 
-#### Access Control
-Speaking of permissions, it’s important to implement robust access controls: `msg.sender` is a parameter and should be treated as such. While custom logic is an option, using trusted libraries like OpenZeppelin helps us manage access securely while minimizing complexity.
-For simple projects where one entity needs full control, developers can use OpenZeppelin’s Ownable contract, which designates a single “owner” with authority over key functions. For added security, we recommend using Ownable2Step. This version includes a two-step ownership-transfer process that helps prevent accidental loss of ownership.
-For more complex needs, OpenZeppelin’s AccessControl allows us to create multiple roles, each with different permissions. Role-based access control lets us assign specific tasks to different users, making it ideal for larger projects.
-Before implementing proper access control, we need to validate all our assumptions about who might call external and public functions. Smart contracts operate in a public and trustless environment, so we can’t assume that only our intended entities will interact with the contract. In fact, we should always assume an attacker will attempt to call these functions to trigger unintended behaviors.
+#### Control de acceso
+Hablando de permisos, es importante implementar controles de acceso robustos: `msg.sender` es un parámetro y debe tratarse como tal. Aunque la lógica personalizada es una opción, utilizar bibliotecas confiables como OpenZeppelin nos ayuda a gestionar el acceso de forma segura y a minimizar la complejidad.
+Para proyectos sencillos en los que una entidad necesita control total, los desarrolladores pueden utilizar el contrato Ownable de OpenZeppelin, que designa un único "propietario" con autoridad sobre funciones clave. Para mayor seguridad, recomendamos utilizar Ownable2Step. Esta versión incluye un proceso de transferencia de propiedad en dos pasos que ayuda a prevenir la pérdida accidental de la propiedad.
+Para necesidades más complejas, AccessControl de OpenZeppelin nos permite crear múltiples roles, cada uno con permisos diferentes. El control de acceso basado en roles permite asignar tareas específicas a distintos usuarios, lo que lo hace ideal para proyectos más grandes.
+Antes de implementar un control de acceso adecuado, debemos validar todos nuestros supuestos sobre quién podría llamar a las funciones externas y públicas. Los contratos inteligentes operan en un entorno público y sin necesidad de confianza, por lo que no podemos suponer que solo las entidades previstas interactuarán con el contrato. De hecho, siempre debemos suponer que un atacante intentará llamar a estas funciones para desencadenar comportamientos no deseados.
 
-#### Prototype example: Arbitrary calls
+#### Ejemplo prototípico: llamadas arbitrarias
 
-The most common exploits entail arbitrary calls. Here, a vulnerable smart contract allows an attacker to provide an address to be called. Under these circumstances, the contract will effectively perform any call the attacker wants. One possible way to exploit this is by returning manipulated values that trick the contract into transferring tokens it shouldn’t.
+Los ataques más comunes implican llamadas arbitrarias. Aquí, un contrato inteligente vulnerable permite a un atacante proporcionar una dirección a la que llamar. En estas circunstancias, el contrato realizará efectivamente cualquier llamada que el atacante quiera. Una posible forma de explotar esto es devolver valores manipulados que engañen al contrato para que transfiera tokens que no debería transferir.
 
-Check this sample code of a vulnerable yield aggregator protocol:
+Revise este código de ejemplo de un protocolo agregador de rendimientos vulnerable:
 
 ```solidity
 contract Aggregator {
@@ -869,31 +869,31 @@ contract Aggregator {
 }
 ```
 
-Its goal is simple: the `claimMultipleStakingRewards` function loops through an array of staking contract addresses provided by the user, calls the `claimStakingRewards` function on each one, and tallies up the total rewards. Finally, it sends the accumulated rewards to the user’s address. The problem is that the contract doesn’t check whether the addresses in `_claimContracts` actually point to trusted staking contracts. That opens the door to arbitrary external calls.
+Su objetivo es sencillo: la función `claimMultipleStakingRewards` recorre un arreglo de direcciones de contratos de staking proporcionado por el usuario, llama a la función `claimStakingRewards` de cada uno y suma las recompensas totales. Por último, envía las recompensas acumuladas a la dirección del usuario. El problema es que el contrato no comprueba si las direcciones de `_claimContracts` realmente apuntan a contratos de staking confiables. Eso abre la puerta a llamadas externas arbitrarias.
 
-For instance, an attacker can deploy a contract like this:
+Por ejemplo, un atacante puede desplegar un contrato como este:
 
 ```solidity
 contract Attack {
     function claimStakingRewards(address ) external pure returns (uint256) {
-        return 1_000_000 ether; // fabricated reward
+        return 1_000_000 ether; // recompensa inventada
     }
 }
 ```
 
-This malicious contract pretends to be a staking contract and simply returns an inflated reward value. When the `Aggregator` calls `claimStakingRewards` on it, it gets tricked into thinking the caller is owed a huge amount of tokens. Without additional checks, the `Aggregator` blindly adds that to the total and transfers real tokens to the attacker. This could have been avoided with a basic allowlist to ensure that only trusted contracts are allowed in `claimMultipleStakingRewards`.
+Este contrato malicioso finge ser un contrato de staking y simplemente devuelve un valor de recompensa inflado. Cuando `Aggregator` llama a su función `claimStakingRewards`, se lo engaña para que crea que a quien realizó la llamada se le debe una cantidad enorme de tokens. Sin comprobaciones adicionales, `Aggregator` agrega ciegamente esa cantidad al total y transfiere tokens reales al atacante. Esto podría haberse evitado con una lista de permitidos básica que garantizara que en `claimMultipleStakingRewards` solo se admitieran contratos confiables.
 
-### Signature Replay Attack
+### Ataque de repetición de firmas
 
-Signatures on Ethereum are incredibly useful because they let us authorize actions off chain, reducing the need for costly on-chain transactions. For example, if you’re authorizing someone to take a specific action on your behalf, such as transferring tokens or accessing a certain feature in a smart contract, you can sign an off-chain message that gives them permission. The contract then verifies the signature and executes the action without needing you to interact directly on chain. This also enables gasless transactions, where you sign off chain and a relayer submits it on chain, paying the gas fees. Smart contracts can verify these signatures to ensure that actions are securely authorized without requiring constant on-chain interaction.
+Las firmas en Ethereum son sumamente útiles porque nos permiten autorizar acciones fuera de la cadena, lo que reduce la necesidad de transacciones costosas en la cadena. Por ejemplo, si autoriza a alguien a realizar una acción específica en su nombre, como transferir tokens o acceder a cierta función de un contrato inteligente, puede firmar un mensaje fuera de la cadena que le dé permiso. Después, el contrato verifica la firma y ejecuta la acción sin que usted tenga que interactuar directamente en la cadena. Esto también permite transacciones sin gas, en las que usted firma fuera de la cadena y un retransmisor presenta la firma en la cadena y paga las comisiones de gas. Los contratos inteligentes pueden verificar estas firmas para garantizar que las acciones estén autorizadas de forma segura sin requerir una interacción constante en la cadena.
 
-However, once a piece of data is signed, it should logically be used only once. If a signed transaction can be reused, it opens the door to replay attacks, where an attacker replays the signature to execute the same action multiple times, such as transferring funds or changing contract states without permission. Smart contracts must be designed to prevent this by ensuring that each signed message is unique and can’t be replayed.
+Sin embargo, una vez que se firma un dato, lógicamente debería utilizarse solo una vez. Si una transacción firmada puede reutilizarse, abre la puerta a ataques de repetición, en los que un atacante reutiliza la firma para ejecutar la misma acción varias veces, como transferir fondos o cambiar estados del contrato sin permiso. Los contratos inteligentes deben diseñarse para prevenir esto, garantizando que cada mensaje firmado sea único y no pueda repetirse.
 
-#### The vulnerability
+#### La vulnerabilidad
 
-Let’s look at an example contract (Example 9-10) that’s vulnerable to replay attacks.
+Veamos un contrato de ejemplo, el ejemplo 9-10, que es vulnerable a ataques de repetición.
 
-**Example 9-10. Token: A contract vulnerable to signature replay attack**
+**Ejemplo 9-10. Token: un contrato vulnerable a ataques de repetición de firmas**
 
 ```solidity
 1 contract Token {
@@ -922,15 +922,15 @@ Let’s look at an example contract (Example 9-10) that’s vulnerable to replay
 23 }
 ```
 
-At first glance, this looks like a handy contract function. It allows anyone with a valid signature to perform multiple transfers without the signer needing to pay gas. An administrator could sign the data off chain, and someone else—perhaps a service—could submit the transaction on chain for them. Anyway, handling signatures is not trivial, and this very short code contains a significant number of issues.
+A primera vista, esta parece una función de contrato práctica. Permite a cualquiera con una firma válida realizar múltiples transferencias sin que el firmante tenga que pagar gas. Un administrador podría firmar los datos fuera de la cadena y otra persona, quizá un servicio, podría enviar la transacción en la cadena en su nombre. De todos modos, manejar firmas no es trivial y este código tan breve contiene una cantidad significativa de problemas.
 
-The most obvious problem is that there’s no mechanism to prevent someone from reusing the same signature over and over. Without any way to track if a signature has been used, an attacker could simply repeat the transaction until the victim’s balance is drained. The fix is pretty simple: we need to add a *nonce* (a value to be used only once, usually a counter that increments with each transaction) into the data being signed. The contract verifying the signature has the responsibility to check that the provided nonces have not been previously used. This ensures that each signature is unique, too, preventing replays. Ethereum transactions already use nonces for this reason.
+El problema más evidente es que no hay ningún mecanismo que impida reutilizar la misma firma una y otra vez. Sin ninguna forma de llevar un registro de si una firma ya se utilizó, un atacante podría simplemente repetir la transacción hasta vaciar el saldo de la víctima. La solución es bastante sencilla: debemos agregar un *nonce*, un valor que se utiliza una sola vez, normalmente un contador que aumenta con cada transacción, a los datos que se firman. El contrato que verifica la firma tiene la responsabilidad de comprobar que los nonces proporcionados no se hayan utilizado antes. Esto también garantiza que cada firma sea única y evita las repeticiones. Las transacciones de Ethereum ya utilizan nonces por este motivo.
 
-Another critical issue here is signature malleability. This happens when a cryptographic signature can be altered to produce a different but still valid signature for the same underlying message. The built-in `ecrecover` function used in the contract is vulnerable to this problem. Attackers can tweak a valid signature and create another one that also works, even though the underlying signed message remains the same. To avoid this, developers should use a safer signature-verification method, like the one provided by the OpenZeppelin ECDSA library. Malleable signatures are the reason why you don’t want to use signatures as unique identifiers, such as to avoid replay attacks—stick to nonces.
+Otro problema crítico es la maleabilidad de las firmas. Esto ocurre cuando una firma criptográfica puede alterarse para producir una firma diferente, pero aún válida, para el mismo mensaje subyacente. La función integrada `ecrecover` utilizada en el contrato es vulnerable a este problema. Los atacantes pueden modificar una firma válida y crear otra que también funcione, aunque el mensaje firmado subyacente siga siendo el mismo. Para evitarlo, los desarrolladores deben utilizar un método de verificación de firmas más seguro, como el que proporciona la biblioteca ECDSA de OpenZeppelin. Las firmas maleables son la razón por la que no conviene utilizar firmas como identificadores únicos, por ejemplo, para evitar ataques de repetición; utilice nonces.
 
-We’ve addressed potential signature manipulation, but what if the data being signed can also be manipulated? In this contract, it can. The problem lies with the use of `abi.encodePacked`, which is often chosen for its compact encoding that requires less memory. But that efficiency comes with trade-offs, and we’re about to explore them. Specifically, `abi.encodePacked` concatenates raw bytes without adding length information or boundaries, which means that different sets of inputs can end up producing the same output. Here’s how that can play out.
+Hemos abordado la posible manipulación de firmas, pero ¿qué ocurre si los datos que se firman también pueden manipularse? En este contrato, se puede. El problema está en el uso de `abi.encodePacked`, que suele elegirse por su codificación compacta, que requiere menos memoria. Pero esa eficiencia tiene contrapartidas, y estamos por explorarlas. En concreto, `abi.encodePacked` concatena bytes sin procesar sin agregar información de longitud ni delimitaciones, lo que significa que distintos conjuntos de entradas pueden terminar produciendo la misma salida. Veamos cómo puede ocurrir.
 
-For the sake of simplicity, let’s suppose that amounts take 8 bits (two hex digits) and addresses take 12 bits (three hex digits). Let’s say the parameters are as follows:
+Para simplificar, supongamos que las cantidades ocupan 8 bits, dos dígitos hexadecimales, y las direcciones ocupan 12 bits, tres dígitos hexadecimales. Supongamos que los parámetros son los siguientes:
 
 ```solidity
 _from = [0x001, 0x002]
@@ -938,7 +938,7 @@ _to = [0x003, 0x003]
 _amount = [0x64, 0x64]
 ```
 
-When we use `abi.encodePacked`, it combines these values into `0x0010020030036464`. But here’s where things get tricky. If we move `0x002` from `_from` to `_to`, we still get the exact same output from `abi.encodePacked` as before:
+Cuando utilizamos `abi.encodePacked`, combina estos valores en `0x0010020030036464`. Pero aquí es donde se complica. Si movemos `0x002` de `_from` a `_to`, seguimos obteniendo exactamente la misma salida de `abi.encodePacked` que antes:
 
 ```solidity
 _from = [0x001]
@@ -946,100 +946,100 @@ _to = [0x002, 0x003, 0x003]
 _amount = [0x64, 0x64]
 ```
 
-Over this new set of values, `abi.encodePacked` would return the same output: `0x0010020030036464`. This means that user `0x002` can use the valid signature but change the input parameters `_from` and `_to`, tricking the contract into thinking that the only transfer to be performed is from `0x001` to `0x002`. The code used in the example does a terrible job at validating inputs, allowing for this problematic situation. Anyway, it shows how `encodePacked` should be avoided when generating signatures over dynamic data types such as arrays. In these cases, we should use `abi.encode`, which produces unambiguous output even when concatenating dynamic data, effectively preventing this type of attack.
+Sobre este nuevo conjunto de valores, `abi.encodePacked` devolvería la misma salida: `0x0010020030036464`. Esto significa que el usuario `0x002` puede utilizar la firma válida, pero cambiar los parámetros de entrada `_from` y `_to`, engañando al contrato para que crea que la única transferencia que debe realizarse es de `0x001` a `0x002`. El código del ejemplo valida las entradas de manera pésima, lo que permite esta situación problemática. De todos modos, muestra por qué debe evitarse `encodePacked` al generar firmas sobre tipos de datos dinámicos, como los arreglos. En estos casos, debemos utilizar `abi.encode`, que produce una salida inequívoca incluso al concatenar datos dinámicos y previene eficazmente este tipo de ataque.
 
-But wait, there’s one more issue. What happens if this contract is deployed on multiple chains? The same signature would be valid across all of them, creating an opportunity for cross-chain replay attacks. An attacker could monitor a user’s activity on one chain and then reuse their signature on other chains. To prevent this, we need to include contextual data in the signed message—at the very least, the `chainId`. Depending on the use case, you might also include the contract address or its version. Fortunately, we don’t have to come up with a new solution from scratch: EIP-712 is a standard that solves this by allowing for context-aware signatures. It also improves the user experience by showing users readable information about what they’re signing instead of a confusing byte string.
+Pero espere, hay un problema más. ¿Qué ocurre si este contrato se despliega en múltiples cadenas? La misma firma sería válida en todas ellas, lo que crea una oportunidad para ataques de repetición entre cadenas. Un atacante podría monitorear la actividad de un usuario en una cadena y luego reutilizar su firma en otras cadenas. Para prevenirlo, debemos incluir datos de contexto en el mensaje firmado, como mínimo el `chainId`. Según el caso de uso, también podría incluirse la dirección del contrato o su versión. Afortunadamente, no tenemos que crear una solución nueva desde cero: EIP-712 es un estándar que resuelve esto al permitir firmas que incorporan el contexto. También mejora la experiencia de usuario al mostrar información legible sobre lo que se firma en lugar de una cadena de bytes confusa.
 
-#### Preventative techniques
+#### Técnicas preventivas
 
-To prevent replay attacks and other vulnerabilities, we need to ensure that each signature is unique, secure, and usable only once. We can easily achieve that through nonces, secure signature handling, and context-aware signatures.
+Para prevenir ataques de repetición y otras vulnerabilidades, debemos garantizar que cada firma sea única, segura y utilizable solo una vez. Podemos lograrlo fácilmente mediante nonces, un manejo seguro de las firmas y firmas que incorporen el contexto.
 
-Nonces are used for ensuring uniqueness. By adding a nonce to each signed message, we prevent attackers from reusing signatures. Contracts validating signatures make sure that the nonces used are unique. Once a signature is used, its nonce becomes invalid, stopping replay attempts.
+Los nonces se utilizan para garantizar la unicidad. Al agregar un nonce a cada mensaje firmado, impedimos que los atacantes reutilicen firmas. Los contratos que validan firmas se aseguran de que los nonces utilizados sean únicos. Una vez utilizada una firma, su nonce deja de ser válido, lo que detiene los intentos de repetición.
 
-When validating signatures, we should avoid using the plain built-in `ecrecover` function and resort to OpenZeppelin’s ECDSA library, which is immune to signature malleability. We also should never use signatures as unique identifiers since they can be manipulated.
+Al validar firmas, debemos evitar utilizar directamente la función integrada `ecrecover` y recurrir a la biblioteca ECDSA de OpenZeppelin, que es inmune a la maleabilidad de firmas. Tampoco debemos utilizar nunca las firmas como identificadores únicos, ya que pueden manipularse.
 
-For signing dynamic data, using `abi.encode` instead of `abi.encodePacked` prevents the manipulation of the inputs by properly separating them, ensuring that they can’t be tampered with or misinterpreted.
+Para firmar datos dinámicos, utilizar `abi.encode` en lugar de `abi.encodePacked` evita la manipulación de las entradas al separarlas correctamente y garantiza que no puedan alterarse ni interpretarse de forma errónea.
 
-Finally, we should implement EIP-712 any time we work with signatures. Beyond adding context awareness, such as the `chainId` to prevent cross-chain replays, EIP-712 improves user experience by letting users see a clear, meaningful visualization of the data they’re signing instead of an opaque byte string. This not only makes transactions easier to understand but also enhances user safety by making phishing attacks more difficult, since users can better recognize suspicious requests.
+Por último, debemos implementar EIP-712 siempre que trabajemos con firmas. Además de agregar información de contexto, como el `chainId` para prevenir repeticiones entre cadenas, EIP-712 mejora la experiencia de usuario al permitir que los usuarios vean una representación clara y significativa de los datos que firman en lugar de una cadena de bytes opaca. Esto no solo facilita la comprensión de las transacciones, sino que también mejora la seguridad del usuario al dificultar los ataques de phishing, ya que los usuarios pueden reconocer mejor las solicitudes sospechosas.
 
-#### Real-world example: TCH token
+#### Ejemplo real: token TCH
 
-In May 2024, the TCH token was exploited due to a common signature-malleability vulnerability. The issue lay in a contract’s `burnToken` function, which verified signatures to authorize token burns. To prevent signature replay attacks, the contract stored used signatures in a mapping. However, this defense could be bypassed if the signature was tampered with.
+En mayo de 2024, el token TCH fue explotado debido a una vulnerabilidad común de maleabilidad de firmas. El problema estaba en la función `burnToken` de un contrato, que verificaba firmas para autorizar quemas de tokens. Para prevenir ataques de repetición de firmas, el contrato almacenaba las firmas utilizadas en un mapping. Sin embargo, esta defensa podía eludirse si se alteraba la firma.
 
-The attacker exploited this by collecting previously submitted signatures and modifying the `v` and `s` values, which are part of the signature. Although the signature was altered, it still passed verification using `ecrecover`. Since the modified signature differed from the original, it wasn’t recognized as already used, and the new version was stored in the mapping. With this trick, the attacker was able to repeatedly burn large amounts of TCH tokens owned by the PancakeSwap liquidity pair. This allowed the attacker to manipulate the token’s price in the pool and profit from the price fluctuations they had caused.
+El atacante aprovechó esto recopilando firmas enviadas previamente y modificando los valores `v` y `s`, que forman parte de la firma. Aunque la firma estaba alterada, seguía superando la verificación mediante `ecrecover`. Como la firma modificada difería de la original, no se reconocía como ya utilizada y la nueva versión se almacenaba en el mapping. Con este truco, el atacante pudo quemar repetidamente grandes cantidades de tokens TCH pertenecientes al par de liquidez de PancakeSwap. Esto le permitió manipular el precio del token en el pool y obtener ganancias de las fluctuaciones de precio que había provocado.
 
-### Smart Contracts Misconfiguration
+### Configuración incorrecta de contratos inteligentes
 
-Misconfiguration is one of those sneaky issues that isn’t technically a vulnerability but can still have serious consequences for smart contracts. After you have written your smart contract and gotten it audited, the job isn’t done; you still need to deploy, maintain, and sometimes upgrade it. And it’s during these stages when misconfigurations often occur. DeFi protocols, for example, come with tons of parameters, and if any of these are misconfigured, that can lead to significant losses. Unfortunately, these kinds of issues are tricky to catch, even in audits, because auditors often overlook deployment and upgrade scripts. So while misconfigurations aren’t vulnerabilities themselves, they can create an opening for vulnerabilities, making it critical to be extra cautious during the deployment and management stages.
+La configuración incorrecta es uno de esos problemas sutiles que técnicamente no son una vulnerabilidad, pero que aun así pueden tener consecuencias graves para los contratos inteligentes. Después de escribir su contrato inteligente y hacerlo auditar, el trabajo no ha terminado; todavía debe desplegarlo, mantenerlo y, a veces, actualizarlo. Y es durante estas etapas cuando suelen producirse configuraciones incorrectas. Los protocolos DeFi, por ejemplo, tienen muchísimos parámetros y, si alguno está mal configurado, puede provocar pérdidas significativas. Por desgracia, este tipo de problemas es difícil de detectar, incluso en las auditorías, porque los auditores a menudo pasan por alto los scripts de despliegue y actualización. Por eso, aunque las configuraciones incorrectas no son vulnerabilidades en sí mismas, pueden abrir la puerta a ellas, lo que hace fundamental extremar la cautela durante las etapas de despliegue y gestión.
 
-Misconfiguration issues are hard to categorize because they can vary widely, so instead of trying to list them all, let’s jump straight into some real-world examples to get a sense of what can go wrong.
+Los problemas de configuración incorrecta son difíciles de categorizar porque pueden variar mucho, así que, en lugar de intentar enumerarlos todos, pasemos directamente a algunos ejemplos reales para hacernos una idea de lo que puede salir mal.
 
-#### Real-world example: yUSDT
+#### Ejemplo real: yUSDT
 
-Let’s take a look at the simplest possible misconfiguration case: a misconfigured storage variable in the yUSDT token from Yearn Finance, which led to an exploit in April 2023. The yUSDT token is supposed to generate yield by investing in USDT-based derivatives, but due to a misconfiguration, it was actually using a different token (IUSDC) as its underlying asset. The crazy part is that this went unnoticed for more than one thousand days. The misconfiguration allowed an attacker to manipulate the system, drain value from the pool, and mint yUSDT essentially for free. As a result, the value of yUSDT dropped to zero, and the attacker walked away with $11.6 million in profit.
+Veamos el caso de configuración incorrecta más sencillo posible: una variable de almacenamiento persistente mal configurada en el token yUSDT de Yearn Finance, que provocó un ataque en abril de 2023. Se supone que el token yUSDT genera rendimiento invirtiendo en derivados basados en USDT, pero, debido a una configuración incorrecta, en realidad utilizaba un token diferente (IUSDC) como activo subyacente. Lo increíble es que esto pasó inadvertido durante más de mil días. La configuración incorrecta permitió a un atacante manipular el sistema, extraer valor del pool y acuñar yUSDT prácticamente gratis. Como resultado, el valor de yUSDT cayó a cero y el atacante se llevó $11.6 millones de ganancia.
 
-#### Real-world example: Ronin Bridge
+#### Ejemplo real: Ronin Bridge
 
-In August 2024, the Ronin Bridge was hacked just an hour after a contract upgrade. The root cause was a misstep during the upgrade process: an important variable, `_totalOperatorWeight`, wasn’t initialized. This variable was supposed to be set in the `initializeV3` function, but during the upgrade, only `initializeV4` was called, skipping over the necessary setup from the previous version. This oversight left the contract exposed. In this case, a white-hat MEV bot was able to front-run the attack and return the stolen 4,000 ETH, but this underscores the importance of thorough review and testing of upgrade procedures.
+En agosto de 2024, Ronin Bridge sufrió un ataque apenas una hora después de una actualización del contrato. La causa raíz fue un error durante el proceso de actualización: no se inicializó una variable importante, `_totalOperatorWeight`. Se suponía que esta variable se establecería en la función `initializeV3`, pero durante la actualización solo se llamó a `initializeV4`, omitiendo la configuración necesaria de la versión anterior. Este descuido dejó expuesto al contrato. En este caso, un bot MEV de sombrero blanco pudo adelantarse al ataque mediante front-running y devolver los 4,000 ETH robados, pero esto resalta la importancia de revisar y probar a fondo los procedimientos de actualización.
 
-> **Note**
+> **Nota**
 >
-> If you think a hack happening shortly after a contract upgrade is just a coincidence, you’re mistaken. Both black and white hats closely monitor contract upgrades: black hats look for weaknesses to exploit while white hats try to prevent attacks. Teams often underestimate the security risks of even small code changes and skip the audit process. Unfortunately, it doesn’t take much to break a contract, and as this case shows, the vulnerability isn’t always in the smart contract itself—sometimes it’s in how the upgrade is executed.
+> Si cree que un ataque ocurrido poco después de una actualización de contrato es solo una coincidencia, se equivoca. Tanto los hackers de sombrero negro como los de sombrero blanco monitorean de cerca las actualizaciones de contratos: los primeros buscan debilidades que explotar, mientras que los segundos intentan prevenir ataques. Los equipos suelen subestimar los riesgos de seguridad incluso de pequeños cambios en el código y omiten el proceso de auditoría. Por desgracia, no hace falta mucho para romper un contrato y, como muestra este caso, la vulnerabilidad no siempre está en el propio contrato inteligente; a veces está en cómo se ejecuta la actualización.
 
-#### Real-world example: Sonne Finance
+#### Ejemplo real: Sonne Finance
 
-The root cause of the Sonne Finance May 2024 hack wasn’t just a typical protocol bug but rather a flaw in its market-activation process. Like many protocols, Sonne was aware of the “empty market” bug found in Compound v2, where an open but unfunded market could be exploited to drain the entire protocol. The standard fix for this bug is to ensure that funds are deposited into the market atomically when it’s activated, preventing the market from being empty at any point.
+La causa raíz del ataque de mayo de 2024 a Sonne Finance no fue solo un error típico de protocolo, sino una falla en su proceso de activación de mercados. Como muchos protocolos, Sonne conocía el error de "mercado vacío" encontrado en Compound v2, en el que un mercado abierto, pero sin fondos, podía explotarse para vaciar todo el protocolo. La solución estándar para este error es asegurar que los fondos se depositen en el mercado de forma atómica al activarlo, evitando que el mercado esté vacío en cualquier momento.
 
-Sonne had a plan in place to handle this. It intended to add the market, deposit funds, and then open the market for use—all three actions through timelocks. The process would have worked, if it had been done in the right order. The issue arose because Sonne scheduled each of these steps as separate transactions in the governance timelock controller, meaning that their execution order was not enforced. The Sonne team made the governance `EXECUTOR_ROLE` accessible to everyone, allowing any user to execute governance transactions once the timelock expired. While this setup is unusual, it wasn’t inherently problematic; however, it proved devastating in this specific situation. It left the door open for anyone to execute the actions out of order once the timelock expired.
+Sonne tenía un plan para manejar esto. Pretendía agregar el mercado, depositar fondos y después abrir el mercado para su uso, las tres acciones mediante bloqueos temporales. El proceso habría funcionado si se hubiera realizado en el orden correcto. El problema surgió porque Sonne programó cada uno de estos pasos como transacciones separadas en el controlador de bloqueos temporales de gobernanza, lo que significaba que no se imponía su orden de ejecución. El equipo de Sonne hizo que el `EXECUTOR_ROLE` de gobernanza fuera accesible para todo el mundo, permitiendo a cualquier usuario ejecutar transacciones de gobernanza una vez vencido el bloqueo temporal. Aunque esta configuración es inusual, no era problemática por naturaleza; sin embargo, resultó devastadora en esta situación específica. Dejó abierta la puerta para que cualquiera ejecutara las acciones fuera de orden una vez vencido el bloqueo temporal.
 
-The attacker simply executed all of the queued timelock actions without waiting for the fund deposit, leaving an empty, vulnerable market open. By exploiting this unfunded market, they drained $20 million from the protocol.
+El atacante simplemente ejecutó todas las acciones en cola del bloqueo temporal sin esperar el depósito de fondos, dejando abierto un mercado vacío y vulnerable. Al explotar este mercado sin fondos, extrajo $20 millones del protocolo.
 
-The key takeaway here is that when governance actions need to occur in a specific order to ensure security, they should be made atomic. For example, if they are using the OpenZeppelin Timelock, they should be scheduled with `scheduleBatch()` instead of `schedule()`. Sonne’s mistake was to allow these actions to be queued separately, which left them exposed.
+La lección clave es que, cuando las acciones de gobernanza deben ocurrir en un orden específico para garantizar la seguridad, deben hacerse atómicas. Por ejemplo, si utilizan Timelock de OpenZeppelin, deben programarse con `scheduleBatch()` en lugar de `schedule()`. El error de Sonne fue permitir que estas acciones se pusieran en cola por separado, lo que las dejó expuestas.
 
-#### Preventative techniques
+#### Técnicas preventivas
 
-To avoid misconfiguration issues and the kind of costly mistakes we’ve discussed, we need to take a proactive approach during the entire life cycle of a smart contract, especially when it comes to deployment, upgrades, and any critical governance actions. We should always ensure that deployment and upgrade scripts are thoroughly tested and audited. We need to go beyond auditing the code itself and pay close attention to the scripts that touch the mainnet, ensuring that every aspect of the process has been tested in a live-like environment.
+Para evitar problemas de configuración incorrecta y el tipo de errores costosos que hemos analizado, debemos adoptar un enfoque proactivo durante todo el ciclo de vida de un contrato inteligente, especialmente en lo referente al despliegue, las actualizaciones y cualquier acción crítica de gobernanza. Siempre debemos asegurarnos de que los scripts de despliegue y actualización se prueben y auditen a fondo. Debemos ir más allá de auditar el código en sí y prestar mucha atención a los scripts que interactúan con la red principal, asegurándonos de que cada aspecto del proceso se haya probado en un entorno similar al real.
 
-## Contract Libraries
+## Bibliotecas de contratos
 
-There is a lot of existing code available for reuse, both deployed on chain as callable libraries and off chain as code template libraries. In Ethereum, the most widely used resource is the [OpenZeppelin suite](https://oreil.ly/OSSoV), an ample library of contracts ranging from implementations of various tokens to different proxy architectures to simple behaviors commonly found in contracts, such as `Ownable`, `Pausable`, or `ReentrancyGuard`. The contracts in this repository have been extensively tested and, in some cases, even function as de facto standard implementations. They are free to use and are built and maintained by [OpenZeppelin](https://www.openzeppelin.com) together with an ever-growing list of external contributors.
+Hay mucho código existente disponible para reutilizar, tanto desplegado en la cadena como bibliotecas invocables como fuera de la cadena en forma de bibliotecas de plantillas de código. En Ethereum, el recurso más utilizado es el [conjunto de OpenZeppelin](https://oreil.ly/OSSoV), una amplia biblioteca de contratos que abarca desde implementaciones de diversos tokens hasta distintas arquitecturas proxy y comportamientos sencillos habituales en los contratos, como `Ownable`, `Pausable` o `ReentrancyGuard`. Los contratos de este repositorio se han probado exhaustivamente y, en algunos casos, incluso funcionan como implementaciones estándar de facto. Son de uso gratuito y los desarrolla y mantiene [OpenZeppelin](https://www.openzeppelin.com) junto con una lista cada vez mayor de colaboradores externos.
 
-Other notable contract libraries include Paradigm’s [Solmate](https://oreil.ly/yTuU9) and Vectorized’s [Solady](https://oreil.ly/zqpib). Solmate is more opinionated in design, while Solady focuses primarily on gas optimization.
+Otras bibliotecas de contratos destacadas son [Solmate](https://oreil.ly/yTuU9) de Paradigm y [Solady](https://oreil.ly/zqpib) de Vectorized. Solmate adopta decisiones de diseño más prescriptivas, mientras que Solady se centra principalmente en la optimización de gas.
 
-## Additional Resources
+## Recursos adicionales
 
-Since smart contract security encompasses so much depth and nuance, here is a list of resources where curious readers can go to learn more about this very advanced subject:
+Como la seguridad de los contratos inteligentes abarca tanta profundidad y tantos matices, aquí presentamos una lista de recursos a los que los lectores curiosos pueden acudir para aprender más sobre este tema tan avanzado:
 
 **Cyfrin Updraft Smart Contract Security and Auditing**
 
-A comprehensive 24-hour course (270+ lessons)
+Un curso integral de 24 horas (270+ lecciones)
 
 **Secureum Bootcamp**
 
-A three-month intensive bootcamp focused on Ethereum smart contract security auditing
+Un programa intensivo de tres meses centrado en la auditoría de seguridad de contratos inteligentes de Ethereum
 
 **Ethernaut**
 
-A Solidity-based wargame by OpenZeppelin where players hack smart contract levels to learn common vulnerabilities
+Un juego de guerra de OpenZeppelin basado en Solidity en el que los jugadores vulneran niveles de contratos inteligentes para aprender sobre vulnerabilidades comunes
 
 **Damn Vulnerable DeFi**
 
-A capture-the-flag (CTF) platform featuring 18 challenges covering flash loans, price oracles, governance, NFTs, and more
+Una plataforma de captura la bandera (CTF) con 18 desafíos que abarcan préstamos flash, oráculos de precios, gobernanza, NFT y más
 
 **Capture the Ether**
 
-A classic CTF-style Ethereum security game
+Un juego clásico de seguridad de Ethereum al estilo CTF
 
 **QuillCTF**
 
-A collection of Ethereum security puzzles by QuillAudits
+Una colección de acertijos de seguridad de Ethereum de QuillAudits
 
 **Paradigm CTF**
 
-An annual online CTF competition organized by Paradigm for experienced smart contract hackers where challenges are highly advanced and reflect cutting-edge exploits; official solutions and write-ups are often released, making it a learning resource as well
+Una competencia anual de CTF en línea organizada por Paradigm para hackers experimentados en contratos inteligentes, con desafíos muy avanzados que reflejan ataques de vanguardia; a menudo se publican soluciones oficiales y explicaciones, lo que también la convierte en un recurso de aprendizaje
 
-## Conclusion
+## Conclusión
 
-Thanks to its updates, the Solidity compiler now mitigates risks like integer overflows and default visibility issues. This allowed us to remove some of the older pitfalls mentioned in the first edition of the book and to use the space to focus on more current and relevant vulnerabilities instead. Anyway, there is still a lot for any developer working in the smart contract domain to know and understand. By following best practices in your smart contract design and code writing, you will avoid many severe pitfalls and traps.
+Gracias a sus actualizaciones, el compilador de Solidity ahora mitiga riesgos como los desbordamientos de enteros y los problemas de visibilidad predeterminada. Esto nos permitió eliminar algunos de los problemas antiguos mencionados en la primera edición del libro y utilizar ese espacio para centrarnos en vulnerabilidades más actuales y relevantes. De todos modos, todavía hay mucho que cualquier desarrollador que trabaje en el ámbito de los contratos inteligentes debe conocer y comprender. Al seguir buenas prácticas al diseñar sus contratos inteligentes y escribir su código, evitará muchos problemas y trampas graves.
 
-Perhaps the most fundamental software security principle is to maximize reuse of trusted code. In cryptography, this is so important that it has been condensed into an adage: “Don’t roll your own crypto.” In the case of smart contracts, this amounts to gaining as much as possible from freely available libraries that have been thoroughly vetted by the community.
+Quizá el principio más fundamental de la seguridad del software sea maximizar la reutilización de código confiable. En criptografía, esto es tan importante que se ha condensado en un dicho: "No implemente su propia criptografía". En el caso de los contratos inteligentes, esto equivale a aprovechar al máximo las bibliotecas disponibles gratuitamente que la comunidad haya examinado a fondo.

@@ -1,0 +1,4 @@
+/* Keep inherited MathML readable in both Vocs color schemes. */
+math [mathcolor] {
+  color: inherit;
+}

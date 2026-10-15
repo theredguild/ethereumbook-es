@@ -1,123 +1,123 @@
-# Chapter 17. Zero-Knowledge Proofs
+# Capítulo 17. Pruebas de conocimiento cero
 
-In this chapter, we'll explore the fascinating world of *zero-knowledge cryptography* and see how it perfectly applies to the Ethereum roadmap, making it possible to really scale and accommodate mass-adoption demand for block space. Zero-knowledge technology is a very complex topic and relies on lots of mathematical rules that we won't be able to explain in detail. The goal of this chapter is to make sure you can understand why zero-knowledge cryptography offers a unique opportunity for Ethereum and fits well into the scaling roadmap. By the end of the chapter, you'll know how zero-knowledge cryptography works on a high level, what its useful properties are, and how Ethereum is going to use it to improve the protocol.
+En este capítulo, exploraremos el fascinante mundo de la *criptografía de conocimiento cero* y veremos cómo se aplica perfectamente a la hoja de ruta de Ethereum, al permitir escalar realmente y satisfacer la demanda de espacio de bloque que genera la adopción masiva. La tecnología de conocimiento cero es un tema muy complejo y se basa en muchas reglas matemáticas que no podremos explicar en detalle. El objetivo de este capítulo es que se comprenda por qué la criptografía de conocimiento cero ofrece una oportunidad única para Ethereum y encaja bien en su hoja de ruta de escalabilidad. Al terminar el capítulo, sabrá cómo funciona la criptografía de conocimiento cero a grandes rasgos, cuáles son sus propiedades útiles y cómo Ethereum la utilizará para mejorar el protocolo.
 
-## History
+## Historia
 
-*Zero-knowledge proofs* were introduced in the paper ["The Knowledge Complexity of Interactive Proof-Systems"](https://oreil.ly/a6KH6) by Shafi Goldwasser, Silvio Micali, and Charles Rackoff in 1985, where they describe a zero-knowledge proof as a way to prove to another party that you know something is true without revealing any information besides the fact that your statement is actually true.
-Even though zero-knowledge proofs were discovered in the 1980s, their practical use cases were very limited. Everything changed in 2011 with the arrival of the [BIT+11](https://oreil.ly/C6HvM) paper that introduced *SNARKs* (*succinct noninteractive arguments of knowledge*) as a theoretical framework for creating zero-knowledge proofs for arbitrary computations. Two years later, in 2013, the [Pinocchio PGHR13](https://oreil.ly/4uU6x) paper provided the first practical implementation of a general-purpose SNARK, making SNARKs feasible for real-world applications. For the first time, it was possible to prove that a generic program had been executed correctly without having to reexecute it and without revealing the actual computation details.
+Las *pruebas de conocimiento cero* se presentaron en el artículo ["The Knowledge Complexity of Interactive Proof-Systems"](https://oreil.ly/a6KH6), de Shafi Goldwasser, Silvio Micali y Charles Rackoff, en 1985. Allí describen una prueba de conocimiento cero como una forma de demostrar a otra parte que se sabe que algo es verdadero sin revelar ninguna información aparte del hecho de que la afirmación es efectivamente verdadera.
+Aunque las pruebas de conocimiento cero se descubrieron en la década de 1980, sus casos de uso prácticos eran muy limitados. Todo cambió en 2011 con la llegada del artículo [BIT+11](https://oreil.ly/C6HvM), que presentó los *SNARKs* (*argumentos de conocimiento sucintos no interactivos*) como un marco teórico para crear pruebas de conocimiento cero de cómputos arbitrarios. Dos años después, en 2013, el artículo [Pinocchio PGHR13](https://oreil.ly/4uU6x) proporcionó la primera implementación práctica de un SNARK de propósito general, lo que hizo viables los SNARKs para aplicaciones del mundo real. Por primera vez, era posible demostrar que un programa genérico se había ejecutado correctamente sin tener que volver a ejecutarlo y sin revelar los detalles del cómputo.
 
-The revolution had started. From that moment on, the field of zero-knowledge proofs evolved at an impressively rapid pace. In 2016, the [Groth16 algorithm](https://oreil.ly/rxlOL) significantly improved the efficiency of zk-SNARKs by reducing proof size and verification time. Because of its exceptional succinctness, Groth16 remains widely used today, despite the availability of newer systems. For example, Tornado Cash, a decentralized mixer application, uses it to implement zero-knowledge proofs on chain.
+La revolución había comenzado. A partir de ese momento, el campo de las pruebas de conocimiento cero evolucionó a un ritmo impresionantemente rápido. En 2016, el [algoritmo Groth16](https://oreil.ly/rxlOL) mejoró significativamente la eficiencia de los zk-SNARKs al reducir el tamaño de las pruebas y el tiempo de verificación. Por su excepcional concisión, Groth16 sigue utilizándose ampliamente hoy en día, a pesar de que existen sistemas más nuevos. Por ejemplo, Tornado Cash, una aplicación mezcladora descentralizada, lo utiliza para implementar pruebas de conocimiento cero en la cadena.
 
-In 2017, [Bulletproofs](https://oreil.ly/ZUeIe) introduced a groundbreaking advancement by eliminating the need for a *trusted setup* (in later sections, we'll do a deep dive into what a trusted setup actually is), though at the cost of larger proof sizes. This was followed in 2018 by [*zk-STARKs*](https://oreil.ly/TCnTT), which not only removed the requirement for trusted setups but also provided postquantum security—meaning their cryptographic foundations are resistant to attacks from quantum computers. The former is used nowadays in the cryptocurrency project Monero to obfuscate transaction amounts, while the latter forms the cryptographic basis of Starknet, an Ethereum L2.
+En 2017, [Bulletproofs](https://oreil.ly/ZUeIe) introdujo un avance revolucionario al eliminar la necesidad de una *configuración de confianza* (en secciones posteriores, profundizaremos en qué es exactamente una configuración de confianza), aunque a costa de pruebas más grandes. Le siguieron en 2018 los [*zk-STARKs*](https://oreil.ly/TCnTT), que no solo eliminaron el requisito de configuraciones de confianza, sino que también proporcionaron seguridad poscuántica, es decir, sus fundamentos criptográficos son resistentes a ataques de computadoras cuánticas. Los primeros se utilizan actualmente en el proyecto de criptomonedas Monero para ocultar los montos de las transacciones, mientras que los segundos constituyen la base criptográfica de Starknet, una L2 de Ethereum.
 
-In 2019, [PLONK](https://oreil.ly/3453_) and [Sonic](https://oreil.ly/f6_Sq) made significant contributions by introducing universal and updatable trusted setups, which made SNARKs more flexible and practical for general-purpose applications. These innovations continue to influence modern zero-knowledge systems.
+En 2019, [PLONK](https://oreil.ly/3453_) y [Sonic](https://oreil.ly/f6_Sq) hicieron aportes importantes al introducir configuraciones de confianza universales y actualizables, que hicieron que los SNARKs fueran más flexibles y prácticos para aplicaciones de propósito general. Estas innovaciones siguen influyendo en los sistemas modernos de conocimiento cero.
 
-Zero-knowledge proofs remain in active development, with recent advances bringing improvements in proving time, recursion efficiency, and practical applications like zk-EVMs and modern zk-VMs. New constructions and optimizations continue to emerge regularly, pushing the boundaries of what's possible with zero-knowledge technology.
+Las pruebas de conocimiento cero siguen en desarrollo activo, con avances recientes que mejoran el tiempo de generación de pruebas, la eficiencia de la recursión y aplicaciones prácticas como las zk-EVMs y las zk-VMs modernas. Continúan apareciendo regularmente nuevas construcciones y optimizaciones que amplían los límites de lo que es posible con la tecnología de conocimiento cero.
 
-That's a reality mostly thanks to the money brought by the cryptocurrency space. The Ethereum Foundation itself has contributed (and still contributes) by providing multiple grants and having dedicated teams research the topic.
+Esto es una realidad en gran medida gracias al dinero aportado por el sector de las criptomonedas. La propia Ethereum Foundation ha contribuido (y sigue contribuyendo) al otorgar múltiples subvenciones y contar con equipos dedicados a investigar el tema.
 
-## Definition and Properties
+## Definición y propiedades
 
-Now, let's be more specific and define what a zero-knowledge proof is and which properties it must have. We've already said that a zero-knowledge proof is a protocol that lets a party—usually called the *prover*, P—prove to another party—usually called the *verifier*, V—that a statement is true without revealing anything apart from the fact that that specific statement is true.
+Ahora seamos más específicos y definamos qué es una prueba de conocimiento cero y qué propiedades debe tener. Ya dijimos que una prueba de conocimiento cero es un protocolo que permite a una parte, habitualmente llamada *probador*, P, demostrar a otra parte, habitualmente llamada *verificador*, V, que una afirmación es verdadera sin revelar nada aparte del hecho de que esa afirmación específica es verdadera.
 
-Let's formalize some important definitions:
+Formalizamos algunas definiciones importantes:
 
-**Statement**
+**Afirmación**
 
-The claim being proven. The statement is public and verifiable by anyone, and it doesn't include private information.
+La aseveración que se demuestra. La afirmación es pública y verificable por cualquiera, y no incluye información privada.
 
-**Witness**
+**Testigo**
 
-The secret information that proves the statement is true. The witness is known only by the prover.
+La información secreta que demuestra que la afirmación es verdadera. Solo el probador conoce el testigo.
 
-**Proof**
+**Prueba**
 
-The cryptographic object that convinces a verifier that the statement is true without revealing the witness.
+El objeto criptográfico que convence a un verificador de que la afirmación es verdadera sin revelar el testigo.
 
-All zero-knowledge proof systems must adhere to the following three properties:
+Todos los sistemas de pruebas de conocimiento cero deben cumplir las siguientes tres propiedades:
 
-**Completeness**
+**Completitud**
 
-If the prover P holds a true statement, then it must be able to compute a valid zero-knowledge proof by following the protocol rules. There cannot be a case where a prover is not able to produce a valid proof if it's following all the rules correctly.
+Si el probador P tiene una afirmación verdadera, debe poder calcular una prueba de conocimiento cero válida siguiendo las reglas del protocolo. No puede haber un caso en que un probador no pueda producir una prueba válida si sigue correctamente todas las reglas.
 
-**Soundness**
+**Solidez**
 
-It must be infeasible for any malicious prover to forge a valid proof for a false statement. If a zero-knowledge proof is accepted by a verifier, the only way the prover must have created it is by following all the protocol rules accordingly, starting with a true statement.
+Debe ser inviable que un probador malicioso falsifique una prueba válida de una afirmación falsa. Si un verificador acepta una prueba de conocimiento cero, la única manera en que el probador debe haberla creado es siguiendo todas las reglas del protocolo de manera correspondiente, a partir de una afirmación verdadera.
 
-**Zero knowledge**
+**Conocimiento cero**
 
-As the name suggests, a verifier shouldn't get to know anything other than the validity of the initial statement while following the protocol.
+Como su nombre lo indica, un verificador no debería conocer nada más que la validez de la afirmación inicial mientras sigue el protocolo.
 
-## How Ethereum Uses Zero-Knowledge Proofs
+## Cómo utiliza Ethereum las pruebas de conocimiento cero
 
-You may wonder why this very new piece of cryptography is important for the future development and roadmap of Ethereum. The answer is actually pretty straightforward.
+Tal vez se pregunte por qué esta incorporación tan reciente a la criptografía es importante para el desarrollo futuro y la hoja de ruta de Ethereum. La respuesta es bastante directa.
 
-The real power of zero-knowledge proof systems, in the context of Ethereum, is that they enable the possibility of verifying the validity of a statement without having to perform all the computations needed to get to that final statement. First, a prover computes a certain statement and attaches a zero-knowledge proof to it; then, all verifiers can simply use the zero-knowledge protocol and trustlessly take that statement as true, without needing to do the same computation that the prover did.
+El verdadero poder de los sistemas de pruebas de conocimiento cero, en el contexto de Ethereum, es que permiten verificar la validez de una afirmación sin tener que realizar todos los cómputos necesarios para llegar a esa afirmación final. Primero, un probador calcula una determinada afirmación y le adjunta una prueba de conocimiento cero; después, todos los verificadores pueden utilizar el protocolo de conocimiento cero y dar por verdadera esa afirmación sin necesidad de confianza, sin realizar el mismo cómputo que hizo el probador.
 
-A careful reader may have already spotted where this perfectly applies to Ethereum: block execution and state updates—in other words, the *EVM state transition function*. Every new block updates the current state by processing all transactions included into it. Figure 17-1 shows a good representation of this.
+Un lector atento quizá ya haya identificado dónde se aplica esto perfectamente a Ethereum: la ejecución de bloques y las actualizaciones de estado, en otras palabras, la *función de transición de estado de la EVM*. Cada bloque nuevo actualiza el estado actual al procesar todas las transacciones incluidas en él. La Figura 17-1 ofrece una buena representación de esto.
 
-![EVM state transition function](images/ch17/maet_1701.png)
+![Función de transición de estado de la EVM](images/ch17/maet_1701.png)
 
-Figure 17-1. EVM state transition function
+Figura 17-1. Función de transición de estado de la EVM
 
-You can think of the EVM as a black box that takes in as input the current state of the blockchain and the new received block full of transactions, and then returns the new, updated state of the chain. Right now, when an Ethereum full node receives a new block, it reexecutes all the transactions contained in that block so that it can trustlessly update the state without having to rely on any trusted third party.
-The main issue with this approach is that block execution becomes a potential bottleneck because it's very load intensive. You end up having to balance the hardware requirements that a full node must adhere to in order to work fine and be up to date with the tip of the chain with the level of decentralization that you want to have in the network. The more you want to scale by pushing the requirements of a full node higher, the more you compromise decentralization because less sophisticated actors cannot economically sustain running a full node anymore. And vice versa: the lower you keep hardware requirements so that anyone can run a node, the more you're limited in terms of maximal throughput that your blockchain can handle. Ethereum has always preferred the decentralization branch of this trade-off, keeping hardware requirements low enough to allow for solo stakers and full node runners to exist.
+Podemos imaginar la EVM como una caja negra que recibe como entrada el estado actual de la blockchain y el bloque recién recibido lleno de transacciones, y luego devuelve el nuevo estado actualizado de la cadena. Actualmente, cuando un nodo completo de Ethereum recibe un bloque nuevo, vuelve a ejecutar todas las transacciones que contiene para poder actualizar el estado sin necesidad de confianza y sin depender de ningún tercero de confianza.
+El principal problema de este enfoque es que la ejecución de bloques se convierte en un posible cuello de botella porque impone una carga muy intensa. Se termina teniendo que equilibrar los requisitos de hardware que un nodo completo debe cumplir para funcionar bien y mantenerse al día con la punta de la cadena con el nivel de descentralización que se desea tener en la red. Cuanto más se quiera escalar elevando los requisitos de un nodo completo, más se compromete la descentralización, porque los actores menos sofisticados ya no pueden sostener económicamente la operación de un nodo completo. Y viceversa: cuanto más bajos se mantengan los requisitos de hardware para que cualquiera pueda ejecutar un nodo, más limitado será el rendimiento máximo que la blockchain puede manejar. Ethereum siempre ha preferido la descentralización en esta disyuntiva, manteniendo requisitos de hardware lo suficientemente bajos para permitir que existan quienes hacen staking de forma individual y quienes operan nodos completos.
 
-Here is where zero-knowledge proof systems come into play. What if there is a way for a full node to trustlessly update its state without having to execute any transaction—basically not having to perform the heavy computation of the EVM state transition function? This idea can be summarized in the following example:
+Aquí entran en juego los sistemas de pruebas de conocimiento cero. ¿Y si hubiera una forma de que un nodo completo actualizara su estado sin necesidad de confianza y sin ejecutar ninguna transacción, es decir, sin realizar el pesado cómputo de la función de transición de estado de la EVM? Esta idea puede resumirse en el siguiente ejemplo:
 
-1. Some actors perform the actual EVM computation by executing all transactions included into a new block and producing the updated state of the chain.
-2. These actors create a zero-knowledge proof that attests to the validity of the state and share it, together with the new updated state, to all full nodes.
-3. When all other full nodes receive the new state of the chain and the zero-knowledge proof, they just verify the validity of the proof, and if it's valid, they can trustlessly update their own states of the chain with the new state they have just received.
+1. Algunos actores realizan el cómputo real de la EVM ejecutando todas las transacciones incluidas en un bloque nuevo y produciendo el estado actualizado de la cadena.
+2. Estos actores crean una prueba de conocimiento cero que da fe de la validez del estado y la comparten, junto con el nuevo estado actualizado, con todos los nodos completos.
+3. Cuando todos los demás nodos completos reciben el nuevo estado de la cadena y la prueba de conocimiento cero, solo verifican la validez de la prueba y, si es válida, pueden actualizar sin necesidad de confianza sus propios estados de la cadena con el nuevo estado que acaban de recibir.
 
-This way, you still need to have nodes—probably maintained by heavily financed companies—that do need to execute all transactions, but all other nodes can be cheap since they only need to verify a proof. You can bump hardware requirements really high for the first type of nodes so that you can handle a much bigger throughput and still have a high level of decentralization thanks to the "magic" of zero-knowledge proofs.
+De esta manera, sigue siendo necesario contar con nodos, probablemente mantenidos por empresas con abundante financiación, que sí deban ejecutar todas las transacciones, pero todos los demás nodos pueden ser económicos porque solo necesitan verificar una prueba. Se pueden elevar mucho los requisitos de hardware del primer tipo de nodos para manejar un rendimiento mucho mayor y aun así mantener un alto nivel de descentralización gracias a la "magia" de las pruebas de conocimiento cero.
 
-As of now, we have always assumed that generating a zero-knowledge proof and verifying it is fast and straightforward. In fact, the previous steps only make sense if verifying a zero-knowledge proof is faster than reexecuting all of the transactions contained in an average Ethereum block. And it turns out that today, it's quite hard to achieve such a property. But that's an optimization problem: it's just a matter of when, not if. We'll soon reach the point where it will be feasible to generate and verify a zero-knowledge proof for an Ethereum block in real time. Ethproofs is a very cool website to follow if you're interested in the development of this topic.
+Hasta ahora, siempre hemos supuesto que generar una prueba de conocimiento cero y verificarla es rápido y sencillo. De hecho, los pasos anteriores solo tienen sentido si verificar una prueba de conocimiento cero es más rápido que volver a ejecutar todas las transacciones contenidas en un bloque promedio de Ethereum. Y resulta que hoy es bastante difícil lograr esa propiedad. Pero ese es un problema de optimización: es solo cuestión de cuándo, no de si será posible. Pronto llegaremos al punto en que será viable generar y verificar una prueba de conocimiento cero de un bloque de Ethereum en tiempo real. Ethproofs es un sitio web muy interesante para seguir si le interesa el desarrollo de este tema.
 
-## L2s Also Benefit from ZK
+## Las L2 también se benefician de ZK
 
-The Ethereum mainnet is not the only thing that benefits from zero-knowledge proof technology. In fact, as you may have already read in Chapter 16, there is a category of rollups called *ZK rollups*. As the name suggests, they use zero-knowledge proof systems to prove the EVM execution so that they can post state updates of their chains, attached with a zero-knowledge proof that ensures that the new state has been computed correctly.
+La red principal de Ethereum no es la única que se beneficia de la tecnología de pruebas de conocimiento cero. De hecho, como quizá ya haya leído en el Capítulo 16, existe una categoría de rollups llamados *rollups ZK*. Como su nombre lo indica, utilizan sistemas de pruebas de conocimiento cero para demostrar la ejecución de la EVM y poder publicar actualizaciones de estado de sus cadenas acompañadas de una prueba de conocimiento cero que garantiza que el nuevo estado se calculó correctamente.
 
-You may wonder how ZK rollups are able to use zero-knowledge technology if, as we previously said, it's currently not possible to achieve real-time proving for average Ethereum blocks. The answer is that they don't; they don't even need to do real-time proving for each block of the L2. Usually, they post an aggregate zero-knowledge proof once every hour or so that proves that all the state updates that happened between the last one and the most recent one have been executed correctly.
+Tal vez se pregunte cómo pueden los rollups ZK utilizar la tecnología de conocimiento cero si, como dijimos antes, actualmente no es posible generar pruebas en tiempo real para bloques promedio de Ethereum. La respuesta es que no lo hacen; ni siquiera necesitan generar pruebas en tiempo real para cada bloque de la L2. Habitualmente publican una prueba agregada de conocimiento cero aproximadamente una vez por hora, que demuestra que todas las actualizaciones de estado ocurridas entre la última y la más reciente se ejecutaron correctamente.
 
-The time elapsed between every zero-knowledge proof only affects the time to finality of the rollup itself. If a proof is posted once every hour, that means that on average, you need to wait 30 minutes to be able to consider your transaction really finalized (on the L1).
+El tiempo transcurrido entre cada prueba de conocimiento cero solo afecta al tiempo hasta la finalidad del propio rollup. Si se publica una prueba una vez por hora, eso significa que, en promedio, hay que esperar 30 minutos para poder considerar que una transacción realmente alcanzó la finalidad (en la L1).
 
-## A Small Example
+## Un pequeño ejemplo
 
-To become more familiar with how zero-knowledge proof systems work, let's start with a simple and small example: the *partition problem*. This is a well-known problem that consists of the task of "deciding whether a given multiset S of positive integers can be partitioned into two subsets S1 and S2 such that the sum of the numbers in S1 equals the sum of the numbers in S2."
+Para familiarizarnos con el funcionamiento de los sistemas de pruebas de conocimiento cero, comencemos con un ejemplo pequeño y sencillo: el *problema de partición*. Es un problema conocido que consiste en la tarea de "decidir si un multiconjunto dado S de enteros positivos puede dividirse en dos subconjuntos S1 y S2 tales que la suma de los números de S1 sea igual a la suma de los números de S2".
 
-> **Note**  
+> **Nota**  
 >
-> The partition problem is a decision problem, whereas Ethereum relies on zero-knowledge proofs to verify computation traces. Although Ethereum's primary use case for zero-knowledge proofs is execution-trace verification, working through the partition problem is still an excellent way to build your intuition about how zero-knowledge proof systems work.
+> El problema de partición es un problema de decisión, mientras que Ethereum utiliza pruebas de conocimiento cero para verificar trazas de cómputo. Aunque el principal caso de uso de las pruebas de conocimiento cero en Ethereum es la verificación de trazas de ejecución, trabajar con el problema de partición sigue siendo una excelente manera de desarrollar la intuición sobre el funcionamiento de los sistemas de pruebas de conocimiento cero.
 
 
-If we have S = [1, 1, 5, 7], we can satisfy the problem by partitioning it into S1 = [1, 1, 5] and S2 = [7]. But it's not always possible to generate a correct solution to this problem; in fact, if S = [1, 1, 5, 8], then it's impossible to partition it into two subsets that sum up to the same number.
+Si tenemos S = [1, 1, 5, 7], podemos satisfacer el problema al dividirlo en S1 = [1, 1, 5] y S2 = [7]. Pero no siempre es posible generar una solución correcta para este problema; de hecho, si S = [1, 1, 5, 8], es imposible dividirlo en dos subconjuntos que sumen el mismo número.
 
-The partition problem is NP-complete, meaning that an algorithm doesn't exist that can solve it in polynomial time—that is, providing a solution if there is one or proving the solution doesn't exist in a small amount of time.
+El problema de partición es NP-completo, lo que significa que no existe un algoritmo que pueda resolverlo en tiempo polinómico, es decir, proporcionar una solución si existe o demostrar que no existe una solución en poco tiempo.
 
-### Let's Prove It
+### Demostrémoslo
 
-The structure of the partition problem perfectly applies to the properties of zero-knowledge proof systems we have seen so far. In fact, since it's hard to find a solution, it could be interesting to delegate the computational power of finding it to a rich prover, equipped with a supercomputer, and then use zero-knowledge technology to prove that it found a valid solution without having everyone else perform the same heavy computation but also without actually revealing that solution.
+La estructura del problema de partición se aplica perfectamente a las propiedades de los sistemas de pruebas de conocimiento cero que hemos visto hasta ahora. De hecho, como es difícil encontrar una solución, podría ser interesante delegar la capacidad de cómputo necesaria para encontrarla a un probador con muchos recursos, equipado con una supercomputadora, y luego utilizar tecnología de conocimiento cero para demostrar que encontró una solución válida sin que todos los demás realicen el mismo cómputo pesado, pero también sin revelar esa solución.
 
-To make the partition problem suitable for zero-knowledge proof systems, we need to tweak it a little bit. Suppose we have a list `s` of positive integers. We'll say that another list `a` is a *satisfying assignment* if:
+Para adaptar el problema de partición a los sistemas de pruebas de conocimiento cero, debemos modificarlo un poco. Supongamos que tenemos una lista `s` de enteros positivos. Diremos que otra lista `a` es una *asignación satisfactoria* si:
 
 1. `len(s) == len(a)`
-2. All elements of `a` are 1 or –1
-3. The dot product between `s` and `a` is 0
+2. Todos los elementos de `a` son 1 o –1
+3. El producto punto entre `s` y `a` es 0
 
-Note that this construction is completely analogous to the partition problem. If we take our previous initial list S = [1, 1, 5, 7], then the satisfying assignment `a` is equal to:
+Observe que esta construcción es completamente análoga al problema de partición. Si tomamos nuestra lista inicial anterior S = [1, 1, 5, 7], la asignación satisfactoria `a` es igual a:
 
 ```
 a = [1, 1, 1, –1]
 ```
 
-You can manually check that all three conditions are true:
+Se puede comprobar manualmente que las tres condiciones se cumplen:
 
 1. `len(s) = 4 == len(a) = 4`
-2. All elements of `a` are 1 or –1
-3. Dot product: 1 × 1 + 1 × 1 + 1 × 5 + (–1) × 7 = 1 + 1 + 5 – 7 = 0
+2. Todos los elementos de `a` son 1 o –1
+3. Producto punto: 1 × 1 + 1 × 1 + 1 × 5 + (–1) × 7 = 1 + 1 + 5 – 7 = 0
 
-The *dot product* between two lists of equal length is computed by multiplying each member of the first list with the corresponding element of the second one and then summing all the results. More technically, if we have lists `s = [s0, s1, s2, sn]` and `a = [a0, a1, a2, an]` of equal length `n`, the dot product is calculated as follows:
+El *producto punto* entre dos listas de igual longitud se calcula multiplicando cada miembro de la primera lista por el elemento correspondiente de la segunda y sumando todos los resultados. Más técnicamente, si tenemos las listas `s = [s0, s1, s2, sn]` y `a = [a0, a1, a2, an]` de igual longitud `n`, el producto punto se calcula de la siguiente manera:
 
 <math xmlns="http://www.w3.org/1998/Math/MathML">
   <mi mathcolor="#000000">s</mi>
@@ -234,29 +234,29 @@ The *dot product* between two lists of equal length is computed by multiplying e
   </msub>
 </math>
 
-Of course, we could immediately provide `a` to the verifier, and they could easily check that it is a valid solution, but that would violate the zero-knowledge assumption of not revealing the solution.
+Por supuesto, podríamos proporcionar inmediatamente `a` al verificador, y este podría comprobar fácilmente que es una solución válida, pero eso violaría el supuesto de conocimiento cero de no revelar la solución.
 
-Let's start generating a different list `w` by creating the *partial-sum list*—that is, `w[i]` is equal to the partial dot product between `s` and `a` up to `i`. In the context of zero-knowledge proof systems, `w` is also called the *witness*. Following our example, we can compute `w`:
+Comencemos generando una lista diferente `w` mediante la creación de la *lista de sumas parciales*, es decir, `w[i]` es igual al producto punto parcial entre `s` y `a` hasta `i`. En el contexto de los sistemas de pruebas de conocimiento cero, `w` también se denomina *testigo*. Siguiendo nuestro ejemplo, podemos calcular `w`:
 
 ```
 w = [1, 2, 7, 0]
 ```
 
-Note that if `a` is a valid satisfying assignment, then `w` always ends with a 0.
+Observe que, si `a` es una asignación satisfactoria válida, `w` siempre termina en 0.
 
-To make the proof system work better, let's apply a small modification to the proof `p` we have built so far. In particular, we'll put the last item of the list `w` in the first position, so our previous `w` now becomes:
+Para que el sistema de pruebas funcione mejor, apliquemos una pequeña modificación a la prueba `p` que hemos construido hasta ahora. En particular, pondremos el último elemento de la lista `w` en la primera posición, de modo que nuestra `w` anterior ahora se convierte en:
 
 ```
 w = [0, 1, 2, 7]
 ```
 
-Sweet! This list `w` has a very cool property:
+¡Excelente! Esta lista `w` tiene una propiedad muy interesante:
 
 ```
 |s[i]| = |w[i + 1] – w[i]|
 ```
 
-You can check the validity of this statement yourself:
+Se puede comprobar la validez de esta afirmación:
 
 ```
 |s[0]| = |w[0 + 1] – w[0]| = |w[1] – w[0]| = |1 – 0| = |1| = 1
@@ -265,25 +265,25 @@ You can check the validity of this statement yourself:
 |s[3]| = |w[3 + 1] – w[3]| = |w[4] – w[3]| = |w[0] – w[3]| = |0 – 7| = |–7| = 7
 ```
 
-Note that to compute `s[3]`, we would need to access `w[4]`, which does not exist since `w` has only four items (and we start indexing from zero). Still, there is a very easy solution: you just need to go back to the first element of `w` as if `w` were cyclical.
+Observe que, para calcular `s[3]`, necesitaríamos acceder a `w[4]`, que no existe porque `w` solo tiene cuatro elementos (y comenzamos a indexar desde cero). Aun así, hay una solución muy sencilla: solo hay que volver al primer elemento de `w` como si `w` fuera cíclica.
 
-A verifier could ask for two consecutive elements of `w` and check that the previous relation holds. Remember that the verifier has access to `s` because that is publicly available; it represents the input of this problem but has no access to `a`, the satisfying assignment, which represents the solution. If the equation holds, it means the prover knows a satisfying assignment `a` for this problem.
+Un verificador podría solicitar dos elementos consecutivos de `w` y comprobar que se cumple la relación anterior. Recuerde que el verificador tiene acceso a `s` porque está disponible públicamente; representa la entrada de este problema, pero no tiene acceso a `a`, la asignación satisfactoria, que representa la solución. Si la ecuación se cumple, significa que el probador conoce una asignación satisfactoria `a` para este problema.
 
-### Issues
+### Problemas
 
-What we have built so far is a very naive proof system. In fact, there are three big issues with it:
+Lo que hemos construido hasta ahora es un sistema de pruebas muy ingenuo. De hecho, tiene tres grandes problemas:
 
-1. Previously, we said that once the verifier has asked for two consecutive elements of `w` and the equation holds true, then they have verified that the prover knows a solution to this problem. This is not true. With only one query, the verifier cannot be completely sure; they have to make several queries of consecutive elements of `w` before being sure of it with a really high probability.
-2. While it's true that the verifier can indeed verify that the prover has a solution to the problem, this proof system relies on the integrity of the prover. What if the prover is malevolent and lies? When the verifier asks for two consecutive elements of `w`, the prover could provide two random numbers that still satisfy the equation.
-3. Furthermore, this proof system is not zero knowledge. In fact, by asking for consecutive elements of `w`, the verifier gets to know a lot about the satisfying assignment `a`. The verifier knows how `w` has been constructed, so the more they know about `w`, the more they know about the solution `a`.
+1. Antes dijimos que, una vez que el verificador ha solicitado dos elementos consecutivos de `w` y la ecuación se cumple, ha verificado que el probador conoce una solución para este problema. Esto no es cierto. Con una sola consulta, el verificador no puede estar completamente seguro; debe realizar varias consultas de elementos consecutivos de `w` antes de tener certeza con una probabilidad muy alta.
+2. Aunque es cierto que el verificador puede verificar que el probador tiene una solución para el problema, este sistema de pruebas depende de la integridad del probador. ¿Qué pasa si el probador es malicioso y miente? Cuando el verificador solicita dos elementos consecutivos de `w`, el probador podría proporcionar dos números aleatorios que aun así satisfagan la ecuación.
+3. Además, este sistema de pruebas no es de conocimiento cero. De hecho, al solicitar elementos consecutivos de `w`, el verificador llega a saber mucho sobre la asignación satisfactoria `a`. El verificador sabe cómo se construyó `w`, así que cuanto más sabe sobre `w`, más sabe sobre la solución `a`.
 
-Let's address these issues now and try to build a better proof system.
+Abordemos ahora estos problemas e intentemos construir un sistema de pruebas mejor.
 
-### Zero Knowledge
+### Conocimiento cero
 
-Let's add zero knowledge to the system. The main issue with the protocol we've built so far is that we send the real values of `w` to the verifier, and that lets the verifier understand a lot of information about `a`. To see this in practice, let's do two simple steps of interaction between prover and verifier.
+Agreguemos conocimiento cero al sistema. El principal problema del protocolo que hemos construido hasta ahora es que enviamos los valores reales de `w` al verificador, lo que le permite obtener mucha información sobre `a`. Para verlo en la práctica, hagamos dos pasos sencillos de interacción entre probador y verificador.
 
-The verifier asks for `w[1]` and `w[2]` and checks that `|w[2] – w[1]| = |s[1]|`, so the prover provides `w[1] = 1` and `w[2] = 2`, and the verifier can confirm that the equation holds true:
+El verificador solicita `w[1]` y `w[2]` y comprueba que `|w[2] – w[1]| = |s[1]|`, por lo que el probador proporciona `w[1] = 1` y `w[2] = 2`, y el verificador puede confirmar que la ecuación se cumple:
 
 <math xmlns="http://www.w3.org/1998/Math/MathML">
   <mfenced open="|" close="" separators="|">
@@ -328,7 +328,7 @@ The verifier asks for `w[1]` and `w[2]` and checks that `|w[2] – w[1]| = |s[1]
   </mfenced>
 </math>
 
-Then, the verifier asks for another query: `w[2]` and `w[3]`. The prover provides `w[2] = 2` and `w[3] = 7`, and the verifier checks the equation:
+Después, el verificador realiza otra consulta: `w[2]` y `w[3]`. El probador proporciona `w[2] = 2` y `w[3] = 7`, y el verificador comprueba la ecuación:
 
 <math xmlns="http://www.w3.org/1998/Math/MathML">
   <mfenced open="|" close="" separators="|">
@@ -373,7 +373,7 @@ Then, the verifier asks for another query: `w[2]` and `w[3]`. The prover provide
   </mfenced>
 </math>
 
-With these two interactions, the verifier gets to know three elements of w:
+Con estas dos interacciones, el verificador llega a conocer tres elementos de w:
 
 <math xmlns="http://www.w3.org/1998/Math/MathML">
   <mtable>
@@ -413,17 +413,17 @@ With these two interactions, the verifier gets to know three elements of w:
   </mtable>
 </math>
 
-Since the verifier already knows `s = [1, 1, 5, 7]` and knows how `w` has been computed, they can derive that the initial part of the solution `a` is equal to `[1, 1, 1]` because that's the only way to get `w[3] = 7`, `w[2] = 2`, and `w[1] = 1`.
+Como el verificador ya conoce `s = [1, 1, 5, 7]` y sabe cómo se calculó `w`, puede deducir que la parte inicial de la solución `a` es igual a `[1, 1, 1]`, porque esa es la única forma de obtener `w[3] = 7`, `w[2] = 2` y `w[1] = 1`.
 
-We need to find a way to mask the real values of `w` but still manage to satisfy the relation between the new `w` and the input list `s`. To achieve that, we need to add some level of randomness in a very specific way.
+Debemos encontrar una forma de ocultar los valores reales de `w` y aun así satisfacer la relación entre la nueva `w` y la lista de entrada `s`. Para lograrlo, debemos agregar cierto grado de aleatoriedad de una manera muy específica.
 
-First, instead of `a`, we flip a coin, and if it's heads, we leave it as it is; otherwise, we change the signs for all elements, so all 1s becomes –1s, and vice versa. Note that this change doesn't break the three main properties of the satisfying assignment `a` for the problem.
+Primero, en lugar de `a`, lanzamos una moneda y, si sale cara, la dejamos como está; de lo contrario, cambiamos los signos de todos los elementos, de modo que todos los 1 se convierten en –1 y viceversa. Observe que este cambio no rompe las tres propiedades principales de la asignación satisfactoria `a` del problema.
 
-Then, we get a new random integer value `r`. We calculate `w` in the same way as before, but we add `r` to every element of it. Even this change doesn't break the key relation between `s` and `w`.
+Después, obtenemos un nuevo valor entero aleatorio `r`. Calculamos `w` de la misma manera que antes, pero agregamos `r` a cada uno de sus elementos. Este cambio tampoco rompe la relación clave entre `s` y `w`.
 
-Every time the verifier asks for a new query, we have to flip a coin and compute a different random value `r`. This way, while the verifier is still able to verify the validity of the equation, they are not able to understand anything about `a` because all `w` values will look random to them.
+Cada vez que el verificador realiza una nueva consulta, debemos lanzar una moneda y calcular un valor aleatorio `r` diferente. De esta manera, aunque el verificador sigue pudiendo verificar la validez de la ecuación, no puede averiguar nada sobre `a` porque todos los valores de `w` le parecerán aleatorios.
 
-Let's do a small demonstration. Remember, the prover (us, in this example) starts with both `s` and `a`:
+Hagamos una pequeña demostración. Recuerde que el probador (nosotros, en este ejemplo) comienza tanto con `s` como con `a`:
 
 <math xmlns="http://www.w3.org/1998/Math/MathML">
   <mtable>
@@ -463,9 +463,9 @@ Let's do a small demonstration. Remember, the prover (us, in this example) start
   </mtable>
 </math>
 
-Now, the verifier asks for `w[1]` and `w[2]` to check that `|w[2] – w[1]| = |s[1]|`.
+Ahora, el verificador solicita `w[1]` y `w[2]` para comprobar que `|w[2] – w[1]| = |s[1]|`.
 
-First, we need to flip a coin to eventually change all values of `a`. It's tails, so we need to flip all signs, and `a` becomes:
+Primero, debemos lanzar una moneda para posiblemente cambiar todos los valores de `a`. Sale cruz, así que debemos invertir todos los signos y `a` se convierte en:
 
 <math xmlns="http://www.w3.org/1998/Math/MathML">
   <mi mathcolor="#000000">a</mi>
@@ -485,7 +485,7 @@ First, we need to flip a coin to eventually change all values of `a`. It's tails
   <mo stretchy="false" mathcolor="#000000">]</mo>
 </math>
 
-Then, we compute a random value `r = 4`. We calculate `w` and add `r` to each element:
+Después, calculamos un valor aleatorio `r = 4`. Calculamos `w` y agregamos `r` a cada elemento:
 
 <math xmlns="http://www.w3.org/1998/Math/MathML">
   <mtable>
@@ -529,7 +529,7 @@ Then, we compute a random value `r = 4`. We calculate `w` and add `r` to each el
   </mtable>
 </math>
 
-And we provide <math xmlns="http://www.w3.org/1998/Math/MathML">
+Y proporcionamos <math xmlns="http://www.w3.org/1998/Math/MathML">
   <msup>
     <mrow>
       <mi mathcolor="#000000">w</mi>
@@ -543,7 +543,7 @@ And we provide <math xmlns="http://www.w3.org/1998/Math/MathML">
   <mo stretchy="false" mathcolor="#000000">]</mo>
   <mo mathcolor="#000000">=</mo>
   <mn mathcolor="#000000">3</mn>
-</math> and <math xmlns="http://www.w3.org/1998/Math/MathML">
+</math> y <math xmlns="http://www.w3.org/1998/Math/MathML">
   <msup>
     <mrow>
       <mi mathcolor="#000000">w</mi>
@@ -559,7 +559,7 @@ And we provide <math xmlns="http://www.w3.org/1998/Math/MathML">
   <mn mathcolor="#000000">2</mn>
 </math>.
 
-The verifier can still confirm the validity of the equation:
+El verificador aún puede confirmar la validez de la ecuación:
 
 <math xmlns="http://www.w3.org/1998/Math/MathML">
   <mfenced open="|" close="|" separators="|">
@@ -621,9 +621,9 @@ The verifier can still confirm the validity of the equation:
   </mfenced>
 </math>
 
-Now, the verifier runs another query, asking for `w[2]` and `w[3]`. Again, we need to flip a coin to eventually change all values of `a`. This time, it's heads, so we don't change signs:
+Ahora, el verificador realiza otra consulta, solicitando `w[2]` y `w[3]`. Nuevamente, debemos lanzar una moneda para posiblemente cambiar todos los valores de `a`. Esta vez sale cara, así que no cambiamos los signos:
 
-Then, we compute a random value `r = 1`. We calculate `w` and add `r` to each element:
+Después, calculamos un valor aleatorio `r = 1`. Calculamos `w` y agregamos `r` a cada elemento:
 
 <math xmlns="http://www.w3.org/1998/Math/MathML">
   <mi mathcolor="#000000">a</mi>
@@ -640,7 +640,7 @@ Then, we compute a random value `r = 1`. We calculate `w` and add `r` to each el
   <mo stretchy="false" mathcolor="#000000">]</mo>
 </math>
 
-And we provide <math xmlns="http://www.w3.org/1998/Math/MathML">
+Y proporcionamos <math xmlns="http://www.w3.org/1998/Math/MathML">
   <msup>
     <mrow>
       <mi mathcolor="#000000">w</mi>
@@ -654,7 +654,7 @@ And we provide <math xmlns="http://www.w3.org/1998/Math/MathML">
   <mo stretchy="false" mathcolor="#000000">]</mo>
   <mo mathcolor="#000000">=</mo>
   <mn mathcolor="#000000">3</mn>
-</math> and <math xmlns="http://www.w3.org/1998/Math/MathML">
+</math> y <math xmlns="http://www.w3.org/1998/Math/MathML">
   <msup>
     <mrow>
       <mi mathcolor="#000000">w</mi>
@@ -669,7 +669,7 @@ And we provide <math xmlns="http://www.w3.org/1998/Math/MathML">
   <mo mathcolor="#000000">=</mo>
   <mn mathcolor="#000000">8</mn>
 </math>.
-The verifier can still confirm the validity of the equation:
+El verificador aún puede confirmar la validez de la ecuación:
 
 <math xmlns="http://www.w3.org/1998/Math/MathML">
   <mfenced open="|" close="|" separators="|">
@@ -730,7 +730,7 @@ The verifier can still confirm the validity of the equation:
   </mfenced>
 </math>
 
-But now, the verifier cannot understand much about the satisfying assignment a. In fact, they now have the following information:
+Pero ahora, el verificador no puede averiguar mucho sobre la asignación satisfactoria a. De hecho, ahora tiene la siguiente información:
 
 <math xmlns="http://www.w3.org/1998/Math/MathML">
   <mtable>
@@ -809,19 +809,19 @@ But now, the verifier cannot understand much about the satisfying assignment a. 
   </mtable>
 </math>
 
-The `w` values on the different queries look random to them, and they are not able to reconstruct the assignment `a`.
+Los valores de `w` de las diferentes consultas le parecen aleatorios, y no puede reconstruir la asignación `a`.
 
-Nice! We managed to add zero knowledge to the proof system. Let's now address a malevolent prover.
+¡Bien! Logramos agregar conocimiento cero al sistema de pruebas. Abordemos ahora el caso de un probador malicioso.
 
-### Prover Commitment
+### Compromiso del probador
 
-The problem we need to address is that the prover can lie to the verifier, providing completely made-up numbers instead of the real values of the computed witness `w`. This is really bad because the prover would be able to provide a valid proof of a false statement—that is, even though the prover doesn't actually have a satisfying assignment `a`, they are able to potentially trick the verifier into believing that they do.
+El problema que debemos abordar es que el probador puede mentirle al verificador y proporcionar números completamente inventados en lugar de los valores reales del testigo calculado `w`. Esto es muy malo porque el probador podría proporcionar una prueba válida de una afirmación falsa, es decir, aunque el probador no tenga realmente una asignación satisfactoria `a`, podría engañar al verificador para que crea que sí la tiene.
 
-We need to find a way to make sure the prover cannot lie without being caught. Essentially, we need the prover to do a *commitment* of all `w` values before providing them to the verifier.
+Debemos encontrar una forma de garantizar que el probador no pueda mentir sin ser descubierto. En esencia, necesitamos que el probador genere un *compromiso criptográfico* de todos los valores de `w` antes de proporcionárselos al verificador.
 
-This is where Merkle trees help us again. We introduced them in Chapter 14, so we won't go into much detail on how they work here.
+Aquí los árboles de Merkle vuelven a ayudarnos. Los presentamos en el Capítulo 14, así que aquí no entraremos en muchos detalles sobre su funcionamiento.
 
-Let's do a new example to see the new construction in practice. We (the prover) have:
+Hagamos un nuevo ejemplo para ver la nueva construcción en la práctica. Nosotros (el probador) tenemos:
 
 <math xmlns="http://www.w3.org/1998/Math/MathML">
   <mtable>
@@ -863,7 +863,7 @@ Let's do a new example to see the new construction in practice. We (the prover) 
   </mtable>
 </math>
 
-We flip a coin, and it's heads, so we don't need to change all the signs of the assignment `a`. We then compute `w` as the dot product between `a` and `s` (with a swap between the first and last elements):
+Lanzamos una moneda y sale cara, así que no necesitamos cambiar todos los signos de la asignación `a`. Después calculamos `w` como el producto punto entre `a` y `s` (con un intercambio entre el primer y el último elemento):
 
 <math xmlns="http://www.w3.org/1998/Math/MathML">
   <mi mathcolor="#000000">w</mi>
@@ -879,7 +879,7 @@ We flip a coin, and it's heads, so we don't need to change all the signs of the 
   <mo stretchy="false" mathcolor="#000000">]</mo>
 </math>
 
-We compute a random value `r = 8` and we add it to each element of `w`:
+Calculamos un valor aleatorio `r = 8` y lo agregamos a cada elemento de `w`:
 
 <math xmlns="http://www.w3.org/1998/Math/MathML">
   <mi mathcolor="#000000">w</mi>
@@ -896,15 +896,15 @@ We compute a random value `r = 8` and we add it to each element of `w`:
   <mo stretchy="false" mathcolor="#000000">]</mo>
 </math>
 
-Now we need to commit to all values of `w′` and send the commitment to the verifier so that we ensure that if we ever cheat by providing fake values of `w′`, then it's trivial to spot it. Figure 17-2 shows the Merkle tree built using all `w′` values as leaves.
+Ahora debemos comprometernos con todos los valores de `w′` y enviar el compromiso al verificador para garantizar que, si alguna vez hacemos trampa proporcionando valores falsos de `w′`, sea trivial detectarlo. La Figura 17-2 muestra el árbol de Merkle construido utilizando todos los valores de `w′` como hojas.
 
-![Merkle tree commitment](images/ch17/maet_1702.png)
+![Compromiso mediante un árbol de Merkle](images/ch17/maet_1702.png)
 
-Figure 17-2. Merkle tree built using `w′` values
+Figura 17-2. Árbol de Merkle construido utilizando valores de `w′`
 
-The Merkle root is the final commitment that is sent to the verifier.
+La raíz de Merkle es el compromiso final que se envía al verificador.
 
-At this point, the verifier starts asking for the first query: <math xmlns="http://www.w3.org/1998/Math/MathML">
+En este punto, el verificador comienza con la primera consulta: <math xmlns="http://www.w3.org/1998/Math/MathML">
   <msup>
     <mrow>
       <mi mathcolor="#000000">w</mi>
@@ -916,7 +916,7 @@ At this point, the verifier starts asking for the first query: <math xmlns="http
   <mo stretchy="false" mathcolor="#000000">[</mo>
   <mn mathcolor="#000000">1</mn>
   <mo stretchy="false" mathcolor="#000000">]</mo>
-</math> and <math xmlns="http://www.w3.org/1998/Math/MathML">
+</math> y <math xmlns="http://www.w3.org/1998/Math/MathML">
   <msup>
     <mrow>
       <mi mathcolor="#000000">w</mi>
@@ -928,7 +928,7 @@ At this point, the verifier starts asking for the first query: <math xmlns="http
   <mo stretchy="false" mathcolor="#000000">[</mo>
   <mn mathcolor="#000000">2</mn>
   <mo stretchy="false" mathcolor="#000000">]</mo>
-</math>. We can provide <math xmlns="http://www.w3.org/1998/Math/MathML">
+</math>. Podemos proporcionar <math xmlns="http://www.w3.org/1998/Math/MathML">
   <msup>
     <mrow>
       <mi mathcolor="#000000">w</mi>
@@ -942,7 +942,7 @@ At this point, the verifier starts asking for the first query: <math xmlns="http
   <mo stretchy="false" mathcolor="#000000">]</mo>
   <mo mathcolor="#000000">=</mo>
   <mn mathcolor="#000000">9</mn>
-</math> and <math xmlns="http://www.w3.org/1998/Math/MathML">
+</math> y <math xmlns="http://www.w3.org/1998/Math/MathML">
   <msup>
     <mrow>
       <mi mathcolor="#000000">w</mi>
@@ -956,7 +956,7 @@ At this point, the verifier starts asking for the first query: <math xmlns="http
   <mo stretchy="false" mathcolor="#000000">]</mo>
   <mo mathcolor="#000000">=</mo>
   <mn mathcolor="#000000">10</mn>
-</math> to the verifier, and they can check:
+</math> al verificador, y este puede comprobar:
 
 <math xmlns="http://www.w3.org/1998/Math/MathML">
   <mfenced open="|" close="|" separators="|">
@@ -1017,154 +1017,154 @@ At this point, the verifier starts asking for the first query: <math xmlns="http
   </mfenced>
 </math>
 
-Now, the verifier needs to make sure that we didn't cheat, so they also ask the prover for the *verification path*, which contains all the data they need to re-create the Merkle tree on its own in order to check that the Merkle root is the same as the commitment we sent. If that's the case, then they are sure we didn't cheat; otherwise, they immediately know we did cheat.
+Ahora, el verificador debe asegurarse de que no hicimos trampa, así que también solicita al probador la *ruta de verificación*, que contiene todos los datos que necesita para reconstruir por su cuenta el árbol de Merkle y comprobar que la raíz de Merkle sea igual al compromiso que enviamos. Si es así, tiene la certeza de que no hicimos trampa; de lo contrario, sabe inmediatamente que sí la hicimos.
 
-Specifically, the verification path for this query contains:
+En concreto, la ruta de verificación de esta consulta contiene:
 
 - Hash 8
 - Hash 15
 
-This way, the verifier can re-create the Merkle tree up to the root and verify the commitment. So, we send hash 8 and hash 15 to the verifier, the verifier checks the validity of the commitment, and finally, this query is over.
+De esta manera, el verificador puede reconstruir el árbol de Merkle hasta la raíz y verificar el compromiso. Así, enviamos el hash de 8 y el hash de 15 al verificador, este comprueba la validez del compromiso y, finalmente, termina esta consulta.
 
-You may have spotted a new issue, though. In fact, due to the verification-path requirement, we ended up sending some additional data about `w′`: hash 8 and hash 15. While it's true that it should be computationally infeasible to revert a hash function—that is, to get the actual values 8 and 15 from their hashes—a malevolent verifier could try a brute-force attack and may succeed in finding out a part of the Merkle tree that we didn't intend to reveal. Luckily for us, there is a simple and nice tweak that solves this problem.
+Sin embargo, quizá haya detectado un nuevo problema. De hecho, debido al requisito de la ruta de verificación, terminamos enviando algunos datos adicionales sobre `w′`: el hash de 8 y el hash de 15. Aunque es cierto que debería ser computacionalmente inviable invertir una función hash, es decir, obtener los valores reales 8 y 15 a partir de sus hashes, un verificador malicioso podría intentar un ataque de fuerza bruta y lograr descubrir una parte del árbol de Merkle que no pretendíamos revelar. Por suerte, existe una modificación sencilla y útil que resuelve este problema.
 
-### Adding Randomness to the Commitment
+### Agregar aleatoriedad al compromiso
 
-The idea is analogous to what we have previously done to add the zero-knowledge property to our proof system. This time, we need to add randomness to the commitment so that we don't reveal any information about `w` (or `w′`) in the verification path.
+La idea es análoga a lo que hicimos anteriormente para agregar la propiedad de conocimiento cero a nuestro sistema de pruebas. Esta vez, debemos agregar aleatoriedad al compromiso para no revelar ninguna información sobre `w` (o `w′`) en la ruta de verificación.
 
-When we create the Merkle tree, instead of using only the hash of the exact value of each element of `w′` for the leaves of the tree, we add a random string that we won't provide to the verifier. Figure 17-3 shows the new Merkle tree built with this new methodology.
+Cuando creamos el árbol de Merkle, en lugar de utilizar solo el hash del valor exacto de cada elemento de `w′` para las hojas del árbol, agregamos una cadena aleatoria que no proporcionaremos al verificador. La Figura 17-3 muestra el nuevo árbol de Merkle construido con esta nueva metodología.
 
-![Merkle tree with randomness](images/ch17/maet_1703.png)
+![Árbol de Merkle con aleatoriedad](images/ch17/maet_1703.png)
 
-Figure 17-3. Merkle tree with added randomness for zero-knowledge property
+Figura 17-3. Árbol de Merkle con aleatoriedad agregada para la propiedad de conocimiento cero
 
-For this example, we used the string "eth" to mask each item of the witness `w′`. Note that if you don't have this secret string, it's impossible to decode the actual values. Now, when we send hash* 8 and hash* 15 to the verifier in the verification path, they really have no clue about the concrete `w′` values behind the hash. Even if they try to brute-force attack, they don't know the secret string we used to hide the `w′` items even further.
+En este ejemplo, utilizamos la cadena "eth" para ocultar cada elemento del testigo `w′`. Observe que, si no se tiene esta cadena secreta, es imposible decodificar los valores reales. Ahora, cuando enviamos hash* 8 y hash* 15 al verificador en la ruta de verificación, realmente no tiene ninguna pista sobre los valores concretos de `w′` detrás del hash. Incluso si intenta un ataque de fuerza bruta, no conoce la cadena secreta que utilizamos para ocultar aún más los elementos de `w′`.
 
-### Conclusion? Or Not…
+### ¿Conclusión? ¿O no…?
 
-We did it! We managed to create a (very naive and basic) zero-knowledge proof system for our initial partition problem!
+¡Lo logramos! ¡Conseguimos crear un sistema de pruebas de conocimiento cero (muy ingenuo y básico) para nuestro problema de partición inicial!
 
-You may still think: "That's a great proof system, but it still requires a lot of interaction between the prover and the verifier. They need to be online at the same time to make sure the protocol succeeds. Is there a way to fix it and transform this interactive zero-knowledge proof system into a noninteractive zero-knowledge proof system?"
+Quizá todavía piense: "Es un gran sistema de pruebas, pero sigue requiriendo mucha interacción entre el probador y el verificador. Deben estar en línea al mismo tiempo para garantizar que el protocolo tenga éxito. ¿Hay alguna forma de solucionarlo y transformar este sistema de pruebas de conocimiento cero interactivo en uno no interactivo?".
 
-And you would be so right. It's true that our system requires interaction between prover and verifier to work correctly, and that's really annoying for most use cases. We are lucky again (so much luck here, eh?). There is a scientific paper that could help us.
+Y tendría toda la razón. Es cierto que nuestro sistema requiere interacción entre probador y verificador para funcionar correctamente, y eso resulta muy molesto para la mayoría de los casos de uso. Volvemos a tener suerte (¡cuánta suerte por aquí!, ¿no?). Hay un artículo científico que podría ayudarnos.
 
-## Fiat-Shamir Heuristic
+## Heurística de Fiat-Shamir
 
-In 1986, two well-known cryptographers, Amos Fiat and Adi Shamir, published the paper ["How to Prove Yourself: Practical Solutions to Identification and Signature Problems"](https://oreil.ly/TGfa-), in which they invented the transformation protocol that is still widely used today and has their name: the *Fiat-Shamir heuristic* or transformation.
+En 1986, dos reconocidos criptógrafos, Amos Fiat y Adi Shamir, publicaron el artículo ["How to Prove Yourself: Practical Solutions to Identification and Signature Problems"](https://oreil.ly/TGfa-), en el que inventaron el protocolo de transformación que todavía se utiliza ampliamente y lleva sus nombres: la *heurística de Fiat-Shamir* o transformación.
 
-> **Note**  
+> **Nota**  
 >
-> Adi Shamir is a real legend in cryptography: he's the S in the RSA algorithm, one of the first and most widely used public key cryptosystems. Amos Fiat was his colleague at the Weizmann Institute of Science in Israel.
+> Adi Shamir es una verdadera leyenda de la criptografía: es la S del algoritmo RSA, uno de los primeros criptosistemas de clave pública y uno de los más utilizados. Amos Fiat era su colega en el Weizmann Institute of Science, en Israel.
 
 
-The Fiat-Shamir heuristic is a protocol that can transform an interactive zero-knowledge proof system into a noninteractive one by replacing the verifier's random challenges with a cryptographic hash function.
+La heurística de Fiat-Shamir es un protocolo que puede transformar un sistema de pruebas de conocimiento cero interactivo en uno no interactivo al reemplazar los desafíos aleatorios del verificador por una función hash criptográfica.
 
-If you think about what the verifier has to do in the system we have built so far, you will notice that it's essentially giving the prover some random numbers—the queries—that the prover has to use to generate the correspondent proof.
+Si pensamos en lo que tiene que hacer el verificador en el sistema que hemos construido hasta ahora, notaremos que, en esencia, le da al probador algunos números aleatorios, las consultas, que el probador debe utilizar para generar la prueba correspondiente.
 
-Remember, we used to say, "Now the verifier asks for `w[1]` and `w[2]`." This can be translated into the verifier giving the prover the numbers 1 and 2 to create the proof for `w[1]` and `w[2]`.
+Recuerde que solíamos decir: "Ahora el verificador solicita `w[1]` y `w[2]`". Esto puede interpretarse como que el verificador le da al probador los números 1 y 2 para crear la prueba de `w[1]` y `w[2]`.
 
-We can summarize the original interactive protocol in the following way, skipping the part where the prover creates the witness `w` and tweaks it into `w′`:
+Podemos resumir el protocolo interactivo original de la siguiente manera, omitiendo la parte en que el probador crea el testigo `w` y lo modifica para obtener `w′`:
 
-1. The prover generates a commitment to `w′` and sends it to the verifier.
-2. The verifier sends a random challenge—a query.
-3. The prover sends a response to the challenge—a proof.
-4. The verifier verifies the validity of the proof.
-This process is repeated for every different query the verifier asks. And it all works fine because the prover doesn't know in advance which queries the verifier is going to ask—they're random to the prover. So if we find a way to make the prover itself generate all the queries in a random but predictable way, we are able to transform the entire process into a noninteractive protocol.
+1. El probador genera un compromiso de `w′` y lo envía al verificador.
+2. El verificador envía un desafío aleatorio, una consulta.
+3. El probador envía una respuesta al desafío, una prueba.
+4. El verificador verifica la validez de la prueba.
+Este proceso se repite para cada consulta diferente que realiza el verificador. Y todo funciona bien porque el probador no sabe de antemano qué consultas hará el verificador: para el probador son aleatorias. Por lo tanto, si encontramos una forma de hacer que el propio probador genere todas las consultas de manera aleatoria pero predecible, podemos transformar todo el proceso en un protocolo no interactivo.
 
-In their 1986 paper, Fiat and Shamir propose using a hash function to act as a "random oracle" that simulates the verifier's random challenges. Let's do a quick example with only two rounds of the protocol.
+En su artículo de 1986, Fiat y Shamir proponen utilizar una función hash como un "oráculo aleatorio" que simula los desafíos aleatorios del verificador. Hagamos un ejemplo rápido con solo dos rondas del protocolo.
 
-In the first round:
+En la primera ronda:
 
-1. The prover generates a commitment.
-2. The prover takes the commitment and the public inputs of the problem, and concatenates and hashes them. The result is going to be the first challenge:
+1. El probador genera un compromiso.
+2. El probador toma el compromiso y las entradas públicas del problema, los concatena y les aplica una función hash. El resultado será el primer desafío:
 
     ```
     challenge = hash(commitment || public inputs)
     ```
 
-3. The prover computes a response to the challenge—a proof.
+3. El probador calcula una respuesta al desafío, una prueba.
 
-In the second round:
+En la segunda ronda:
 
-1. The prover generates a new commitment.
-2. The prover takes the new commitment and everything computed so far in the protocol (the old commitment, the proof, and the public inputs), and concatenates and hashes them. The result is going to be the new challenge:
+1. El probador genera un nuevo compromiso.
+2. El probador toma el nuevo compromiso y todo lo calculado hasta ese momento en el protocolo (el compromiso anterior, la prueba y las entradas públicas), los concatena y les aplica una función hash. El resultado será el nuevo desafío:
 
     ```
     new challenge = hash(commitment || proof || new_commitment || public inputs)
     ```
 
-3. The prover computes a response to the new challenge—a new proof.
+3. El probador calcula una respuesta al nuevo desafío, una nueva prueba.
 
-At this point, the prover can send the entire transcript of the protocol to the verifier. The verifier needs to:
+En este punto, el probador puede enviar la transcripción completa del protocolo al verificador. El verificador debe:
 
-1. Make sure that all challenges have been computed correctly by using the hash function and all valid inputs. This is to ensure that the prover didn't try to cheat with made-up challenges.
-2. Verify the validity of all the proofs in the same way they did before in the interactive protocol. This is to ensure that the prover actually knows a solution to the initial problem.
+1. Asegurarse de que todos los desafíos se hayan calculado correctamente utilizando la función hash y todas las entradas válidas. Esto garantiza que el probador no haya intentado hacer trampa con desafíos inventados.
+2. Verificar la validez de todas las pruebas de la misma manera que antes en el protocolo interactivo. Esto garantiza que el probador realmente conozca una solución para el problema inicial.
 
-Figure 17-4 shows the process of the verifier making sure that the challenge has been computed correctly before verifying the validity of the zero-knowledge proof.
+La Figura 17-4 muestra el proceso mediante el cual el verificador se asegura de que el desafío se haya calculado correctamente antes de verificar la validez de la prueba de conocimiento cero.
 
-![Verifier verification process](images/ch17/maet_1704.png)
+![Proceso de verificación del verificador](images/ch17/maet_1704.png)
 
-Figure 17-4. Fiat-Shamir heuristic makes the protocol noninteractive
+Figura 17-4. La heurística de Fiat-Shamir hace que el protocolo sea no interactivo
 
-And that's it! Thanks to the Fiat-Shamir heuristic, we now have a noninteractive zero-knowledge proof system. The cool feature that comes for free is that a prover is now able to generate a valid proof that anyone can verify. So we need only one honest party that verifies the proof to detect if the prover is trying to cheat or not.
+¡Y eso es todo! Gracias a la heurística de Fiat-Shamir, ahora tenemos un sistema de pruebas de conocimiento cero no interactivo. Una característica interesante que obtenemos sin costo adicional es que un probador ahora puede generar una prueba válida que cualquiera puede verificar. Así que solo necesitamos una parte honesta que verifique la prueba para detectar si el probador intenta hacer trampa o no.
 
-### Conclusion?
+### ¿Conclusión?
 
-In this section, we built our first noninteractive zero-knowledge proof system for the partition problem. Modern zero-knowledge architectures are much more complex, and this book is definitely not going to explain all of that (even though you can find some very good papers at the end of the chapter for further reading). Still, what we've discussed thus far is the basis of all new zero-knowledge technology. If you understand that, you can fall into the zero-knowledge rabbit hole and start exploring all the nitty-gritty details behind it.
+En esta sección, construimos nuestro primer sistema de pruebas de conocimiento cero no interactivo para el problema de partición. Las arquitecturas modernas de conocimiento cero son mucho más complejas, y este libro definitivamente no explicará todo eso (aunque al final del capítulo encontrará artículos muy buenos para seguir leyendo). Aun así, lo que hemos analizado hasta ahora es la base de toda la nueva tecnología de conocimiento cero. Si lo comprende, puede adentrarse en el mundo del conocimiento cero y comenzar a explorar todos los detalles minuciosos que lo sustentan.
 
-In the next section, we'll look at two of the most widely used real frameworks for building a zero-knowledge proof system: SNARK and STARK.
+En la siguiente sección, veremos dos de los marcos reales más utilizados para construir un sistema de pruebas de conocimiento cero: SNARK y STARK.
 
-## SNARK Versus STARK
+## SNARK frente a STARK
 
-Previously, we were able to create a zero-knowledge proof system for our initial partition problem. That's a good start. Now, what if we want to create a zero-knowledge proof system for a completely different computation? Can we reuse the same architecture that we built before for the partition problem?
+Anteriormente, pudimos crear un sistema de pruebas de conocimiento cero para nuestro problema de partición inicial. Es un buen comienzo. Ahora, ¿qué pasa si queremos crear un sistema de pruebas de conocimiento cero para un cómputo completamente diferente? ¿Podemos reutilizar la misma arquitectura que construimos antes para el problema de partición?
 
-It turns out that we can't: the commitment `w` and its properties—for example, `|s[i]| = |w[i+1] – w[i]|`—are too specific to the partition problem to be applied to other problems. However, this isn't a big drawback: we can use what we learned from building this zero-knowledge proof system to develop a more general approach.
-And here's where SNARK comes onto the scene. As we already discussed in "History", SNARK was introduced in 2011 in the BIT+11 paper as a general framework for building zero-knowledge proofs for arbitrary computations. Only two years later, the Pinocchio paper created the first implementation that was usable in real-world applications.
+Resulta que no podemos: el compromiso `w` y sus propiedades, por ejemplo, `|s[i]| = |w[i+1] – w[i]|`, son demasiado específicos del problema de partición para aplicarlos a otros problemas. Sin embargo, esto no es una gran desventaja: podemos utilizar lo que aprendimos al construir este sistema de pruebas de conocimiento cero para desarrollar un enfoque más general.
+Y aquí entra en escena SNARK. Como ya comentamos en "Historia", SNARK se presentó en 2011 en el artículo BIT+11 como un marco general para construir pruebas de conocimiento cero de cómputos arbitrarios. Solo dos años después, el artículo Pinocchio creó la primera implementación utilizable en aplicaciones del mundo real.
 
-SNARK systems rely on a cryptographic secret called *trusted setup* to work in a noninteractive way. You can see it as a common knowledge base shared with all the participants of a cryptographic protocol: a sort of initialization phase where you need to generate some secrets and use them to compute some other values—proving and verification keys—that are going to be needed for the correct execution of the SNARK protocol.
+Los sistemas SNARK dependen de un secreto criptográfico llamado *configuración de confianza* para funcionar de manera no interactiva. Puede verse como una base de conocimiento común compartida con todos los participantes de un protocolo criptográfico: una especie de fase de inicialización en la que se deben generar algunos secretos y utilizarlos para calcular otros valores, las claves de generación de pruebas y de verificación, que serán necesarios para la correcta ejecución del protocolo SNARK.
 
-Usually, the trusted setup is obtained through the use of *multiparty computation*: lots of actors each generate a different secret (also called *toxic waste*), compute the proving and verification keys, and delete their initial secrets. Then, those keys are added together to obtain two final keys that will be used in the SNARK protocol. The main benefit of this is that you need only a single benevolent entity to delete its toxic waste to be sure that anyone cannot cheat and the trusted setup has been generated in a tamper-proof way. In Chapter 4, we covered this in the discussion on KZG commitments.
+Habitualmente, la configuración de confianza se obtiene mediante *cómputo multipartito*: muchos actores generan, cada uno, un secreto diferente (también llamado *residuo tóxico*), calculan las claves de generación de pruebas y de verificación, y eliminan sus secretos iniciales. Después, esas claves se suman para obtener dos claves finales que se utilizarán en el protocolo SNARK. El principal beneficio es que solo se necesita que una entidad benévola elimine su residuo tóxico para tener la certeza de que nadie puede hacer trampa y de que la configuración de confianza se generó de una manera resistente a manipulaciones. En el Capítulo 4, cubrimos esto al hablar de los compromisos KZG.
 
-Even though SNARK protocols work perfectly fine, the 1-of-N trust assumption of the trusted setup, together with the difficulty of creating a very resilient initial ceremony to generate the final public keys, has always created lots of discussion and brought several researchers and companies to look into trustless zero-knowledge proof systems that could work completely without it. Furthermore, SNARK systems rely on elliptic curve cryptography that is not quantum resistant, another critical aspect that people pointed out.
+Aunque los protocolos SNARK funcionan perfectamente bien, el supuesto de confianza de 1 de N de la configuración de confianza, junto con la dificultad de crear una ceremonia inicial muy resiliente para generar las claves públicas finales, siempre ha generado mucha discusión y ha llevado a varios investigadores y empresas a estudiar sistemas de pruebas de conocimiento cero sin necesidad de confianza que pudieran funcionar completamente sin ella. Además, los sistemas SNARK se basan en criptografía de curva elíptica que no es resistente a ataques cuánticos, otro aspecto crítico que se ha señalado.
 
-In 2018, a paper written by Eli Ben-Sasson, Iddo Bentov, Yinon Horesh, and Michael Riabzev called ["Scalable, Transparent, and Post-Quantum Secure Computational Integrity"](https://oreil.ly/TCnTT) introduced a new trustless framework for building general zero-knowledge proof systems: zk-STARK.
-STARK stands for "*scalable transparent argument of knowledge*." In particular, *transparent* refers to the groundbreaking property of not needing a trusted setup. It also relies on collision-resistant hash functions instead of elliptic curve cryptography, making it even quantum resistant.
+En 2018, un artículo escrito por Eli Ben-Sasson, Iddo Bentov, Yinon Horesh y Michael Riabzev, titulado ["Scalable, Transparent, and Post-Quantum Secure Computational Integrity"](https://oreil.ly/TCnTT), presentó un nuevo marco sin necesidad de confianza para construir sistemas generales de pruebas de conocimiento cero: zk-STARK.
+STARK significa "*argumento de conocimiento escalable y transparente*". En particular, *transparente* se refiere a la revolucionaria propiedad de no necesitar una configuración de confianza. También se basa en funciones hash resistentes a colisiones en lugar de criptografía de curva elíptica, lo que incluso lo hace resistente a ataques cuánticos.
 
-These advantages explain why most people now consider STARK to be the most modern zero-knowledge proof system. However, SNARKs are not an obsolete technology. They do have some advantages in certain contexts, mostly in the proof size, which can be fundamental in bandwidth-constrained environments such as blockchains. Moreover, several mixed approaches have been developed that try to take the best from both worlds.
+Estas ventajas explican por qué la mayoría considera actualmente a STARK el sistema de pruebas de conocimiento cero más moderno. Sin embargo, los SNARKs no son una tecnología obsoleta. Tienen algunas ventajas en ciertos contextos, principalmente en el tamaño de las pruebas, que puede ser fundamental en entornos con ancho de banda limitado, como las blockchains. Además, se han desarrollado varios enfoques mixtos que intentan aprovechar lo mejor de ambos mundos.
 
-## Zk-EVM and zk-VM
+## Zk-EVM y zk-VM
 
-Now that we've done a technical deep dive into how zero-knowledge proof systems work, we can finally go back to Ethereum and see how the tech has evolved in recent years.
+Ahora que hemos profundizado técnicamente en el funcionamiento de los sistemas de pruebas de conocimiento cero, finalmente podemos volver a Ethereum y ver cómo ha evolucionado la tecnología en los últimos años.
 
-We've already explained how we can use zero-knowledge proof systems to improve Ethereum—that is, prove the EVM execution of a block so that full nodes don't have to reexecute all transactions included into that block to trustlessly update their states. Instead, they can just verify a zero-knowledge proof, and if it's valid, they know the new state has been computed correctly. We also saw a basic example of how to create a zero-knowledge proof system for a very specific computation—the partition problem—and then we introduced SNARK and STARK frameworks, which let us generalize the architecture and apply it to any arbitrary computation.
-So we can immediately wonder: can we use a SNARK or STARK zero-knowledge proof system to correctly prove the EVM block execution? Yes, we definitely can, but there are a couple of choices we have to make.
+Ya explicamos cómo podemos utilizar sistemas de pruebas de conocimiento cero para mejorar Ethereum, es decir, demostrar la ejecución de un bloque en la EVM para que los nodos completos no tengan que volver a ejecutar todas las transacciones incluidas en ese bloque para actualizar sus estados sin necesidad de confianza. En su lugar, pueden verificar una prueba de conocimiento cero y, si es válida, saben que el nuevo estado se calculó correctamente. También vimos un ejemplo básico de cómo crear un sistema de pruebas de conocimiento cero para un cómputo muy específico, el problema de partición, y luego presentamos los marcos SNARK y STARK, que permiten generalizar la arquitectura y aplicarla a cualquier cómputo arbitrario.
+Por lo tanto, podemos preguntarnos inmediatamente: ¿podemos utilizar un sistema de pruebas de conocimiento cero SNARK o STARK para demostrar correctamente la ejecución de bloques en la EVM? Sí, sin duda podemos, pero debemos tomar un par de decisiones.
 
-In the partition-problem example, we had to slightly transform the initial proposition—that is, whether you can divide a set of integers into two subsets so that the sum of the numbers in the two subsets is equal—into something that was easier to prove with the system that we later built—that is, we added the satisfying assignment `a` and three constraints that it must satisfy to be valid. The transformation is necessary in order to be able to tackle the problem in a mathematical way. And it applies to SNARK and STARK frameworks.
+En el ejemplo del problema de partición, tuvimos que transformar ligeramente la proposición inicial, es decir, si se puede dividir un conjunto de enteros en dos subconjuntos de modo que la suma de los números de ambos subconjuntos sea igual, en algo más fácil de demostrar con el sistema que construimos después, es decir, agregamos la asignación satisfactoria `a` y tres restricciones que debe satisfacer para ser válida. La transformación es necesaria para poder abordar el problema de manera matemática. Y se aplica a los marcos SNARK y STARK.
 
-In fact, even though it's true that you can zero-knowledge prove any arbitrary computation using a SNARK or STARK framework, you first need to transform the computation into a form that the framework is able to correctly digest and process, usually called a *circuit*. It turns out that's a very hard task. In particular, it's really error prone to transform a complex computation such as the EVM state transition function into a zero-knowledge circuit, and it's also difficult to debug if there are any errors or problems. If the circuit is not correct or there are bugs, then you cannot trust the zero-knowledge proof that is later generated because it doesn't reflect the actual computation that has been done, so it could even be possible to generate a valid zero-knowledge proof for a fake statement—that is, saying that the new EVM state is "state1" while the correct one should be "state2."
+De hecho, aunque es cierto que se puede demostrar cualquier cómputo arbitrario mediante conocimiento cero utilizando un marco SNARK o STARK, primero es necesario transformar el cómputo en una forma que el marco pueda asimilar y procesar correctamente, habitualmente llamada *circuito*. Resulta que esa es una tarea muy difícil. En particular, transformar un cómputo complejo como la función de transición de estado de la EVM en un circuito de conocimiento cero es muy propenso a errores, y también es difícil depurarlo si hay errores o problemas. Si el circuito no es correcto o tiene errores, no se puede confiar en la prueba de conocimiento cero que se genera después porque no refleja el cómputo real que se realizó, por lo que incluso podría ser posible generar una prueba válida de conocimiento cero de una afirmación falsa, es decir, afirmar que el nuevo estado de la EVM es "state1" cuando el correcto debería ser "state2".
 
-An EVM implementation that also includes a zero-knowledge proof-generation system is called a *zk-EVM*. You can find a concrete zk-EVM in the ZKsync repository.
+Una implementación de la EVM que también incluye un sistema de generación de pruebas de conocimiento cero se denomina *zk-EVM*. Puede encontrar una zk-EVM concreta en el repositorio de ZKsync.
 
-Initially, every project that wanted to build a ZK rollup had to tackle the hard work of creating the correct zero-knowledge circuit for the EVM state transition function. This is why at the time of writing (June 2025), we have far more optimistic rollups than ZK rollups. But things are changing really fast, thanks to the arrival of zk-VMs.
-*Zk-VMs* drastically change the perspective of building a ZK rollup and, more generally, a zero-knowledge proof system for the EVM state transition function. The idea is quite straightforward: instead of having to create a custom circuit for every different computation in order to then apply a SNARK or STARK framework, what if we could create a universal circuit that can be used for all kinds of computations? It would be a sort of general-purpose zero-knowledge computer that could handle any arbitrary computation. This layer of abstraction is really powerful: "one circuit to rule them all."
+Inicialmente, cada proyecto que quería construir un rollup ZK debía afrontar el arduo trabajo de crear el circuito de conocimiento cero correcto para la función de transición de estado de la EVM. Por eso, al momento de escribir este libro (junio de 2025), tenemos muchos más rollups optimistas que rollups ZK. Pero las cosas están cambiando muy rápido gracias a la llegada de las zk-VMs.
+Las *zk-VMs* cambian drásticamente la perspectiva de construir un rollup ZK y, de forma más general, un sistema de pruebas de conocimiento cero para la función de transición de estado de la EVM. La idea es bastante directa: en lugar de tener que crear un circuito personalizado para cada cómputo diferente y después aplicar un marco SNARK o STARK, ¿qué pasaría si pudiéramos crear un circuito universal que pudiera utilizarse para todo tipo de cómputos? Sería una especie de computadora de conocimiento cero de propósito general que podría manejar cualquier cómputo arbitrario. Esta capa de abstracción es muy poderosa: "un circuito para gobernarlos a todos".
 
-This way, you only need to focus on the computation you want to prove, and the zk-VM handles all the hard work of generating a proof. The most famous zk-VMs right now are [SP1](https://oreil.ly/kgVYY) and [RISC Zero](https://oreil.ly/z6v2l).
+De esta manera, solo hay que concentrarse en el cómputo que se quiere demostrar, y la zk-VM se encarga de todo el trabajo difícil de generar una prueba. Las zk-VMs más famosas actualmente son [SP1](https://oreil.ly/kgVYY) y [RISC Zero](https://oreil.ly/z6v2l).
 
-Figure 17-5 offers a streamlined visualization that captures the core elements of both zk-EVM and zk-VM frameworks.
+La Figura 17-5 ofrece una visualización simplificada que presenta los elementos principales de los marcos zk-EVM y zk-VM.
 
-![zk-EVM and zk-VM comparison](images/ch17/maet_1705.png)
+![Comparación de zk-EVM y zk-VM](images/ch17/maet_1705.png)
 
-Figure 17-5. Comparison of zk-EVM and zk-VM frameworks
+Figura 17-5. Comparación de los marcos zk-EVM y zk-VM
 
-## Conclusion
+## Conclusión
 
-In this final chapter, we explored the basics of zero-knowledge technology: from its invention in 1985 to the groundbreaking innovations of the Bit+11 and Pinocchio papers that truly brought it to real-world applications, particularly in the blockchain world. We used the small partition problem as an example to gain intuition on how these complex systems work under the hood, and we later examined more generalized approaches, such as SNARK and STARK frameworks, that make it possible to apply a standard methodology to build a zero-knowledge proof system for any arbitrary computation. Finally, we introduced a very recent development: zk-VMs, which are quickly revolutionizing the sector thanks to their significant advantage of having a single circuit capable of handling arbitrary computations, which eliminates the need for developers to spend time creating custom circuits tied to specific computations they want to prove.
+En este capítulo final, exploramos los fundamentos de la tecnología de conocimiento cero: desde su invención en 1985 hasta las innovaciones revolucionarias de los artículos Bit+11 y Pinocchio que realmente la llevaron a aplicaciones del mundo real, en particular en el mundo de las blockchains. Utilizamos el pequeño problema de partición como ejemplo para desarrollar la intuición sobre el funcionamiento interno de estos sistemas complejos, y después examinamos enfoques más generales, como los marcos SNARK y STARK, que permiten aplicar una metodología estándar para construir un sistema de pruebas de conocimiento cero para cualquier cómputo arbitrario. Finalmente, presentamos un desarrollo muy reciente: las zk-VMs, que están revolucionando rápidamente el sector gracias a su importante ventaja de contar con un único circuito capaz de manejar cómputos arbitrarios, lo que elimina la necesidad de que los desarrolladores dediquen tiempo a crear circuitos personalizados vinculados a los cómputos específicos que quieren demostrar.
 
-The future of Ethereum will undoubtedly intersect with zero-knowledge technology, both at the L2 level and directly on the L1 level. The concrete solution that will ultimately prevail remains unknown; perhaps it will be a combination of different approaches to ensure greater resilience against bugs or failures. Only time will tell...
+El futuro de Ethereum sin duda se cruzará con la tecnología de conocimiento cero, tanto en las L2 como directamente en la L1. Todavía no se sabe qué solución concreta terminará prevaleciendo; quizá sea una combinación de diferentes enfoques para garantizar una mayor resiliencia frente a errores o fallas. Solo el tiempo lo dirá...
 
-For further reading on this subject, please see the following:
+Para seguir leyendo sobre este tema, consulte lo siguiente:
 
-- [A simple example](https://oreil.ly/jVNdu)
-- ["You Could Have Invented SNARKs"](https://oreil.ly/jiaOa) by Ethan Buchman
-- ["Why and How zk-SNARK Works: Definitive Explanation"](https://oreil.ly/EUUzt) by Maksym Petkus
+- [Un ejemplo sencillo](https://oreil.ly/jVNdu)
+- ["You Could Have Invented SNARKs"](https://oreil.ly/jiaOa), de Ethan Buchman
+- ["Why and How zk-SNARK Works: Definitive Explanation"](https://oreil.ly/EUUzt), de Maksym Petkus
 - [The RareSkills Book of Zero Knowledge](https://oreil.ly/tpHrl)

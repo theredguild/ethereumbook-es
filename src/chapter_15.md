@@ -1,676 +1,676 @@
-# Chapter 15. Consensus
+# Capítulo 15. Consenso
 
-Throughout this book we have talked about *consensus rules*—the rules that everyone must agree to for the system to operate in a decentralized yet deterministic manner. In computer science, the term *consensus* predates blockchains and is related to the broader problem of synchronizing state in distributed systems, such that different participants in a distributed system all (eventually) agree on a single system-wide state. This is called *reaching consensus*.
+A lo largo de este libro hemos hablado de las *reglas de consenso*, las reglas que todos deben aceptar para que el sistema funcione de manera descentralizada pero determinista. En ciencias de la computación, el término *consenso* es anterior a las blockchains y se relaciona con el problema más amplio de sincronizar el estado en sistemas distribuidos, de modo que todos los participantes de un sistema distribuido acuerden, eventualmente, un único estado para todo el sistema. A esto se le llama *alcanzar consenso*.
 
-When it comes to the core functions of decentralized record keeping and verification, it can become problematic to rely on trust alone to ensure that information derived from state updates is correct. This rather general challenge is particularly pronounced in decentralized networks because there is no central entity to decide what is true. The lack of a central decision-making entity is one of the main attractions of blockchain platforms because of the resulting capacity to resist censorship and the lack of dependence on authority for permission to access information. However, these benefits come at a cost: without a trusted arbitrator, any disagreements, deceptions, or differences need to be reconciled using other means. Consensus algorithms are the mechanism used to reconcile security and decentralization.
+En las funciones centrales del registro y la verificación descentralizados, puede resultar problemático depender únicamente de la confianza para garantizar que la información derivada de las actualizaciones de estado sea correcta. Este desafío bastante general es especialmente marcado en las redes descentralizadas porque no hay una entidad central que decida qué es verdadero. La ausencia de una entidad central de toma de decisiones es uno de los principales atractivos de las plataformas blockchain por su capacidad resultante de resistir la censura y por no depender de una autoridad para obtener permiso de acceso a la información. Sin embargo, estos beneficios tienen un costo: sin un árbitro de confianza, cualquier desacuerdo, engaño o diferencia debe conciliarse por otros medios. Los algoritmos de consenso son el mecanismo utilizado para conciliar la seguridad y la descentralización.
 
-In blockchains, consensus is a critical property of the system. Simply put, there is money at stake! So in the context of blockchains, consensus is about being able to arrive at a common state while maintaining decentralization. In other words, consensus is intended to produce a system of strict rules without rulers. There is no one person, organization, or group "in charge"; rather, power and control are diffused across a broad network of participants whose self-interest is served by following the rules and behaving honestly.
+En las blockchains, el consenso es una propiedad crítica del sistema. En pocas palabras, ¡hay dinero en juego! Así que, en el contexto de las blockchains, el consenso consiste en poder llegar a un estado común manteniendo la descentralización. En otras palabras, el consenso busca producir un sistema de reglas estrictas sin gobernantes. No hay una persona, organización o grupo "a cargo"; en cambio, el poder y el control se distribuyen entre una amplia red de participantes a quienes les conviene seguir las reglas y comportarse honestamente.
 
-The ability to come to consensus across a distributed network, under adversarial conditions, without centralizing control is the core principle of all open, public blockchains. To address this challenge and maintain the valued property of decentralization, the community continues to experiment with different models of consensus. This chapter explores these consensus models and their expected impact on smart contract blockchains such as Ethereum.
+La capacidad de alcanzar consenso en una red distribuida, bajo condiciones adversas y sin centralizar el control, es el principio central de todas las blockchains abiertas y públicas. Para abordar este desafío y mantener la valiosa propiedad de la descentralización, la comunidad continúa experimentando con diferentes modelos de consenso. Este capítulo explora estos modelos de consenso y su impacto esperado en las blockchains de contratos inteligentes como Ethereum.
 
-> **Note**  
+> **Nota**  
 >
-> While consensus algorithms are an important part of how blockchains work, they operate at a foundational layer, far below the abstraction of smart contracts. In other words, most of the details of consensus are hidden from the writers of smart contracts. You don't need to know how they work to use Ethereum, any more than you need to know how routing works to use the internet.
+> Aunque los algoritmos de consenso son una parte importante del funcionamiento de las blockchains, operan en una capa fundamental, muy por debajo de la abstracción de los contratos inteligentes. En otras palabras, la mayoría de los detalles del consenso están ocultos para quienes escriben contratos inteligentes. No es necesario saber cómo funcionan para usar Ethereum, del mismo modo que no es necesario saber cómo funciona el enrutamiento para usar internet.
 
-## Principles of Consensus
+## Principios del consenso
 
-In blockchain technology, particularly within Ethereum, understanding the principles of consensus helps us make sense of how the network maintains its integrity and operates effectively. To get a clearer picture of how it all works, let's walk through the core ideas.
+En la tecnología blockchain, en particular en Ethereum, comprender los principios del consenso nos ayuda a entender cómo la red mantiene su integridad y funciona de manera eficaz. Para tener una idea más clara de cómo funciona todo, repasemos las ideas centrales.
 
-### Safety
+### Seguridad
 
-In the context of consensus mechanisms, *safety* is about ensuring that the network consistently agrees on the blockchain's current state without error. This means avoiding problems like double-spending and transaction conflicts, maintaining consistency across the network. In a safe system, every node has an identical view of the history of the chain, effectively behaving like a centralized implementation that executes operations atomically one at a time.
+En el contexto de los mecanismos de consenso, la *seguridad* consiste en garantizar que la red acuerde de manera consistente el estado actual de la blockchain sin errores. Esto significa evitar problemas como el doble gasto y los conflictos entre transacciones, manteniendo la consistencia en toda la red. En un sistema seguro, cada nodo tiene una visión idéntica del historial de la cadena y, en la práctica, se comporta como una implementación centralizada que ejecuta las operaciones de forma atómica, una a la vez.
 
-### Finality
+### Finalidad
 
-*Finality* is one of the most important safety features in Ethereum's consensus mechanism. It marks the point at which transactions are considered complete and irreversible, ensuring that once a transaction has been added to the blockchain, it cannot be altered or removed. This irreversible nature of transactions instills a high level of trust in the system, providing certainty to users that their transactions are permanently recorded.
+La *finalidad* es una de las características de seguridad más importantes del mecanismo de consenso de Ethereum. Marca el punto en el que las transacciones se consideran completas e irreversibles, lo que garantiza que, una vez que una transacción se ha agregado a la blockchain, no puede alterarse ni eliminarse. Esta naturaleza irreversible de las transacciones inspira un alto grado de confianza en el sistema y brinda a los usuarios la certeza de que sus transacciones quedan registradas permanentemente.
 
-Basically, finality puts the idea of safety into action, turning it from just a concept into something practical. It ensures that even though different parts of the network might have their own local views, there exists a point of irrevocable agreement that makes the chain's history fixed and unchangeable.
+Básicamente, la finalidad pone en práctica la idea de seguridad, convirtiéndola de un concepto en algo práctico. Garantiza que, aunque distintas partes de la red puedan tener sus propias visiones locales, exista un punto de acuerdo irrevocable que deje fijo e inmutable el historial de la cadena.
 
-### Liveness
+### Vivacidad
 
-While safety ensures that nothing bad happens on the network, *liveness* guarantees that something good always happens, eventually. In other words, the Ethereum network will continue to process transactions and add new blocks, come what may.
+Mientras que la seguridad garantiza que no ocurra nada malo en la red, la *vivacidad* garantiza que siempre ocurra algo bueno, eventualmente. En otras palabras, la red Ethereum seguirá procesando transacciones y agregando nuevos bloques, pase lo que pase.
 
-From another perspective, liveness can also be understood in terms of availability. In practical terms, this means that whenever we submit a valid transaction to a node that is acting honestly within the network, we can expect the transaction to be included in a forthcoming block that contributes to the extension of the blockchain. This expectation of transaction inclusion and processing is necessary to achieve user trust and the overall efficacy of the Ethereum platform.
+Desde otra perspectiva, la vivacidad también puede entenderse en términos de disponibilidad. En la práctica, esto significa que, cada vez que enviamos una transacción válida a un nodo que actúa honestamente dentro de la red, podemos esperar que la transacción se incluya en un próximo bloque que contribuya a extender la blockchain. Esta expectativa de inclusión y procesamiento de transacciones es necesaria para lograr la confianza de los usuarios y la eficacia general de la plataforma Ethereum.
 
-### Block Trees and Forking
+### Árboles de bloques y bifurcaciones
 
-Designing a consensus protocol that is both safe and live under all circumstances is not possible—you have to favor one of the two. While the Ethereum consensus protocol offers both safety and liveness under good network conditions, it prioritizes liveness when things get chaotic. It does so through the concept of forking.
+No es posible diseñar un protocolo de consenso que sea seguro y tenga vivacidad bajo todas las circunstancias; hay que favorecer una de las dos propiedades. Aunque el protocolo de consenso de Ethereum ofrece tanto seguridad como vivacidad en buenas condiciones de red, prioriza la vivacidad cuando las cosas se vuelven caóticas. Lo hace mediante el concepto de bifurcación.
 
-In a blockchain, every block (except for the special Genesis block) builds on and points to a parent block. Thus, we end up with a chain of blocks: a blockchain. On chains implementing forking consensus protocols, this linear condition is often not the case in practice: in real-world conditions, we can end up with something more like a block tree—as you can see in Figure 15-1—than a blockchain, and the goal of the consensus protocol is for all nodes on the network to agree on the same linear sequence of blocks.
+En una blockchain, cada bloque, excepto el bloque especial Génesis, se construye sobre un bloque padre y apunta a él. Así, obtenemos una cadena de bloques: una blockchain. En las cadenas que implementan protocolos de consenso con bifurcaciones, esta condición lineal a menudo no se cumple en la práctica: en condiciones reales, podemos terminar con algo más parecido a un árbol de bloques, como se ve en la Figura 15-1, que a una blockchain, y el objetivo del protocolo de consenso es que todos los nodos de la red acuerden la misma secuencia lineal de bloques.
 
-![Block tree structure](images/ch15/maet_1501.png)
+![Estructura de un árbol de bloques](images/ch15/maet_1501.png)
 
-Figure 15-1. Block tree structure
+Figura 15-1. Estructura de un árbol de bloques
 
-The various branches in the block tree are called *forks*. Forks happen naturally as a consequence of network and processing delays or client faults and malicious client behavior.
+Las distintas ramas del árbol de bloques se llaman *bifurcaciones*. Las bifurcaciones ocurren naturalmente como consecuencia de los retrasos de red y procesamiento, o de fallas de los clientes y comportamientos maliciosos de estos.
 
-If we were to consult nodes that are following different forks, they would give us different answers regarding the state of the system. Here lies the resilience of forking consensus protocols: instead of stopping entirely under unfavorable conditions, they fork. Eventually, we want every correct node on the network to agree on an identical linear view of history and hence a common view of the state of the system. It is the role of the protocol's *fork choice rule* to bring about this agreement: given a block tree and some decision criteria, the fork choice rule is designed to select, from all the available branches, the one that is most likely to eventually end up in the final linear, canonical chain. The downside of a forking protocol is that nodes following branches that don't end up in the canonical chain will eventually have to rewind their view of reality, reversing any recent transactions they have processed, in order to get onto the correct branch. This is called a *reorg* or *reversion* and is disruptive, so protocols aim to minimize it as much as possible.
+Si consultáramos nodos que siguen distintas bifurcaciones, nos darían respuestas diferentes sobre el estado del sistema. Aquí radica la resiliencia de los protocolos de consenso con bifurcaciones: en lugar de detenerse por completo en condiciones desfavorables, se bifurcan. En última instancia, queremos que todos los nodos correctos de la red acuerden una visión lineal idéntica del historial y, por lo tanto, una visión común del estado del sistema. La función de la *regla de elección de bifurcación* del protocolo es lograr este acuerdo: dado un árbol de bloques y algunos criterios de decisión, la regla de elección de bifurcación está diseñada para seleccionar, entre todas las ramas disponibles, la que tenga más probabilidades de terminar formando parte de la cadena canónica lineal final. La desventaja de un protocolo con bifurcaciones es que los nodos que siguen ramas que no terminan en la cadena canónica tendrán que retroceder su visión de la realidad y revertir las transacciones recientes que hayan procesado para incorporarse a la rama correcta. Esto se llama *reorganización* o *reversión* y causa trastornos, por lo que los protocolos buscan minimizarlo tanto como sea posible.
 
-Now we can understand the power of finality in Ethereum consensus protocol: forking is a powerful means to liveness, but for the network to be usable, this flexibility must be balanced by some safety guarantees.
+Ahora podemos comprender el poder de la finalidad en el protocolo de consenso de Ethereum: la bifurcación es un medio poderoso para lograr vivacidad, pero, para que la red sea utilizable, esta flexibilidad debe equilibrarse con algunas garantías de seguridad.
 
-## Consensus via Proof of Work
+## Consenso mediante prueba de trabajo
 
-The creator of the original blockchain, Bitcoin, invented a consensus algorithm based on *proof of work* (PoW). Arguably, PoW is the most important invention underpinning Bitcoin. The colloquial term for PoW is *mining*, which creates a misunderstanding about the primary purpose of consensus. Often, people assume that the purpose of mining is to create new currency since the purpose of real-world mining is to extract precious metals or other resources. Rather, the real purpose of mining (and all other consensus models) is to secure the blockchain while keeping control over the system decentralized and diffused across as many participants as possible. The reward of newly minted currency is an incentive to those who contribute to the security of the system: a means to an end. In that sense, the reward is the means, and decentralized security is the end.
+El creador de la blockchain original, Bitcoin, inventó un algoritmo de consenso basado en la *prueba de trabajo* (proof of work, PoW). Podría decirse que PoW es la invención más importante que sustenta a Bitcoin. El término coloquial para PoW es *minería*, lo que genera un malentendido sobre el propósito principal del consenso. A menudo se supone que el propósito de la minería es crear moneda nueva, ya que el propósito de la minería en el mundo real es extraer metales preciosos u otros recursos. Sin embargo, el verdadero propósito de la minería, y de todos los demás modelos de consenso, es proteger la blockchain y mantener el control del sistema descentralizado y distribuido entre tantos participantes como sea posible. La recompensa en moneda recién emitida es un incentivo para quienes contribuyen a la seguridad del sistema: un medio para alcanzar un fin. En ese sentido, la recompensa es el medio y la seguridad descentralizada es el fin.
 
-In PoW consensus, there is also a corresponding "punishment," which is the cost of energy required to participate in mining. This significant energy consumption isn't a flaw; it's key to a deliberate security and incentive design. If participants do not follow the rules and earn the reward, they risk the funds they have already spent on electricity to mine. Thus, PoW consensus is a careful balance of risk and reward that drives participants to behave honestly out of self-interest.
+En el consenso PoW también existe un "castigo" correspondiente: el costo de la energía necesaria para participar en la minería. Este consumo significativo de energía no es un defecto; es clave en un diseño deliberado de seguridad e incentivos. Si los participantes no siguen las reglas y obtienen la recompensa, arriesgan los fondos que ya han gastado en electricidad para minar. Por lo tanto, el consenso PoW es un equilibrio cuidadoso entre riesgo y recompensa que impulsa a los participantes a comportarse honestamente por interés propio.
 
-Ethereum started as a PoW blockchain following Bitcoin's example, in that it used a PoW algorithm with the same basic incentive system for the same basic goal: securing the blockchain while decentralizing control. Ethereum's PoW algorithm was slightly different from Bitcoin's and was called *Ethash*.
+Ethereum comenzó como una blockchain PoW siguiendo el ejemplo de Bitcoin, en el sentido de que utilizaba un algoritmo PoW con el mismo sistema básico de incentivos para el mismo objetivo básico: proteger la blockchain y descentralizar el control. El algoritmo PoW de Ethereum era ligeramente diferente del de Bitcoin y se llamaba *Ethash*.
 
-### Ethash: Ethereum's PoW Algorithm
+### Ethash: el algoritmo PoW de Ethereum
 
-Before Ethereum transitioned to PoS, it relied on a PoW algorithm called Ethash. It used an evolution of the Dagger-Hashimoto algorithm, which is a combination of Vitalik Buterin's Dagger algorithm and Thaddeus Dryja's Hashimoto algorithm. Ethash is dependent on the generation and analysis of a large dataset, known as a *directed acyclic graph* (or, more simply, "the DAG"). The DAG had an initial size of about 1 GB and continued to slowly and linearly grow, being updated once every epoch (30,000 blocks, or roughly 125 hours).
+Antes de que Ethereum pasara a PoS, dependía de un algoritmo PoW llamado Ethash. Utilizaba una evolución del algoritmo Dagger-Hashimoto, que es una combinación del algoritmo Dagger de Vitalik Buterin y el algoritmo Hashimoto de Thaddeus Dryja. Ethash depende de la generación y el análisis de un gran conjunto de datos, conocido como *grafo acíclico dirigido* o, más sencillamente, "el DAG". El DAG tenía un tamaño inicial de aproximadamente 1 GB y seguía creciendo de forma lenta y lineal, actualizándose una vez por época, cada 30,000 bloques o aproximadamente 125 horas.
 
-The purpose of the DAG was to make the Ethash PoW algorithm dependent on maintaining a large, frequently accessed data structure. This in turn was intended to make Ethash ASIC resistant, which means that it was more difficult to make application-specific integrated circuit (ASIC) mining equipment that is orders of magnitude faster than a fast GPU. Ethereum's founders wanted to avoid centralization in PoW mining, where those with access to specialized silicon-fabrication factories and big budgets could dominate the mining infrastructure and undermine the security of the consensus algorithm.
+El propósito del DAG era hacer que el algoritmo PoW Ethash dependiera del mantenimiento de una estructura de datos grande a la que se accediera con frecuencia. A su vez, esto buscaba hacer que Ethash fuera resistente a los ASIC, lo que significa que resultaba más difícil fabricar equipos de minería con circuitos integrados de aplicación específica (ASIC) que fueran órdenes de magnitud más rápidos que una GPU rápida. Los fundadores de Ethereum querían evitar la centralización de la minería PoW, en la que quienes tuvieran acceso a fábricas especializadas de chips de silicio y grandes presupuestos pudieran dominar la infraestructura de minería y socavar la seguridad del algoritmo de consenso.
 
-Using consumer-level GPUs to carry out the PoW on the Ethereum network meant that more people around the world could participate in the mining process. A larger number of independent miners meant that the mining power was more decentralized, which meant a situation like in Bitcoin, where much of the mining power is concentrated in the hands of a few large, industrial mining operations, could be avoided. The downside of the use of GPUs for mining was that it precipitated a worldwide shortage of GPUs in 2017, causing their price to skyrocket and an outcry from gamers. This led to purchase restrictions at retailers, limiting buyers to one or two GPUs per customer.
+Utilizar GPU de consumo para realizar la PoW en la red Ethereum significaba que más personas de todo el mundo podían participar en el proceso de minería. Una mayor cantidad de mineros independientes significaba que la potencia de minería estaba más descentralizada, lo que permitía evitar una situación como la de Bitcoin, donde gran parte de la potencia de minería se concentra en manos de unas pocas operaciones industriales de minería de gran tamaño. La desventaja de usar GPU para la minería fue que precipitó una escasez mundial de GPU en 2017, lo que disparó sus precios y provocó protestas entre los aficionados a los videojuegos. Esto llevó a los comercios a imponer restricciones de compra, limitando a los compradores a una o dos GPU por cliente.
 
-Until 2017, the threat of ASIC miners on the Ethereum network was largely non-existent. Using ASICs for Ethereum required the design, manufacture, and distribution of highly customized hardware. Producing them required a considerable investment of time and money. The Ethereum developers' long-expressed plans to move to a PoS consensus algorithm, now realized, likely kept ASIC suppliers from targeting the Ethereum network for a long time.
+Hasta 2017, la amenaza de los mineros ASIC en la red Ethereum era prácticamente inexistente. Usar ASIC para Ethereum requería el diseño, la fabricación y la distribución de hardware altamente personalizado. Producirlo requería una inversión considerable de tiempo y dinero. Los planes de los desarrolladores de Ethereum de pasar a un algoritmo de consenso PoS, expresados durante mucho tiempo y ya concretados, probablemente disuadieron a los proveedores de ASIC de enfocarse en la red Ethereum durante mucho tiempo.
 
-## Consensus via Proof of Stake
+## Consenso mediante proof of stake
 
-Historically, PoW wasn't the first consensus algorithm to be proposed. Before it, many researchers explored ideas based on financial or reputational stake. Even earlier still, some of the first consensus models were permissioned: validators were selected through authority or identity, not open competition. *Practical Byzantine fault tolerance* (PBFT), for example, requires a fixed or curated set of validators, a model that still underlies many traditional distributed systems today.
+Históricamente, PoW no fue el primer algoritmo de consenso propuesto. Antes, muchos investigadores exploraron ideas basadas en stake financiero o reputacional. Incluso antes, algunos de los primeros modelos de consenso eran con permiso: los validadores se seleccionaban por autoridad o identidad, no mediante competencia abierta. La *tolerancia práctica a fallas bizantinas* (PBFT), por ejemplo, requiere un conjunto fijo o seleccionado de validadores, un modelo que aún hoy sustenta muchos sistemas distribuidos tradicionales.
 
-One of the major breakthroughs of PoW-based consensus was that it made participation permissionless: anyone with the available computational power could contribute and get rewarded, without needing approval to join. That was a huge win for decentralization. In a sense, PoW was invented as a permissionless alternative to the more closed models.
+Uno de los grandes avances del consenso basado en PoW fue que permitió participar sin permiso: cualquiera con la potencia de cómputo disponible podía contribuir y recibir recompensas sin necesitar aprobación para unirse. Esto fue un gran logro para la descentralización. En cierto sentido, PoW se inventó como una alternativa sin permiso a los modelos más cerrados.
 
-Following Bitcoin's success, many blockchains adopted PoW. But the explosion of research into consensus reignited interest in PoS and led to major advances. From the beginning, Ethereum's founders hoped to eventually migrate to PoS. In fact, Ethereum's original PoW chain included a built-in handicap, the so-called *difficulty bomb*, which was designed to slowly make mining harder over time, forcing the system toward the eventual transition. Ethereum's version of PoS, while permissionless, has some conceptual roots in the earlier authority-based systems: here, identity and participation come from putting down stake. But since anyone with ETH can do so, it preserves the open-access spirit of Nakamoto's design.
+Tras el éxito de Bitcoin, muchas blockchains adoptaron PoW. Pero la explosión de investigaciones sobre consenso reavivó el interés en PoS y produjo grandes avances. Desde el principio, los fundadores de Ethereum esperaban migrar eventualmente a PoS. De hecho, la cadena PoW original de Ethereum incluía un obstáculo incorporado, la llamada *bomba de dificultad*, diseñado para dificultar gradualmente la minería con el tiempo y forzar al sistema hacia la transición eventual. La versión de PoS de Ethereum, aunque es sin permiso, tiene algunas raíces conceptuales en los sistemas anteriores basados en autoridad: aquí, la identidad y la participación provienen de aportar stake. Pero, dado que cualquiera con ETH puede hacerlo, conserva el espíritu de acceso abierto del diseño de Nakamoto.
 
-In general, a PoS algorithm works as follows. The blockchain keeps track of a set of validators, and anyone who holds the blockchain's base cryptocurrency (ether, in Ethereum's case) can become a validator by sending a special type of transaction that locks up their ether into a deposit. Validators take turns proposing and voting on the next valid block, and the weight of each validator's vote depends on the size of their deposit (i.e., stake). Validators earn small rewards proportional to their stake when they participate correctly in the protocol. If they make mistakes, like publishing inaccurate or late attestations, they can incur small penalties, roughly on the same scale as the rewards. But there's a much more serious consequence called *slashing*, which happens only when a validator is provably malicious—for example, by publishing conflicting attestations or equivocating blocks. Thus, PoS forces validators to act honestly and follow the consensus rules via a system of reward and punishment. The major difference between PoS and PoW is that the punishment in PoS is intrinsic to the blockchain (e.g., loss of staked ether), whereas in PoW the punishment is extrinsic (e.g., loss of funds spent on electricity).
+En general, un algoritmo PoS funciona de la siguiente manera. La blockchain lleva un registro de un conjunto de validadores, y cualquiera que posea la criptomoneda base de la blockchain, ether en el caso de Ethereum, puede convertirse en validador enviando un tipo especial de transacción que bloquea su ether en un depósito. Los validadores se turnan para proponer y votar el siguiente bloque válido, y el peso del voto de cada validador depende del tamaño de su depósito, es decir, su stake. Los validadores obtienen pequeñas recompensas proporcionales a su stake cuando participan correctamente en el protocolo. Si cometen errores, como publicar atestaciones incorrectas o tardías, pueden incurrir en pequeñas penalizaciones, aproximadamente de la misma escala que las recompensas. Pero existe una consecuencia mucho más grave llamada *slashing*, que ocurre solo cuando se puede demostrar que un validador es malicioso, por ejemplo, al publicar atestaciones contradictorias o bloques incompatibles. Así, PoS obliga a los validadores a actuar honestamente y seguir las reglas de consenso mediante un sistema de recompensas y castigos. La principal diferencia entre PoS y PoW es que el castigo en PoS es intrínseco a la blockchain, por ejemplo, la pérdida de ether en staking, mientras que en PoW el castigo es extrínseco, por ejemplo, la pérdida de los fondos gastados en electricidad.
 
-Since Ethereum was launched in 2015, there was the intention to transition to a PoS consensus protocol. The first concrete step in that direction came on December 1, 2020, with the launch of the Beacon Chain. Initially, the Beacon Chain was an empty blockchain that let everyone become a validator by depositing 32 ETH into a specific deposit contract and handled only its internal consensus of validators and their respective balances. At that time, the Ethereum blockchain was still using Ethash as its consensus protocol.
+Desde el lanzamiento de Ethereum en 2015, existía la intención de pasar a un protocolo de consenso PoS. El primer paso concreto en esa dirección llegó el 1 de diciembre de 2020 con el lanzamiento de Beacon Chain. Inicialmente, Beacon Chain era una blockchain vacía que permitía a cualquiera convertirse en validador depositando 32 ETH en un contrato de depósito específico y solo gestionaba su consenso interno de validadores y sus respectivos saldos. En ese momento, la blockchain de Ethereum todavía utilizaba Ethash como protocolo de consenso.
 
-On September 15, 2022, the Merge hard fork occurred, and the Beacon Chain, with its own set of validators, extended its PoS-based consensus protocol to the Ethereum main blockchain, effectively ending the use of Ethash. However, some limitations remained, including the inability for validators to withdraw their capital and leave the validator set. These issues were fully resolved on April 12, 2023, with the Shapella update, which completed the work of transitioning Ethereum from a PoW to a PoS consensus protocol.
+El 15 de septiembre de 2022 se produjo el hard fork The Merge, y Beacon Chain, con su propio conjunto de validadores, extendió su protocolo de consenso basado en PoS a la blockchain principal de Ethereum, lo que puso fin al uso de Ethash. Sin embargo, persistían algunas limitaciones, incluida la imposibilidad de que los validadores retiraran su capital y abandonaran el conjunto de validadores. Estos problemas se resolvieron por completo el 12 de abril de 2023 con la actualización Shapella, que completó el trabajo de transición de Ethereum de un protocolo de consenso PoW a uno PoS.
 
-The PoS consensus protocol used by Ethereum is called *Gasper*. In the following sections, we will explore how it works, starting with basic terminology and progressing to the fork choice rule (LMD-GHOST) and finality gadget (Casper FFG). We will conclude with an example to clarify the theoretical concepts that we have discussed.
+El protocolo de consenso PoS utilizado por Ethereum se llama *Gasper*. En las siguientes secciones exploraremos cómo funciona, comenzando por la terminología básica y avanzando hacia la regla de elección de bifurcación (LMD-GHOST) y el mecanismo de finalidad (Casper FFG). Concluiremos con un ejemplo para aclarar los conceptos teóricos que hemos tratado.
 
-## PoS Terminology
+## Terminología de PoS
 
-In this section, we'll focus on Ethereum PoS consensus components and terminology.
+En esta sección nos enfocaremos en los componentes y la terminología del consenso PoS de Ethereum.
 
-### Nodes and Validators
+### Nodos y validadores
 
-*Nodes* form the backbone of the Ethereum network. They communicate with one another and are responsible for validating consensus adherence. *Validators*, which are responsible for proposing and voting on new blocks, are attached to these nodes, but despite what the name might imply, they don't actually validate the blocks themselves. Instead, it's the node software that checks whether blocks and transactions follow the protocol rules. A single node can host multiple validators, and validator duties are carried out by running both an execution client and a consensus client. We'll see exactly what those duties are in the next sections.
+Los *nodos* forman la columna vertebral de la red Ethereum. Se comunican entre sí y son responsables de verificar el cumplimiento del consenso. Los *validadores*, responsables de proponer nuevos bloques y votar sobre ellos, están conectados a estos nodos, pero, a pesar de lo que su nombre pueda sugerir, en realidad no validan los bloques por sí mismos. En cambio, es el software del nodo el que verifica si los bloques y las transacciones siguen las reglas del protocolo. Un solo nodo puede alojar múltiples validadores, y las tareas de los validadores se realizan ejecutando tanto un cliente de ejecución como un cliente de consenso. En las próximas secciones veremos exactamente cuáles son esas tareas.
 
-One peculiar property of PoS to keep in mind is that the set of active validators is known: this will be key to achieving finality since we can identify when we have reached a majority vote of participants.
+Una propiedad peculiar de PoS que conviene tener presente es que se conoce el conjunto de validadores activos: esto será clave para lograr finalidad, ya que podemos identificar cuándo hemos alcanzado una mayoría de votos de los participantes.
 
-### Blocks and Attestations
+### Bloques y atestaciones
 
-Strict time management is an important property of Ethereum's PoS. The two key intervals in PoS are the *slot*, which is exactly 12 seconds, and the *epoch*, which spans 32 slots.
+La gestión estricta del tiempo es una propiedad importante de PoS de Ethereum. Los dos intervalos clave en PoS son el *slot*, que dura exactamente 12 segundos, y la *época*, que abarca 32 slots.
 
-At every slot, exactly one validator is selected to propose a block. During every epoch, every validator gets to share its view of the world exactly once, in the form of an *attestation*. An attestation contains votes for the head of the chain that will be used by the LMD-GHOST protocol and votes for checkpoints that will be used by the Casper FFG protocol, where FFG stands for "Friendly Finality Gadget." Attestation sharing is bandwidth intensive, so it's distributed across each epoch instead of every block to spread the necessary workload and keep it manageable.
+En cada slot se selecciona exactamente un validador para proponer un bloque. Durante cada época, cada validador puede compartir su visión del mundo exactamente una vez, en forma de una *atestación*. Una atestación contiene votos para la cabeza de la cadena que utilizará el protocolo LMD-GHOST y votos para puntos de control que utilizará el protocolo Casper FFG, donde FFG significa "Friendly Finality Gadget". Compartir atestaciones consume mucho ancho de banda, por lo que se distribuye a lo largo de cada época, en lugar de cada bloque, para repartir la carga de trabajo necesaria y mantenerla manejable.
 
-The protocol incentivizes block and attestation production and accuracy via a system of rewards and penalties for validators, but it tolerates empty slots and attestations, which can happen for both organic (e.g., a node went offline) and profit-driven reasons. We will expand on this in the later section "Timing Games".
+El protocolo incentiva la producción y la precisión de bloques y atestaciones mediante un sistema de recompensas y penalizaciones para los validadores, pero tolera slots y atestaciones vacíos, lo que puede ocurrir tanto por razones naturales, por ejemplo, que un nodo se desconecte, como por motivos de lucro. Ampliaremos este tema en la sección posterior "Juegos de temporización".
 
 ## LMD-GHOST
 
-LMD-GHOST is the main part of the Ethereum consensus protocol: it's the fork choice rule algorithm. It selects the latest block a node should consider valid in its local view of the blockchain. This block is also called the *head of the chain*.
+LMD-GHOST es la parte principal del protocolo de consenso de Ethereum: es el algoritmo de la regla de elección de bifurcación. Selecciona el bloque más reciente que un nodo debe considerar válido en su visión local de la blockchain. Este bloque también se llama la *cabeza de la cadena*.
 
-To fully understand how it works, you must know some basic concepts of the Ethereum PoS protocol. In a classic PoW-based consensus protocol, entities responsible for creating new blocks and adding them to the chain (i.e., miners) don't need to adhere to any special requirement. If they publish a block that satisfies the PoW, then it gets accepted by the whole network. In Ethereum's PoS-based consensus protocol, validators must stake a big amount of ETH as collateral—right now, at least 32 ETH—just to enter into the validators set.
+Para comprender por completo cómo funciona, es necesario conocer algunos conceptos básicos del protocolo PoS de Ethereum. En un protocolo de consenso clásico basado en PoW, las entidades responsables de crear nuevos bloques y agregarlos a la cadena, es decir, los mineros, no necesitan cumplir ningún requisito especial. Si publican un bloque que satisface la PoW, toda la red lo acepta. En el protocolo de consenso de Ethereum basado en PoS, los validadores deben hacer staking de una gran cantidad de ETH como garantía, actualmente al menos 32 ETH, tan solo para entrar al conjunto de validadores.
 
-As we have previously briefly mentioned, validators have two main duties:
+Como ya mencionamos brevemente, los validadores tienen dos tareas principales:
 
-**Block proposing**
+**Proponer bloques**
 
-Every slot, a validator is pseudorandomly selected to create and propose the next block for the chain.
+En cada slot se selecciona un validador de forma seudoaleatoria para crear y proponer el siguiente bloque de la cadena.
 
-**Creating attestations**
+**Crear atestaciones**
 
-Every slot, a proportion of the validators is selected to publish their votes for the block that they think is the best head of the chain. This vote is then shared to every validator in the form of an attestation.
+En cada slot se selecciona una proporción de los validadores para publicar sus votos por el bloque que consideran la mejor cabeza de la cadena. Este voto se comparte después con todos los validadores en forma de una atestación.
 
-When a validator votes for a certain block inside an attestation, it's actually assigning it a score. This score is exactly equal to the amount of ETH the validator has staked at the moment they've published the attestation. But there's more: this vote is not only a vote for that block but also a vote for all ancestor blocks that live in the same fork of that selected block, as you can see in Figure 15-2.
+Cuando un validador vota por cierto bloque dentro de una atestación, en realidad le está asignando una puntuación. Esta puntuación es exactamente igual a la cantidad de ETH que el validador tiene en staking al momento de publicar la atestación. Pero hay más: este voto no es solo un voto por ese bloque, sino también por todos los bloques ancestros que se encuentran en la misma bifurcación del bloque seleccionado, como se ve en la Figura 15-2.
 
-![Vote propagation to ancestors](images/ch15/maet_1502.png)
+![Propagación de votos a los ancestros](images/ch15/maet_1502.png)
 
-Figure 15-2. Vote propagation to ancestors
+Figura 15-2. Propagación de votos a los ancestros
 
-You could say that a vote for a block is propagated back to all its ancestors. To make this concept even clearer, we can assign a score to all branches. A *branch* is the link that connects a block with its parent, as shown in Figure 15-3.
+Podríamos decir que un voto por un bloque se propaga hacia atrás a todos sus ancestros. Para aclarar aún más este concepto, podemos asignar una puntuación a todas las ramas. Una *rama* es el enlace que conecta un bloque con su padre, como se muestra en la Figura 15-3.
 
-![Branch definition](images/ch15/maet_1503.png)
+![Definición de rama](images/ch15/maet_1503.png)
 
-Figure 15-3. Branch definition
+Figura 15-3. Definición de rama
 
-We define the score of a branch to be the sum of the score of the block that roots that branch (block B in Figure 15-3) plus the score of all its direct descendant branches.
+Definimos la puntuación de una rama como la suma de la puntuación del bloque que da origen a esa rama, el bloque B en la Figura 15-3, más la puntuación de todas sus ramas descendientes directas.
 
-Figure 15-4 shows a chain of blocks where each block has a score equal to 1. The branch connecting E to D has a score exactly equal to the score of block E because there are no descendant blocks. To compute the score of branch D→C, you need to add the score of block D to the score of all descendant branches. In this case, there's only one descendant branch: branch E→D. So it's 1 (score of block D) + 1 (score of branch E→D) = 2. Then we have branch C→B: its score is 1 (score of block C) + 2 (score of branch D→C) = 3. Here, we have a small fork with block C′; we need to assign a score to branch C′→B. Its score is just 1 (score of block C′) because block C′ has no direct descendant. Finally, we have branch B→A; to compute its score, we need to sum 1 (score of block B) + 1 (score of branch C′→B) + 3 (score of branch C→B) = 5.
+La Figura 15-4 muestra una cadena de bloques donde cada bloque tiene una puntuación igual a 1. La rama que conecta E con D tiene una puntuación exactamente igual a la del bloque E porque no hay bloques descendientes. Para calcular la puntuación de la rama D→C, hay que sumar la puntuación del bloque D a la de todas las ramas descendientes. En este caso, solo hay una rama descendiente: la rama E→D. Por lo tanto, es 1 (puntuación del bloque D) + 1 (puntuación de la rama E→D) = 2. Luego tenemos la rama C→B: su puntuación es 1 (puntuación del bloque C) + 2 (puntuación de la rama D→C) = 3. Aquí tenemos una pequeña bifurcación con el bloque C′; debemos asignar una puntuación a la rama C′→B. Su puntuación es solo 1 (puntuación del bloque C′) porque el bloque C′ no tiene descendientes directos. Por último, tenemos la rama B→A; para calcular su puntuación, debemos sumar 1 (puntuación del bloque B) + 1 (puntuación de la rama C′→B) + 3 (puntuación de la rama C→B) = 5.
 
-![Branch score calculation example](images/ch15/maet_1504.png)
+![Ejemplo de cálculo de puntuación de ramas](images/ch15/maet_1504.png)
 
-Figure 15-4. Branch score calculation example
+Figura 15-4. Ejemplo de cálculo de puntuación de ramas
 
-Figure 15-5 contains a more complex scenario with several forks where each block has a different score. Look at it and make sure you understand how the score of each branch is computed.
+La Figura 15-5 contiene un escenario más complejo con varias bifurcaciones donde cada bloque tiene una puntuación diferente. Obsérvela y asegúrese de comprender cómo se calcula la puntuación de cada rama.
 
-![Complex branch scoring](images/ch15/maet_1505.png)
+![Puntuación de ramas compleja](images/ch15/maet_1505.png)
 
-Figure 15-5. Complex branch scoring
+Figura 15-5. Puntuación de ramas compleja
 
-After the last example, it should be clear that the score of a block not only influences that single block but also all its ancestors as it gets propagated back to all previous branches. The idea is that if a validator votes (in the form of an attestation) for a block to be the head of the chain, it's also considering all its ancestors valid and part of the correct chain.
+Después del último ejemplo, debería quedar claro que la puntuación de un bloque no solo influye en ese bloque, sino también en todos sus ancestros, ya que se propaga hacia atrás a todas las ramas anteriores. La idea es que, si un validador vota, en forma de una atestación, por un bloque para que sea la cabeza de la cadena, también está considerando válidos a todos sus ancestros y como parte de la cadena correcta.
 
-Now, we can finally go into the details of how LMD-GHOST really works and how it selects the block to be considered the head of the chain. Let's start by analyzing its name. LMD-GHOST is made up of two acronyms: *latest message driven* and *greediest heaviest observed subtree*.
+Ahora podemos finalmente entrar en los detalles de cómo funciona realmente LMD-GHOST y cómo selecciona el bloque que se considerará la cabeza de la cadena. Comencemos analizando su nombre. LMD-GHOST está formado por dos siglas: *latest message driven* y *greediest heaviest observed subtree*.
 
-### Latest Message Driven
+### Guiado por el mensaje más reciente
 
-To assign a score to each block and branch, you need to consider only the most recent attestation of each validator. That means that if you receive two attestations from a validator V, then you don't have to count them twice; you need to check which one is the most recent and discard the other one.
+Para asignar una puntuación a cada bloque y rama, solo hay que considerar la atestación más reciente de cada validador. Esto significa que, si se reciben dos atestaciones de un validador V, no hay que contarlas dos veces; hay que verificar cuál es la más reciente y descartar la otra.
 
-Figure 15-6 shows a validator that publishes an attestation on block B in which they share the fact that they think block B is the head of the chain. Then, at a later time during block F, the validator is selected again to post a new attestation in which they express their preference for block F as the new head of the chain. When that validator posts the new attestation at block F, other validators need to discard the old one (published during block B) and consider only the most recent.
+La Figura 15-6 muestra un validador que publica una atestación sobre el bloque B en la que comparte que considera al bloque B la cabeza de la cadena. Luego, en un momento posterior, durante el bloque F, el validador vuelve a ser seleccionado para publicar una nueva atestación en la que expresa su preferencia por el bloque F como nueva cabeza de la cadena. Cuando ese validador publica la nueva atestación en el bloque F, los demás validadores deben descartar la anterior, publicada durante el bloque B, y considerar solo la más reciente.
 
-![Latest message driven example](images/ch15/maet_1506.png)
+![Ejemplo de selección guiada por el mensaje más reciente](images/ch15/maet_1506.png)
 
-Figure 15-6. Latest message driven example
+Figura 15-6. Ejemplo de selección guiada por el mensaje más reciente
 
-### Greediest Heaviest Observed Subtree
+### Selección voraz del subárbol observado más pesado
 
-GHOST is the key aspect of the fork choice rule. The head block is the block with no further descendants that is part of the fork with the highest vote.
+GHOST es el aspecto clave de la regla de elección de bifurcación. El bloque cabeza es el bloque sin más descendientes que forma parte de la bifurcación con la mayor votación.
 
-Let's see it in practice to better understand how LMD-GHOST works in a real scenario. Figure 15-7 represents the same scenario we used previously.
+Veámoslo en la práctica para comprender mejor cómo funciona LMD-GHOST en un escenario real. La Figura 15-7 representa el mismo escenario que usamos anteriormente.
 
-![LMD-GHOST scenario](images/ch15/maet_1507.png)
+![Escenario de LMD-GHOST](images/ch15/maet_1507.png)
 
-Figure 15-7. LMD-GHOST scenario
+Figura 15-7. Escenario de LMD-GHOST
 
-LMD-GHOST always starts from an initial block that is considered part of the finalized chain. Initially, that's the Genesis block, but with the full PoS-based Ethereum consensus protocol, it keeps getting updated with the last justified checkpoint block—that's terminology that we'll explore in "Casper FFG: The Finality Gadget". It's not crucial if you don't know what a justified checkpoint is yet; you just need to know that there's always a starting block.
+LMD-GHOST siempre parte de un bloque inicial que se considera parte de la cadena finalizada. Al principio es el bloque Génesis, pero, con el protocolo completo de consenso de Ethereum basado en PoS, se va actualizando con el último bloque de punto de control justificado, terminología que exploraremos en "Casper FFG: el mecanismo de finalidad". No es crucial saber todavía qué es un punto de control justificado; solo hay que saber que siempre existe un bloque de partida.
 
-In this example, block A is the initial block. Let's assume we're a validator who needs to cast an attestation or who is selected to propose the next block. We need to run LMD-GHOST to know which block is the head of the chain so that we can publish the attestation accordingly or we can build the next block on top of the correct previous head block. We've already collected other validators' attestations up to now, only considering the most recent one for every validator, following the LMD rule of the protocol. So we have the score of all blocks, made up as the sum of the score that each validator gave to each of them.
+En este ejemplo, el bloque A es el bloque inicial. Supongamos que somos un validador que debe emitir una atestación o que ha sido seleccionado para proponer el siguiente bloque. Debemos ejecutar LMD-GHOST para saber qué bloque es la cabeza de la cadena, de modo que podamos publicar la atestación correspondiente o construir el siguiente bloque sobre el bloque cabeza anterior correcto. Ya hemos recopilado las atestaciones de otros validadores hasta este momento, considerando solo la más reciente de cada validador, siguiendo la regla LMD del protocolo. Así, tenemos la puntuación de todos los bloques, formada por la suma de las puntuaciones que cada validador asignó a cada uno.
 
-At this point LMD-GHOST works in two steps:
+En este punto, LMD-GHOST funciona en dos pasos:
 
-1. It assigns a score to all branches, following the same methodology we explained before by propagating backward the score of each block to all previous branches. Figure 15-8 shows the final scores of all branches.
+1. Asigna una puntuación a todas las ramas, siguiendo la misma metodología que explicamos antes: propaga hacia atrás la puntuación de cada bloque a todas las ramas anteriores. La Figura 15-8 muestra las puntuaciones finales de todas las ramas.
 
-![Branch scores computed](images/ch15/maet_1508.png)
+![Puntuaciones calculadas de las ramas](images/ch15/maet_1508.png)
 
-Figure 15-8. Branch scores computed
+Figura 15-8. Puntuaciones calculadas de las ramas
 
-2. Then, starting at the initial block, the GHOST part of the protocol greedily proceeds to select the branch with the highest score until it gets to a block with no descendants. That's the head block returned by the LMD-GHOST fork choice rule.
+2. Luego, partiendo del bloque inicial, la parte GHOST del protocolo procede de manera voraz a seleccionar la rama con la puntuación más alta hasta llegar a un bloque sin descendientes. Ese es el bloque cabeza que devuelve la regla de elección de bifurcación LMD-GHOST.
 
-Let's see this running step-by-step in our example. LMD-GHOST starts at initial block A and immediately goes to block B by following branch B→A as there are no alternative branches to choose from, as shown in Figure 15-9.
+Veamos cómo se ejecuta esto paso a paso en nuestro ejemplo. LMD-GHOST comienza en el bloque inicial A y pasa inmediatamente al bloque B siguiendo la rama B→A, ya que no hay ramas alternativas entre las que elegir, como se muestra en la Figura 15-9.
 
-![LMD-GHOST step 1](images/ch15/maet_1509.png)
+![LMD-GHOST, paso 1](images/ch15/maet_1509.png)
 
-Figure 15-9. LMD-GHOST step 1
+Figura 15-9. LMD-GHOST, paso 1
 
-Now, there are two branches to choose from:
+Ahora hay dos ramas entre las que elegir:
 
-- Branch C→B with a score equal to 8
-- Branch D→B with a score equal to 6
+- Rama C→B con una puntuación igual a 8
+- Rama D→B con una puntuación igual a 6
 
-GHOST greedily selects branch C→B since it's the one with the highest score, as shown in Figure 15-10. Note that it doesn't matter that block D has a higher score than block C because LMD-GHOST doesn't consider the score of a single block but rather the score of the entire fork that block lives in.
+GHOST selecciona de manera voraz la rama C→B porque es la que tiene la puntuación más alta, como se muestra en la Figura 15-10. Nótese que no importa que el bloque D tenga una puntuación mayor que el bloque C, porque LMD-GHOST no considera la puntuación de un bloque individual, sino la de toda la bifurcación en la que se encuentra ese bloque.
 
-![LMD-GHOST step 2](images/ch15/maet_1510.png)
+![LMD-GHOST, paso 2](images/ch15/maet_1510.png)
 
-Figure 15-10. LMD-GHOST step 2
+Figura 15-10. LMD-GHOST, paso 2
 
-We now have two different branches to choose from:
+Ahora tenemos dos ramas diferentes entre las que elegir:
 
-- Branch E→C with a score equal to 4
-- Branch F→C with a score equal to 3
+- Rama E→C con una puntuación igual a 4
+- Rama F→C con una puntuación igual a 3
 
-GHOST selects branch E→C, as shown in Figure 15-11.
+GHOST selecciona la rama E→C, como se muestra en la Figura 15-11.
 
-![LMD-GHOST step 3](images/ch15/maet_1511.png)
+![LMD-GHOST, paso 3](images/ch15/maet_1511.png)
 
-Figure 15-11. LMD-GHOST step 3
+Figura 15-11. LMD-GHOST, paso 3
 
-At this point, we have only one branch to choose from, branch H→E, so that's the one selected by GHOST, as shown in Figure 15-12.
+En este punto solo tenemos una rama entre la que elegir, la rama H→E, así que esa es la que selecciona GHOST, como se muestra en la Figura 15-12.
 
-![LMD-GHOST step 4](images/ch15/maet_1512.png)
+![LMD-GHOST, paso 4](images/ch15/maet_1512.png)
 
-Figure 15-12. LMD-GHOST step 4
+Figura 15-12. LMD-GHOST, paso 4
 
-Block H has no descendants. LMD-GHOST stops and returns it as the new head block of the chain.
+El bloque H no tiene descendientes. LMD-GHOST se detiene y lo devuelve como el nuevo bloque cabeza de la cadena.
 
-### Incentives
+### Incentivos
 
-LMD-GHOST offers a variety of explicit incentives for validators who strictly follow the rules, and punishments for those who act maliciously. In this section, we'll explore how it prevents malicious actors from breaking the rules and rewards benevolent ones.
+LMD-GHOST ofrece diversos incentivos explícitos para los validadores que siguen estrictamente las reglas y castigos para quienes actúan de manera maliciosa. En esta sección exploraremos cómo impide que los actores maliciosos infrinjan las reglas y cómo recompensa a quienes actúan de buena fe.
 
-Validators need to perform two different duties:
+Los validadores deben realizar dos tareas diferentes:
 
-- Proposing blocks
-- Creating attestations
+- Proponer bloques
+- Crear atestaciones
 
-For each of these, LMD-GHOST includes several ways to make sure everyone behaves according to the rules.
+Para cada una de ellas, LMD-GHOST incluye varias formas de garantizar que todos se comporten de acuerdo con las reglas.
 
-#### Proposing blocks
+#### Proponer bloques
 
-When a validator is selected to propose a new block to the chain, it must create only a single valid block. By doing that, the validator earns the sum of the priority fees of all transactions included into the block they have created, plus some newly minted ETH, as you can see in Figure 15-13.
+Cuando se selecciona un validador para proponer un nuevo bloque a la cadena, debe crear un solo bloque válido. Al hacerlo, el validador obtiene la suma de las comisiones de prioridad de todas las transacciones incluidas en el bloque que ha creado, más algunos ETH recién emitidos, como se ve en la Figura 15-13.
 
-![Block proposal reward](images/ch15/maet_1513.png)
+![Recompensa por proponer un bloque](images/ch15/maet_1513.png)
 
-Figure 15-13. Block proposal reward
+Figura 15-13. Recompensa por proponer un bloque
 
-If the validator tries to cheat by creating more than one block, the protocol explicitly punishes them by slashing a proportion of their stake. In fact, to become part of the validator set, you must stake some ETH as collateral (at least 32 ETH). This stake is (also) necessary so that the protocol can punish you by slashing—that is, removing—some ETH from it, as shown in Figure 15-14.
+Si el validador intenta hacer trampa creando más de un bloque, el protocolo lo castiga explícitamente aplicando slashing a una proporción de su stake. De hecho, para formar parte del conjunto de validadores, hay que hacer staking de algunos ETH como garantía, al menos 32 ETH. Este stake también es necesario para que el protocolo pueda castigarlo mediante slashing, es decir, quitándole algunos ETH, como se muestra en la Figura 15-14.
 
-![Block proposal slashing](images/ch15/maet_1514.png)
+![Slashing por propuesta de bloques](images/ch15/maet_1514.png)
 
-Figure 15-14. Block proposal slashing
+Figura 15-14. Slashing por propuesta de bloques
 
-> **Note**  
+> **Nota**  
 >
-> It's interesting to note here that the explicit punishment is a big difference between Ethereum's PoS consensus protocol and Bitcoin's PoW. Bitcoin miners get rewarded if their block becomes part of the heaviest chain. If they create more than one block for a single block number, there's no explicit punishment.
+> Es interesante señalar aquí que el castigo explícito es una gran diferencia entre el protocolo de consenso PoS de Ethereum y el PoW de Bitcoin. Los mineros de Bitcoin reciben una recompensa si su bloque pasa a formar parte de la cadena más pesada. Si crean más de un bloque para un mismo número de bloque, no hay un castigo explícito.
 >
-> You may wonder why. It's because PoW-based systems require some work to be made to create a valid block (the PoW itself). If a miner creates more than one block, they are just wasting time and money because eventually only one block will end up in the heaviest chain, so they'll get rewarded for only one of them.
+> Quizá se pregunte por qué. Es porque los sistemas basados en PoW requieren realizar cierto trabajo para crear un bloque válido, la propia PoW. Si un minero crea más de un bloque, solo está desperdiciando tiempo y dinero, porque al final solo un bloque terminará en la cadena más pesada, así que recibirá una recompensa por solo uno de ellos.
 >
-> Ethereum PoS protocol doesn't require validators to perform a PoW to create a valid block. That means that creating more than a single block is almost free for validators. That's why we need explicit punishment for anyone who tries to cheat in this way.
+> El protocolo PoS de Ethereum no requiere que los validadores realicen una PoW para crear un bloque válido. Esto significa que crear más de un bloque es casi gratuito para los validadores. Por eso necesitamos un castigo explícito para cualquiera que intente hacer trampa de esta manera.
 
-#### Creating attestations
+#### Crear atestaciones
 
-When a validator is selected to share their view of the network in the form of an attestation, they must publish only a single, valid one. By doing that, they earn a small fee (much smaller than the one earned by the block proposer), as you can see in Figure 15-15.
+Cuando se selecciona un validador para compartir su visión de la red en forma de una atestación, debe publicar solo una que sea válida. Al hacerlo, obtiene una pequeña comisión, mucho menor que la que recibe el proponente del bloque, como se ve en la Figura 15-15.
 
-![Attestation reward](images/ch15/maet_1515.png)
+![Recompensa por atestación](images/ch15/maet_1515.png)
 
-Figure 15-15. Attestation reward
+Figura 15-15. Recompensa por atestación
 
-If the validator tries to cheat by creating more than a single attestation or contradictory attestations, the protocol explicitly punishes them by slashing a proportion of their stake, as shown in Figure 15-16.
+Si el validador intenta hacer trampa creando más de una atestación o atestaciones contradictorias, el protocolo lo castiga explícitamente aplicando slashing a una proporción de su stake, como se muestra en la Figura 15-16.
 
-![Attestation slashing](images/ch15/maet_1516.png)
+![Slashing por atestación](images/ch15/maet_1516.png)
 
-Figure 15-16. Attestation slashing
+Figura 15-16. Slashing por atestación
 
-If the validator keeps behaving maliciously for quite a long time, the protocol has the power of force-ejecting them from the validator set.
+Si el validador sigue comportándose de manera maliciosa durante bastante tiempo, el protocolo tiene la facultad de expulsarlo por la fuerza del conjunto de validadores.
 
-## Casper FFG: The Finality Gadget
+## Casper FFG: el mecanismo de finalidad
 
-Casper FFG is a kind of metaconsensus protocol. It is an overlay that can be run on top of an underlying consensus protocol in order to add finality to it.
+Casper FFG es una especie de protocolo de metaconsenso. Es una capa superpuesta que puede ejecutarse sobre un protocolo de consenso subyacente para agregarle finalidad.
 
-In Ethereum's PoS consensus, the underlying protocol is LMD-GHOST, which does not provide finality. Finality ensures that once blocks are confirmed in the chain, they cannot be reversed: they will be part of the chain forever. So in essence, Casper FFG functions as a finality gadget, and we use it to add finality to LMD-GHOST.
+En el consenso PoS de Ethereum, el protocolo subyacente es LMD-GHOST, que no proporciona finalidad. La finalidad garantiza que, una vez confirmados los bloques en la cadena, no puedan revertirse: formarán parte de la cadena para siempre. Así que, en esencia, Casper FFG funciona como un mecanismo de finalidad y lo usamos para agregar finalidad a LMD-GHOST.
 
-Casper FFG takes advantage of the fact that, in a PoS protocol, we know who our participants are: the validators who manage the staked ether. This means that we can use vote counting to judge when we have seen a majority of the votes of honest validators, or more precisely, votes from validators who manage the majority of the stake. In everything that follows, every validator's vote is weighted by the value of the stake that they manage, but for simplicity, we won't spell this out every time.
+Casper FFG aprovecha que, en un protocolo PoS, sabemos quiénes son nuestros participantes: los validadores que gestionan el ether en staking. Esto significa que podemos contar votos para determinar cuándo hemos visto una mayoría de los votos de los validadores honestos o, más precisamente, votos de validadores que gestionan la mayoría del stake. En todo lo que sigue, el voto de cada validador está ponderado por el valor del stake que gestiona, pero, por simplicidad, no lo aclararemos cada vez.
 
-Casper FFG, like all classic Byzantine fault tolerant (BFT) protocols, can ensure finality as long as fewer than a third of validators are faulty or adversarial. Once a majority of honest validators have declared a block final, all honest validators agree, making that block irreversible. By requiring that honest validators constitute more than two thirds of the total, the system ensures that the consensus accurately represents the honest majority's view. Notably, Casper FFG distinguishes itself from traditional BFT protocols by offering economic finality (you'll find more details in "Accountable Safety and Plausible Liveness") even if more than one-third of validators are compromised.
+Casper FFG, como todos los protocolos clásicos tolerantes a fallas bizantinas (BFT), puede garantizar finalidad siempre que menos de un tercio de los validadores sean defectuosos o adversarios. Una vez que una mayoría de validadores honestos ha declarado finalizado un bloque, todos los validadores honestos están de acuerdo, lo que hace irreversible ese bloque. Al requerir que los validadores honestos constituyan más de dos tercios del total, el sistema garantiza que el consenso represente con precisión la visión de la mayoría honesta. Cabe destacar que Casper FFG se distingue de los protocolos BFT tradicionales por ofrecer finalidad económica, sobre la que encontrará más detalles en "Seguridad con atribución de responsabilidad y vivacidad plausible", incluso si más de un tercio de los validadores están comprometidos.
 
-### Epochs and Checkpoints
+### Épocas y puntos de control
 
-Casper FFG ensures consensus by requiring votes from more than two thirds of validators within an epoch, dividing voting across 32 slots to manage the large validator set efficiently, as shown in Figure 15-17. An epoch is divided into 32 slots, each of which usually contains a block. The first slot of an epoch is its *checkpoint*.
+Casper FFG garantiza el consenso al requerir votos de más de dos tercios de los validadores dentro de una época y distribuir la votación entre 32 slots para gestionar eficientemente el gran conjunto de validadores, como se muestra en la Figura 15-17. Una época se divide en 32 slots, cada uno de los cuales suele contener un bloque. El primer slot de una época es su *punto de control*.
 
-![Epochs and checkpoints](images/ch15/maet_1517.png)
+![Épocas y puntos de control](images/ch15/maet_1517.png)
 
-Figure 15-17. Epochs and checkpoints
+Figura 15-17. Épocas y puntos de control
 
-Validators vote once per epoch on a checkpoint, the first slot, to maintain a unified voting focus. This process, which incorporates both Casper FFG and LMD-GHOST votes for efficiency, aims at finalizing checkpoints, in the context of Casper FFG, not entire epochs, clarifying that finality extends to the checkpoint and its preceding content.
+Los validadores votan una vez por época sobre un punto de control, el primer slot, para mantener un objetivo común de votación. Este proceso, que incorpora tanto los votos de Casper FFG como los de LMD-GHOST por eficiencia, busca finalizar puntos de control, en el contexto de Casper FFG, no épocas enteras, lo que aclara que la finalidad se extiende al punto de control y al contenido que lo precede.
 
-### Justification and Finalization
+### Justificación y finalización
 
-Casper FFG, like traditional BFT protocols, secures network agreement in two stages. Initially, validators broadcast and gather views on a proposed checkpoint. If a significant majority agrees, the checkpoint is *justified*, signaling a tentative agreement. In the subsequent round, if validators confirm widespread support for the justified checkpoint, it achieves *finalization*, meaning it's unanimously agreed upon and irreversible. This process underlines the collaborative effort to ensure network consistency and security, aiming for checkpoints to be justified and then finalized within specific time frames and improving the reliability of the consensus mechanism.
+Casper FFG, al igual que los protocolos BFT tradicionales, asegura el acuerdo de la red en dos etapas. Inicialmente, los validadores difunden y recopilan opiniones sobre un punto de control propuesto. Si una mayoría significativa está de acuerdo, el punto de control queda *justificado*, lo que indica un acuerdo provisional. En la ronda siguiente, si los validadores confirman un apoyo amplio al punto de control justificado, este alcanza la *finalización*, lo que significa que hay acuerdo unánime sobre él y que es irreversible. Este proceso pone de relieve el esfuerzo colaborativo para garantizar la consistencia y la seguridad de la red, con el objetivo de justificar y luego finalizar los puntos de control dentro de plazos específicos y mejorar la confiabilidad del mecanismo de consenso.
 
-#### Sources and targets, links and conflicts
+#### Orígenes y destinos, enlaces y conflictos
 
-In Casper FFG, votes comprise source and target checkpoints, representing validators' commitments to the blockchain's state at different points. These votes are cast as a linked pair, indicating a validator's current and proposed points of consensus. The source vote reflects a validator's acknowledgment of widespread support for a checkpoint, while the target vote represents a conditional commitment to a new checkpoint, dependent on similar support from others. This dual-vote system facilitates a structured progression toward finalizing blocks, ensuring network integrity and continuity.
+En Casper FFG, los votos comprenden puntos de control de origen y destino que representan los compromisos de los validadores con el estado de la blockchain en diferentes momentos. Estos votos se emiten como un par enlazado que indica los puntos de consenso actual y propuesto de un validador. El voto de origen refleja el reconocimiento del validador de que existe un apoyo amplio a un punto de control, mientras que el voto de destino representa un compromiso condicional con un nuevo punto de control, dependiente de un apoyo similar de los demás. Este sistema de voto dual facilita un avance estructurado hacia la finalización de bloques y garantiza la integridad y la continuidad de la red.
 
-#### Supermajority links
+#### Enlaces de supermayoría
 
-In Casper FFG, a *supermajority link* between source and target checkpoints, *s→t*, is established when more than two thirds of validators, by stake weight, endorse the same link, with their votes included in the blockchain. This mechanism ensures consensus and security by validating the sequence of checkpoints through widespread validator agreement.
+En Casper FFG, se establece un *enlace de supermayoría* entre los puntos de control de origen y destino, *s→t*, cuando más de dos tercios de los validadores, según el peso de su stake, respaldan el mismo enlace y sus votos están incluidos en la blockchain. Este mecanismo garantiza el consenso y la seguridad al validar la secuencia de puntos de control mediante un acuerdo amplio de los validadores.
 
-#### Justification
+#### Justificación
 
-In Casper FFG, when a node observes a majority of validators agreeing on a transition from one checkpoint to another, it justifies the old checkpoint. This signifies that the node has seen evidence of consensus from a significant portion of the validator set, as shown in Figure 15-18, making a commitment not to revert to a previous state unless overwhelming consensus is shown for an alternative path.
+En Casper FFG, cuando un nodo observa que una mayoría de los validadores acuerda una transición de un punto de control a otro, justifica el punto de control anterior. Esto significa que el nodo ha visto evidencia de consenso de una parte significativa del conjunto de validadores, como se muestra en la Figura 15-18, y se compromete a no volver a un estado anterior a menos que se demuestre un consenso abrumador a favor de una ruta alternativa.
 
-![Justification process](images/ch15/maet_1518.png)
+![Proceso de justificación](images/ch15/maet_1518.png)
 
-Figure 15-18. Justification process[^1]
+Figura 15-18. Proceso de justificación[^1]
 
-[^1]: The node has seen a supermajority link CN → CN + 1, therefore marking CN + 1 as justified. Since CN + 1 is a direct child of CN in the checkpoint tree, it also marks CN as finalized. Finalized checkpoints are cross-hatched and marked with F.
+[^1]: El nodo ha visto un enlace de supermayoría CN → CN + 1, por lo que marca CN + 1 como justificado. Dado que CN + 1 es un hijo directo de CN en el árbol de puntos de control, también marca CN como finalizado. Los puntos de control finalizados tienen un rayado cruzado y están marcados con F.
 
-#### Finalization
+#### Finalización
 
-When a node observes a consensus (a supermajority link) from one justified checkpoint to its direct child, it finalizes the parent checkpoint, as shown in Figure 15-19. This indicates a network-wide commitment not to revert from this point, backed by a strong majority of validator support. Finalization ensures network stability and security by making the blockchain history immutable past that checkpoint, preventing reversals without significant consequences for validators.
+Cuando un nodo observa un consenso, un enlace de supermayoría, desde un punto de control justificado hasta su hijo directo, finaliza el punto de control padre, como se muestra en la Figura 15-19. Esto indica un compromiso de toda la red de no retroceder desde este punto, respaldado por el apoyo de una fuerte mayoría de validadores. La finalización garantiza la estabilidad y la seguridad de la red al hacer inmutable el historial de la blockchain anterior a ese punto de control e impedir reversiones sin consecuencias significativas para los validadores.
 
-![Finalization process](images/ch15/maet_1519.png)
+![Proceso de finalización](images/ch15/maet_1519.png)
 
-Figure 15-19. Finalization process
+Figura 15-19. Proceso de finalización
 
 ### Slashing
 
-Casper FFG implements a slashing mechanism to penalize validators for breaches of protocol rules with the aim of securing network consensus. This enforcement discourages actions that could otherwise undermine the blockchain's integrity, such as finalizing conflicting checkpoints. Detection of these breaches, especially complex scenarios like surround votes (see "Fork Choice Rule"), may rely on specialized external services due to their technical challenges. Slashing consequences are proportional to the misconduct's severity and overall network health, with penalties scaling based on the collective behavior within a specific time frame, which ensures fairness and accountability in validators' actions.
+Casper FFG implementa un mecanismo de slashing para penalizar a los validadores por infracciones de las reglas del protocolo, con el objetivo de proteger el consenso de la red. Esta medida disuade acciones que podrían socavar la integridad de la blockchain, como finalizar puntos de control contradictorios. La detección de estas infracciones, especialmente en escenarios complejos como los votos envolventes, véase "Regla de elección de bifurcación", puede depender de servicios externos especializados debido a sus desafíos técnicos. Las consecuencias del slashing son proporcionales a la gravedad de la conducta indebida y al estado general de la red, y las penalizaciones se ajustan según el comportamiento colectivo dentro de un período específico, lo que garantiza equidad y responsabilidad en las acciones de los validadores.
 
-### Fork Choice Rule
+### Regla de elección de bifurcación
 
-Casper FFG modifies the traditional LMD-GHOST fork choice rule, mandating that nodes prioritize the chain with the highest justified checkpoint; this checkpoint then effectively becomes the starting block for the LMD-GHOST protocol. This adaptation, which is an evolution from the LMD-GHOST protocol's approach, ensures that the network achieves finality by committing to checkpoints that have been agreed upon by a supermajority of validators. It effectively guarantees that once a checkpoint is justified, the network cannot revert beyond it, reinforcing the security and stability of the blockchain. This rule is also designed to maintain network liveness, aligning with Casper's foundational goals.
+Casper FFG modifica la regla tradicional de elección de bifurcación LMD-GHOST y exige que los nodos prioricen la cadena con el punto de control justificado más alto; este punto de control se convierte entonces, en la práctica, en el bloque inicial del protocolo LMD-GHOST. Esta adaptación, que es una evolución del enfoque del protocolo LMD-GHOST, garantiza que la red alcance finalidad al comprometerse con puntos de control acordados por una supermayoría de validadores. En la práctica, garantiza que, una vez justificado un punto de control, la red no pueda retroceder más allá de él, reforzando la seguridad y la estabilidad de la blockchain. Esta regla también está diseñada para mantener la vivacidad de la red, en consonancia con los objetivos fundamentales de Casper.
 
-### The Casper Commandments
+### Los mandamientos de Casper
 
-In Casper FFG, checkpoints are central to ensuring network consensus and security. They are marked by epoch numbers that increase with blockchain progression. Validators must adhere to strict voting rules: they cannot vote on different outcomes for the same checkpoint, so no double-voting, as shown in Figure 15-20. If this voting rule were not in place, a reorg would be much more likely, rendering the chain highly unstable.
+En Casper FFG, los puntos de control son fundamentales para garantizar el consenso y la seguridad de la red. Están marcados con números de época que aumentan a medida que avanza la blockchain. Los validadores deben cumplir reglas estrictas de votación: no pueden votar por resultados diferentes para el mismo punto de control, de modo que no se permite el voto doble, como se muestra en la Figura 15-20. Si esta regla de votación no existiera, una reorganización sería mucho más probable y la cadena sería muy inestable.
 
-![No double-voting rule](images/ch15/maet_1520.png)
+![Regla de prohibición del voto doble](images/ch15/maet_1520.png)
 
-Figure 15-20. No double-voting rule
+Figura 15-20. Regla de prohibición del voto doble
 
-Validators must also avoid creating votes that could be interpreted as contradicting previous commitments (no surround vote). Violating these principles leads to slashing, a penalty designed to maintain the integrity and accountability of the consensus mechanism, as shown in Figure 15-21.
+Los validadores también deben evitar crear votos que puedan interpretarse como contradictorios con compromisos anteriores: no se permite el voto envolvente. Infringir estos principios conlleva slashing, una penalización diseñada para mantener la integridad y la responsabilidad del mecanismo de consenso, como se muestra en la Figura 15-21.
 
-![No surround vote rule](images/ch15/maet_1521.png)
+![Regla de prohibición del voto envolvente](images/ch15/maet_1521.png)
 
-Figure 15-21. No surround vote rule
+Figura 15-21. Regla de prohibición del voto envolvente
 
-### Accountable Safety and Plausible Liveness
+### Seguridad con atribución de responsabilidad y vivacidad plausible
 
-The Casper FFG consensus protocol makes two guarantees that are analogous to, but different from, the concepts of safety and liveness in classical consensus: *accountable safety* and *plausible liveness*.
+El protocolo de consenso Casper FFG ofrece dos garantías análogas, pero diferentes, a los conceptos de seguridad y vivacidad del consenso clásico: *seguridad con atribución de responsabilidad* y *vivacidad plausible*.
 
-#### Accountable safety and economic finality
+#### Seguridad con atribución de responsabilidad y finalidad económica
 
-Casper FFG's proof of accountable safety demonstrates that conflicting checkpoints cannot be finalized unless more than one-third of validators violate protocol rules. This system ensures that checkpoints finalized with fewer than one-third adversarial validators remain irreversible, enforcing both network security and economic penalties for dishonest behavior.
+La prueba de seguridad con atribución de responsabilidad de Casper FFG demuestra que no pueden finalizarse puntos de control contradictorios a menos que más de un tercio de los validadores infrinja las reglas del protocolo. Este sistema garantiza que los puntos de control finalizados con menos de un tercio de validadores adversarios sigan siendo irreversibles, imponiendo tanto la seguridad de la red como penalizaciones económicas por comportamiento deshonesto.
 
-Economic finality in Casper FFG introduces a cost to potential attackers, enforcing security not just through protocol rules but also through economic disincentives. Validators who attempt to undermine the network by finalizing conflicting checkpoints face severe penalties, losing a significant portion of their stakes. This approach contrasts with traditional consensus mechanisms by adding a layer of economic consequences, ensuring that finalizing a block carries a substantial cost for malicious actors and thereby enhancing the blockchain's integrity and resilience against attacks.
+La finalidad económica en Casper FFG introduce un costo para los posibles atacantes y refuerza la seguridad no solo mediante reglas del protocolo, sino también mediante desincentivos económicos. Los validadores que intentan socavar la red finalizando puntos de control contradictorios enfrentan penalizaciones severas y pierden una parte significativa de sus stakes. Este enfoque contrasta con los mecanismos tradicionales de consenso al agregar una capa de consecuencias económicas, lo que garantiza que finalizar un bloque implique un costo considerable para los actores maliciosos y, de ese modo, mejora la integridad de la blockchain y su resiliencia ante ataques.
 
-#### Plausible liveness
+#### Vivacidad plausible
 
-Casper FFG ensures that the network remains active and can always reach consensus without any honest validators being penalized, embodying the concept of plausible liveness. This means that, provided a supermajority of validators are honest, the protocol can continue justifying and finalizing new checkpoints, avoiding any deadlock scenarios where progress is halted because of fear of slashing. This principle ensures the network's resilience and continuous operation, underlining Casper's adaptability to maintain consensus even under challenging conditions.
+Casper FFG garantiza que la red permanezca activa y pueda alcanzar consenso siempre sin que ningún validador honesto sea penalizado, plasmando el concepto de vivacidad plausible. Esto significa que, siempre que una supermayoría de validadores sea honesta, el protocolo puede seguir justificando y finalizando nuevos puntos de control, evitando situaciones de bloqueo en las que el progreso se detenga por temor al slashing. Este principio garantiza la resiliencia y el funcionamiento continuo de la red y pone de relieve la adaptabilidad de Casper para mantener el consenso incluso bajo condiciones difíciles.
 
-## A Practical Example: The Life Cycle of a Checkpoint
+## Un ejemplo práctico: el ciclo de vida de un punto de control
 
-Let's take a journey together through the life cycle of a checkpoint in Ethereum's Casper FFG mechanism.
+Recorramos juntos el ciclo de vida de un punto de control en el mecanismo Casper FFG de Ethereum.
 
-The community of Ethereum validators can be overwhelmingly large, with potentially hundreds of thousands involved. It's not practical for all these votes to be processed at once. So how do we manage this?
+La comunidad de validadores de Ethereum puede ser inmensamente grande, con potencialmente cientos de miles de participantes. No resulta práctico procesar todos estos votos a la vez. Entonces, ¿cómo lo gestionamos?
 
-Votes are spread out across what we call an epoch, which is divided into 32 slots, each lasting 12 seconds. This way, each validator votes exactly once per epoch, with about 1/32 of the validator set voting in each slot. Figure 15-22 shows a pool of such validators.
+Los votos se distribuyen a lo largo de lo que llamamos una época, que se divide en 32 slots de 12 segundos cada uno. De esta manera, cada validador vota exactamente una vez por época, y aproximadamente 1/32 del conjunto de validadores vota en cada slot. La Figura 15-22 muestra un grupo de estos validadores.
 
-![Validator pool](images/ch15/maet_1522.png)
+![Grupo de validadores](images/ch15/maet_1522.png)
 
-Figure 15-22. Validator pool
+Figura 15-22. Grupo de validadores
 
-In this example, the number of validators is, of course, much more limited than on the real Ethereum network, but we do have 64 nodes that are divided into 32 groups. Each of the groups will vote for one slot in the epoch, as shown in Figure 15-23.
+En este ejemplo, la cantidad de validadores es, por supuesto, mucho más limitada que en la red Ethereum real, pero contamos con 64 nodos divididos en 32 grupos. Cada grupo votará en un slot de la época, como se muestra en la Figura 15-23.
 
-![Validators divided into groups](images/ch15/maet_1523.png)
+![Validadores divididos en grupos](images/ch15/maet_1523.png)
 
-Figure 15-23. Validators divided into groups
+Figura 15-23. Validadores divididos en grupos
 
-Now, what are they voting on? They vote on a checkpoint: specifically, the very first slot of an epoch.[^2] This checkpoint acts as a common goal for validators voting at different times.
+Ahora bien, ¿sobre qué votan? Votan sobre un punto de control: específicamente, el primer slot de una época.[^2] Este punto de control actúa como un objetivo común para los validadores que votan en diferentes momentos.
 
-[^2]: A checkpoint is always the very first slot of an epoch, but its block hash may be from an earlier block if the checkpoint's own block is missing.
+[^2]: Un punto de control siempre es el primer slot de una época, pero su hash de bloque puede ser el de un bloque anterior si falta el bloque propio del punto de control.
 
-> **Note**  
+> **Nota**  
 >
-> It's important to clarify something here: although we often talk about finalizing epochs, in technical terms we're actually finalizing checkpoints, which are these first slots. Once a checkpoint is finalized, everything up to and including that slot is set in stone, secure and unchangeable.
+> Es importante aclarar algo aquí: aunque a menudo hablamos de finalizar épocas, en términos técnicos estamos finalizando puntos de control, que son estos primeros slots. Una vez finalizado un punto de control, todo lo anterior hasta ese slot inclusive queda fijado, seguro e inmutable.
 
-A representation of an epoch—in this case, epoch N—is shown in Figure 15-24. The checkpoint N is the slot 32N; once that checkpoint is finalized, slot 32N-1 and every other slot before that will be considered finalized.
+La Figura 15-24 muestra una representación de una época, en este caso la época N. El punto de control N es el slot 32N; una vez finalizado ese punto de control, el slot 32N-1 y todos los slots anteriores se considerarán finalizados.
 
-![Epoch representation](images/ch15/maet_1524.png)
+![Representación de una época](images/ch15/maet_1524.png)
 
-Figure 15-24. Epoch representation
+Figura 15-24. Representación de una época
 
-The process to achieve this security is rigorous and resembles traditional BFT consensus mechanisms. In the next sections, we'll describe how it works.
+El proceso para lograr esta seguridad es riguroso y se asemeja a los mecanismos tradicionales de consenso BFT. En las próximas secciones describiremos cómo funciona.
 
-### First Round: Justification
+### Primera ronda: justificación
 
-Validators each broadcast their own views of the current epoch's checkpoint to the network. Then, they listen to see if a supermajority of the network agrees with their perspectives. If they do, this checkpoint is "justified." At this stage, validators believe that the majority of the network supports this checkpoint for finalization, although they are not entirely certain that everyone agrees just yet.
+Cada validador difunde a la red su propia visión del punto de control de la época actual. Luego escucha para determinar si una supermayoría de la red coincide con su perspectiva. Si es así, este punto de control queda "justificado". En esta etapa, los validadores creen que la mayoría de la red respalda la finalización de este punto de control, aunque todavía no están completamente seguros de que todos estén de acuerdo.
 
-The key issue is that validators can't yet be sure that malicious actors on the network aren't feeding them false information about the network's state—saying one thing to them and something else to others. This is a very important point that's often overlooked. If all participants were always honest, justification would imply finalization, and the entire two-round process could be avoided.
+El problema clave es que los validadores aún no pueden estar seguros de que los actores maliciosos de la red no les estén proporcionando información falsa sobre el estado de la red, diciéndoles una cosa a ellos y otra a los demás. Este es un punto muy importante que suele pasarse por alto. Si todos los participantes fueran siempre honestos, la justificación implicaría la finalización y podría evitarse todo el proceso de dos rondas.
 
-When a validator justifies a checkpoint, they have received approval from two thirds of the network for that specific checkpoint, as shown in Figure 15-25, but this first round of approval is only local to the validator itself. It's possible, especially under adversarial conditions, that not enough validators have reached a consensus. Traditional PBFT-style consensus mechanisms—like those used in Algorand, Dfinity, and Cosmos—would halt at this stage and lose liveness. Ethereum, on the other hand, keeps going. If it can't justify a checkpoint, no problem—it simply moves on and tries to justify the next one. This works because Ethereum relies on LMD-GHOST for liveness, while Casper FFG is just an overlay—a "nice to have." So if finality stalls temporarily, that's not a critical issue.
+Cuando un validador justifica un punto de control, ha recibido la aprobación de dos tercios de la red para ese punto de control específico, como se muestra en la Figura 15-25, pero esta primera ronda de aprobación solo es local para el propio validador. Es posible, especialmente bajo condiciones adversas, que no haya suficientes validadores que hayan alcanzado consenso. Los mecanismos tradicionales de consenso de estilo PBFT, como los utilizados en Algorand, Dfinity y Cosmos, se detendrían en esta etapa y perderían vivacidad. Ethereum, en cambio, sigue adelante. Si no puede justificar un punto de control, no hay problema: pasa al siguiente e intenta justificarlo. Esto funciona porque Ethereum depende de LMD-GHOST para la vivacidad, mientras que Casper FFG es solo una capa superpuesta, algo "deseable, pero no indispensable". Por lo tanto, si la finalidad se detiene temporalmente, no es un problema crítico.
 
-![Justification round](images/ch15/maet_1525.png)
+![Ronda de justificación](images/ch15/maet_1525.png)
 
-Figure 15-25. Justification round
+Figura 15-25. Ronda de justificación
 
-### Second Round: Finalization
+### Segunda ronda: finalización
 
-Validators announce that they have heard from a supermajority that they also support this checkpoint. They check again to see if the rest of the network confirms that this supermajority indeed exists. If so, the validators can "finalize" the checkpoint, as shown in Figure 15-26. Finalization is a powerful step—it means that no honest validator will ever revert this checkpoint. They may not have marked it as finalized in their local view yet, but at least they've marked it as justified, and it cannot be reversed without punishable actions.
+Los validadores anuncian que han escuchado de una supermayoría que también apoya este punto de control. Vuelven a verificar si el resto de la red confirma que esta supermayoría existe realmente. Si es así, los validadores pueden "finalizar" el punto de control, como se muestra en la Figura 15-26. La finalización es un paso poderoso: significa que ningún validador honesto revertirá jamás este punto de control. Puede que aún no lo hayan marcado como finalizado en su visión local, pero al menos lo han marcado como justificado y no puede revertirse sin acciones sancionables.
 
-![Finalization round](images/ch15/maet_1526.png)
+![Ronda de finalización](images/ch15/maet_1526.png)
 
-Figure 15-26. Finalization round
+Figura 15-26. Ronda de finalización
 
-In practice, each round ideally spans one epoch, meaning it takes one epoch to justify a checkpoint and another to finalize it. That totals about 12.8 minutes. However, thanks to the pipelined design of Casper FFG, we can finalize a checkpoint every 6.4 minutes, once per epoch.
+En la práctica, cada ronda idealmente abarca una época, lo que significa que se necesita una época para justificar un punto de control y otra para finalizarlo. Esto suma aproximadamente 12.8 minutos. Sin embargo, gracias al diseño en etapas superpuestas de Casper FFG, podemos finalizar un punto de control cada 6.4 minutos, una vez por época.
 
-> **Note**  
+> **Nota**  
 >
-> It's also worth noting that from an external viewpoint, we might see signs that a checkpoint will likely be finalized before the 12.8 minutes are up since votes are accumulated gradually as the epoch progresses, assuming there's no significant chain reorganization. However, the official in-protocol actions of justification and finalization occur only at the end of an epoch.
+> También cabe señalar que, desde una perspectiva externa, podríamos ver indicios de que un punto de control probablemente se finalizará antes de que transcurran los 12.8 minutos, ya que los votos se acumulan gradualmente a medida que avanza la época, suponiendo que no haya una reorganización significativa de la cadena. Sin embargo, las acciones oficiales de justificación y finalización dentro del protocolo ocurren solo al final de una época.
 
-There are a lot of things that can go wrong during the justification and finalization of checkpoints. Let's analyze two important cases and how they are handled by this friendly finality gadget.
+Muchas cosas pueden salir mal durante la justificación y la finalización de puntos de control. Analicemos dos casos importantes y cómo los gestiona este mecanismo amistoso de finalidad.
 
-### Conflicting Justification
+### Justificación contradictoria
 
-It's insightful to think about why we need both "justified" and "finalized" statuses for checkpoints. Why isn't it sufficient to immediately finalize a checkpoint once a supermajority of two thirds has voted in favor of it?
+Resulta útil pensar por qué necesitamos tanto el estado "justificado" como el estado "finalizado" para los puntos de control. ¿Por qué no basta con finalizar inmediatamente un punto de control una vez que una supermayoría de dos tercios ha votado a su favor?
 
-Here's the distinction: justification is about local agreement, whereas finality is about global consensus.
+Esta es la distinción: la justificación se refiere al acuerdo local, mientras que la finalidad se refiere al consenso global.
 
-Justifying a checkpoint means that I, as a validator, have received confirmation from two thirds of the validators that they approve the checkpoint. This approval, however, represents only my local perspective. It's possible that other validators have different information; I can't be sure. Despite this uncertainty, as an honest validator, I commit to never reversing any checkpoint that I've justified based on my local data.
+Justificar un punto de control significa que yo, como validador, he recibido confirmación de dos tercios de los validadores de que aprueban el punto de control. Sin embargo, esta aprobación representa solo mi perspectiva local. Es posible que otros validadores tengan información diferente; no puedo estar seguro. A pesar de esta incertidumbre, como validador honesto, me comprometo a no revertir nunca ningún punto de control que haya justificado con base en mis datos locales.
 
-Finalizing a checkpoint, on the other hand, takes this a step further. It occurs when I've received assurances from two thirds of the validators that they, too, have heard from two thirds of their peers confirming the checkpoint's validity. This means that a supermajority of the network—not just my local view—acknowledges and commits to this checkpoint. It's this broad consensus that protects the checkpoint from being reversed globally. Therefore, a finalized checkpoint is not just locally recognized; it's globally secured.
+Finalizar un punto de control, en cambio, lleva esto un paso más allá. Ocurre cuando he recibido garantías de dos tercios de los validadores de que ellos también han escuchado de dos tercios de sus pares la confirmación de la validez del punto de control. Esto significa que una supermayoría de la red, no solo mi visión local, reconoce este punto de control y se compromete con él. Este consenso amplio es lo que protege al punto de control de una reversión global. Por lo tanto, un punto de control finalizado no solo se reconoce localmente, sino que está protegido globalmente.
 
-Let's explore an extreme scenario to understand the consensus process better. Suppose we have four validators, A, B, C, and D, as shown in Figure 15-27. All of them are honest, but the network they operate in can experience indefinite delays. For the sake of this example, imagine that there's a checkpoint at every block height.
+Exploremos un escenario extremo para comprender mejor el proceso de consenso. Supongamos que tenemos cuatro validadores, A, B, C y D, como se muestra en la Figura 15-27. Todos son honestos, pero la red en la que operan puede experimentar retrasos indefinidos. Para este ejemplo, imaginemos que hay un punto de control en cada altura de bloque.
 
-![Four validators scenario](images/ch15/maet_1527.png)
+![Escenario con cuatro validadores](images/ch15/maet_1527.png)
 
-Figure 15-27. Four validators scenario
+Figura 15-27. Escenario con cuatro validadores
 
-Every validator in the scenario has the block 0 and can therefore justify the checkpoint 0; so 0, the source, is justified locally for all four validators, and 1 is the target (see "Sources and targets, links and conflicts").
+Cada validador del escenario tiene el bloque 0 y, por lo tanto, puede justificar el punto de control 0; así, 0, el origen, está justificado localmente para los cuatro validadores, y 1 es el destino, véase "Orígenes y destinos, enlaces y conflictos".
 
-Now let's imagine that A is severely delayed in the network connection and that it's also chosen to propose a block. A proposes a block in epoch 2. This block contains all four votes to justify checkpoint 1, but since its network connection is severely delayed, the other validators never see it.
+Ahora imaginemos que A tiene un retraso grave en su conexión de red y que también es elegido para proponer un bloque. A propone un bloque en la época 2. Este bloque contiene los cuatro votos para justificar el punto de control 1, pero, dado que su conexión de red está muy retrasada, los demás validadores nunca lo ven.
 
-A has a supermajority link (see "Supermajority links") between the source 0 and the target 1, so it will finalize checkpoint 0 and justify checkpoint 1. Meanwhile, B, C, and D saw no votes in the current epoch, so they still have only justified checkpoint 0. They will also vote for an empty checkpoint in this epoch, which is checkpoint X, as shown in Figure 15-28.
+A tiene un enlace de supermayoría, véase "Enlaces de supermayoría", entre el origen 0 y el destino 1, por lo que finalizará el punto de control 0 y justificará el punto de control 1. Mientras tanto, B, C y D no vieron votos en la época actual, así que solo tienen justificado el punto de control 0. También votarán por un punto de control vacío en esta época, que es el punto de control X, como se muestra en la Figura 15-28.
 
-![Network delay scenario step 1](images/ch15/maet_1528.png)
+![Escenario de retraso de red, paso 1](images/ch15/maet_1528.png)
 
-Figure 15-28. Network delay scenario step 1
+Figura 15-28. Escenario de retraso de red, paso 1
 
-In epoch 3, one validator among B, C, and D is chosen to propose a block.
+En la época 3, se elige a un validador entre B, C y D para proponer un bloque.
 
-This block contains three votes with the source as checkpoint 0 and the target as checkpoint X; therefore, there is a supermajority link between 0 and X that allows the validators B, C, and D to have checkpoint 0 as finalized and checkpoint X as justified, as shown in Figure 15-29. A, on the other hand, considers this block to be invalid, because in its local view, 1 is justified and cannot be reverted. The only solution for validator A's chain to continue is to delete its memory and resync with the rest of the network.
+Este bloque contiene tres votos con el punto de control 0 como origen y el punto de control X como destino; por lo tanto, existe un enlace de supermayoría entre 0 y X que permite a los validadores B, C y D tener el punto de control 0 como finalizado y el punto de control X como justificado, como se muestra en la Figura 15-29. A, por su parte, considera inválido este bloque porque, en su visión local, 1 está justificado y no puede revertirse. La única solución para que la cadena del validador A continúe es borrar su memoria y volver a sincronizarse con el resto de la red.
 
-![Network delay scenario step 2](images/ch15/maet_1529.png)
+![Escenario de retraso de red, paso 2](images/ch15/maet_1529.png)
 
-Figure 15-29. Network delay scenario step 2
+Figura 15-29. Escenario de retraso de red, paso 2
 
-> **Note**  
+> **Nota**  
 >
-> It is important to remember that in this example, validators B, C, and D never saw the block proposed by A. Since they did not observe block 2—the block that would have justified checkpoint 1—they cannot agree on block 1 and are therefore unable to justify checkpoint 1. As a result, they vote on an empty checkpoint instead.
+> Es importante recordar que, en este ejemplo, los validadores B, C y D nunca vieron el bloque propuesto por A. Dado que no observaron el bloque 2, el bloque que habría justificado el punto de control 1, no pueden acordar el bloque 1 y, por lo tanto, no pueden justificar el punto de control 1. Como resultado, votan por un punto de control vacío.
 
-This example demonstrates that even simple network delays can cause nodes to have differing views of justification and finalization. However, this alone doesn't justify the need for two separate phases: justification followed by finalization. The reasoning behind the two phases is very straightforward: if we didn't have a justification step, A would have finalized checkpoint 1, which would have been considered invalid by the rest of the validators, as shown in Figure 15-30.
+Este ejemplo demuestra que incluso los retrasos de red simples pueden hacer que los nodos tengan visiones diferentes de la justificación y la finalización. Sin embargo, esto por sí solo no justifica la necesidad de dos fases separadas: la justificación seguida de la finalización. El razonamiento detrás de las dos fases es muy sencillo: si no tuviéramos un paso de justificación, A habría finalizado el punto de control 1, que el resto de los validadores habría considerado inválido, como se muestra en la Figura 15-30.
 
-![Without justification step](images/ch15/maet_1530.png)
+![Sin el paso de justificación](images/ch15/maet_1530.png)
 
-Figure 15-30. Without justification step
+Figura 15-30. Sin el paso de justificación
 
-In the previous example, A had to delete its memory and resync with the rest of the network. This is because justification, as we said before, is similar to a local step and can be reverted. However, this would not have been possible if A had directly finalized checkpoint 1. Without the two phases, A would have had a finalized block reverted and B, C, and D would have been able to orphan block 1 without being slashed. The only way to guarantee safety is with a two-way commit: justification and finalization.
+En el ejemplo anterior, A tuvo que borrar su memoria y volver a sincronizarse con el resto de la red. Esto se debe a que la justificación, como dijimos antes, es similar a un paso local y puede revertirse. Sin embargo, esto no habría sido posible si A hubiera finalizado directamente el punto de control 1. Sin las dos fases, se habría revertido un bloque finalizado de A y B, C y D habrían podido dejar huérfano al bloque 1 sin sufrir slashing. La única forma de garantizar seguridad es mediante un compromiso en dos fases: justificación y finalización.
 
-## Gasper: A Real Example
+## Gasper: un ejemplo real
 
-So far, we have seen how Casper FFG and LMD-GHOST work on their own. Let's see now how they are combined into Gasper and used inside the Ethereum PoS consensus protocol.
+Hasta ahora hemos visto cómo funcionan Casper FFG y LMD-GHOST por separado. Veamos ahora cómo se combinan en Gasper y se utilizan dentro del protocolo de consenso PoS de Ethereum.
 
-The best way to fully understand how Gasper works is to follow a real example of a blockchain using it to gain consensus over the history of blocks. We won't use Ethereum mainnet for our example. Instead, we'll create a mock-up network with three validators in order to better describe what is happening during each phase of the consensus protocol, as you will see in Figure 15-31.
+La mejor manera de comprender por completo cómo funciona Gasper es seguir un ejemplo real de una blockchain que lo utilice para alcanzar consenso sobre el historial de bloques. No usaremos la red principal de Ethereum para nuestro ejemplo. En cambio, crearemos una red simulada con tres validadores para describir mejor lo que ocurre durante cada fase del protocolo de consenso, como se verá en la Figura 15-31.
 
-![Gasper mock network](images/ch15/maet_1531.png)
+![Red simulada de Gasper](images/ch15/maet_1531.png)
 
-Figure 15-31. Gasper mock network
+Figura 15-31. Red simulada de Gasper
 
-The three validators have the same number of ETH in stake, so their voting power—that is, their contribution to the score of every block in which they vote—is the same. Also, every validator publishes an attestation every block, instead of once in an epoch as in the Ethereum mainnet.
+Los tres validadores tienen la misma cantidad de ETH en stake, por lo que su poder de voto, es decir, su contribución a la puntuación de cada bloque por el que votan, es el mismo. Además, cada validador publica una atestación en cada bloque, en lugar de una vez por época como en la red principal de Ethereum.
 
-Our goal is to see the life of a block from being published to first being justified and then finalized.
+Nuestro objetivo es ver la vida de un bloque desde su publicación hasta que primero se justifica y luego se finaliza.
 
-In our simplified network, every epoch is made of three slots, shown in Figure 15-32.
+En nuestra red simplificada, cada época consta de tres slots, como se muestra en la Figura 15-32.
 
-![Simplified epoch structure](images/ch15/maet_1532.png)
+![Estructura simplificada de una época](images/ch15/maet_1532.png)
 
-Figure 15-32. Simplified epoch structure
+Figura 15-32. Estructura simplificada de una época
 
-Let's start our example at epoch number 1. This is not the real first epoch; we just call it "epoch 1" for simplicity. Validator A is the one selected to propose the first block. We can call the block that they are to propose block 1, as shown in Figure 15-33.
+Comencemos nuestro ejemplo en la época número 1. Esta no es realmente la primera época; solo la llamamos "época 1" por simplicidad. El validador A es el seleccionado para proponer el primer bloque. Podemos llamar bloque 1 al bloque que va a proponer, como se muestra en la Figura 15-33.
 
-![Block 1 proposal](images/ch15/maet_1533.png)
+![Propuesta del bloque 1](images/ch15/maet_1533.png)
 
-Figure 15-33. Block 1 proposal
+Figura 15-33. Propuesta del bloque 1
 
-Validator A publishes block 1, and immediately, that block starts propagating in the network. Shortly after the publication, validators B and C receive it and save it into their view of the network.
+El validador A publica el bloque 1 y, de inmediato, ese bloque comienza a propagarse por la red. Poco después de la publicación, los validadores B y C lo reciben y lo guardan en su visión de la red.
 
-Then, all the validators make an attestation by voting what they think is the last head block of the chain. To do that, they have to run LMD-GHOST on their local views. The result is block 1. These attestations are published and shared with all validators.
+Luego, todos los validadores realizan una atestación votando por el que consideran el último bloque cabeza de la cadena. Para hacerlo, deben ejecutar LMD-GHOST sobre sus visiones locales. El resultado es el bloque 1. Estas atestaciones se publican y se comparten con todos los validadores.
 
-Now, validator B is selected to propose the block at the next slot—slot 2—as you'll see in Figure 15-34. To do that, the validator still has to run LMD-GHOST on their local view of the network to get the last head block to build on top of.
+Ahora se selecciona al validador B para proponer el bloque en el siguiente slot, el slot 2, como se verá en la Figura 15-34. Para hacerlo, el validador todavía debe ejecutar LMD-GHOST sobre su visión local de la red para obtener el último bloque cabeza sobre el que construir.
 
-![Block 2 proposal](images/ch15/maet_1534.png)
+![Propuesta del bloque 2](images/ch15/maet_1534.png)
 
-Figure 15-34. Block 2 proposal
+Figura 15-34. Propuesta del bloque 2
 
-Here is validator B's view of the network:
+Esta es la visión de la red del validador B:
 
-- Validator A attestation: head block: block 1
-- Validator B attestation: head block: block 1
-- Validator C attestation: head block: block 1
+- Atestación del validador A: bloque cabeza: bloque 1
+- Atestación del validador B: bloque cabeza: bloque 1
+- Atestación del validador C: bloque cabeza: bloque 1
 
-So the result of LMD-GHOST for validator B is block 1. They can now publish block 2 on top of block 1. Inside block 2, validator B saves also all the attestations they have seen that were not included in a previous block. So they save the three attestations that contain a vote for block 1.
+Por lo tanto, el resultado de LMD-GHOST para el validador B es el bloque 1. Ahora puede publicar el bloque 2 sobre el bloque 1. Dentro del bloque 2, el validador B también guarda todas las atestaciones que ha visto y que no se incluyeron en un bloque anterior. Así, guarda las tres atestaciones que contienen un voto por el bloque 1.
 
-Block 2 propagates in the network and, shortly after its publication, validators A and C receive it. Remember that while LMD-GHOST uses both votes shared via P2P and included in blocks, Casper FFG takes into consideration only votes included into blocks. So while including LMD-GHOST votes into the block doesn't affect LMD-GHOST results if validators are already sharing them through the P2P network, it's fundamental for Casper FFG since that's the only way validators get to know them.
+El bloque 2 se propaga por la red y, poco después de su publicación, los validadores A y C lo reciben. Recordemos que, mientras LMD-GHOST utiliza tanto los votos compartidos por P2P como los incluidos en bloques, Casper FFG solo considera los votos incluidos en bloques. Por lo tanto, aunque incluir los votos de LMD-GHOST en el bloque no afecta los resultados de LMD-GHOST si los validadores ya los están compartiendo por la red P2P, es fundamental para Casper FFG, ya que esa es la única manera en que los validadores llegan a conocerlos.
 
-Again, all validators make an attestation by voting what they think is the last head block of the chain. Since they all have block 2 in their local views, they all vote for it to be the head of the chain. Then, they publish these attestations so that all validators can see them.
+De nuevo, todos los validadores realizan una atestación votando por el que consideran el último bloque cabeza de la cadena. Como todos tienen el bloque 2 en sus visiones locales, todos votan por él como cabeza de la cadena. Luego publican estas atestaciones para que todos los validadores puedan verlas.
 
-Now, validator C is selected to propose the next block at slot 3. They run LMD-GHOST on top of their local view to get the head block. Here is validator C's view of the network:
+Ahora se selecciona al validador C para proponer el siguiente bloque en el slot 3. Ejecuta LMD-GHOST sobre su visión local para obtener el bloque cabeza. Esta es la visión de la red del validador C:
 
-- Validator A attestation: head block: block 2
-- Validator B attestation: head block: block 2
-- Validator C attestation: head block: block 2
+- Atestación del validador A: bloque cabeza: bloque 2
+- Atestación del validador B: bloque cabeza: bloque 2
+- Atestación del validador C: bloque cabeza: bloque 2
 
-The result is block 2, so validator C publishes block 3 on top of it, shown in Figure 15-35.
+El resultado es el bloque 2, así que el validador C publica el bloque 3 sobre él, como se muestra en la Figura 15-35.
 
-![Block 3 proposal](images/ch15/maet_1535.png)
+![Propuesta del bloque 3](images/ch15/maet_1535.png)
 
-Figure 15-35. Block 3 proposal
+Figura 15-35. Propuesta del bloque 3
 
-Inside block 3, validator C saves the three attestations voting for block 2 because they were not included in previous blocks.
+Dentro del bloque 3, el validador C guarda las tres atestaciones que votan por el bloque 2 porque no se incluyeron en los bloques anteriores.
 
-Block 3 propagates in the network and, shortly after its publication, validators A and B receive it. Then, the validators make an attestation voting for it.
+El bloque 3 se propaga por la red y, poco después de su publicación, los validadores A y B lo reciben. Luego, los validadores realizan una atestación votando por él.
 
-Now, we go back to validator A. They have to propose the next block—slot 4—which is also the first block of the new epoch—epoch 2—as you'll see in Figure 15-36.
+Ahora volvemos al validador A. Debe proponer el siguiente bloque, en el slot 4, que también es el primer bloque de la nueva época, la época 2, como se verá en la Figura 15-36.
 
-![Block 4 proposal - new epoch](images/ch15/maet_1536.png)
+![Propuesta del bloque 4: nueva época](images/ch15/maet_1536.png)
 
-Figure 15-36. Block 4 proposal - new epoch
+Figura 15-36. Propuesta del bloque 4: nueva época
 
-Validator A runs LMD-GHOST on their local view to get the head of the chain. Here is validator A's view of the network:
+El validador A ejecuta LMD-GHOST sobre su visión local para obtener la cabeza de la cadena. Esta es la visión de la red del validador A:
 
-- Validator A attestation: head block: block 3
-- Validator B attestation: head block: block 3
-- Validator C attestation: head block: block 3
+- Atestación del validador A: bloque cabeza: bloque 3
+- Atestación del validador B: bloque cabeza: bloque 3
+- Atestación del validador C: bloque cabeza: bloque 3
 
-The result is block 3, so validator A publishes block 4 on top of it.
+El resultado es el bloque 3, así que el validador A publica el bloque 4 sobre él.
 
-Inside block 4, validator A saves the three attestations voting for block 3 because they were not included in previous blocks.
+Dentro del bloque 4, el validador A guarda las tres atestaciones que votan por el bloque 3 porque no se incluyeron en los bloques anteriores.
 
-Block 4 propagates in the network and, shortly after its publication, validators B and C receive it. The validators have to make a new attestation voting for it to be the head of the chain. But this time, something changes.
+El bloque 4 se propaga por la red y, poco después de su publicación, los validadores B y C lo reciben. Los validadores deben realizar una nueva atestación votando por él como cabeza de la cadena. Pero esta vez algo cambia.
 
-We are in a new epoch, so the validators have to update the Casper FFG part of the vote. In fact, we previously ignored that an attestation includes not only a vote for the last head block of the chain—the LMD-GHOST part of the consensus protocol—but also a vote for the Casper-FFG checkpoints. In particular, every attestation includes a source and a target vote. The source vote is the last justified checkpoint that the validator knows about, while the target vote represents what the validator thinks should become the next block to be justified.
+Estamos en una nueva época, así que los validadores deben actualizar la parte del voto correspondiente a Casper FFG. De hecho, antes ignoramos que una atestación incluye no solo un voto por el último bloque cabeza de la cadena, la parte LMD-GHOST del protocolo de consenso, sino también un voto por los puntos de control de Casper-FFG. En particular, cada atestación incluye un voto de origen y otro de destino. El voto de origen es el último punto de control justificado que conoce el validador, mientras que el voto de destino representa lo que el validador cree que debería ser el próximo bloque en justificarse.
 
-So the attestation that validators A, B, and C make is as follows:
+Así, la atestación que realizan los validadores A, B y C es la siguiente:
 
-**Attestation**
+**Atestación**
 
-- Head block: block 4
-- Source block: block 1
-- Target block: block 4
+- Bloque cabeza: bloque 4
+- Bloque de origen: bloque 1
+- Bloque de destino: bloque 4
 
-The target block is easy to select because it's just the first block of the epoch (there could be some edge cases where the target block is not the first one of an epoch, but we ignore them for simplicity's sake). The source block is calculated by looking at the attestations a validator has and seeing if there is a block voted to be the target block by more than two thirds of the validators. We didn't include source and target block in the previous attestations, but let's say that they all include block 1 as the target block. So right now, we have justified block 1 because there is a supermajority link from block 1 to block 4. See Figure 15-37.
+El bloque de destino es fácil de seleccionar porque es simplemente el primer bloque de la época, aunque podría haber casos límite en los que el bloque de destino no fuera el primero de una época, que ignoramos por simplicidad. El bloque de origen se calcula examinando las atestaciones que tiene un validador y verificando si hay un bloque por el que más de dos tercios de los validadores hayan votado como bloque de destino. No incluimos el bloque de origen ni el de destino en las atestaciones anteriores, pero digamos que todas incluyen el bloque 1 como bloque de destino. Así que ahora hemos justificado el bloque 1 porque existe un enlace de supermayoría del bloque 1 al bloque 4. Véase la Figura 15-37.
 
-![Block 1 justified](images/ch15/maet_1537.png)
+![Bloque 1 justificado](images/ch15/maet_1537.png)
 
-Figure 15-37. Block 1 justified
+Figura 15-37. Bloque 1 justificado
 
-These attestations are then published and shared with all the validators and will be included in the next slots (usually in the very next slot). We can skip blocks 5 and 6 and go straight to block 7, the first block of the next epoch: epoch 3, shown in Figure 15-38.
+Estas atestaciones se publican y se comparten con todos los validadores y se incluirán en los próximos slots, generalmente en el slot inmediatamente siguiente. Podemos saltarnos los bloques 5 y 6 e ir directamente al bloque 7, el primer bloque de la siguiente época: la época 3, que se muestra en la Figura 15-38.
 
-![Block 7 proposal - epoch 3](images/ch15/maet_1538.png)
+![Propuesta del bloque 7: época 3](images/ch15/maet_1538.png)
 
-Figure 15-38. Block 7 proposal - epoch 3
+Figura 15-38. Propuesta del bloque 7: época 3
 
-Again, validator A is selected to propose the block. They run LMD-GHOST on their local view. Here is validator A's view of the network:
+De nuevo, se selecciona al validador A para proponer el bloque. Ejecuta LMD-GHOST sobre su visión local. Esta es la visión de la red del validador A:
 
-- Validator A attestation: head block: block 6, source block: 1, target block: 4
-- Validator B attestation: head block: block 6, source block: 1, target block: 4
-- Validator C attestation: head block: block 6, source block: 1, target block: 4
+- Atestación del validador A: bloque cabeza: bloque 6, bloque de origen: 1, bloque de destino: 4
+- Atestación del validador B: bloque cabeza: bloque 6, bloque de origen: 1, bloque de destino: 4
+- Atestación del validador C: bloque cabeza: bloque 6, bloque de origen: 1, bloque de destino: 4
 
-The result is block 6, so they publish block 7 on top of it.
+El resultado es el bloque 6, así que publica el bloque 7 sobre él.
 
-Block 7 propagates in the network and, shortly after its publication, validators B and C receive it. The validators have to make a new attestation voting for it to be the head of the chain. And something changes again here.
+El bloque 7 se propaga por la red y, poco después de su publicación, los validadores B y C lo reciben. Los validadores deben realizar una nueva atestación votando por él como cabeza de la cadena. Y aquí vuelve a cambiar algo.
 
-We are in the next epoch—epoch 3—so the Casper-FFG part of the attestation changes again. In fact, the attestation that validators A, B, and C make is like this:
+Estamos en la siguiente época, la época 3, así que la parte de la atestación correspondiente a Casper-FFG vuelve a cambiar. De hecho, la atestación que realizan los validadores A, B y C es así:
 
-**Attestation**
+**Atestación**
 
-- Head block: block 7
-- Source block: block 4
-- Target block: block 7
+- Bloque cabeza: bloque 7
+- Bloque de origen: bloque 4
+- Bloque de destino: bloque 7
 
-As you can see, the target block is now block 7, and the source block is block 4. This is true because validators A, B, and C all voted for a target block equal to block 4 in the previous attestation. We have now justified block 4 because we have a new supermajority link from block 4 to block 7, as shown in Figure 15-39.
+Como se puede ver, el bloque de destino ahora es el bloque 7 y el bloque de origen es el bloque 4. Esto es así porque los validadores A, B y C votaron todos por un bloque de destino igual al bloque 4 en la atestación anterior. Ahora hemos justificado el bloque 4 porque tenemos un nuevo enlace de supermayoría del bloque 4 al bloque 7, como se muestra en la Figura 15-39.
 
-![Block 4 justified, block 1 finalized](images/ch15/maet_1539.png)
+![Bloque 4 justificado, bloque 1 finalizado](images/ch15/maet_1539.png)
 
-Figure 15-39. Block 4 justified, block 1 finalized
+Figura 15-39. Bloque 4 justificado, bloque 1 finalizado
 
-We have also finalized block 1 because it's a justified checkpoint whose direct child—block 4—is also justified. When a validator considers a block to be finalized, that means the validator has seen a confirmation from more than two thirds of the validators that they all have seen that that block is justified. In fact, if we take validator A—this applies to validators B and C, too—they have seen B and C's attestations where they voted for block 1 as the source block. Voting for block 1 as the source block means that B and C previously had seen a two-thirds majority of votes for block 1 as the target block. So we can be sure that, in order to revert block 1, at least one third of the validators must be slashed because they double-voted.
+También hemos finalizado el bloque 1 porque es un punto de control justificado cuyo hijo directo, el bloque 4, también está justificado. Cuando un validador considera que un bloque está finalizado, significa que ha visto una confirmación de más de dos tercios de los validadores de que todos han visto que ese bloque está justificado. De hecho, si tomamos al validador A, y esto también se aplica a los validadores B y C, ha visto las atestaciones de B y C en las que votaron por el bloque 1 como bloque de origen. Votar por el bloque 1 como bloque de origen significa que B y C habían visto previamente una mayoría de dos tercios de votos por el bloque 1 como bloque de destino. Por lo tanto, podemos estar seguros de que, para revertir el bloque 1, al menos un tercio de los validadores debe sufrir slashing porque emitieron votos dobles.
 
-## Controversy and Competition
+## Controversia y competencia
 
-At this point, you might be wondering why we need so many different consensus algorithms. Which one works better? The answer to this question is at the center of the most exciting area of research in distributed systems during the past decade. It all boils down to what you consider "better"—which, in the context of computer science, is about assumptions, goals, and the unavoidable trade-offs.
+En este punto, quizá se pregunte por qué necesitamos tantos algoritmos de consenso diferentes. ¿Cuál funciona mejor? La respuesta a esta pregunta está en el centro del área de investigación más apasionante de los sistemas distribuidos de la última década. Todo se reduce a lo que se considere "mejor", que, en el contexto de las ciencias de la computación, se refiere a supuestos, objetivos y concesiones inevitables.
 
-It is likely that no algorithm can optimize across all dimensions of the problem of decentralized consensus. When someone suggests that one consensus algorithm is "better" than the others, you should start asking questions that clarify, better at what: immutability? Finality? Decentralization? Cost? There is no clear answer, at least not yet. Furthermore, the design of consensus algorithms is at the center of a multibillion-dollar industry and generates enormous controversy and heated arguments. In the end, there might not be a "correct" answer, just as there might be different answers for different applications.
+Es probable que ningún algoritmo pueda optimizar todas las dimensiones del problema del consenso descentralizado. Cuando alguien sugiera que un algoritmo de consenso es "mejor" que los demás, conviene empezar a hacer preguntas que aclaren en qué es mejor: ¿inmutabilidad? ¿Finalidad? ¿Descentralización? ¿Costo? No hay una respuesta clara, al menos todavía. Además, el diseño de algoritmos de consenso está en el centro de una industria de miles de millones de dólares y genera enormes controversias y discusiones acaloradas. Al final, puede que no exista una respuesta "correcta", así como puede haber respuestas diferentes para distintas aplicaciones.
 
-The entire blockchain industry is one giant experiment where these questions will be tested under adversarial conditions, with enormous monetary value at stake. In the end, history will answer the controversy.
+Toda la industria blockchain es un experimento gigantesco en el que estas preguntas se pondrán a prueba bajo condiciones adversas, con un enorme valor monetario en juego. Al final, la historia resolverá la controversia.
 
-The controversies in a consensus protocol can be many, and coordinating the network to solve them is challenging. Aligning incentives is crucial but not always possible. We will examine two current problems of the Ethereum consensus algorithm.
+Las controversias en un protocolo de consenso pueden ser muchas, y coordinar la red para resolverlas es un desafío. Alinear los incentivos es crucial, pero no siempre es posible. Examinaremos dos problemas actuales del algoritmo de consenso de Ethereum.
 
-### Timing Games
+### Juegos de temporización
 
-In Ethereum's protocol, time is structured into 12-second units called slots. Each slot assigns a validator the role of proposing a block right at the start (*t* = 0). A committee of attesters is then tasked with validating this block, aiming to do so by four seconds into the slot (*t* = 4), which is considered the attestation deadline.
+En el protocolo de Ethereum, el tiempo se estructura en unidades de 12 segundos llamadas slots. Cada slot asigna a un validador la función de proponer un bloque justo al comienzo (*t* = 0). Luego, un comité de atestadores se encarga de validar este bloque, con el objetivo de hacerlo a más tardar a los cuatro segundos de iniciado el slot (*t* = 4), lo que se considera el plazo límite para la atestación.
 
-*Timing games* are strategies where validators wait as long as possible before proposing a block to maximize their MEV rewards, as shown in Figure 15-40. This practice involves a delicate balance, requiring validators to delay their proposals to capture more value while ensuring that their block is supported by a sufficient portion of the attesting committee to remain on the canonical chain.
+Los *juegos de temporización* son estrategias en las que los validadores esperan tanto como sea posible antes de proponer un bloque para maximizar sus recompensas de MEV, como se muestra en la Figura 15-40. Esta práctica implica un equilibrio delicado, ya que requiere que los validadores retrasen sus propuestas para capturar más valor y, al mismo tiempo, garanticen que su bloque cuente con el apoyo de una proporción suficiente del comité de atestación para permanecer en la cadena canónica.
 
-![Timing game strategy](images/ch15/maet_1540.png)
+![Estrategia de juegos de temporización](images/ch15/maet_1540.png)
 
-Figure 15-40. Timing game strategy
+Figura 15-40. Estrategia de juegos de temporización
 
-Timing games in Ethereum create a competitive landscape where gains from MEV for one validator may lead to disadvantages for others. This competition can disrupt consensus by increasing the number of missed slots and potential block reorganizations. Additionally, it motivates attesters to postpone their validations, adding layers of complexity to the process.
+Los juegos de temporización en Ethereum crean un entorno competitivo en el que las ganancias de MEV de un validador pueden traducirse en desventajas para otros. Esta competencia puede perturbar el consenso al aumentar la cantidad de slots perdidos y las posibles reorganizaciones de bloques. Además, motiva a los atestadores a posponer sus validaciones, lo que agrega capas de complejidad al proceso.
 
-"Principles of Consensus" points out the importance of liveness for Ethereum's consensus process. However, timing games pose a threat to this critical feature by compromising the network's reliability.
+"Principios del consenso" señala la importancia de la vivacidad para el proceso de consenso de Ethereum. Sin embargo, los juegos de temporización amenazan esta característica crítica al comprometer la confiabilidad de la red.
 
-What's a timing game? It's like waiting for the perfect moment to make a move, aiming to get the most out of it. This is what some of the people keeping the network up and running are trying to do. They're waiting for the right time to act to get the most rewards. But this waiting game can be risky. If their internet is slow or they're not too experienced, they may miss their chance to do their part. And missing too many chances could make the network less dependable.
+¿Qué es un juego de temporización? Es como esperar el momento perfecto para actuar, con el objetivo de sacarle el máximo provecho. Esto es lo que intentan hacer algunas de las personas que mantienen la red en funcionamiento. Esperan el momento adecuado para actuar y obtener la mayor cantidad de recompensas. Pero este juego de espera puede ser arriesgado. Si su conexión a internet es lenta o no tienen mucha experiencia, pueden perder la oportunidad de cumplir su parte. Y perder demasiadas oportunidades podría hacer que la red sea menos confiable.
 
-![Timing game risk visualization](images/ch15/maet_1541.png)
+![Visualización del riesgo de los juegos de temporización](images/ch15/maet_1541.png)
 
-Figure 15-41. Timing game risk visualization
+Figura 15-41. Visualización del riesgo de los juegos de temporización
 
-Right now, this isn't a big problem. Most of the entries working as validators aren't really getting into these timing games or aren't playing them at all, as shown in Figure 15-41.
+En este momento, esto no es un gran problema. La mayoría de las entidades que funcionan como validadores no participan demasiado en estos juegos de temporización o no participan en absoluto, como se muestra en la Figura 15-41.
 
-> **Note**  
+> **Nota**  
 >
-> Since we wrote this chapter in 2024, things have changed a bit. Right now, a solution has been added in the [Dencun hard fork](https://oreil.ly/TXJYS) called "proposer boost" that does punish late block proposers. The proposer boost adds weight to the attestations of the block proposer in the slot where the block is proposed.
+> Desde que escribimos este capítulo en 2024, las cosas han cambiado un poco. Actualmente se ha agregado una solución en el [hard fork Dencun](https://oreil.ly/TXJYS) llamada "proposer boost" que sí castiga a los proponentes de bloques tardíos. El proposer boost agrega peso a las atestaciones del proponente del bloque en el slot en el que se propone el bloque.
 
-### Centralization of Supermajority
+### Centralización de la supermayoría
 
-The concept of supermajority client risk in Ethereum is all about balancing the network's health and security. Ethereum decided to use multiple clients to prevent any single point of failure. This is because all software, including these clients, can have bugs. The real trouble starts when there's a consensus bug, which could lead to something serious, such as creating infinite ether out of thin air. If just one client ran the whole show and it got hit by such a bug, fixing it would be a nightmare. The network could keep running with the bug active long enough for an attacker to cause irreversible damage.
+El concepto de riesgo de un cliente con supermayoría en Ethereum consiste en equilibrar el buen estado y la seguridad de la red. Ethereum decidió usar múltiples clientes para evitar cualquier punto único de falla. Esto se debe a que todo el software, incluidos estos clientes, puede tener errores. El verdadero problema comienza cuando hay un error de consenso, que podría provocar algo grave, como crear ether infinito de la nada. Si un solo cliente controlara todo y sufriera un error así, corregirlo sería una pesadilla. La red podría seguir funcionando con el error activo el tiempo suficiente para que un atacante causara daños irreversibles.
 
-Let's analyze a quick example of what could happen if a majority client had a bug. Note that every block in Figure 15-42 is a checkpoint and not a block in the blockchain.
+Analicemos un ejemplo rápido de lo que podría ocurrir si un cliente mayoritario tuviera un error. Nótese que cada bloque de la Figura 15-42 es un punto de control y no un bloque de la blockchain.
 
-![Majority client bug scenario](images/ch15/maet_1542.png)
+![Escenario de error en un cliente mayoritario](images/ch15/maet_1542.png)
 
-Figure 15-42. Majority client bug scenario
+Figura 15-42. Escenario de error en un cliente mayoritario
 
-Functional clients disregard the epoch containing the invalid block (labeled "B"). The arrow pointing to block B serves to justify the invalid epoch, while the one coming from it finalizes it.
+Los clientes que funcionan correctamente ignoran la época que contiene el bloque inválido, etiquetado como "B". La flecha que apunta al bloque B sirve para justificar la época inválida, mientras que la que sale de él la finaliza.
 
-Assuming the bug is resolved and the validators who finalized the invalid epoch wish to switch back to the correct chain B, a preliminary action required is the justification of epoch X, as shown in Figure 15-43.
+Suponiendo que el error se resuelva y que los validadores que finalizaron la época inválida deseen volver a la cadena correcta B, una acción previa necesaria es justificar la época X, como se muestra en la Figura 15-43.
 
-![Recovery from bug requires justification](images/ch15/maet_1543.png)
+![La recuperación del error requiere justificación](images/ch15/maet_1543.png)
 
-Figure 15-43. Recovery from bug requires justification
+Figura 15-43. La recuperación del error requiere justificación
 
-To engage in the justification of epoch X, requiring a supermajority link as shown by the dashed arrow, validators must bypass the arrow coming out of block B, which represents the finalization of the invalid epoch. Casting votes for both links could lead to penalties for these validators.
+Para participar en la justificación de la época X, que requiere un enlace de supermayoría como muestra la flecha discontinua, los validadores deben eludir la flecha que sale del bloque B, que representa la finalización de la época inválida. Emitir votos por ambos enlaces podría conllevar penalizaciones para estos validadores.
 
-The multiclient approach offers a safety net. If a bug pops up in a client that less than half the network uses, the rest of the network, running other clients, simply ignores the buggy block. This keeps the network on track, minimizing disruption. But if a majority client—especially one used by more than two thirds of validators—introduces a bug, that could wrongly finalize the chain, leading to a potential split.
+El enfoque de múltiples clientes ofrece una red de seguridad. Si aparece un error en un cliente que utiliza menos de la mitad de la red, el resto de la red, que ejecuta otros clientes, simplemente ignora el bloque defectuoso. Esto mantiene la red en su curso y minimiza las perturbaciones. Pero si un cliente mayoritario, especialmente uno utilizado por más de dos tercios de los validadores, introduce un error, podría finalizar incorrectamente la cadena y provocar una posible división.
 
-Ethereum encourages diversifying clients because if everyone used the same client and it failed, the whole network would be at risk. The penalties for running a client that goes against the grain are there to discourage putting all our eggs in one basket. This way, if a client does have a bug, the damage is contained, affecting fewer users. If a minority client causes trouble, it's less of an issue because the majority can correct the path and continue finalizing the chain.
+Ethereum fomenta la diversificación de clientes porque, si todos usaran el mismo cliente y este fallara, toda la red estaría en riesgo. Las penalizaciones por ejecutar un cliente que se aparta del resto buscan desalentar que pongamos todos los huevos en la misma canasta. De esta manera, si un cliente tiene un error, el daño queda contenido y afecta a menos usuarios. Si un cliente minoritario causa problemas, el impacto es menor porque la mayoría puede corregir el rumbo y seguir finalizando la cadena.
 
-The more we spread out our choices across different clients, the safer Ethereum becomes. It's not just about avoiding technical failures; it's about safeguarding Ethereum's future against any single point of failure. This diversity is our best defense against network-wide crises, ensuring that Ethereum remains robust and resilient no matter what comes its way.
+Cuanto más distribuyamos nuestras elecciones entre distintos clientes, más seguro será Ethereum. No se trata solo de evitar fallas técnicas; se trata de proteger el futuro de Ethereum frente a cualquier punto único de falla. Esta diversidad es nuestra mejor defensa contra crisis que afecten a toda la red y garantiza que Ethereum siga siendo robusto y resiliente sin importar lo que ocurra.
 
-When we first wrote this chapter, the percentage of usage for Geth was 63%, which was a problem, as we explained previously. Right now the situation is more healthy, but it will still need to improve in the future; as of now, 41% of the execution clients are using Geth and 38% are using Nethermind, as shown in Figure 15-44.
+Cuando escribimos este capítulo por primera vez, el porcentaje de uso de Geth era del 63%, lo que representaba un problema, como explicamos antes. Actualmente la situación es más saludable, pero aún tendrá que mejorar en el futuro; en este momento, el 41% de los clientes de ejecución utiliza Geth y el 38% utiliza Nethermind, como se muestra en la Figura 15-44.
 
-![Current execution client distribution](images/ch15/maet_1544.png)
+![Distribución actual de clientes de ejecución](images/ch15/maet_1544.png)
 
-Figure 15-44. Current execution client distribution
+Figura 15-44. Distribución actual de clientes de ejecución
 
-This issue affects not only execution clients but also consensus clients, although the problem on the consensus side was quickly addressed, and the situation is now relatively healthy and stable, as shown in Figure 15-45.
+Este problema no solo afecta a los clientes de ejecución, sino también a los clientes de consenso, aunque el problema del lado del consenso se abordó rápidamente y la situación es ahora relativamente saludable y estable, como se muestra en la Figura 15-45.
 
-![Current consensus client distribution](images/ch15/maet_1545.png)
+![Distribución actual de clientes de consenso](images/ch15/maet_1545.png)
 
-Figure 15-45. Current consensus client distribution
+Figura 15-45. Distribución actual de clientes de consenso
 
-## Conclusion
+## Conclusión
 
-The consensus algorithm is one of the most complicated (and delicate) things in Ethereum. It represents a never-ending journey of innovation and improvement, with ongoing proposals to enhance its functionality and efficiency. Features such as single-slot finality and the ability to increase the max effective balance for validators illustrate the continuous efforts to refine and optimize the system.
+El algoritmo de consenso es una de las cosas más complicadas y delicadas de Ethereum. Representa un recorrido interminable de innovación y mejora, con propuestas continuas para mejorar su funcionalidad y eficiencia. Características como la finalidad en un solo slot y la capacidad de aumentar el saldo efectivo máximo de los validadores ilustran los esfuerzos continuos por perfeccionar y optimizar el sistema.
 
-Understanding the core principles of consensus provides a solid foundation for appreciating these advancements and their impact on the robustness and scalability of the Ethereum network. As Ethereum evolves, so too will its consensus mechanisms, driving forward the capabilities of this pioneering blockchain technology.
+Comprender los principios centrales del consenso proporciona una base sólida para apreciar estos avances y su impacto en la robustez y la escalabilidad de la red Ethereum. A medida que Ethereum evolucione, también lo harán sus mecanismos de consenso, impulsando las capacidades de esta tecnología blockchain pionera.
 
-For further reading, we recommend:
+Para profundizar, recomendamos:
 
-- [Gasper paper](https://oreil.ly/1BoMt)
-- [Upgrading Ethereum](https://oreil.ly/Jzh-9) by Ben Edgington
+- [Artículo sobre Gasper](https://oreil.ly/1BoMt)
+- [Upgrading Ethereum](https://oreil.ly/Jzh-9), de Ben Edgington
 - ["Decentralization Is Good or Not? Defending Consensus in Ethereum 2.0"](https://oreil.ly/VNC1Q)

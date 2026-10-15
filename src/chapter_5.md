@@ -1,40 +1,40 @@
-# Chapter 5: Wallets
+# Capítulo 5: Billeteras
 
-The word *wallet* is used to describe a few different things in Ethereum. At a high level, a wallet is a software application that serves as the primary user interface to Ethereum. The wallet controls access to a user's money, manages keys and addresses, tracks the balance, and creates and signs transactions. In addition, some Ethereum wallets can interact with contracts, such as ERC-20 tokens.
+La palabra *billetera* se usa para describir varias cosas distintas en Ethereum. A grandes rasgos, una billetera es una aplicación de software que funciona como interfaz principal del usuario con Ethereum. La billetera controla el acceso al dinero del usuario, administra claves y direcciones, lleva registro del saldo y crea y firma transacciones. Además, algunas billeteras de Ethereum pueden interactuar con contratos, como los tokens ERC-20.
 
-More narrowly, from a programmer's perspective, the word *wallet* refers to the system used to store and manage a user's keys. Every wallet has a key-management component. For some wallets, that's all there is. Other wallets are part of a much broader category, that of *browsers*, which are interfaces to Ethereum-based DApps, which we will examine in more detail in Chapter 12. There are no clear lines of distinction between the various categories that are conflated under the term *wallet*.
+En un sentido más acotado, desde la perspectiva de quien programa, la palabra *billetera* se refiere al sistema utilizado para almacenar y administrar las claves de un usuario. Toda billetera tiene un componente de administración de claves. En algunas billeteras, eso es todo. Otras forman parte de una categoría mucho más amplia, la de los *navegadores*, que son interfaces para DApps basadas en Ethereum y que examinaremos con más detalle en el capítulo 12. No existen límites claros entre las distintas categorías que se agrupan bajo el término *billetera*.
 
-In this chapter, we will look at wallets as containers for private keys and as systems for managing these keys.
+En este capítulo, veremos las billeteras como contenedores de claves privadas y como sistemas para administrar estas claves.
 
-## Overview of Wallet Technologies
+## Panorama de las tecnologías de billeteras
 
-In this section, we summarize the various technologies used to construct user-friendly, secure, and flexible Ethereum wallets.
+En esta sección, resumimos las distintas tecnologías utilizadas para construir billeteras de Ethereum fáciles de usar, seguras y flexibles.
 
-One key consideration in designing wallets is balancing convenience and privacy. The most convenient Ethereum wallet is one with a single private key and address that you reuse for everything. Unfortunately, such a solution is a privacy nightmare since anyone can easily track and correlate all your transactions. Using a new key for every transaction is best for privacy but becomes very difficult to manage. The correct balance is difficult to achieve, which is why good wallet design is paramount.
+Una consideración clave al diseñar billeteras es equilibrar la comodidad y la privacidad. La billetera de Ethereum más cómoda es aquella que tiene una sola clave privada y una dirección que se reutilizan para todo. Por desgracia, esta solución es una pesadilla para la privacidad, ya que cualquiera puede rastrear y correlacionar fácilmente todas las transacciones. Usar una clave nueva para cada transacción es lo mejor para la privacidad, pero resulta muy difícil de administrar. Alcanzar el equilibrio adecuado es difícil, por lo que un buen diseño de billetera es fundamental.
 
-A common misconception about Ethereum is that Ethereum wallets contain ether or tokens. In fact, very strictly speaking, the wallet holds only keys. The ether or other tokens are recorded on the Ethereum blockchain. Users control the tokens on the network by signing transactions with the keys in their wallets. In a sense, an Ethereum wallet is a *keychain*. Having said that, given that the keys held by the wallet are the only things needed to transfer ether or tokens to others, in practice this distinction is fairly irrelevant.
+Una idea equivocada común sobre Ethereum es que las billeteras de Ethereum contienen ether o tokens. En realidad, hablando en sentido estricto, la billetera solo guarda claves. El ether u otros tokens se registran en la blockchain de Ethereum. Los usuarios controlan los tokens en la red al firmar transacciones con las claves de sus billeteras. En cierto sentido, una billetera de Ethereum es un *llavero*. Dicho esto, como las claves que guarda la billetera son lo único necesario para transferir ether o tokens a otros, en la práctica esta distinción es bastante irrelevante.
 
-Where the difference does matter is in changing one's mindset from dealing with the centralized system of conventional banking (where only you and the bank can see the money in your account, and you only need to convince the bank that you want to move funds to make a transaction) to the decentralized system of blockchain platforms (where everyone can see the ether balance of an account, although they probably don't know the account's owner, and everyone needs to be convinced that the owner wants to move funds for a transaction to be enacted). In practice, this means that there is an independent way to check an account's balance without needing its wallet. Moreover, you can move your account handling from your current wallet to a different wallet, if you grow to dislike the wallet app you started out using.
+La diferencia sí importa al cambiar la mentalidad de operar con el sistema centralizado de la banca convencional (donde solo usted y el banco pueden ver el dinero de su cuenta, y solo necesita convencer al banco de que desea mover fondos para realizar una transacción) a operar con el sistema descentralizado de las plataformas blockchain (donde todos pueden ver el saldo de ether de una cuenta, aunque probablemente no sepan quién es su propietario, y todos necesitan convencerse de que el propietario desea mover fondos para que se ejecute una transacción). En la práctica, esto significa que existe una forma independiente de consultar el saldo de una cuenta sin necesitar su billetera. Además, puede trasladar la administración de su cuenta de la billetera actual a otra, si deja de gustarle la aplicación de billetera que empezó a usar.
 
-> **Note**  
+> **Nota**  
 >
-> Ethereum wallets contain keys, not ether or tokens. Wallets are like keychains containing pairs of private and public keys. Users sign transactions with the private keys, thereby proving they own the ether. The ether is stored on the blockchain.
+> Las billeteras de Ethereum contienen claves, no ether ni tokens. Las billeteras son como llaveros que contienen pares de claves privadas y públicas. Los usuarios firman transacciones con las claves privadas y así demuestran que son propietarios del ether. El ether se almacena en la blockchain.
 
-There are two primary types of wallets, distinguished by whether the keys they contain are related to one another or not.
+Existen dos tipos principales de billeteras, que se distinguen según si las claves que contienen están relacionadas entre sí o no.
 
-The first type is a *nondeterministic wallet*, where each key is independently generated from a different random number. The keys are not related to one another. This type of wallet is also known as a *JBOK wallet*, from the phrase "just a bunch of keys."
+El primer tipo es una *billetera no determinista*, donde cada clave se genera de manera independiente a partir de un número aleatorio distinto. Las claves no están relacionadas entre sí. Este tipo de billetera también se conoce como *billetera JBOK*, por la expresión inglesa "just a bunch of keys", es decir, "solo un montón de claves".
 
-The second type of wallet is a *deterministic wallet*, where all the keys are derived from a single master key, known as the *seed*. All the keys in this type of wallet are related to one another and can be generated again if you have the original seed. Several different key-derivation methods are used in deterministic wallets. The most common derivation method uses a treelike structure, as described in "Hierarchical Deterministic Wallets (BIP-32/BIP-44)".
+El segundo tipo es una *billetera determinista*, donde todas las claves se derivan de una única clave maestra, conocida como *semilla*. Todas las claves de este tipo de billetera están relacionadas entre sí y pueden generarse de nuevo si se dispone de la semilla original. En las billeteras deterministas se utilizan varios métodos distintos de derivación de claves. El método de derivación más común usa una estructura de árbol, como se describe en "Billeteras deterministas jerárquicas (BIP-32/BIP-44)".
 
-To make deterministic wallets slightly more secure against data-loss accidents, such as having your phone stolen or dropping it in the toilet, the seeds are often encoded as a list of words (in English or another language) for you to write down and use in case of an accident. These are known as the wallet's *mnemonic code words*. Of course, if someone gets hold of your mnemonic code words, then they can also re-create your wallet and thus gain access to your ether and smart contracts. As such, be very, very careful with your recovery word list! Never store it electronically, in a file on your computer or phone. Write it down on paper and store it in a safe, secure place.
+Para que las billeteras deterministas sean un poco más seguras frente a accidentes que provoquen pérdida de datos, como el robo del teléfono o su caída al inodoro, las semillas suelen codificarse como una lista de palabras (en inglés u otro idioma) para anotarlas y usarlas en caso de accidente. Se conocen como las *palabras del código mnemónico* de la billetera. Por supuesto, si alguien obtiene esas palabras, también puede volver a crear su billetera y así acceder a su ether y sus contratos inteligentes. Por eso, ¡tenga muchísimo cuidado con su lista de palabras de recuperación! Nunca la guarde de forma electrónica, en un archivo de su computadora o teléfono. Anótela en papel y guárdela en un lugar seguro y protegido.
 
-The next few sections introduce each of the wallet technologies at a high level.
+Las siguientes secciones presentan, a grandes rasgos, cada una de las tecnologías de billeteras.
 
-### Nondeterministic (Random) Wallets
+### Billeteras no deterministas (aleatorias)
 
-In the first Ethereum wallet (produced for the Ethereum presale), each wallet file stored a single randomly generated private key. Such wallets are being replaced with deterministic wallets because these "old-style" wallets are in many ways inferior. For example, it is considered good practice to avoid reusing Ethereum addresses as part of maximizing your privacy while using Ethereum—that is, to use a new address (which needs a new private key) every time you receive funds. You can go further and use a new address for each transaction, although this can get expensive if you deal a lot with tokens. To follow this practice, a nondeterministic wallet will need to regularly increase its list of keys, which means you will need to make regular backups. If you ever lose your data (disk failure, drink accident, phone stolen) before you've managed to back up your wallet, you will lose access to your funds and smart contracts. The "type 0" nondeterministic wallets are the hardest to deal with because they create a new wallet file for every new address in a "just in time" manner.
+En la primera billetera de Ethereum (producida para la preventa de Ethereum), cada archivo de billetera almacenaba una sola clave privada generada aleatoriamente. Estas billeteras están siendo reemplazadas por billeteras deterministas porque las de "estilo antiguo" son inferiores en muchos aspectos. Por ejemplo, se considera una buena práctica evitar reutilizar direcciones de Ethereum para maximizar la privacidad al usar Ethereum, es decir, usar una dirección nueva (que necesita una clave privada nueva) cada vez que se reciben fondos. Se puede ir más allá y usar una dirección nueva para cada transacción, aunque esto puede resultar costoso si se opera mucho con tokens. Para seguir esta práctica, una billetera no determinista necesitará ampliar regularmente su lista de claves, lo que significa que habrá que hacer copias de respaldo periódicas. Si alguna vez pierde sus datos (falla del disco, derrame de una bebida, robo del teléfono) antes de haber podido respaldar su billetera, perderá el acceso a sus fondos y contratos inteligentes. Las billeteras no deterministas de "tipo 0" son las más difíciles de manejar porque crean un archivo de billetera nuevo para cada dirección nueva, de manera "justo a tiempo".
 
-Nevertheless, many Ethereum clients (including Geth) use a *keystore file*, which is a JSON-encoded file that contains a single (randomly generated) private key, encrypted by a passphrase for extra security. The JSON file's contents look like this:
+No obstante, muchos clientes de Ethereum (incluido Geth) usan un *archivo de almacén de claves*, que es un archivo codificado en JSON que contiene una sola clave privada (generada aleatoriamente), cifrada mediante una frase de contraseña para mayor seguridad. El contenido del archivo JSON tiene este aspecto:
 
 ```json
 {
@@ -62,106 +62,106 @@ Nevertheless, many Ethereum clients (including Geth) use a *keystore file*, whic
 }
 ```
 
-The keystore format uses a *key derivation function* (KDF), also known as a *password-stretching algorithm*, which protects against brute-force, dictionary, and rainbow table attacks. In simple terms, the private key is not encrypted by the passphrase directly. Instead, the passphrase is "stretched" by repeatedly hashing it. The hashing function is repeated for 262,144 rounds, which can be seen in the keystore JSON as the parameter `crypto.kdfparams.n`. An attacker trying to brute-force the passphrase would have to apply 262,144 rounds of hashing for every attempted passphrase, which slows the attack sufficiently to make it infeasible for passphrases of appropriate complexity and length.
+El formato del almacén de claves usa una *función de derivación de claves* (KDF), también conocida como *algoritmo de estiramiento de contraseñas*, que protege contra ataques de fuerza bruta, de diccionario y de tablas arcoíris. En términos sencillos, la clave privada no se cifra directamente con la frase de contraseña. En cambio, la frase de contraseña se "estira" aplicándole un hash repetidamente. La función hash se repite durante 262,144 rondas, lo que puede verse en el JSON del almacén de claves como el parámetro `crypto.kdfparams.n`. Un atacante que intentara descubrir la frase de contraseña por fuerza bruta tendría que aplicar 262,144 rondas de hash por cada frase probada, lo que ralentiza el ataque lo suficiente como para volverlo inviable para frases de contraseña con una complejidad y longitud adecuadas.
 
-> **Tip**  
+> **Consejo**  
 >
-> Using nondeterministic wallets is discouraged for anything other than simple tests. They are too cumbersome to back up and use for anything but the most basic of situations. Instead, use an industry standard–based hierarchical deterministic wallet with a mnemonic seed for backup.
+> Se desaconseja usar billeteras no deterministas para cualquier cosa que no sean pruebas sencillas. Son demasiado engorrosas de respaldar y usar salvo en las situaciones más básicas. En su lugar, use una billetera determinista jerárquica basada en estándares de la industria, con una semilla mnemónica para respaldo.
 
-### Deterministic (Seeded) Wallets
+### Billeteras deterministas (con semilla)
 
-Deterministic or "seeded" wallets contain private keys that are all derived from a single master key, or seed. The seed is a randomly generated number that is combined with other data, such as an index number or "chain code" (see "Extended Public and Private Keys"), to derive any number of private keys. In a deterministic wallet, the seed is sufficient to recover all the derived keys, and therefore a single backup, at creation time, is sufficient to secure all the funds and smart contracts in the wallet. The seed is also sufficient for a wallet export or import, allowing for easy migration of all the keys between different wallet implementations.
+Las billeteras deterministas o "con semilla" contienen claves privadas que se derivan de una única clave maestra, o semilla. La semilla es un número generado aleatoriamente que se combina con otros datos, como un número de índice o un "código de cadena" (véase "Claves públicas y privadas extendidas"), para derivar cualquier cantidad de claves privadas. En una billetera determinista, la semilla basta para recuperar todas las claves derivadas y, por tanto, una sola copia de respaldo, al momento de la creación, basta para proteger todos los fondos y contratos inteligentes de la billetera. La semilla también basta para exportar o importar una billetera, lo que permite migrar fácilmente todas las claves entre distintas implementaciones de billeteras.
 
-This design makes the security of the seed of utmost importance, as only the seed is needed to gain access to the entire wallet. On the other hand, being able to focus security efforts on a single piece of data can be seen as an advantage.
+Este diseño hace que la seguridad de la semilla sea de máxima importancia, ya que solo se necesita la semilla para acceder a toda la billetera. Por otro lado, poder concentrar los esfuerzos de seguridad en un solo dato puede considerarse una ventaja.
 
-### Hierarchical Deterministic Wallets (BIP-32/BIP-44)
+### Billeteras deterministas jerárquicas (BIP-32/BIP-44)
 
-Deterministic wallets were developed to make it easy to derive many keys from a single seed. Currently, one of the most advanced forms of deterministic wallet is the *hierarchical deterministic (HD) wallet* defined by Bitcoin's BIP-32 standard. HD wallets contain keys derived in a tree structure, such that a parent key can derive a sequence of child keys, each of which can derive a sequence of grandchild keys, and so on. This tree structure is illustrated in Figure 5-1.
+Las billeteras deterministas se desarrollaron para facilitar la derivación de muchas claves a partir de una sola semilla. Actualmente, una de las formas más avanzadas de billetera determinista es la *billetera determinista jerárquica (HD)* definida por el estándar BIP-32 de Bitcoin. Las billeteras HD contienen claves derivadas en una estructura de árbol, de modo que una clave madre puede derivar una secuencia de claves hijas, cada una de las cuales puede derivar una secuencia de claves nietas, y así sucesivamente. Esta estructura de árbol se ilustra en la figura 5-1.
 
-![HD wallet: a tree of keys generated from a single seed](images/ch5/maet_0501.png)
+![Billetera HD: un árbol de claves generado a partir de una sola semilla](images/ch5/maet_0501.png)
 
-Figure 5-1. HD wallet: a tree of keys generated from a single seed
+Figura 5-1. Billetera HD: un árbol de claves generado a partir de una sola semilla
 
-HD wallets offer a few key advantages over simpler deterministic wallets. First, the tree structure can be used to express additional organizational meaning, such as when a specific branch of subkeys is used to receive incoming payments and a different branch is used to receive change from outgoing payments. Branches of keys can also be used in corporate settings, where different branches can be allocated to departments, subsidiaries, specific functions, or accounting categories.
+Las billeteras HD ofrecen algunas ventajas importantes frente a las billeteras deterministas más sencillas. Primero, la estructura de árbol puede usarse para expresar un significado organizativo adicional, como cuando una rama específica de subclaves se usa para recibir pagos entrantes y otra rama se usa para recibir el cambio de los pagos salientes. Las ramas de claves también pueden usarse en entornos empresariales, donde se pueden asignar distintas ramas a departamentos, subsidiarias, funciones específicas o categorías contables.
 
-The second advantage of HD wallets is that users can create a sequence of public keys without having access to the corresponding private keys. This allows HD wallets to be used on an insecure server or in a watch-only or receive-only capacity, where the wallet doesn't have the private keys that can spend the funds.
+La segunda ventaja de las billeteras HD es que los usuarios pueden crear una secuencia de claves públicas sin tener acceso a las claves privadas correspondientes. Esto permite usar billeteras HD en un servidor inseguro o en una modalidad de solo observación o solo recepción, donde la billetera no dispone de las claves privadas que permiten gastar los fondos.
 
-### Seeds and Mnemonic Codes (BIP-39)
+### Semillas y códigos mnemónicos (BIP-39)
 
-There are many ways to encode a private key for secure backup and retrieval. The currently preferred method is to use a sequence of words that, when taken together in the correct order, can uniquely re-create the private key. This is sometimes known as a *mnemonic*, and the approach has been standardized by BIP-39. Today, many Ethereum wallets (as well as wallets for other cryptocurrencies) use this standard and can import and export seeds for backup and recovery using interoperable mnemonics.
+Existen muchas formas de codificar una clave privada para respaldarla y recuperarla de manera segura. El método preferido actualmente es usar una secuencia de palabras que, tomadas juntas en el orden correcto, permitan volver a crear la clave privada de manera unívoca. Esto a veces se conoce como una *frase mnemónica*, y el enfoque se ha estandarizado mediante BIP-39. Hoy, muchas billeteras de Ethereum (así como billeteras de otras criptomonedas) usan este estándar y pueden importar y exportar semillas para respaldo y recuperación mediante frases mnemónicas interoperables.
 
-To see why this approach has become popular, let's have a look at an example:
+Para ver por qué este enfoque se ha vuelto popular, veamos un ejemplo:
 
 ```
-FCCF1AB3329FD5DA3DA9577511F8F137 ← seed in hexadecimal
+FCCF1AB3329FD5DA3DA9577511F8F137 ← semilla en hexadecimal
 wolf juice proud gown wool unfair
-wall cliff insect more detail hub ← seed using BIP-39 representation
+wall cliff insect more detail hub ← semilla con representación BIP-39
 ```
 
-In practical terms, the chance of an error when writing down the hex sequence is unacceptably high. In contrast, the list of known words is quite easy to deal with, mainly because there is a high level of redundancy in the writing of words (especially English words). If *inzect* had been recorded by accident, it could quickly be determined, upon the need for wallet recovery, that *inzect* is not a valid English word and that *insect* should be used instead. We are talking about writing down a representation of the seed because that is good practice when managing HD wallets: the seed is needed to recover the wallet in the case of data loss (whether through accident or theft), so keeping a backup is very prudent. However, the seed must be kept extremely private, so digital backups should be carefully avoided—hence, the advice to back up with pen and paper.
+En términos prácticos, la probabilidad de cometer un error al anotar la secuencia hexadecimal es inaceptablemente alta. En cambio, la lista de palabras conocidas es bastante fácil de manejar, principalmente porque existe un alto grado de redundancia en la escritura de las palabras (especialmente en inglés). Si se hubiera anotado *inzect* por accidente, al necesitar recuperar la billetera se podría determinar rápidamente que *inzect* no es una palabra válida en inglés y que debería usarse *insect*. Hablamos de anotar una representación de la semilla porque esa es una buena práctica al administrar billeteras HD: la semilla se necesita para recuperar la billetera en caso de pérdida de datos (ya sea por accidente o robo), por lo que conservar una copia de respaldo es muy prudente. Sin embargo, la semilla debe mantenerse en estricta privacidad, por lo que deben evitarse cuidadosamente las copias digitales; de ahí el consejo de respaldarla con papel y lápiz.
 
-In summary, using a recovery word list to encode the seed for an HD wallet is the easiest way to safely export a private key set, transcribe it, record it on paper, read it without error, and import it into another wallet.
+En resumen, usar una lista de palabras de recuperación para codificar la semilla de una billetera HD es la forma más sencilla de exportar de manera segura un conjunto de claves privadas, transcribirlo, registrarlo en papel, leerlo sin errores e importarlo a otra billetera.
 
-## Wallet Best Practices
+## Buenas prácticas para billeteras
 
-As cryptocurrency wallet technology has matured, certain industry standards have emerged that make wallets broadly interoperable, easy to use, secure, and flexible. These standards also allow wallets to derive keys for multiple different cryptocurrencies, all from a single mnemonic. These standards are:
+A medida que la tecnología de billeteras de criptomonedas ha madurado, han surgido ciertos estándares de la industria que hacen que las billeteras sean ampliamente interoperables, fáciles de usar, seguras y flexibles. Estos estándares también permiten que las billeteras deriven claves para varias criptomonedas distintas, todas a partir de una sola frase mnemónica. Estos estándares son:
 
-- Mnemonic code words, based on BIP-39
-- HD wallets, based on BIP-32
-- A multipurpose HD wallet structure, based on BIP-43
-- Multicurrency and multiaccount wallets, based on BIP-44
+- Palabras de códigos mnemónicos, basadas en BIP-39
+- Billeteras HD, basadas en BIP-32
+- Una estructura de billetera HD multipropósito, basada en BIP-43
+- Billeteras multimoneda y multicuenta, basadas en BIP-44
 
-These standards may change or be made obsolete by future developments, but for now, they form a set of interlocking technologies that have become the de facto wallet standard for most blockchain platforms and their cryptocurrencies.
+Estos estándares pueden cambiar o quedar obsoletos por desarrollos futuros, pero por ahora forman un conjunto de tecnologías interconectadas que se han convertido en el estándar de facto de billeteras para la mayoría de las plataformas blockchain y sus criptomonedas.
 
-A broad range of software and hardware wallets have adopted the standards, making all these wallets interoperable. A user can export a mnemonic generated in one of these wallets and import it to another wallet, recovering all keys and addresses.
+Una amplia gama de billeteras de software y hardware ha adoptado estos estándares, lo que hace que todas estas billeteras sean interoperables. Un usuario puede exportar una frase mnemónica generada en una de estas billeteras e importarla a otra, recuperando todas las claves y direcciones.
 
-Some examples of software wallets supporting these standards include Rabby Wallet, MetaMask, and Phantom. Examples of hardware wallets supporting these standards are various models of Ledger and Trezor.
+Algunos ejemplos de billeteras de software compatibles con estos estándares incluyen Rabby Wallet, MetaMask y Phantom. Entre las billeteras de hardware compatibles con estos estándares se encuentran varios modelos de Ledger y Trezor.
 
-The following sections examine each of these technologies in detail.
+Las siguientes secciones examinan en detalle cada una de estas tecnologías.
 
-> **Tip**  
+> **Consejo**  
 >
-> If you are implementing an Ethereum wallet, it should be built as an HD wallet, with a seed encoded as a mnemonic code for backup, following the BIP-32, BIP-39, BIP-43, and BIP-44 standards, as described in the following sections.
+> Si está implementando una billetera de Ethereum, debería construirla como una billetera HD, con una semilla codificada como código mnemónico para respaldo, siguiendo los estándares BIP-32, BIP-39, BIP-43 y BIP-44, como se describe en las siguientes secciones.
 
-### Mnemonic Code Words (BIP-39)
+### Palabras de códigos mnemónicos (BIP-39)
 
-Mnemonic code words are word sequences that encode a random number used as a seed to derive a deterministic wallet. The sequence of words is sufficient to re-create the seed and, from there, to re-create the wallet and all the derived keys. A wallet application that implements deterministic wallets with mnemonic words will show the user a sequence of 12–24 words when first creating a wallet. That sequence of words is the wallet backup and can be used to recover and re-create all the keys in the same or any compatible wallet application. As we explained earlier, mnemonic word lists make it easier for users to back up wallets because they are easy to read and correctly transcribe.
+Las palabras de códigos mnemónicos son secuencias de palabras que codifican un número aleatorio usado como semilla para derivar una billetera determinista. La secuencia de palabras basta para volver a crear la semilla y, a partir de ella, la billetera y todas las claves derivadas. Una aplicación que implemente billeteras deterministas con palabras mnemónicas mostrará al usuario una secuencia de 12–24 palabras al crear una billetera por primera vez. Esa secuencia es el respaldo de la billetera y puede usarse para recuperar y volver a crear todas las claves en la misma aplicación de billetera o en cualquier otra compatible. Como explicamos antes, las listas de palabras mnemónicas facilitan que los usuarios respalden sus billeteras porque son fáciles de leer y transcribir correctamente.
 
-> **Note**  
+> **Nota**  
 >
-> Mnemonic words are often confused with *brainwallets*. They are not the same. The primary difference is that a brainwallet consists of words chosen by the user, whereas mnemonic words are created randomly by the wallet and presented to the user. This important difference makes mnemonic words much more secure because humans are very poor sources of randomness. Perhaps more important, using the term *brainwallet* suggests that the words have to be memorized, which is a terrible idea and a recipe for not having your backup when you need it.
+> Las palabras mnemónicas suelen confundirse con las *brainwallets*. No son lo mismo. La diferencia principal es que una brainwallet consiste en palabras elegidas por el usuario, mientras que las palabras mnemónicas son creadas aleatoriamente por la billetera y se presentan al usuario. Esta importante diferencia hace que las palabras mnemónicas sean mucho más seguras, porque los seres humanos son muy malas fuentes de aleatoriedad. Quizá más importante, usar el término *brainwallet* sugiere que las palabras deben memorizarse, lo que es una idea terrible y una receta para no tener su respaldo cuando lo necesite.
 
-Mnemonic codes are defined in BIP-39. Note that BIP-39 is one implementation of a mnemonic code standard. There is a different standard, with a different set of words, used by the Electrum Bitcoin wallet and predating BIP-39. BIP-39 was proposed by the company behind the Trezor hardware wallet and is incompatible with Electrum's implementation. However, BIP-39 has now achieved broad industry support across dozens of interoperable implementations and should be considered the de facto industry standard. Furthermore, BIP-39 can be used to produce multicurrency wallets supporting Ethereum, whereas Electrum seeds cannot.
+Los códigos mnemónicos se definen en BIP-39. Tenga en cuenta que BIP-39 es una implementación de un estándar de códigos mnemónicos. Existe un estándar distinto, con otro conjunto de palabras, que usa la billetera de Bitcoin Electrum y que es anterior a BIP-39. BIP-39 fue propuesto por la empresa detrás de la billetera de hardware Trezor y es incompatible con la implementación de Electrum. Sin embargo, BIP-39 ya ha logrado un amplio respaldo en la industria, con decenas de implementaciones interoperables, y debería considerarse el estándar de facto de la industria. Además, BIP-39 puede usarse para producir billeteras multimoneda compatibles con Ethereum, mientras que las semillas de Electrum no.
 
-BIP-39 defines the creation of a mnemonic code and seed, which we describe here in nine steps. For clarity, the process is split into two parts: steps 1 through 6 are listed in "Generating mnemonic words", and steps 7 through 9 are listed in "From mnemonic to seed".
+BIP-39 define la creación de un código mnemónico y una semilla, que aquí describimos en nueve pasos. Para mayor claridad, el proceso se divide en dos partes: los pasos 1 a 6 se enumeran en "Generación de palabras mnemónicas", y los pasos 7 a 9, en "De la frase mnemónica a la semilla".
 
-#### Generating mnemonic words
+#### Generación de palabras mnemónicas
 
-The wallet generates mnemonic words automatically using the standardized process defined in BIP-39. The wallet starts from a source of entropy, adds a checksum, and then maps the entropy to a word list following these steps:
+La billetera genera palabras mnemónicas automáticamente mediante el proceso estandarizado definido en BIP-39. La billetera parte de una fuente de entropía, agrega una suma de verificación y luego asigna la entropía a una lista de palabras siguiendo estos pasos:
 
-1. Create a cryptographically random sequence *S* of 128–256 bits.
+1. Crear una secuencia criptográficamente aleatoria *S* de 128–256 bits.
 
-2. Create a checksum of *S* by taking the first length-of-*S* ÷ 32 bits of the SHA-256 hash of *S*.
+2. Crear una suma de verificación de *S* tomando los primeros (longitud de *S* ÷ 32) bits del hash SHA-256 de *S*.
 
-3. Add the checksum to the end of the random sequence *S*.
+3. Agregar la suma de verificación al final de la secuencia aleatoria *S*.
 
-4. Divide the sequence-and-checksum concatenation into sections of 11 bits.
+4. Dividir la concatenación de la secuencia y la suma de verificación en secciones de 11 bits.
 
-5. Map each 11-bit value to a word from the predefined dictionary of 2,048 words.
+5. Asignar cada valor de 11 bits a una palabra del diccionario predefinido de 2,048 palabras.
 
-6. Create the mnemonic code from the sequence of words, maintaining the order.
+6. Crear el código mnemónico a partir de la secuencia de palabras, manteniendo el orden.
 
-Figure 5-2 shows how entropy is used to generate mnemonic words.
+La figura 5-2 muestra cómo se usa la entropía para generar palabras mnemónicas.
 
-![Generating mnemonic words](images/ch5/maet_0502.png)
+![Generación de palabras mnemónicas](images/ch5/maet_0502.png)
 
-Figure 5-2. Generating mnemonic words
+Figura 5-2. Generación de palabras mnemónicas
 
-Table 5-1 shows the relationship between the size of the entropy data and the length of mnemonic codes in words.
+La tabla 5-1 muestra la relación entre el tamaño de los datos de entropía y la longitud de los códigos mnemónicos en palabras.
 
-**Table 5-1. Mnemonic codes: Entropy and word length**
+**Tabla 5-1. Códigos mnemónicos: entropía y longitud en palabras**
 
-| Entropy (bits) | Checksum (bits) | Entropy + checksum (bits) | Mnemonic length (words) |
+| Entropía (bits) | Suma de verificación (bits) | Entropía + suma de verificación (bits) | Longitud mnemónica (palabras) |
 |---|---|---|---|
 | 128 | 4 | 132 | 12 |
 | 160 | 5 | 165 | 15 |
@@ -169,409 +169,409 @@ Table 5-1 shows the relationship between the size of the entropy data and the le
 | 224 | 7 | 231 | 21 |
 | 256 | 8 | 264 | 24 |
 
-#### From mnemonic to seed
+#### De la frase mnemónica a la semilla
 
-The mnemonic words represent entropy with a length of 128–256 bits. The entropy is then used to derive a longer (512-bit) seed through the use of the key-stretching function PBKDF2. The seed produced is used to build a deterministic wallet and derive its keys.
+Las palabras mnemónicas representan una entropía de 128–256 bits de longitud. Luego, la entropía se usa para derivar una semilla más larga (de 512 bits) mediante la función de estiramiento de claves PBKDF2. La semilla producida se usa para construir una billetera determinista y derivar sus claves.
 
-The key-stretching function takes two parameters: the mnemonic and a salt. The purpose of a salt in a key-stretching function is to make it difficult to build a lookup table enabling a brute-force attack. In the BIP-39 standard, the salt has another purpose: it allows for the introduction of a passphrase that serves as an additional security factor protecting the seed, which we will describe in more detail in the next section.
+La función de estiramiento de claves recibe dos parámetros: la frase mnemónica y una sal. El propósito de una sal en una función de estiramiento de claves es dificultar la construcción de una tabla de consulta que permita un ataque de fuerza bruta. En el estándar BIP-39, la sal tiene otro propósito: permite introducir una frase de contraseña que funciona como factor de seguridad adicional para proteger la semilla, lo que describiremos con más detalle en la siguiente sección.
 
-The process continues from the previous section with the following steps:
+El proceso continúa desde la sección anterior con los siguientes pasos:
 
-7. The first parameter to the PBKDF2 key-stretching function is the mnemonic produced in step 6.
+7. El primer parámetro de la función de estiramiento de claves PBKDF2 es la frase mnemónica producida en el paso 6.
 
-8. The second parameter to the PBKDF2 key-stretching function is a *salt*. The salt is composed of the string constant `"mnemonic"` concatenated with an optional user-supplied passphrase.
+8. El segundo parámetro de la función de estiramiento de claves PBKDF2 es una *sal*. La sal se compone de la cadena constante `"mnemonic"` concatenada con una frase de contraseña opcional proporcionada por el usuario.
 
-9. PBKDF2 stretches the mnemonic and salt parameters using 2,048 rounds of hashing with the HMAC-SHA512 algorithm, producing a 512-bit value as its final output. That 512-bit value is the seed.
+9. PBKDF2 estira los parámetros de frase mnemónica y sal mediante 2,048 rondas de hash con el algoritmo HMAC-SHA512 y produce un valor de 512 bits como salida final. Ese valor de 512 bits es la semilla.
 
-Figure 5-3 shows how a mnemonic is used to generate a seed.
+La figura 5-3 muestra cómo se usa una frase mnemónica para generar una semilla.
 
-![From mnemonic to seed](images/ch5/maet_0503.png)
+![De la frase mnemónica a la semilla](images/ch5/maet_0503.png)
 
-Figure 5-3. From mnemonic to seed
+Figura 5-3. De la frase mnemónica a la semilla
 
-> **Note**  
+> **Nota**  
 >
-> The key-stretching function, with its 2,048 rounds of hashing, is a somewhat effective protection against brute-force attacks against the mnemonic or the passphrase. It makes it costly (in computation) to try more than a few thousand passphrase and mnemonic combinations, while the number of possible derived seeds is vast (2^512^, or about 10^154^)—far bigger than the number of atoms in the visible universe (about 10^80^).
+> La función de estiramiento de claves, con sus 2,048 rondas de hash, es una protección de cierta eficacia frente a ataques de fuerza bruta contra la frase mnemónica o la frase de contraseña. Hace costoso (en cómputo) probar más de unos pocos miles de combinaciones de frases de contraseña y frases mnemónicas, mientras que la cantidad de semillas derivadas posibles es enorme (2^512^, o aproximadamente 10^154^), mucho mayor que la cantidad de átomos en el universo visible (aproximadamente 10^80^).
 
-Tables 5-2, 5-3, and 5-4 show some examples of mnemonic codes and the seeds they produce.
+Las tablas 5-2, 5-3 y 5-4 muestran algunos ejemplos de códigos mnemónicos y las semillas que producen.
 
-**Table 5-2. A 128-bit entropy mnemonic code with no passphrase and the resulting seed**
-
-| | |
-|---|---|
-| **Entropy** | 0c1e24e5917779d297e14d45f14e1a1a |
-| **Mnemonic** | army van defense carry jealous true garbage claim echo media make crunch |
-| **Passphrase** | (none) |
-| **Seed** | 5b56c417303faa3fcba7e57400e120a0ca83ec5a4fc9ffba757fbe63fbd77a89a1a3be4c67196f57c39... |
-
-**Table 5-3. A 128-bit entropy mnemonic code with a passphrase and the resulting seed**
+**Tabla 5-2. Un código mnemónico de 128 bits de entropía sin frase de contraseña y la semilla resultante**
 
 | | |
 |---|---|
-| **Entropy** | 0c1e24e5917779d297e14d45f14e1a1a |
-| **Mnemonic** | army van defense carry jealous true garbage claim echo media make crunch |
-| **Passphrase** | SuperDuperSecret |
-| **Seed** | 3b5df16df2157104cfdd22830162a5e170c0161653e3afe6c88defeefb0818c793dbb28ab3ab091897d0... |
+| **Entropía** | 0c1e24e5917779d297e14d45f14e1a1a |
+| **Frase mnemónica** | army van defense carry jealous true garbage claim echo media make crunch |
+| **Frase de contraseña** | (ninguna) |
+| **Semilla** | 5b56c417303faa3fcba7e57400e120a0ca83ec5a4fc9ffba757fbe63fbd77a89a1a3be4c67196f57c39... |
 
-**Table 5-4. A 256-bit entropy mnemonic code with no passphrase and the resulting seed**
+**Tabla 5-3. Un código mnemónico de 128 bits de entropía con una frase de contraseña y la semilla resultante**
 
 | | |
 |---|---|
-| **Entropy** | 2041546864449caff939d32d574753fe684d3c947c3346713dd8423e74abcf8c |
-| **Mnemonic** | cake apple borrow silk endorse fitness top denial coil riot stay wolf luggage oxygen faint major edit measure invite love trap field dilemma oblige |
-| **Passphrase** | (none) |
-| **Seed** | 3269bce2674acbd188d4f120072b13b088a0ecf87c6e4cae41657a0bb78f5315b33b3a04356e53d062e5... |
+| **Entropía** | 0c1e24e5917779d297e14d45f14e1a1a |
+| **Frase mnemónica** | army van defense carry jealous true garbage claim echo media make crunch |
+| **Frase de contraseña** | SuperDuperSecret |
+| **Semilla** | 3b5df16df2157104cfdd22830162a5e170c0161653e3afe6c88defeefb0818c793dbb28ab3ab091897d0... |
 
-#### Optional Passphrase in BIP-39
+**Tabla 5-4. Un código mnemónico de 256 bits de entropía sin frase de contraseña y la semilla resultante**
 
-The BIP-39 standard allows for the use of an optional passphrase in the derivation of the seed. If no passphrase is used, the mnemonic is stretched with a salt consisting of the constant string `"mnemonic"`, producing a specific 512-bit seed from any given mnemonic. If a passphrase is used, the stretching function produces a *different* seed from that same mnemonic. In fact, given a single mnemonic, every possible passphrase leads to a different seed. Essentially, there is no "wrong" passphrase. All passphrases are valid, and they all lead to different seeds, forming a vast set of possible uninitialized wallets. The set of possible wallets is so large (2^512^) that there is no practical possibility of brute-forcing or accidentally guessing one that is in use, as long as the passphrase has sufficient complexity and length.
+| | |
+|---|---|
+| **Entropía** | 2041546864449caff939d32d574753fe684d3c947c3346713dd8423e74abcf8c |
+| **Frase mnemónica** | cake apple borrow silk endorse fitness top denial coil riot stay wolf luggage oxygen faint major edit measure invite love trap field dilemma oblige |
+| **Frase de contraseña** | (ninguna) |
+| **Semilla** | 3269bce2674acbd188d4f120072b13b088a0ecf87c6e4cae41657a0bb78f5315b33b3a04356e53d062e5... |
 
-> **Tip**  
+#### Frase de contraseña opcional en BIP-39
+
+El estándar BIP-39 permite usar una frase de contraseña opcional al derivar la semilla. Si no se usa una frase de contraseña, la frase mnemónica se estira con una sal que consiste en la cadena constante `"mnemonic"`, lo que produce una semilla específica de 512 bits a partir de cualquier frase mnemónica dada. Si se usa una frase de contraseña, la función de estiramiento produce una semilla *distinta* a partir de esa misma frase mnemónica. De hecho, dada una sola frase mnemónica, cada frase de contraseña posible conduce a una semilla distinta. En esencia, no existe una frase de contraseña "incorrecta". Todas son válidas y todas conducen a semillas distintas, lo que forma un vasto conjunto de posibles billeteras sin inicializar. El conjunto de billeteras posibles es tan grande (2^512^) que no existe una posibilidad práctica de descubrir por fuerza bruta o adivinar accidentalmente una que esté en uso, siempre que la frase de contraseña tenga suficiente complejidad y longitud.
+
+> **Consejo**  
 >
-> There are no "wrong" passphrases in BIP-39. Every passphrase leads to some wallet, which unless previously used will be empty.
+> No existen frases de contraseña "incorrectas" en BIP-39. Cada frase de contraseña conduce a alguna billetera que, a menos que se haya usado previamente, estará vacía.
 
-The optional passphrase creates two important features:
+La frase de contraseña opcional aporta dos características importantes:
 
-- A second factor (something memorized) that makes a mnemonic useless on its own, protecting mnemonic backups from compromise by a thief
+- Un segundo factor (algo memorizado) que hace que una frase mnemónica sea inútil por sí sola, lo que protege los respaldos mnemónicos frente al acceso de un ladrón
 
-- A form of plausible deniability or "duress wallet," where a chosen passphrase leads to a wallet with a small amount of funds, used to distract an attacker from the "real" wallet that contains the majority of funds
+- Una forma de negación plausible o "billetera bajo coacción", donde una frase de contraseña elegida conduce a una billetera con una pequeña cantidad de fondos, utilizada para distraer a un atacante de la billetera "real" que contiene la mayoría de los fondos
 
-However, it is important to note that the use of a passphrase also introduces the risk of loss:
+Sin embargo, es importante señalar que usar una frase de contraseña también introduce el riesgo de pérdida:
 
-- If the wallet owner is incapacitated or dead and no one else knows the passphrase, the seed is useless, and all the funds stored in the wallet are lost forever.
+- Si el propietario de la billetera queda incapacitado o muere y nadie más conoce la frase de contraseña, la semilla es inútil y todos los fondos almacenados en la billetera se pierden para siempre.
 
-- Conversely, if the owner backs up the passphrase in the same place as the seed, that defeats the purpose of a second factor.
+- Por el contrario, si el propietario respalda la frase de contraseña en el mismo lugar que la semilla, eso anula el propósito de un segundo factor.
 
-While passphrases are very useful, they should be used only in combination with a carefully planned process for backup and recovery, considering the possibility of heirs surviving the owner being able to recover the cryptocurrency.
+Si bien las frases de contraseña son muy útiles, solo deberían usarse junto con un proceso de respaldo y recuperación cuidadosamente planificado, considerando que los herederos que sobrevivan al propietario puedan recuperar la criptomoneda.
 
-#### Working with Mnemonic Codes
+#### Trabajo con códigos mnemónicos
 
-BIP-39 is implemented as a library in many different programming languages, such as:
+BIP-39 está implementado como biblioteca en muchos lenguajes de programación distintos, como:
 
 **python-mnemonic**
 
-The reference implementation of the standard by the SatoshiLabs team that proposed BIP-39, in Python
+La implementación de referencia del estándar, en Python, del equipo de SatoshiLabs que propuso BIP-39
 
 **ConsenSys/eth-lightwallet**
 
-A lightweight JavaScript Ethereum wallet for nodes and browser (with BIP-39)
+Una billetera ligera de Ethereum en JavaScript para nodos y navegador (con BIP-39)
 
 **npm/bip39**
 
-A JavaScript implementation of Bitcoin BIP-39
+Una implementación en JavaScript de BIP-39 de Bitcoin
 
-There is also a BIP-39 generator implemented in a standalone web page (Figure 5-4), which is extremely useful for testing and experimentation. The [Mnemonic Code Converter](https://iancoleman.io/bip39/) generates mnemonics, seeds, and extended private keys. It can be used offline in a browser, or it can be accessed online.
+También existe un generador BIP-39 implementado en una página web independiente (figura 5-4), que es sumamente útil para pruebas y experimentación. El [convertidor de códigos mnemónicos](https://iancoleman.io/bip39/) genera frases mnemónicas, semillas y claves privadas extendidas. Puede usarse sin conexión en un navegador o accederse a él en línea.
 
-> **Note**  
+> **Nota**  
 >
-> This will be emphasized repeatedly throughout the chapter because it is the most crucial rule for seed security: never, under any circumstances, save your seed phrase in digital form.
+> Esto se enfatizará repetidamente a lo largo del capítulo porque es la regla más importante para la seguridad de la semilla: nunca, bajo ninguna circunstancia, guarde su frase semilla en formato digital.
 
-![The BIP-39 generator web page](images/ch5/maet_0504.png)
+![La página web del generador BIP-39](images/ch5/maet_0504.png)
 
-Figure 5-4. The BIP-39 generator web page
+Figura 5-4. La página web del generador BIP-39
 
-### Creating an HD Wallet from the Seed
+### Creación de una billetera HD a partir de la semilla
 
-HD wallets are created from a single *root seed*, which is a 128-, 256-, or 512-bit random number. This seed is most commonly generated from a mnemonic, as detailed in the previous section.
+Las billeteras HD se crean a partir de una única *semilla raíz*, que es un número aleatorio de 128, 256 o 512 bits. Esta semilla suele generarse a partir de una frase mnemónica, como se detalló en la sección anterior.
 
-Every key in the HD wallet is deterministically derived from this root seed, which makes it possible to re-create the entire HD wallet from that seed in any compatible HD wallet. This makes it easy to export, back up, restore, and import HD wallets containing thousands or even millions of keys by transferring just the mnemonic from which the root seed is derived.
+Cada clave de la billetera HD se deriva de manera determinista de esta semilla raíz, lo que permite volver a crear toda la billetera HD a partir de esa semilla en cualquier billetera HD compatible. Esto facilita exportar, respaldar, restaurar e importar billeteras HD que contienen miles o incluso millones de claves transfiriendo solo la frase mnemónica de la que se deriva la semilla raíz.
 
-### HD Wallets (BIP-32)
+### Billeteras HD (BIP-32)
 
-Most HD wallets follow the BIP-32 standard, which has become a de facto industry standard for deterministic key generation. We won't be discussing all the details of BIP-32 here, only the components necessary to understand how it is used in wallets. The most important aspect is the treelike hierarchical relationships that it is possible for the derived keys to have, as you can see in Figure 5-1. It's also important to understand the ideas of extended keys and hardened keys, which are explained in the following sections.
+La mayoría de las billeteras HD siguen el estándar BIP-32, que se ha convertido en un estándar de facto de la industria para la generación determinista de claves. Aquí no trataremos todos los detalles de BIP-32, sino solo los componentes necesarios para comprender cómo se usa en las billeteras. El aspecto más importante son las relaciones jerárquicas en forma de árbol que pueden tener las claves derivadas, como puede verse en la figura 5-1. También es importante comprender los conceptos de claves extendidas y claves endurecidas, que se explican en las siguientes secciones.
 
-There are dozens of interoperable implementations of BIP-32 offered in many software libraries. These are mostly designed for Bitcoin wallets, which implement addresses in a different way, but they share the same key-derivation implementation as Ethereum's BIP-32-compatible wallets. Use one designed for Ethereum or adapt one from Bitcoin by adding an Ethereum address encoding library.
+Existen decenas de implementaciones interoperables de BIP-32 disponibles en muchas bibliotecas de software. En su mayoría están diseñadas para billeteras de Bitcoin, que implementan las direcciones de una manera distinta, pero comparten la misma implementación de derivación de claves que las billeteras de Ethereum compatibles con BIP-32. Use una diseñada para Ethereum o adapte una de Bitcoin agregando una biblioteca de codificación de direcciones de Ethereum.
 
-There is also a BIP-32 generator implemented as a standalone web page that is very useful for testing and experimentation with BIP-32.
+También existe un generador BIP-32 implementado como una página web independiente que resulta muy útil para probar y experimentar con BIP-32.
 
-> **Warning**  
+> **Advertencia**  
 >
-> The standalone BIP-32 generator is not an HTTPS site. That's to remind you that using this tool is not secure. It is only for testing. You should not use the keys produced by this site with real funds.
+> El generador BIP-32 independiente no es un sitio HTTPS. Esto es para recordarle que usar esta herramienta no es seguro. Es solo para pruebas. No debería usar las claves producidas por este sitio con fondos reales.
 
-#### Extended Public and Private Keys
+#### Claves públicas y privadas extendidas
 
-In BIP-32 terminology, keys can be "extended." With the right mathematical operations, these extended "parent" keys can be used to derive "child" keys, thus producing the hierarchy of keys and addresses described earlier. A parent key doesn't have to be at the top of the tree. It can be picked out from anywhere in the tree hierarchy. Extending a key involves taking the key itself and appending a special *chain code* to it. A chain code is a 256-bit binary string that is mixed with each key to produce child keys.
+En la terminología de BIP-32, las claves pueden ser "extendidas". Con las operaciones matemáticas adecuadas, estas claves "madre" extendidas pueden usarse para derivar claves "hijas", produciendo así la jerarquía de claves y direcciones descrita antes. Una clave madre no tiene que estar en la parte superior del árbol. Puede elegirse de cualquier lugar de la jerarquía del árbol. Extender una clave consiste en tomar la propia clave y agregarle un *código de cadena* especial. Un código de cadena es una cadena binaria de 256 bits que se mezcla con cada clave para producir claves hijas.
 
-If the key is a private key, it becomes an *extended private key* distinguished by the prefix `xprv`:
+Si la clave es privada, se convierte en una *clave privada extendida* que se distingue por el prefijo `xprv`:
 
     xprv9s21ZrQH143K2JF8RafpqtKiTbsbaxEeUaMnNHsm5o6wCW3z8ySyH4UxFVSfZ8n7ESu7fgir8i...
 
-An *extended public key* is distinguished by the prefix `xpub`:
+Una *clave pública extendida* se distingue por el prefijo `xpub`:
 
     xpub661MyMwAqRbcEnKbXcCqD2GT1di5zQxVqoHPAgHNe8dv5JP8gWmDproS6kFHJnLZd23tWevhdn...
 
-A very useful characteristic of HD wallets is the ability to derive child public keys from parent public keys *without* having the private keys. This gives us two ways to derive a child public key: either directly from the child private key or from the parent public key. An extended public key can be used, therefore, to derive all the public keys (and *only* the public keys) in that branch of the HD wallet structure.
+Una característica muy útil de las billeteras HD es la capacidad de derivar claves públicas hijas a partir de claves públicas madre *sin* tener las claves privadas. Esto nos da dos formas de derivar una clave pública hija: directamente a partir de la clave privada hija o a partir de la clave pública madre. Por tanto, una clave pública extendida puede usarse para derivar todas las claves públicas (y *solo* las claves públicas) de esa rama de la estructura de la billetera HD.
 
-This shortcut can be used to create extremely secure public-key-only deployments, where a server or application has a copy of an extended public key but no private keys whatsoever. That kind of deployment can produce an infinite number of public keys and Ethereum addresses but cannot spend any money sent to those addresses. Meanwhile, on another, more secure server, the extended private key can derive all the corresponding private keys to sign transactions and spend the money.
+Este atajo puede usarse para crear despliegues sumamente seguros que solo contienen claves públicas, donde un servidor o una aplicación tiene una copia de una clave pública extendida, pero ninguna clave privada. Ese tipo de despliegue puede producir una cantidad infinita de claves públicas y direcciones de Ethereum, pero no puede gastar el dinero enviado a esas direcciones. Mientras tanto, en otro servidor más seguro, la clave privada extendida puede derivar todas las claves privadas correspondientes para firmar transacciones y gastar el dinero.
 
-One common application of this method is to install an extended public key on a web server that serves an ecommerce application. The web server can use the public key derivation function to create a new Ethereum address for every transaction (e.g., for a customer shopping cart) and will not have any private keys that would be vulnerable to theft. Without HD wallets, the only way to do this is to generate thousands of Ethereum addresses on a separate secure server and then preload them on the ecommerce server. That approach is cumbersome and requires constant maintenance to ensure that the server doesn't run out of keys—hence the preference to use extended public keys from HD wallets.
+Una aplicación común de este método es instalar una clave pública extendida en un servidor web que aloja una aplicación de comercio electrónico. El servidor web puede usar la función de derivación de claves públicas para crear una dirección de Ethereum nueva para cada transacción (por ejemplo, para el carrito de compras de un cliente) y no tendrá claves privadas que puedan ser robadas. Sin billeteras HD, la única forma de hacer esto es generar miles de direcciones de Ethereum en un servidor seguro separado y luego precargarlas en el servidor de comercio electrónico. Ese enfoque es engorroso y requiere mantenimiento constante para asegurar que el servidor no se quede sin claves; de ahí la preferencia por usar claves públicas extendidas de billeteras HD.
 
-Another common application of this solution is for cold-storage or hardware wallets. In that scenario, the extended private key can be stored in a hardware wallet, while the extended public key can be kept online. The user can create "receive" addresses at will while the private keys are safely stored offline. To spend the funds, the user can use the extended private key in an offline signing Ethereum client or sign transactions on the hardware wallet device.
+Otra aplicación común de esta solución es para billeteras de almacenamiento en frío o de hardware. En ese escenario, la clave privada extendida puede almacenarse en una billetera de hardware, mientras que la clave pública extendida puede mantenerse en línea. El usuario puede crear direcciones de "recepción" a voluntad mientras las claves privadas permanecen almacenadas de forma segura sin conexión. Para gastar los fondos, el usuario puede usar la clave privada extendida en un cliente de Ethereum con firma sin conexión o firmar transacciones en el dispositivo de billetera de hardware.
 
-#### Hardened Child Key Derivation
+#### Derivación endurecida de claves hijas
 
-The ability to derive a branch of public keys from an extended public key, or `xpub`, is very useful, but it comes with potential risk. Access to an `xpub` does not give access to child private keys. However, because the `xpub` contains the chain code (used to derive child public keys from the parent public key), if a child private key is known or somehow leaked, it can be used with the chain code to derive all the other child private keys. A single leaked child private key, together with a parent chain code, reveals all the private keys of all the children. Worse, the child private key together with a parent chain code can be used to deduce the parent private key.
+La capacidad de derivar una rama de claves públicas a partir de una clave pública extendida, o `xpub`, es muy útil, pero conlleva un riesgo potencial. Acceder a una `xpub` no da acceso a las claves privadas hijas. Sin embargo, como la `xpub` contiene el código de cadena (usado para derivar claves públicas hijas a partir de la clave pública madre), si se conoce o se filtra de alguna manera una clave privada hija, puede usarse junto con el código de cadena para derivar todas las demás claves privadas hijas. Una sola clave privada hija filtrada, junto con un código de cadena de la madre, revela todas las claves privadas de todas las hijas. Peor aún, la clave privada hija junto con un código de cadena de la madre puede usarse para deducir la clave privada madre.
 
-To counter this risk, HD wallets use an alternative derivation function called *hardened derivation*, which "breaks" the relationship between parent public key and child chain code. The hardened derivation function uses the parent private key to derive the child chain code, instead of the parent public key. This creates a "firewall" in the parent-child sequence, with a chain code that cannot be used to compromise a parent or sibling private key.
+Para contrarrestar este riesgo, las billeteras HD usan una función de derivación alternativa llamada *derivación endurecida*, que "rompe" la relación entre la clave pública madre y el código de cadena hijo. La función de derivación endurecida usa la clave privada madre para derivar el código de cadena hijo, en lugar de la clave pública madre. Esto crea un "cortafuegos" en la secuencia madre-hija, con un código de cadena que no puede usarse para comprometer una clave privada madre o hermana.
 
-In simple terms, if you want to use the convenience of an `xpub` to derive branches of public keys without exposing yourself to the risk of a leaked chain code, you should derive it from a hardened parent, rather than a normal parent. Best practice is to have the level-one children of the master keys always derived by hardened derivation, to prevent compromise of the master keys.
+En términos sencillos, si desea aprovechar la comodidad de una `xpub` para derivar ramas de claves públicas sin exponerse al riesgo de un código de cadena filtrado, debería derivarla de una madre endurecida en lugar de una madre normal. La buena práctica es que las hijas de nivel uno de las claves maestras siempre se deriven mediante derivación endurecida, para evitar que las claves maestras se vean comprometidas.
 
-#### Index Numbers for Normal and Hardened Derivation
+#### Números de índice para derivación normal y endurecida
 
-It is clearly desirable to be able to derive more than one child key from a given parent key. To manage this, an index number is used. Each index number, when combined with a parent key using the special child derivation function, gives a different child key. The index number used in the BIP-32 parent-to-child derivation function is a 32-bit integer. To easily distinguish between keys derived through the normal (unhardened) derivation function versus keys derived through hardened derivation, this index number is split into two ranges. Index numbers between 0 and 2^31^–1 (0x0 to 0x7FFFFFFF) are used *only* for normal derivation. Index numbers between 2^31^ and 2^32^–1 (0x80000000 to 0xFFFFFFFF) are used *only* for hardened derivation. Therefore, if the index number is less than 2^31^, the child is normal, whereas if the index number is equal to or above 2^31^, the child is hardened.
+Es claramente deseable poder derivar más de una clave hija a partir de una clave madre dada. Para administrar esto, se usa un número de índice. Cada número de índice, al combinarse con una clave madre mediante la función especial de derivación de hijas, da una clave hija distinta. El número de índice usado en la función de derivación de madre a hija de BIP-32 es un entero de 32 bits. Para distinguir fácilmente entre las claves derivadas mediante la función de derivación normal (no endurecida) y las derivadas mediante derivación endurecida, este número de índice se divide en dos rangos. Los números de índice entre 0 y 2^31^–1 (0x0 a 0x7FFFFFFF) se usan *solo* para derivación normal. Los números de índice entre 2^31^ y 2^32^–1 (0x80000000 a 0xFFFFFFFF) se usan *solo* para derivación endurecida. Por tanto, si el número de índice es menor que 2^31^, la hija es normal, mientras que si es igual o mayor que 2^31^, la hija es endurecida.
 
-To make the index numbers easier to read and display, the index numbers for hardened children are displayed starting from zero, but with a prime symbol. The first normal child key is therefore displayed as 0, whereas the first hardened child (index 0x80000000) is displayed as 0′. In sequence, then, the second hardened key would have an index of 0x80000001 and would be displayed as 1′, and so on. When you see an HD wallet index *i*′, that means 2^31^ + *i*.
+Para facilitar la lectura y visualización de los números de índice, los índices de las hijas endurecidas se muestran comenzando desde cero, pero con un símbolo de prima. Así, la primera clave hija normal se muestra como 0, mientras que la primera hija endurecida (índice 0x80000000) se muestra como 0′. Siguiendo la secuencia, la segunda clave endurecida tendría un índice de 0x80000001 y se mostraría como 1′, y así sucesivamente. Cuando vea un índice de billetera HD *i*′, significa 2^31^ + *i*.
 
-#### HD Wallet Key Identifier (Path)
+#### Identificador de clave de billetera HD (ruta)
 
-Keys in an HD wallet are identified using a "path" naming convention, with each level of the tree separated by a slash (`/`) character (see Table 5-5). Private keys derived from the master private key start with `m`. Public keys derived from the master public key start with `M`. Therefore, the first child private key of the master private key is `m/0`. The first child public key is `M/0`. The second grandchild of the first child is `m/0/1`, and so on.
+Las claves de una billetera HD se identifican mediante una convención de nombres de "ruta", con cada nivel del árbol separado por un carácter de barra (`/`) (véase la tabla 5-5). Las claves privadas derivadas de la clave privada maestra comienzan con `m`. Las claves públicas derivadas de la clave pública maestra comienzan con `M`. Por tanto, la primera clave privada hija de la clave privada maestra es `m/0`. La primera clave pública hija es `M/0`. La segunda nieta de la primera hija es `m/0/1`, y así sucesivamente.
 
-The "ancestry" of a key is read from right to left, until you reach the master key from which it was derived. For example, identifier `m/x/y/z` describes the key that is the *z*-th child of key `m/x/y`, which is the *y*-th child of key `m/x`, which is the *x*-th child of `m`.
+La "ascendencia" de una clave se lee de derecha a izquierda, hasta llegar a la clave maestra de la que se derivó. Por ejemplo, el identificador `m/x/y/z` describe la clave que es la hija número *z* de la clave `m/x/y`, que es la hija número *y* de la clave `m/x`, que es la hija número *x* de `m`.
 
-**Table 5-5. HD wallet path examples**
+**Tabla 5-5. Ejemplos de rutas de billeteras HD**
 
-| HD path | Key described |
+| Ruta HD | Clave descrita |
 |---|---|
-| m/0 | The first (0) child private key from the master private key (m) |
-| m/0/0 | The first grandchild private key of the first child (m/0) |
-| m/0'/0 | The first normal grandchild of the first hardened child (m/0') |
-| m/1/0 | The first grandchild private key of the second child (m/1) |
-| M/23/17/0/0 | The first great-great-grandchild public key of the first great-grandchild of the 18th grandchild of the 24th child |
+| m/0 | La primera (0) clave privada hija de la clave privada maestra (m) |
+| m/0/0 | La primera clave privada nieta de la primera hija (m/0) |
+| m/0'/0 | La primera nieta normal de la primera hija endurecida (m/0') |
+| m/1/0 | La primera clave privada nieta de la segunda hija (m/1) |
+| M/23/17/0/0 | La primera clave pública tataranieta de la primera bisnieta de la 18.ª nieta de la 24.ª hija |
 
-### Navigating the HD Wallet Tree Structure
+### Navegación por la estructura de árbol de la billetera HD
 
-The HD wallet tree structure is tremendously flexible. The flip side of this is that it also allows for unbounded complexity: each parent extended key can have four billion children—two billion normal children and two billion hardened children. Each of those children can have another four billion children, and so on. The tree can be as deep as you want, with a potentially infinite number of generations. With all that potential, it can become quite difficult to navigate these very large trees.
+La estructura de árbol de la billetera HD es tremendamente flexible. La contrapartida es que también permite una complejidad sin límites: cada clave madre extendida puede tener cuatro mil millones de hijas, dos mil millones normales y dos mil millones endurecidas. Cada una de esas hijas puede tener otros cuatro mil millones de hijas, y así sucesivamente. El árbol puede ser tan profundo como se desee, con una cantidad potencialmente infinita de generaciones. Con todo ese potencial, puede resultar bastante difícil navegar por estos árboles tan grandes.
 
-Two BIPs offer a way to manage this potential complexity by creating standards for the structure of HD wallet trees. BIP-43 proposes the use of the first hardened child index as a special identifier that signifies the "purpose" of the tree structure. Based on BIP-43, an HD wallet should use only one level-one branch of the tree, with the index number defining the purpose of the wallet by identifying the structure and namespace of the rest of the tree. More specifically, an HD wallet using only branch `m/i′/...` is intended to signify a specific purpose, and that purpose is identified by index number *i*.
+Dos BIP ofrecen una forma de administrar esta complejidad potencial mediante estándares para la estructura de los árboles de billeteras HD. BIP-43 propone usar el primer índice de hija endurecida como identificador especial que indica el "propósito" de la estructura del árbol. Según BIP-43, una billetera HD debería usar solo una rama de nivel uno del árbol, cuyo número de índice define el propósito de la billetera al identificar la estructura y el espacio de nombres del resto del árbol. Más específicamente, una billetera HD que usa solo la rama `m/i′/...` pretende indicar un propósito específico, y ese propósito se identifica mediante el número de índice *i*.
 
-Extending that specification, BIP-44 proposes a multicurrency, multiaccount structure signified by setting the "purpose" number to `44′`. All HD wallets following the BIP-44 structure are identified by the fact that they use only one branch of the tree: `m/44′/*`. BIP-44 specifies the structure as consisting of five predefined tree levels:
+Ampliando esa especificación, BIP-44 propone una estructura multimoneda y multicuenta que se indica fijando el número de "propósito" en `44′`. Todas las billeteras HD que siguen la estructura BIP-44 se identifican porque usan una sola rama del árbol: `m/44′/*`. BIP-44 especifica una estructura que consta de cinco niveles de árbol predefinidos:
 
     m / purpose′ / coin_type′ / account′ / change / address_index
 
-The first level, `purpose′`, is always set to `44′`. The second level, `coin_type′`, specifies the type of cryptocurrency coin, allowing for multicurrency HD wallets where each currency has its own subtree under the second level. There are several currencies defined in the standards document SLIP-0044; for example, Ethereum is `m/44′/60′`, Ethereum Classic is `m/44′/61′`, Bitcoin is `m/44′/0′`, and testnet for all currencies is `m/44′/1′`.
+El primer nivel, `purpose′`, siempre se fija en `44′`. El segundo nivel, `coin_type′`, especifica el tipo de criptomoneda y permite billeteras HD multimoneda donde cada moneda tiene su propio subárbol bajo el segundo nivel. Hay varias monedas definidas en el documento de estándares SLIP-0044; por ejemplo, Ethereum es `m/44′/60′`, Ethereum Classic es `m/44′/61′`, Bitcoin es `m/44′/0′` y la red de pruebas para todas las monedas es `m/44′/1′`.
 
-The third level of the tree is `account′`, which allows users to subdivide their wallets into separate logical subaccounts for accounting or organizational purposes. For example, an HD wallet might contain two Ethereum accounts: `m/44′/60′/0′` and `m/44′/60′/1′`. Each account is the root of its own subtree.
+El tercer nivel del árbol es `account′`, que permite a los usuarios subdividir sus billeteras en subcuentas lógicas separadas con fines contables u organizativos. Por ejemplo, una billetera HD podría contener dos cuentas de Ethereum: `m/44′/60′/0′` y `m/44′/60′/1′`. Cada cuenta es la raíz de su propio subárbol.
 
-Because BIP-44 was created originally for Bitcoin, it contains a "quirk" that isn't relevant in the Ethereum world. On the fourth level of the path, `change`, an HD wallet has two subtrees: one for creating receiving addresses and one for creating change addresses. Only the "receive" path is used in Ethereum, as there is no necessity for a change address like there is in Bitcoin. Note that whereas the previous levels used hardened derivation, this level uses normal derivation. This is to allow the account level of the tree to export extended public keys for use in a nonsecured environment.
+Como BIP-44 se creó originalmente para Bitcoin, contiene una "peculiaridad" que no es relevante en el mundo de Ethereum. En el cuarto nivel de la ruta, `change`, una billetera HD tiene dos subárboles: uno para crear direcciones de recepción y otro para crear direcciones de cambio. En Ethereum solo se usa la ruta de "recepción", ya que no se necesita una dirección de cambio como en Bitcoin. Observe que, mientras los niveles anteriores usaban derivación endurecida, este nivel usa derivación normal. Esto permite que el nivel de cuenta del árbol exporte claves públicas extendidas para usarlas en un entorno no protegido.
 
-Usable addresses are derived by the HD wallet as children of the fourth level, making the fifth level of the tree the `address_index`. For example, the third receiving address for Ethereum payments in the primary account would be `M/44′/60′/0′/0/2`. Table 5-6 shows a few more examples.
+La billetera HD deriva las direcciones utilizables como hijas del cuarto nivel, de modo que el quinto nivel del árbol es `address_index`. Por ejemplo, la tercera dirección de recepción para pagos de Ethereum en la cuenta principal sería `M/44′/60′/0′/0/2`. La tabla 5-6 muestra algunos ejemplos más.
 
-**Table 5-6. BIP-44 HD wallet structure examples**
+**Tabla 5-6. Ejemplos de estructura de billetera HD BIP-44**
 
-| HD path | Key described |
+| Ruta HD | Clave descrita |
 |---|---|
-| M/44′/60′/0′/0/2 | The third receiving public key for the primary Ethereum account |
-| M/44′/0′/3′/1/14 | The 15th change-address public key for the fourth Bitcoin account |
-| m/44′/2′/0′/0/1 | The second private key in the Litecoin main account, for signing transactions |
+| M/44′/60′/0′/0/2 | La tercera clave pública de recepción de la cuenta principal de Ethereum |
+| M/44′/0′/3′/1/14 | La 15.ª clave pública de dirección de cambio de la cuarta cuenta de Bitcoin |
+| m/44′/2′/0′/0/1 | La segunda clave privada de la cuenta principal de Litecoin, para firmar transacciones |
 
-## Security
+## Seguridad
 
-Let's start by introducing the concept of security versus ease of recovery. Taking these concepts to the extreme: what's the most secure seed? It's the one that no one can recover, not even you. So if the seed is created and all copies (physical or digital) are destroyed, that's the most secure seed in the world. Not great, as you wouldn't be able to recover it, but it's technically the most secure.
+Comencemos por introducir el concepto de seguridad frente a facilidad de recuperación. Llevando estos conceptos al extremo: ¿cuál es la semilla más segura? Aquella que nadie puede recuperar, ni siquiera usted. Así que, si se crea la semilla y se destruyen todas las copias (físicas o digitales), esa es la semilla más segura del mundo. No es una gran solución, ya que no podría recuperarla, pero técnicamente es la más segura.
 
-On the flip side, for ease of recovery, what's the easiest seed to recover? One that has the seed phrase written everywhere, like getting it tattooed on your body, in plain sight. That seed will be super easy to recover but not secure at all.
+Por otro lado, en cuanto a facilidad de recuperación, ¿cuál es la semilla más fácil de recuperar? Una cuya frase semilla esté escrita por todas partes, como tatuársela en el cuerpo, a plena vista. Esa semilla será facilísima de recuperar, pero no será segura en absoluto.
 
-Any choice you make for your operational security (OpSec) in self-custody will likely increase either the security or the ease of recovery of your seed phrase. Increasing security typically reduces ease of recovery, and vice versa. Sometimes, you may end up reducing both, which should be avoided.
+Cualquier decisión que tome para su seguridad operativa (OpSec) en autocustodia probablemente aumentará la seguridad o la facilidad de recuperación de su frase semilla. Aumentar la seguridad suele reducir la facilidad de recuperación, y viceversa. A veces, puede terminar reduciendo ambas, lo que debería evitarse.
 
-Even with a high-security system, no setup is 100% secure. You can do everything in your power to create a perfect system, but there will still be vulnerabilities. One of the most interesting is private-key collisions: essentially generating a seed that's already been used. Since seeds in hardware wallets are generated offline and there's no database of generated seeds, it's technically possible to generate the same wallet twice. The chances of this happening are astronomically small (you're more likely to win the lottery twice in a row), but it's still a possibility.
+Incluso con un sistema de alta seguridad, ninguna configuración es 100% segura. Puede hacer todo lo que esté a su alcance para crear un sistema perfecto, pero aun así habrá vulnerabilidades. Una de las más interesantes son las colisiones de claves privadas: en esencia, generar una semilla que ya se haya usado. Como las semillas de las billeteras de hardware se generan sin conexión y no existe una base de datos de semillas generadas, técnicamente es posible generar la misma billetera dos veces. Las probabilidades de que esto ocurra son astronómicamente pequeñas (es más probable ganar la lotería dos veces seguidas), pero sigue siendo una posibilidad.
 
-> **Warning**  
+> **Advertencia**  
 >
-> Often, there's no urgency in seed security. Either your seed has been stolen, in which case you're already in trouble, or it hasn't. This is especially true for Bitcoin wallets. For Ethereum, it is still the case, but there are situations where acting fast can save funds—for example, removing approvals to dangerous smart contracts. If you receive any urgent messages about your seed, it's probably a scam.
+> A menudo, no hay urgencia en la seguridad de la semilla. O su semilla ha sido robada, en cuyo caso ya está en problemas, o no lo ha sido. Esto es especialmente cierto para las billeteras de Bitcoin. En Ethereum sigue siendo así, pero hay situaciones donde actuar rápido puede salvar fondos, por ejemplo, revocar aprobaciones a contratos inteligentes peligrosos. Si recibe mensajes urgentes sobre su semilla, probablemente se trate de una estafa.
 
-Complex security mechanisms for hiding your seed are not a best practice. Although they may seem foolproof at first, professionals in the field can often recover these types of seeds with the right tools. And if it's so complex that even professionals can't recover it, there's a good chance you won't be able to when needed.
+Los mecanismos de seguridad complejos para ocultar su semilla no son una buena práctica. Aunque al principio parezcan infalibles, los profesionales del sector a menudo pueden recuperar este tipo de semillas con las herramientas adecuadas. Y si el sistema es tan complejo que ni siquiera los profesionales pueden recuperarla, es muy probable que usted tampoco pueda hacerlo cuando lo necesite.
 
-Another non–best practice is relying on obscurity for security. Your system should have as few "secret" components as possible, with the seed itself being the main one. If revealing parts of your system causes it to collapse, it's not secure.
+Otra mala práctica es depender de la oscuridad para la seguridad. Su sistema debería tener la menor cantidad posible de componentes "secretos", siendo la propia semilla el principal. Si revelar partes del sistema hace que colapse, no es seguro.
 
-A best practice is to follow what most others do. Trying to invent new systems or, worse, creating everything from scratch is wrong. It's not secure, and the majority of people don't have the technical skills to do it. Keep things simple. Simplicity is absolutely a best practice.
+Una buena práctica es seguir lo que hace la mayoría. Intentar inventar sistemas nuevos o, peor aún, crear todo desde cero está mal. No es seguro, y la mayoría de las personas no tiene las habilidades técnicas para hacerlo. Mantenga las cosas sencillas. La sencillez es, sin duda, una buena práctica.
 
-Making a backup of your seed is probably the most important best practice. Whether it's a hardware wallet or a browser wallet, a backup is essential. Backup storage should (a) withstand natural disasters, (b) be geographically separate from your hardware wallet, (c) be in a secure place, and (d) have tamper-evident packaging. Dividing your seed across multiple pieces of paper is not a best practice. It gives a false sense of security.
+Hacer una copia de respaldo de su semilla es probablemente la buena práctica más importante. Ya sea una billetera de hardware o una billetera de navegador, un respaldo es esencial. El almacenamiento del respaldo debería (a) resistir desastres naturales, (b) estar separado geográficamente de su billetera de hardware, (c) estar en un lugar seguro y (d) tener un empaque que evidencie cualquier manipulación. Dividir su semilla entre varias hojas de papel no es una buena práctica. Da una falsa sensación de seguridad.
 
-> **Tip**  
+> **Consejo**  
 >
-> If you don't have a secure place to store your seed, consider using a passphrase. The passphrase adds an extra layer of protection by being combined with your seed during the key-generation process. You can even store the passphrase digitally since it's useless without the seed. If someone gets your seed but not your passphrase, they won't be able to access your funds for a certain amount of time; this is because the passphrase can be brute-forced if the attacker has the seed.
+> Si no tiene un lugar seguro para guardar su semilla, considere usar una frase de contraseña. Esta agrega una capa adicional de protección al combinarse con su semilla durante el proceso de generación de claves. Incluso puede guardar la frase de contraseña de forma digital, ya que es inútil sin la semilla. Si alguien obtiene su semilla, pero no su frase de contraseña, no podrá acceder a sus fondos durante cierto tiempo; esto se debe a que la frase de contraseña puede descubrirse por fuerza bruta si el atacante tiene la semilla.
 
-Everyone's needs are different, and their security requirements will vary accordingly. But you should always follow best practices. Your needs may change over time, so stay aware and adjust your OpSec if needed.
+Las necesidades de cada persona son distintas, y sus requisitos de seguridad variarán en consecuencia. Pero siempre debería seguir las buenas prácticas. Sus necesidades pueden cambiar con el tiempo, así que manténgase atento y ajuste su OpSec si es necesario.
 
-After setting up your hardware wallet, test your ability to recover the seed. Do this at least once every 12 months, ensuring that your backup works and is accessible.
+Después de configurar su billetera de hardware, pruebe su capacidad para recuperar la semilla. Hágalo al menos una vez cada 12 meses, asegurándose de que su respaldo funcione y sea accesible.
 
-What does a secure system look like? A trusted hardware wallet (like Trezor), at least one safe backup (never saved digitally), and a plan for inheritance in case something happens to you.
+¿Cómo es un sistema seguro? Una billetera de hardware de confianza (como Trezor), al menos un respaldo seguro (nunca guardado de forma digital) y un plan de herencia por si le sucede algo.
 
-> **Note**  
+> **Nota**  
 >
-> Inheritance is a very complicated topic. We recommend reading *Cryptoasset Inheritance Planning: A Simple Guide for Owners* by Pamela Morgan (Merkle Bloom).
+> La herencia es un tema muy complicado. Recomendamos leer *Cryptoasset Inheritance Planning: A Simple Guide for Owners*, de Pamela Morgan (Merkle Bloom).
 
-## Improving on User Experience
+## Mejoras en la experiencia de usuario
 
-As we mentioned earlier, at a high level, a wallet is a software application that serves as the primary user interface to Ethereum. So for most of Ethereum's users, the wallet is most of the user experience. For years, it has not really been improved. For example, the most popular browser wallet at the time of writing is MetaMask, which has not evolved that much since its inception; a close second, Rabby, has recently emerged. We will now examine a few updates to wallets that could drastically improve the user experience.
+Como mencionamos antes, a grandes rasgos, una billetera es una aplicación de software que funciona como interfaz principal del usuario con Ethereum. Por eso, para la mayoría de los usuarios de Ethereum, la billetera constituye gran parte de la experiencia de usuario. Durante años, esta no ha mejorado realmente. Por ejemplo, la billetera de navegador más popular al momento de escribir este libro es MetaMask, que no ha evolucionado demasiado desde su creación; recientemente ha surgido Rabby, que ocupa un cercano segundo lugar. Ahora examinaremos algunas actualizaciones de las billeteras que podrían mejorar drásticamente la experiencia de usuario.
 
-### Account Abstraction
+### Abstracción de cuentas
 
-Account abstraction (AA) on Ethereum is a way to make user accounts more flexible and easier to use. Normally, there are two types of accounts in Ethereum, as described in Chapter 2: EOAs and smart contract accounts. AA combines the benefits of both types. It allows regular accounts (EOAs) to behave more like smart contracts, meaning users can set up custom rules for how their accounts work, such as adding security features or allowing multiple people to sign transactions.
+La abstracción de cuentas (AA) en Ethereum es una forma de hacer que las cuentas de usuario sean más flexibles y fáciles de usar. Normalmente, existen dos tipos de cuentas en Ethereum, como se describe en el capítulo 2: EOA y cuentas de contratos inteligentes. La AA combina las ventajas de ambos tipos. Permite que las cuentas normales (EOA) se comporten más como contratos inteligentes, lo que significa que los usuarios pueden establecer reglas personalizadas para el funcionamiento de sus cuentas, como agregar funciones de seguridad o permitir que varias personas firmen transacciones.
 
-With AA, Ethereum can become more user-friendly and flexible. For example, you could recover a lost account without relying solely on a private key, or you could pay transaction fees in any token, not just ether.
+Con la AA, Ethereum puede volverse más fácil de usar y flexible. Por ejemplo, podría recuperar una cuenta perdida sin depender únicamente de una clave privada, o pagar las comisiones de transacción en cualquier token, no solo en ether.
 
-There have been multiple proposals to implement AA. The main distinction is that one group of proposals tried to implement AA without changing the Ethereum protocol. Another group of proposals, which will be implemented in the Pectra upgrade, will end up changing the Ethereum protocol.
+Ha habido múltiples propuestas para implementar la AA. La distinción principal es que un grupo de propuestas intentó implementarla sin cambiar el protocolo de Ethereum. Otro grupo de propuestas, que se implementará en la actualización Pectra, terminará cambiando el protocolo de Ethereum.
 
-Let's look at the main EIPs and Ethereum Requests for Comments (ERCs) for AA. Keep in mind that these proposals are evolving rapidly, and by the time this book is published, the AA landscape may have changed significantly. Nevertheless, it's still useful to explore what has been implemented and what is planned for the near future.
+Veamos las principales EIP y solicitudes de comentarios de Ethereum (ERC) para la AA. Tenga en cuenta que estas propuestas evolucionan rápidamente y que, para cuando se publique este libro, la situación de la AA podría haber cambiado significativamente. No obstante, sigue siendo útil explorar lo que se ha implementado y lo previsto para el futuro cercano.
 
-> **Tip**  
+> **Consejo**  
 >
-> It is important to understand the difference between an ERC, an EIP, and a Rollup Improvement Proposal (RIP). Essentially, EIPs and RIPs are improvements that center on changes in the Ethereum networks, whereas ERCs are application-related changes that do not have any impact on core network capability.
+> Es importante comprender la diferencia entre una ERC, una EIP y una propuesta de mejora de rollups (RIP). En esencia, las EIP y RIP son mejoras centradas en cambios en las redes de Ethereum, mientras que las ERC son cambios relacionados con las aplicaciones que no tienen ningún impacto en las capacidades fundamentales de la red.
 
 #### ERC-4337
 
-ERC-4337 is an advancement in the Ethereum blockchain that aims to make user accounts more versatile, secure, and user-friendly. Unlike typical upgrades that alter the Ethereum protocol, ERC-4337 introduces new functionality through smart contracts and off-chain components. As of September 2024, the primary on-chain implementation of AA is ERC-4337.
+ERC-4337 es un avance en la blockchain de Ethereum que busca hacer las cuentas de usuario más versátiles, seguras y fáciles de usar. A diferencia de las actualizaciones típicas que alteran el protocolo de Ethereum, ERC-4337 introduce funciones nuevas mediante contratos inteligentes y componentes fuera de la cadena. A septiembre de 2024, la principal implementación de AA en la cadena es ERC-4337.
 
-As we said in Chapter 2, traditional Ethereum accounts are divided into two types: EOAs, controlled solely by private keys, and contract accounts, which operate through smart contracts. EOAs dominate user wallets today because they are simple and economical; however, they are also limited in functionality and prone to security risks. Losing a private key can mean permanent loss of funds, and EOAs are not customizable for security features like multisignature setups or account-recovery options. Contract accounts can incorporate these security measures and more, yet their complexity and higher transaction fees have prevented their widespread use by everyday users. ERC-4337 overcomes this by enabling EOAs to function as smart contracts, merging the simplicity of EOAs with the security and flexibility of contract accounts.
+Como dijimos en el capítulo 2, las cuentas tradicionales de Ethereum se dividen en dos tipos: las EOA, controladas únicamente por claves privadas, y las cuentas de contrato, que operan mediante contratos inteligentes. Las EOA predominan hoy en las billeteras de usuario porque son sencillas y económicas; sin embargo, también tienen funciones limitadas y son propensas a riesgos de seguridad. Perder una clave privada puede significar la pérdida permanente de fondos, y las EOA no pueden personalizarse con funciones de seguridad como configuraciones de multifirma u opciones de recuperación de cuentas. Las cuentas de contrato pueden incorporar estas medidas de seguridad y más, pero su complejidad y sus mayores comisiones de transacción han impedido su uso generalizado entre los usuarios cotidianos. ERC-4337 supera esto al permitir que las EOA funcionen como contratos inteligentes, combinando la sencillez de las EOA con la seguridad y flexibilidad de las cuentas de contrato.
 
-The implementation of ERC-4337 introduces *UserOperations* to handle transactions differently, as shown in Figure 5-5. Rather than directly broadcasting each transaction to the blockchain, users submit UserOperations to a high-level mempool, where transactions are temporarily stored. Special participants, known as *bundlers*, collect and process these UserOperations, packaging them into a single Ethereum transaction. This process reduces network congestion and allows multiple operations to be processed in a more efficient, bundled manner. ERC-4337 also establishes a new role called *paymasters*. Typically, Ethereum transactions require the payment of gas fees in ETH, but paymasters make it possible for users to cover gas fees with alternative tokens or even to have a third-party sponsor pay the fees on their behalf. This shift eliminates a significant barrier, especially for newcomers who may not hold ETH, making the Ethereum network more inclusive and accessible.
+La implementación de ERC-4337 introduce *UserOperations* para manejar las transacciones de manera distinta, como se muestra en la figura 5-5. En lugar de difundir directamente cada transacción a la blockchain, los usuarios envían UserOperations a una mempool de alto nivel, donde las transacciones se almacenan temporalmente. Participantes especiales, conocidos como *agrupadores*, recopilan y procesan estas UserOperations, empaquetándolas en una sola transacción de Ethereum. Este proceso reduce la congestión de la red y permite procesar múltiples operaciones de forma más eficiente y agrupada. ERC-4337 también establece un nuevo rol llamado *patrocinadores de gas*. Normalmente, las transacciones de Ethereum requieren pagar las comisiones de gas en ETH, pero los patrocinadores de gas permiten que los usuarios cubran esas comisiones con tokens alternativos o incluso que un tercero patrocinador las pague en su nombre. Este cambio elimina una barrera importante, especialmente para los recién llegados que quizá no tengan ETH, y hace que la red de Ethereum sea más inclusiva y accesible.
 
-![ERC-4337 implementation diagram](images/ch5/maet_0505.png)
+![Diagrama de implementación de ERC-4337](images/ch5/maet_0505.png)
 
-Figure 5-5. ERC-4337 implementation diagram
+Figura 5-5. Diagrama de implementación de ERC-4337
 
-Instead of using the traditional public mempool, which hosts pending transactions for EOAs, UserOperations are sent to a specialized *UserOperation mempool*: a higher-level mempool specifically designed for these operations. Bundlers monitor the UserOperation mempool, collecting multiple UserOperations to package them into a single "classic" transaction. They start by verifying each UserOperation's validity through the EntryPoint methods. After validation, the bundler submits this bundled transaction directly to the next proposed block, bypassing the regular mempool. Bundlers can either act as block builders themselves or collaborate with block builders to add the transaction to the blockchain.
+En lugar de usar la mempool pública tradicional, que aloja transacciones pendientes de las EOA, las UserOperations se envían a una *mempool de UserOperation* especializada: una mempool de nivel superior diseñada específicamente para estas operaciones. Los agrupadores supervisan la mempool de UserOperation y recopilan múltiples UserOperations para empaquetarlas en una sola transacción "clásica". Comienzan verificando la validez de cada UserOperation mediante los métodos de EntryPoint. Después de la validación, el agrupador envía esta transacción agrupada directamente al siguiente bloque propuesto, sin pasar por la mempool normal. Los agrupadores pueden actuar como constructores de bloques o colaborar con ellos para agregar la transacción a la blockchain.
 
 #### EIP-2938
 
-While ERC-4337 focuses on AA at a high level via smart contracts without changing Ethereum's core, EIP-2938 goes a step further by proposing that AA be embedded within the protocol layer itself. This lower-level approach allows for even more direct and flexible interactions among users, smart contracts, and applications by fundamentally changing how the EVM treats accounts. Through EIP-2938, users could handle operations without traditional EOAs, removing reliance on private-key-based accounts and enabling a greater diversity of account management systems, such as multisignature accounts or social recovery accounts, directly on Ethereum's protocol level.
+Mientras que ERC-4337 se centra en la AA a un nivel alto mediante contratos inteligentes sin cambiar el núcleo de Ethereum, EIP-2938 va un paso más allá al proponer que la AA se incorpore a la propia capa de protocolo. Este enfoque de nivel inferior permite interacciones aún más directas y flexibles entre usuarios, contratos inteligentes y aplicaciones al cambiar fundamentalmente cómo la EVM trata las cuentas. Mediante EIP-2938, los usuarios podrían manejar operaciones sin EOA tradicionales, eliminando la dependencia de cuentas basadas en claves privadas y permitiendo una mayor diversidad de sistemas de administración de cuentas, como cuentas multifirma o de recuperación social, directamente en el nivel de protocolo de Ethereum.
 
-The main difference between EIP-2938 and some existing AA proposals lies in the focus on integrating abstraction directly into the protocol, rather than layering it on top. With EIP-2938, Ethereum would support "operations" rather than "transactions," where each operation could represent a more versatile, customizable transaction type. EIP-2938 can redefine Ethereum's transactions as programmable objects, supporting a broader spectrum of use cases. By treating accounts and transactions as inherently programmable, it expands Ethereum's utility beyond standard payments and contract interactions, fitting perfectly with the increasingly complex applications being built on the network.
+La diferencia principal entre EIP-2938 y algunas propuestas de AA existentes radica en el enfoque de integrar la abstracción directamente en el protocolo, en lugar de superponerla. Con EIP-2938, Ethereum admitiría "operaciones" en lugar de "transacciones", donde cada operación podría representar un tipo de transacción más versátil y personalizable. EIP-2938 puede redefinir las transacciones de Ethereum como objetos programables, admitiendo un espectro más amplio de casos de uso. Al tratar las cuentas y transacciones como inherentemente programables, amplía la utilidad de Ethereum más allá de los pagos estándar y las interacciones con contratos, encajando perfectamente con las aplicaciones cada vez más complejas que se construyen en la red.
 
 #### RIP-7560
 
-The RIP-7560 proposal integrates EIP-2938 and ERC-4337 into a unified approach for native AA, splitting Ethereum's transaction scope into validation, execution, and post-transaction steps. By separating transaction validation into distinct processes for authorization and payment of gas fees, it enables one contract to sponsor gas fees for another account's transaction. This approach maintains compatibility with ERC-4337's ecosystem while working toward the goal of fully native AA.
+La propuesta RIP-7560 integra EIP-2938 y ERC-4337 en un enfoque unificado de AA nativa, dividiendo el ámbito de las transacciones de Ethereum en pasos de validación, ejecución y posteriores a la transacción. Al separar la validación de transacciones en procesos distintos para la autorización y el pago de comisiones de gas, permite que un contrato patrocine las comisiones de gas de la transacción de otra cuenta. Este enfoque mantiene la compatibilidad con el ecosistema de ERC-4337 mientras avanza hacia el objetivo de una AA completamente nativa.
 
-ERC-4337 introduces AA at the application level, but it comes with limitations due to its out-of-protocol design. These drawbacks include extra gas costs, limited censorship resistance, a dependency on nonstandard RPC methods, and restrictions that limit compatibility with existing contract expectations. Native AA, as proposed in EIP-2938, presents a more robust alternative by building these features directly into the protocol. However, EIP-2938 doesn't fully align with ERC-4337's structure, which has been widely tested and implemented without protocol changes.
+ERC-4337 introduce la AA en el nivel de aplicación, pero tiene limitaciones debido a su diseño externo al protocolo. Estas desventajas incluyen costos adicionales de gas, resistencia limitada a la censura, dependencia de métodos RPC no estándar y restricciones que limitan la compatibilidad con las expectativas de los contratos existentes. La AA nativa, como se propone en EIP-2938, presenta una alternativa más robusta al incorporar estas funciones directamente en el protocolo. Sin embargo, EIP-2938 no se alinea completamente con la estructura de ERC-4337, que se ha probado e implementado ampliamente sin cambios de protocolo.
 
-By combining EIP-2938's built-in protocol-level features with the practical insights gained from ERC-4337, this proposal brings together the best of both approaches. This hybrid approach aims to lower gas costs, improve the reliability of transactions by making them more resistant to censorship, and ensure compatibility with current and future Ethereum contracts. Gradually moving from EOAs to smart contract accounts would also reduce risks tied to private keys, making Ethereum more secure and easier to use. Importantly, this setup ensures that those already using ERC-4337 can smoothly adopt these new features.
+Al combinar las funciones de nivel de protocolo incorporadas en EIP-2938 con los conocimientos prácticos obtenidos de ERC-4337, esta propuesta reúne lo mejor de ambos enfoques. Este enfoque híbrido busca reducir los costos de gas, mejorar la fiabilidad de las transacciones al hacerlas más resistentes a la censura y asegurar la compatibilidad con los contratos actuales y futuros de Ethereum. La transición gradual de EOA a cuentas de contratos inteligentes también reduciría los riesgos asociados a las claves privadas, haciendo que Ethereum sea más seguro y fácil de usar. Es importante que esta configuración permite a quienes ya usan ERC-4337 adoptar estas nuevas funciones sin dificultades.
 
-Figure 5-6 represents the transaction flow for AA as outlined in RIP-7560. The process incorporates several key contracts that handle validation, deployment, and execution, creating a streamlined, modular approach to managing user accounts and transactions on the Ethereum blockchain.
+La figura 5-6 representa el flujo de transacciones de AA descrito en RIP-7560. El proceso incorpora varios contratos clave que manejan la validación, el despliegue y la ejecución, creando un enfoque simplificado y modular para administrar cuentas de usuario y transacciones en la blockchain de Ethereum.
 
-![RIP-7560 transaction flow](images/ch5/maet_0506.png)
+![Flujo de transacciones de RIP-7560](images/ch5/maet_0506.png)
 
-Figure 5-6. RIP-7560 transaction flow
+Figura 5-6. Flujo de transacciones de RIP-7560
 
-The flow begins with a nonce check by the Nonce Manager Contract to ensure that the transaction is unique and hasn't been replayed. This is a crucial step for transaction integrity because it prevents double-spending or accidental repeats. If the nonce is valid, the system moves forward; otherwise, the transaction is halted.
+El flujo comienza con una comprobación del nonce por parte del contrato administrador de nonces para asegurar que la transacción sea única y no se haya reproducido. Este es un paso fundamental para la integridad de las transacciones porque evita el doble gasto o las repeticiones accidentales. Si el nonce es válido, el sistema avanza; de lo contrario, la transacción se detiene.
 
-Next, the process checks if the user's Account Contract (a smart wallet) already exists. If not, the Deployer Contract steps in to create this wallet, allowing the user to participate in transactions. Once it is deployed, or if it is already in place, the Account Contract itself performs a validation check to confirm that the transaction is legitimate and aligns with the contract's logic. This ensures that only authorized actions proceed, adding a layer of security and customization to each user's wallet.
+A continuación, el proceso comprueba si el contrato de cuenta del usuario (una billetera inteligente) ya existe. Si no, el contrato de despliegue interviene para crear esta billetera, permitiendo al usuario participar en transacciones. Una vez desplegado, o si ya existe, el propio contrato de cuenta realiza una comprobación de validación para confirmar que la transacción sea legítima y se ajuste a la lógica del contrato. Esto asegura que solo continúen las acciones autorizadas, agregando una capa de seguridad y personalización a la billetera de cada usuario.
 
-An interesting feature of this flow is the optional involvement of a Paymaster Contract. If specified, this contract can cover the gas fees for the transaction or offer alternative payment methods. When a paymaster is involved, it undergoes its own validation process to ensure it can legitimately cover the transaction costs. This flexibility allows for sponsorship models and potentially reduces the burden of transaction fees on users.
+Una característica interesante de este flujo es la participación opcional de un contrato patrocinador de gas. Si se especifica, este contrato puede cubrir las comisiones de gas de la transacción u ofrecer métodos de pago alternativos. Cuando interviene un patrocinador de gas, pasa por su propio proceso de validación para asegurar que pueda cubrir legítimamente los costos de la transacción. Esta flexibilidad permite modelos de patrocinio y puede reducir la carga de las comisiones de transacción para los usuarios.
 
-Once all validations are complete, the Ethereum Execution Layer begins processing the transaction. During execution, an Execution Frame is used to handle the transaction details and monitor its progression. After execution, if a paymaster was involved, it performs any necessary postprocessing to finalize the transaction sponsorship.
+Una vez completadas todas las validaciones, la capa de ejecución de Ethereum comienza a procesar la transacción. Durante la ejecución, se usa un marco de ejecución para manejar los detalles de la transacción y supervisar su avance. Después de la ejecución, si intervino un patrocinador de gas, este realiza el posprocesamiento necesario para finalizar el patrocinio de la transacción.
 
 #### EIP-5806
 
-EIP-5806 introduces a new transaction type, enabling EOAs to run custom code through a "delegate call" mechanism.
+EIP-5806 introduce un nuevo tipo de transacción que permite a las EOA ejecutar código personalizado mediante un mecanismo de "llamada delegada".
 
-Currently, EOAs can only deploy contracts or send "call" transactions, limiting user interactions with the blockchain. This restriction affects usability since EOAs cannot perform tasks like batching multiple actions into one transaction or executing complex operations. While AA could solve these issues, its adoption path remains uncertain, and not all users can migrate because of costs and nontransferable asset custody.
+Actualmente, las EOA solo pueden desplegar contratos o enviar transacciones de "llamada", lo que limita las interacciones del usuario con la blockchain. Esta restricción afecta la facilidad de uso, ya que las EOA no pueden realizar tareas como agrupar múltiples acciones en una transacción o ejecutar operaciones complejas. Si bien la AA podría resolver estos problemas, su camino de adopción sigue siendo incierto y no todos los usuarios pueden migrar debido a los costos y a la custodia de activos no transferibles.
 
-This proposal offers a straightforward way for EOAs to execute custom code with minimal EVM changes and familiar security standards. By allowing EOAs to delegate calls to specific contracts, users gain more control and flexibility, enabling complex operations like multicall batching or secure token transfers. Unlike other AA proposals, this approach aims to improve EOA user experience without replacing existing abstraction methods, making it an accessible option for enhanced EOA functionality in the near future.
+Esta propuesta ofrece una forma directa para que las EOA ejecuten código personalizado con cambios mínimos en la EVM y estándares de seguridad conocidos. Al permitir que las EOA deleguen llamadas a contratos específicos, los usuarios obtienen más control y flexibilidad, lo que permite operaciones complejas como agrupar múltiples llamadas o transferir tokens de forma segura. A diferencia de otras propuestas de AA, este enfoque busca mejorar la experiencia de usuario de las EOA sin reemplazar los métodos de abstracción existentes, lo que lo convierte en una opción accesible para ampliar las funciones de las EOA en el futuro cercano.
 
 #### EIP-3074
 
-EIP-3074 introduces two opcodes, `AUTH` and `AUTHCALL`, to allow EOAs to delegate control of their transactions to an "invoker" contract. The user signs a message containing the invoker and a commit (a hash of transaction values), ensuring that the invoker only processes authorized transactions. Replay protection is handled by the invoker, and users must trust this contract to avoid malicious behavior. This proposal improves transaction batching and enables flexible account delegation.
+EIP-3074 introduce dos códigos de operación, `AUTH` y `AUTHCALL`, para permitir que las EOA deleguen el control de sus transacciones a un contrato "invocador". El usuario firma un mensaje que contiene el invocador y un compromiso (un hash de los valores de la transacción), asegurando que el invocador solo procese transacciones autorizadas. El invocador maneja la protección contra reproducción, y los usuarios deben confiar en este contrato para evitar comportamientos maliciosos. Esta propuesta mejora la agrupación de transacciones y permite una delegación flexible de cuentas.
 
-`AUTH` lets users grant a smart contract permission to act on their behalf. It uses a digital signature (ECDSA) to verify this authorization, then stores the user's address for future transactions. `AUTHCALL` allows the authorized smart contract to perform transactions, such as sending tokens or interacting with other contracts. For example, if you want to swap 10 DAI for ETH, you can authorize the invoker (using `AUTH`) with one signature. The invoker will use `AUTHCALL` to approve Uniswap to spend your DAI and then execute the swap.
+`AUTH` permite a los usuarios otorgar a un contrato inteligente permiso para actuar en su nombre. Usa una firma digital (ECDSA) para verificar esta autorización y luego almacena la dirección del usuario para transacciones futuras. `AUTHCALL` permite al contrato inteligente autorizado realizar transacciones, como enviar tokens o interactuar con otros contratos. Por ejemplo, si desea intercambiar 10 DAI por ETH, puede autorizar al invocador (mediante `AUTH`) con una sola firma. El invocador usará `AUTHCALL` para autorizar a Uniswap a gastar sus DAI y luego ejecutar el intercambio.
 
-Initially, replay protection and fields like value, gas, and other `AUTHCALL` arguments were also signed. The design evolved to delegate these tasks to the invoker contract, making it crucial for users to trust the invoker. Users can "commit" to particular call properties by hashing them. The invoker validates only if the committed values, such as the nonce for replay protection, match the user's commitment, as shown in Figure 5-7. This ensures that the invoker processes exactly what the user authorized.
+Inicialmente, también se firmaban la protección contra reproducción y campos como el valor, el gas y otros argumentos de `AUTHCALL`. El diseño evolucionó para delegar estas tareas al contrato invocador, haciendo fundamental que los usuarios confíen en él. Los usuarios pueden "comprometerse" con propiedades particulares de la llamada aplicándoles un hash. El invocador valida solo si los valores comprometidos, como el nonce para la protección contra reproducción, coinciden con el compromiso del usuario, como se muestra en la figura 5-7. Esto asegura que el invocador procese exactamente lo que el usuario autorizó.
 
-![EIP-3074 commitment validation](images/ch5/maet_0507.png)
+![Validación del compromiso de EIP-3074](images/ch5/maet_0507.png)
 
-Figure 5-7. EIP-3074 commitment validation
+Figura 5-7. Validación del compromiso de EIP-3074
 
-The commit hash enables invokers to enforce various rules, such as allowing parallel nonces or bundling multiple calls under one signature. This enables multicall flows, such as consolidating an ERC-20 approve-transfer into a single transaction, as seen in Figure 5-8.
+El hash del compromiso permite a los invocadores aplicar diversas reglas, como permitir nonces paralelos o agrupar múltiples llamadas bajo una sola firma. Esto permite flujos de múltiples llamadas, como consolidar una aprobación y transferencia ERC-20 en una sola transacción, como se ve en la figura 5-8.
 
-![EIP-3074 multicall flow](images/ch5/maet_0508.png)
+![Flujo de múltiples llamadas de EIP-3074](images/ch5/maet_0508.png)
 
-Figure 5-8. EIP-3074 multicall flow
+Figura 5-8. Flujo de múltiples llamadas de EIP-3074
 
-Additionally, it supports delegating control of the EOA to other keys by signing a commit message with the delegate's address and an access policy, which the invoker verifies before relaying calls on behalf of the EOA, as seen in Figure 5-9.
+Además, permite delegar el control de la EOA a otras claves al firmar un mensaje de compromiso con la dirección del delegado y una política de acceso, que el invocador verifica antes de retransmitir llamadas en nombre de la EOA, como se ve en la figura 5-9.
 
-![EIP-3074 delegation flow](images/ch5/maet_0509.png)
+![Flujo de delegación de EIP-3074](images/ch5/maet_0509.png)
 
-Figure 5-9. EIP-3074 delegation flow
+Figura 5-9. Flujo de delegación de EIP-3074
 
 #### EIP-5003
 
-EIP-5003 introduces the `AUTHUSURP` opcode, which allows code deployment at an address authorized through EIP-3074, effectively removing the original EOA's signing key (when used with EIP-3607). Traditional EOAs control a lot of value on Ethereum but face limitations. There's no easy way to rotate keys, batch transactions for efficiency, or enable gas sponsorship without holding ETH. Contract accounts and AA address these issues, allowing users to customize security features, authentication methods, spending limits, key rotation, social recovery, and more. However, these benefits are mostly limited to users who actively adopt new standards through smart contract wallets and app-layer solutions, such as those proposed by ERC-4337. This leaves a substantial number of existing users, who have relied on EOAs since Ethereum's inception, with limited security and usability improvements.
+EIP-5003 introduce el código de operación `AUTHUSURP`, que permite desplegar código en una dirección autorizada mediante EIP-3074, eliminando efectivamente la clave de firma de la EOA original (cuando se usa con EIP-3607). Las EOA tradicionales controlan mucho valor en Ethereum, pero enfrentan limitaciones. No existe una forma sencilla de rotar claves, agrupar transacciones por eficiencia o habilitar el patrocinio de gas sin tener ETH. Las cuentas de contrato y la AA abordan estos problemas, permitiendo que los usuarios personalicen funciones de seguridad, métodos de autenticación, límites de gasto, rotación de claves, recuperación social y más. Sin embargo, estas ventajas se limitan principalmente a usuarios que adoptan activamente estándares nuevos mediante billeteras de contratos inteligentes y soluciones en la capa de aplicación, como las propuestas por ERC-4337. Esto deja a una cantidad considerable de usuarios existentes, que han dependido de las EOA desde el inicio de Ethereum, con mejoras limitadas en seguridad y facilidad de uso.
 
-While EIP-3074 offers an initial solution by enabling EOAs to delegate signing authority to a contract account, it stops short of allowing the EOA to completely revoke this original signing key. This gap introduces a security risk: even with delegated authority, the primary private key remains a potential vulnerability. If compromised, the entire account remains at risk, as there is currently no revocation option for an exposed private key. If a user's private key is leaked, either by accident or through a malicious attack, the only option is to create a new wallet and painstakingly migrate assets individually, an expensive and often incomplete process due to the immovability of certain assets within existing smart contracts.
+Si bien EIP-3074 ofrece una solución inicial al permitir que las EOA deleguen la autoridad de firma a una cuenta de contrato, no llega a permitir que la EOA revoque completamente esta clave de firma original. Esta brecha introduce un riesgo de seguridad: incluso con autoridad delegada, la clave privada principal sigue siendo una vulnerabilidad potencial. Si se ve comprometida, toda la cuenta sigue en riesgo, ya que actualmente no existe una opción de revocación para una clave privada expuesta. Si la clave privada de un usuario se filtra, ya sea por accidente o por un ataque malicioso, la única opción es crear una billetera nueva y migrar los activos individualmente con mucho esfuerzo, un proceso costoso y a menudo incompleto debido a la inmovilidad de ciertos activos dentro de contratos inteligentes existentes.
 
-With this EIP, `AUTHUSURP` provides a secure transition path for EOA holders. It allows EOAs to fully transfer control to a smart contract, removing the original key's authority and thereby eliminating it as a security threat.
+Con esta EIP, `AUTHUSURP` proporciona una vía de transición segura para los titulares de EOA. Permite que las EOA transfieran completamente el control a un contrato inteligente, eliminando la autoridad de la clave original y, por tanto, eliminándola como amenaza de seguridad.
 
 #### EIP-7702
 
-EIP-7702 is the main AA EIP expected to be implemented in Pectra by early 2025. (Note: this chapter was written in September and October 2024, which is why we are using future tense.) EIP-7702 introduces a "set code transaction" under EIP-2718, enabling an EOA to delegate certain code to be executed on its behalf by authorized addresses.
+EIP-7702 es la principal EIP de AA que se espera implementar en Pectra para principios de 2025. (Nota: este capítulo se escribió en septiembre y octubre de 2024, por eso usamos el tiempo futuro). EIP-7702 introduce una "transacción de establecimiento de código" bajo EIP-2718, permitiendo que una EOA delegue cierto código para que direcciones autorizadas lo ejecuten en su nombre.
 
-> **Note**  
+> **Nota**  
 >
-> EIP-2718 introduces a "typed transaction envelope" format for Ethereum, supporting multiple transaction types within the protocol. This standardized format allows backward-compatible transaction upgrades, enabling future improvements with new transaction types while maintaining existing structures. This will be explained in more detail in Chapter 6. This EIP also adjusts EIP-3607's restrictions, allowing transactions from EOAs flagged with a delegation designation. It enables secure delegation for EOAs, adding improved account-management capabilities to Ethereum.
+> EIP-2718 introduce un formato de "sobre de transacción tipada" para Ethereum, que admite múltiples tipos de transacciones dentro del protocolo. Este formato estandarizado permite actualizaciones de transacciones compatibles con versiones anteriores, habilitando mejoras futuras con tipos de transacciones nuevos mientras se mantienen las estructuras existentes. Esto se explicará con más detalle en el capítulo 6. Esta EIP también ajusta las restricciones de EIP-3607, permitiendo transacciones de EOA marcadas con una designación de delegación. Habilita la delegación segura para las EOA y agrega capacidades mejoradas de administración de cuentas a Ethereum.
 >
-> A question arises around how users should specify the code they intend to run in their accounts. The main options are to include the bytecode directly in the transaction or to reference a pointer to the code. The simplest pointer is the address of some code deployed on chain. Direct code specification allows EOAs to execute arbitrary code within the transaction calldata. One consideration when signing a code pointer is whether that address points to the intended code on another chain; wallet maintainers can hardcode a single EIP-7702 authorization message, ensuring cross-chain code consistency.
+> Surge una pregunta sobre cómo deberían especificar los usuarios el código que pretenden ejecutar en sus cuentas. Las opciones principales son incluir el bytecode directamente en la transacción o hacer referencia a un puntero al código. El puntero más sencillo es la dirección de algún código desplegado en la cadena. La especificación directa del código permite que las EOA ejecuten código arbitrario dentro de calldata de la transacción. Una consideración al firmar un puntero al código es si esa dirección apunta al código previsto en otra cadena; quienes mantienen las billeteras pueden fijar en el código un único mensaje de autorización EIP-7702, asegurando la coherencia del código entre cadenas.
 
-There is an important security consideration to make. Once code is embedded in an EOA, EIP-7702 transactions may allow `msg.sender == tx.origin`, where the transaction creator is also the broadcasting address whenever the EOA code dispatches a call. Without EIP-7702, this scenario only occurs at the topmost execution layer of a transaction. Because EIP-7702 would enable transaction sponsoring, this would also be possible in other layers of execution. Consequently, this EIP breaks that invariant, affecting smart contracts that contain `require(msg.sender == tx.origin)` checks. This check serves at least three purposes:
+Hay una consideración de seguridad importante. Una vez que se incorpora código en una EOA, las transacciones EIP-7702 pueden permitir `msg.sender == tx.origin`, donde quien crea la transacción también es la dirección que la difunde cada vez que el código de la EOA emite una llamada. Sin EIP-7702, este escenario solo ocurre en la capa de ejecución superior de una transacción. Como EIP-7702 permitiría el patrocinio de transacciones, esto también sería posible en otras capas de ejecución. En consecuencia, esta EIP rompe esa invariante y afecta a los contratos inteligentes que contienen comprobaciones `require(msg.sender == tx.origin)`. Esta comprobación cumple al menos tres propósitos:
 
-1. Verifying that `msg.sender` is an EOA (as `tx.origin` must always be an EOA). This invariant remains unaffected by execution-layer depth; it is still possible to ensure that the `tx.origin` is the `msg.sender` if the depth of the call is 1.
+1. Verificar que `msg.sender` sea una EOA (ya que `tx.origin` siempre debe ser una EOA). Esta invariante no se ve afectada por la profundidad de la capa de ejecución; aún es posible asegurar que `tx.origin` sea `msg.sender` si la profundidad de la llamada es 1.
 
-2. Preventing atomic sandwich attacks, such as flash loans, which rely on altering state before and after target contract execution within the same atomic transaction. This protection is compromised by this EIP. However, using `tx.origin` for this purpose is generally considered poor practice and can already be bypassed by miners selectively including transactions.
+2. Evitar ataques sándwich atómicos, como los préstamos flash, que dependen de alterar el estado antes y después de la ejecución del contrato objetivo dentro de la misma transacción atómica. Esta protección se ve comprometida por esta EIP. Sin embargo, usar `tx.origin` con este fin generalmente se considera una mala práctica y los mineros ya pueden eludirlo incluyendo transacciones de forma selectiva.
 
-3. Guarding against reentrancy.
+3. Proteger contra la reentrada.
 
-Examples of the first two appear in Ethereum mainnet contracts, with the first being more common (and unaffected by this EIP). However, the third case is more vulnerable under this EIP, although no instances of reentrancy protection relying on `tx.origin` were observed during the initial review by the creators of the proposal.
+Hay ejemplos de los dos primeros casos en contratos de la red principal de Ethereum, siendo el primero el más común (y sin verse afectado por esta EIP). Sin embargo, el tercer caso es más vulnerable con esta EIP, aunque durante la revisión inicial realizada por los creadores de la propuesta no se observaron casos de protección contra reentrada que dependieran de `tx.origin`.
 
-> **Tip**  
+> **Consejo**  
 >
-> Unlike prior versions of this EIP and similar proposals, the delegation designation can be revoked at any time by signing and submitting an EIP-7702 authorization targeting a new address, using the account's current nonce. Without such action, a delegation remains valid indefinitely.
+> A diferencia de versiones anteriores de esta EIP y propuestas similares, la designación de delegación puede revocarse en cualquier momento firmando y enviando una autorización EIP-7702 que apunte a una dirección nueva, usando el nonce actual de la cuenta. Sin esa acción, una delegación sigue siendo válida indefinidamente.
 
-There is considerable interest in adding functionality improvements to EOAs, improving usability and, in some cases, improving security. One key application is transaction sponsorship, which enables users to transact without holding ETH to cover gas fees. In traditional Ethereum transactions, gas fees are paid in ETH, which may be inconvenient for users holding only other tokens or those who are new to the ecosystem. EIP-7702 introduces a model where transaction fees can be covered by third parties, temporarily or permanently, allowing users to complete transactions without ETH. This could simplify onboarding, making Ethereum applications more accessible to new users interested in specific DApps or tokens without requiring ETH management.
+Existe un interés considerable en agregar mejoras de funcionalidad a las EOA, mejorando su facilidad de uso y, en algunos casos, su seguridad. Una aplicación clave es el patrocinio de transacciones, que permite a los usuarios operar sin tener ETH para cubrir las comisiones de gas. En las transacciones tradicionales de Ethereum, las comisiones de gas se pagan en ETH, lo que puede ser inconveniente para usuarios que solo tienen otros tokens o que son nuevos en el ecosistema. EIP-7702 introduce un modelo donde terceros pueden cubrir las comisiones de transacción, temporal o permanentemente, permitiendo a los usuarios completar transacciones sin ETH. Esto podría simplificar la incorporación y hacer que las aplicaciones de Ethereum sean más accesibles para usuarios nuevos interesados en DApps o tokens específicos, sin requerir la administración de ETH.
 
-Traditional Ethereum accounts rely solely on a single private key, so losing it means losing access to the account and assets. EIP-7702's structure supports various recovery mechanisms, enabling users to regain access if they lose their private keys. Recovery mechanisms are especially valuable for security-focused users and for those who are new to blockchain and may find key management daunting. Potential recovery options include multisignature and social recovery, which allow selected contacts to assist in account restoration; this is a big step in Ethereum accounts' security and user-friendliness.
+Las cuentas tradicionales de Ethereum dependen únicamente de una sola clave privada, por lo que perderla significa perder el acceso a la cuenta y a los activos. La estructura de EIP-7702 admite diversos mecanismos de recuperación, permitiendo que los usuarios recuperen el acceso si pierden sus claves privadas. Los mecanismos de recuperación son especialmente valiosos para usuarios enfocados en la seguridad y para quienes son nuevos en blockchain y pueden encontrar intimidante la administración de claves. Las posibles opciones de recuperación incluyen multifirma y recuperación social, que permiten a contactos seleccionados ayudar a restaurar la cuenta; esto es un gran paso en la seguridad y facilidad de uso de las cuentas de Ethereum.
 
-EIP-7702 also introduces batching and privilege deescalation. Batching allows multiple actions to be processed within a single atomic transaction, enabling users to complete complex workflows—such as ERC-20 approval followed by token spending—in one step rather than two. Privilege deescalation offers subkeys with restricted permissions, authorizing actions like spending a specific amount or interacting only with certain applications, to improve security by minimizing exposure in case of compromise.
+EIP-7702 también introduce la agrupación y la reducción de privilegios. La agrupación permite procesar múltiples acciones dentro de una sola transacción atómica, permitiendo que los usuarios completen flujos de trabajo complejos, como una aprobación ERC-20 seguida del gasto de tokens, en un paso en lugar de dos. La reducción de privilegios ofrece subclaves con permisos restringidos, que autorizan acciones como gastar una cantidad específica o interactuar solo con ciertas aplicaciones, para mejorar la seguridad al minimizar la exposición en caso de compromiso.
 
-This EIP also modifies the invariants that traditionally govern account balance and nonce behaviors. It breaks the expectation that the balance of an EOA account can only decrease due to transactions from that account, and that an EOA's nonce cannot increment once transaction execution begins. These changes affect the mempool design and other EIPs. However, since the accounts are statically listed in the outer transaction, transaction-propagation rules can be adjusted to prevent forwarding of conflicting transactions. It does have forward compatibility with ERC-4337 and RIP-7560. Among other benefits, it enables EOAs to masquerade as contracts compatible with ERC-4337 bundles via the existing EntryPoint mechanism.
+Esta EIP también modifica las invariantes que tradicionalmente rigen el comportamiento del saldo y del nonce de las cuentas. Rompe la expectativa de que el saldo de una cuenta EOA solo puede disminuir debido a transacciones de esa cuenta, y de que el nonce de una EOA no puede incrementarse una vez que comienza la ejecución de la transacción. Estos cambios afectan el diseño de la mempool y otras EIP. Sin embargo, como las cuentas se enumeran estáticamente en la transacción externa, las reglas de propagación de transacciones pueden ajustarse para impedir el reenvío de transacciones en conflicto. Sí tiene compatibilidad futura con ERC-4337 y RIP-7560. Entre otras ventajas, permite que las EOA se presenten como contratos compatibles con los paquetes de ERC-4337 mediante el mecanismo EntryPoint existente.
 
-> **Note**  
+> **Nota**  
 >
-> A general design goal for state-transition changes is minimizing special cases in an EIP. Earlier iterations of this EIP resisted adding a special case for clearing an account's delegation designation. Generally, an account delegated to 0x0 behaves like a true EOA; however, most operations interacting with that account incur an additional cost. This extra cost may influence overall EIP adoption. For these reasons, a mechanism was included to allow users to restore their EOAs to their original state.
+> Un objetivo general de diseño para los cambios de transición de estado es minimizar los casos especiales en una EIP. Las primeras iteraciones de esta EIP se resistían a agregar un caso especial para borrar la designación de delegación de una cuenta. En general, una cuenta delegada a 0x0 se comporta como una verdadera EOA; sin embargo, la mayoría de las operaciones que interactúan con esa cuenta generan un costo adicional. Este costo extra puede influir en la adopción general de la EIP. Por estas razones, se incluyó un mecanismo para permitir a los usuarios restaurar sus EOA a su estado original.
 
-This EIP involves multiple security considerations, which will be the responsibility of the implementation and should be carefully evaluated. In addition to the noted `tx.origin` issue, there are three key considerations:
+Esta EIP implica múltiples consideraciones de seguridad, que serán responsabilidad de la implementación y deberían evaluarse cuidadosamente. Además del problema señalado con `tx.origin`, hay tres consideraciones clave:
 
-- Enabling EOAs to act like smart contracts challenges transaction propagation. Traditionally, EOAs could only send value via transactions. With this EIP, an EOA's delegated code can be invoked by anyone at any time in a transaction, preventing static balance validation by nodes; it essentially makes it harder for nodes to validate the balance of an address.
+- Permitir que las EOA actúen como contratos inteligentes plantea dificultades para la propagación de transacciones. Tradicionalmente, las EOA solo podían enviar valor mediante transacciones. Con esta EIP, cualquiera puede invocar el código delegado de una EOA en cualquier momento dentro de una transacción, impidiendo la validación estática del saldo por parte de los nodos; en esencia, dificulta que los nodos validen el saldo de una dirección.
 
-- Smart contract wallet developers must consider the implications of setting code in an account without execution. Normally, contracts are deployed with initcode, initializing storage slots deterministically. This EIP omits initcode execution for delegation, so developers must verify initial calldata to prevent an observer from front-running setup with an account they control.
+- Quienes desarrollan billeteras de contratos inteligentes deben considerar las implicaciones de establecer código en una cuenta sin ejecución. Normalmente, los contratos se despliegan con initcode, que inicializa de forma determinista los slots de almacenamiento persistente. Esta EIP omite la ejecución de initcode para la delegación, por lo que los desarrolladores deben verificar calldata inicial para impedir que un observador se adelante mediante front-running a la configuración con una cuenta que controle.
 
-- Replay protection (e.g., nonce handling) should be implemented by the delegate and signed. Without this, a malicious actor could reuse a signature, gaining near-complete control over the signer's EOA.
+- La protección contra reproducción (por ejemplo, el manejo del nonce) debería ser implementada por el delegado y firmada. Sin esto, un actor malicioso podría reutilizar una firma y obtener control casi completo sobre la EOA del firmante.
 
-#### The future of account abstraction
+#### El futuro de la abstracción de cuentas
 
-AA on Ethereum is a complex but promising idea, with many possible paths forward. Each proposal offers a different way to make user interactions simpler and more secure. Some improve on previous proposals, such as EIP-5003 building on EIP-3074, while others, such as EIP-5806, stand alone or even lack backward compatibility. This variety reflects a search for the best solution, with the final direction likely shaped by which options users find easiest and most effective. Although the exact future is unclear, AA holds real promise for improving the experience of using Ethereum.
+La AA en Ethereum es una idea compleja pero prometedora, con muchos caminos posibles. Cada propuesta ofrece una forma distinta de hacer las interacciones del usuario más sencillas y seguras. Algunas mejoran propuestas anteriores, como EIP-5003 que se apoya en EIP-3074, mientras que otras, como EIP-5806, son independientes o incluso carecen de compatibilidad con versiones anteriores. Esta variedad refleja una búsqueda de la mejor solución, cuya dirección final probablemente estará determinada por las opciones que los usuarios encuentren más fáciles y eficaces. Aunque el futuro exacto no está claro, la AA ofrece una promesa real de mejorar la experiencia de usar Ethereum.
 
-### Social Recovery
+### Recuperación social
 
-The primary EIP related to social recovery is EIP-2429. Titled "Secret Multisig Recovery," EIP-2429 introduces a mechanism that allows users to regain access to their wallets by assigning trusted individuals or entities as "guardians." In case a user loses their private key, they can use these guardians to help recover control of the wallet. The guardians are involved only during the recovery process, limiting their power, as shown in Figure 5-10.
+La principal EIP relacionada con la recuperación social es EIP-2429. Titulada "Secret Multisig Recovery", EIP-2429 introduce un mecanismo que permite a los usuarios recuperar el acceso a sus billeteras al designar personas o entidades de confianza como "guardianes". En caso de que un usuario pierda su clave privada, puede recurrir a estos guardianes para ayudar a recuperar el control de la billetera. Los guardianes solo intervienen durante el proceso de recuperación, lo que limita su poder, como se muestra en la figura 5-10.
 
-![Social recovery flow](images/ch5/maet_0510.png)
+![Flujo de recuperación social](images/ch5/maet_0510.png)
 
-Figure 5-10. Social recovery flow
+Figura 5-10. Flujo de recuperación social
 
-> **Note**  
+> **Nota**  
 >
-> Vitalik Buterin released an article in 2021 that said, and we are quoting, "This gets us to my preferred method for securing a wallet: social recovery." We do not know if the situation has changed, but it still might be the case that social recovery is Buterin's preferred method.
+> Vitalik Buterin publicó un artículo en 2021 que decía, y citamos: "Esto nos lleva a mi método preferido para proteger una billetera: la recuperación social". No sabemos si la situación ha cambiado, pero aún podría ser que la recuperación social sea el método preferido de Buterin.
 
-For normal use, a social recovery wallet functions like a regular one, allowing the user to sign transactions with their signing key. If the key is lost, social recovery activates, enabling the user to contact guardians, who sign a transaction to update the wallet's signing key. Guardians can be trusted individuals, devices, or institutions. Guardians can remain anonymous, and to prevent attacks, their identities aren't stored on chain. In case of the user's death, guardians can coordinate to recover the user's funds.
+En el uso normal, una billetera de recuperación social funciona como una billetera común, permitiendo al usuario firmar transacciones con su clave de firma. Si la clave se pierde, se activa la recuperación social, permitiendo al usuario contactar a los guardianes, quienes firman una transacción para actualizar la clave de firma de la billetera. Los guardianes pueden ser personas, dispositivos o instituciones de confianza. Pueden permanecer anónimos y, para evitar ataques, sus identidades no se almacenan en la cadena. En caso de muerte del usuario, los guardianes pueden coordinarse para recuperar sus fondos.
 
 ### ENS
 
-The Ethereum Name Service is like a Web3 version of traditional domain names, but instead of linking to websites, it connects human-readable names to Ethereum addresses. This makes dealing with long, complex blockchain addresses much easier. For instance, rather than having to send cryptocurrency to an address like `0xd8dA6BF...`, you can simply send it to something like `vitalik.eth`. This simplifies transactions and makes the whole process far less intimidating, especially for newcomers to crypto.
+Ethereum Name Service es como una versión Web3 de los nombres de dominio tradicionales, pero en lugar de enlazar a sitios web, conecta nombres legibles para las personas con direcciones de Ethereum. Esto facilita mucho el manejo de las direcciones largas y complejas de blockchain. Por ejemplo, en lugar de tener que enviar criptomonedas a una dirección como `0xd8dA6BF...`, puede enviarlas a algo como `vitalik.eth`. Esto simplifica las transacciones y hace que todo el proceso sea mucho menos intimidante, especialmente para quienes recién llegan al mundo de las criptomonedas.
 
-If you compare ENS to the Web2 world, it's similar to how DNS works. DNS takes IP addresses (which are hard to remember) and connects them to URLs like `google.com`, so you don't have to remember a string of numbers to visit a website. However, there's a key difference between ENS and DNS: ENS is decentralized. No central authority controls your `.eth` name once you own it. In Web2, domain names are managed by registrars and can be censored, suspended, or restricted. In ENS, you control your name entirely through your Ethereum wallet, meaning your `.eth` name is as secure as the wallet that holds it.
+Si se compara ENS con el mundo Web2, es similar al funcionamiento de DNS. DNS toma direcciones IP (que son difíciles de recordar) y las conecta con URL como `google.com`, de modo que no hace falta recordar una cadena de números para visitar un sitio web. Sin embargo, hay una diferencia clave entre ENS y DNS: ENS es descentralizado. Ninguna autoridad central controla su nombre `.eth` una vez que es suyo. En Web2, los nombres de dominio son administrados por registradores y pueden censurarse, suspenderse o restringirse. En ENS, controla su nombre completamente a través de su billetera de Ethereum, lo que significa que su nombre `.eth` es tan seguro como la billetera que lo contiene.
 
-When you're sending or receiving crypto, using a name like `andreas.eth` instead of a long, complex Ethereum address makes everything smoother and safer. It reduces the chance of making a mistake when entering an address, which can otherwise be a big risk in a transaction.
+Al enviar o recibir criptomonedas, usar un nombre como `andreas.eth` en lugar de una dirección de Ethereum larga y compleja hace que todo sea más fluido y seguro. Reduce la posibilidad de equivocarse al introducir una dirección, lo que de otro modo puede representar un gran riesgo en una transacción.
 
-Another cool aspect of ENS is that it provides a sense of digital identity. Just like owning a domain name for your website, having a unique `.eth` name can serve as your public identity on the blockchain.
+Otro aspecto interesante de ENS es que proporciona una sensación de identidad digital. Al igual que tener un nombre de dominio para su sitio web, tener un nombre `.eth` único puede funcionar como su identidad pública en la blockchain.
 
-## Conclusion
+## Conclusión
 
-Wallets are the foundation of any user-facing blockchain application. They enable users to manage collections of keys and addresses. Wallets also allow users to demonstrate their ownership of ether and authorize transactions by applying digital signatures, as we will see in Chapter 6.
+Las billeteras son la base de cualquier aplicación blockchain orientada al usuario. Permiten que los usuarios administren conjuntos de claves y direcciones. Las billeteras también permiten a los usuarios demostrar que son propietarios de ether y autorizar transacciones mediante firmas digitales, como veremos en el capítulo 6.

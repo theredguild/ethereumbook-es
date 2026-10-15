@@ -1,224 +1,224 @@
-# Chapter 6. Transactions
+# Capítulo 6. Transacciones
 
-*Transactions* are signed messages originated by an externally owned account, transmitted by the Ethereum network, and recorded on the Ethereum blockchain. This basic definition conceals a lot of surprising and fascinating details. Another way to look at transactions is that they are the only things that can trigger a change of state, or cause a contract to execute in the EVM. Ethereum is a global singleton state machine, and transactions are what make that state machine "tick," changing its state. Contracts don't run on their own. Ethereum doesn't run autonomously. Everything starts with a transaction.
+Las *transacciones* son mensajes firmados que se originan en una cuenta de propiedad externa, se transmiten por la red Ethereum y se registran en la blockchain de Ethereum. Esta definición básica oculta muchos detalles sorprendentes y fascinantes. Otra forma de ver las transacciones es que son lo único que puede desencadenar un cambio de estado o hacer que un contrato se ejecute en la EVM. Ethereum es una máquina de estados global de estado único (singleton), y las transacciones son lo que hace que esa máquina de estados "avance", cambiando su estado. Los contratos no se ejecutan por sí solos. Ethereum no funciona de manera autónoma. Todo comienza con una transacción.
 
-In this chapter, we will dissect transactions, show how they work, and examine the details. Note that much of this chapter is addressed to those who are interested in managing their own transactions at a low level, perhaps because they are writing a wallet app; you don't have to worry about this if you are happy using existing wallet applications, although you may find the details interesting!
+En este capítulo, desglosaremos las transacciones, mostraremos cómo funcionan y examinaremos los detalles. Se debe tener en cuenta que gran parte de este capítulo está dirigido a quienes tienen interés en gestionar sus propias transacciones a bajo nivel, quizá porque están desarrollando una aplicación de billetera; no es necesario preocuparse por esto si basta con usar las aplicaciones de billetera existentes, ¡aunque los detalles pueden resultar interesantes!
 
-## The Structure of a Transaction
+## La estructura de una transacción
 
-First, let's take a look at the basic structure of a transaction as it is serialized and transmitted on the Ethereum network. Each client that receives a serialized transaction will store it in memory using its own internal data structure, perhaps embellished with metadata that doesn't exist in the network serialized transaction itself. The network serialization is the only standard form of a transaction.
+Primero, veamos la estructura básica de una transacción tal como se serializa y se transmite por la red Ethereum. Cada cliente que recibe una transacción serializada la almacena en memoria usando su propia estructura de datos interna, quizá enriquecida con metadatos que no existen en la propia transacción serializada de la red. La serialización de red es la única forma estándar de una transacción.
 
-While in the first days of Ethereum, there was only a single type of transaction, [*EIP-2718*](https://oreil.ly/6Ku5V) has introduced a way to deal with different transaction types and handle them in a different way. In particular, every transaction starts with a single byte that specifies the type of the transaction:
+Aunque en los primeros días de Ethereum solo había un tipo de transacción, [*EIP-2718*](https://oreil.ly/6Ku5V) introdujo una forma de trabajar con distintos tipos de transacciones y manejarlos de manera diferente. En particular, cada transacción comienza con un solo byte que especifica su tipo:
 
 ```
 transaction = tx_type || tx_payload
 ```
 
-At the time of writing (June 2025), five transaction types exist, listed in Table 6-1.
+Al momento de escribir este texto (junio de 2025), existen cinco tipos de transacciones, enumerados en la Tabla 6-1.
 
-**Table 6-1. EIP-2718 transaction types**
+**Tabla 6-1. Tipos de transacciones de EIP-2718**
 
-| Type identifier | Name |
+| Identificador de tipo | Nombre |
 |-----------------|------|
-| `0x00` | Legacy transactions |
-| `0x01` | EIP-2930 transactions |
-| `0x02` | EIP-1559 transactions |
-| `0x03` | EIP-4844 transactions |
-| `0x04` | EIP-7702 transactions |
+| `0x00` | Transacciones heredadas |
+| `0x01` | Transacciones EIP-2930 |
+| `0x02` | Transacciones EIP-1559 |
+| `0x03` | Transacciones EIP-4844 |
+| `0x04` | Transacciones EIP-7702 |
 
-Let's analyze all of these in more detail.
+Analicemos todos estos tipos con más detalle.
 
-### Legacy Transactions
+### Transacciones heredadas
 
-A *legacy transaction* is a serialized binary message that contains the following data:
+Una *transacción heredada* es un mensaje binario serializado que contiene los siguientes datos:
 
-**Chain ID**
+**ID de cadena**
 
-The chain ID of the network you're sending the transaction to. It was added with EIP-155 as a simple replay-attack-protection mechanism.
-
-**Nonce**
-
-A sequence number, issued by the originating EOA and used to prevent message replay.
-
-**Gas price**
-
-The price of gas (in wei) that the originator is willing to pay.
-
-**Gas limit**
-
-The maximum amount of gas the originator is willing to buy for this transaction. Note that you will pay only for the real gas used in the transaction. Gas limit only represents the maximum amount of gas you're willing to pay for.
-
-**Recipient**
-
-The destination Ethereum address.
-
-**Value**
-
-The amount of ether to send to the destination.
-
-**Data**
-
-The variable-length binary data payload.
-
-**v,r,s**
-
-The three components of an ECDSA digital signature of the originating EOA.
-
-The transaction message's structure is serialized using the *recursive-length prefix (RLP)* encoding scheme, which was created specifically for simple, byte-perfect data serialization in Ethereum. All numbers in Ethereum are encoded as big-endian integers, of lengths that are multiples of 8 bits.
-
-Note that the field labels (`to`, `gas limit`, etc.) are shown here for clarity but are not part of the transaction serialized data, which contains the RLP-encoded field values. In general, RLP does not contain any field delimiters or labels. RLP's length prefix is used to identify the length of each field. Anything beyond the defined length belongs to the next field in the structure.
-
-While this is the actual transaction structure that is transmitted, most internal representations and user interface visualizations embellish this with additional information derived from the transaction or from the blockchain. For example, you may notice there is no "from" data in the address identifying the originator EOA. That is because the EOA's public key can be derived from the `v`, `r`, `s` components of the ECDSA signature. The address can, in turn, be derived from the public key. When you see a transaction showing a `from` field, that was added by the software used to visualize the transaction. Other metadata frequently added to the transaction by client software include the block number (once it is published and included in the blockchain) and a transaction ID (calculated hash). Again, this data is derived from the transaction and does not form part of the transaction message itself.
-
-### EIP-2930 Transactions
-
-[EIP-2930](https://oreil.ly/1dSza) transactions are the first ones to use the EIP-2718 typed transaction envelope, with `0x01` as transaction type. They are basically equal to the previous transaction type, but a new field called *access list* is added. It's an array of (addresses, storage slots) that lets a user prepay for addresses and storage slots that are going to be touched by the transaction. This way, during the execution in the EVM, the user is charged less gas.
-
-> **Note**  
->
-> To be more precise, addresses and their storage slots contained in the access list are included, respectively, in `accessed_addresses` and `accessed_storage_keys`, which are used by the EVM to differentiate between a warm and a cold access. Cold accesses charge way more gas than warm ones. For example, the `SLOAD` opcode charges 100 gas if the storage slot accessed is warm, 2,100 otherwise.
-
-This new transaction type was primarily introduced to address issues stemming from [EIP-2929](https://oreil.ly/_9kTv). EIP-2929 increased gas costs for state-access opcodes, which caused some smart contracts to fail when processing transactions correctly due to out-of-gas errors. By introducing access lists, users can prepay for the addresses and storage slots their transactions will access, preventing these failures.
-
-### EIP-1559 Transactions
-
-[EIP-1559](https://oreil.ly/ZBON6) transactions were introduced during the London hard fork on August 5, 2021, using `0x02` as transaction type. They completely change the structure of the fee market on Ethereum by introducing a new protocol parameter: the *base fee*.
-
-The base fee represents the minimum fee you need to pay to send a transaction on the Ethereum network. The block gas limit is doubled from 15 million to 30 million gas, and the *block gas target* is introduced equal to half the block gas limit: 15 million gas. The idea is to maintain the same amount of load on the Ethereum network than before on average but to let blocks be much bigger in size (potentially twice as big) if needed.
-
-To keep blocks at an average of 15 million gas used, the base fee isn't a fixed value: it changes based on blocks' utilization rate. If a block's gas used is higher than the block gas target, then the base fee increases; if the gas used is lower than the gas target, then it decreases.
-
-Block gas limit has (almost) always been increased at specific blocks at fixed, rounded values: 10 million, 12.5 million, 15 million, and 30 million, as you can see in Figure 6-1. In fact, even though validators (and miners with the old PoW consensus protocol) can slightly adjust the gas target on every block, which directly translates to the gas limit, block gas limit is a very crucial value, and everyone usually follows core developers' recommendations.
-
-![Block gas limit evolution over time](images/ch6/maet_0601.png)
-
-**Figure 6-1.** Block gas limit evolution
-
-Base fees do not go to validators (or miners) who create blocks; instead, they are immediately burned, reducing the total supply of ETH. A new fee is introduced—the *priority fee*—which you can think of as the tip you pay to validators (or miners) to incentivize them to include your transactions in the next block.
-
-> **Tip**  
->
-> In theory, you could create transactions that only pay the base fee—which is mandatory—and zero priority fee. The protocol doesn't oblige you to pay a tip to validators. But in reality, you should always include it to see your transactions confirmed in a reasonable amount of time. Note that wallets normally handle base and priority fees automatically for you and set them to the correct values.
-
-An EIP-1559 transaction is a serialized binary message that contains the following data:
-
-**Chain ID**
-
-Same as legacy transactions
+El ID de cadena de la red a la que se envía la transacción. Se agregó con EIP-155 como un mecanismo sencillo de protección contra ataques de repetición.
 
 **Nonce**
 
-Same as legacy transactions
+Un número de secuencia, emitido por la EOA de origen y utilizado para evitar la repetición de mensajes.
 
-**Max priority fee per gas**
+**Precio del gas**
 
-The price of gas (in wei) that the originator is willing to pay directly to validators as a tip for including the transaction in the block
+El precio del gas (en wei) que el emisor está dispuesto a pagar.
 
-**Max fee per gas**
+**Límite de gas**
 
-The price of gas (in wei) that the originator is willing to pay in total, comprehensive of base fee and priority fee
+La cantidad máxima de gas que el emisor está dispuesto a comprar para esta transacción. Se debe tener en cuenta que solo se pagará por el gas realmente utilizado en la transacción. El límite de gas solo representa la cantidad máxima de gas que se está dispuesto a pagar.
 
-**Gas limit**
+**Destinatario**
 
-Same as legacy transactions
+La dirección de Ethereum de destino.
 
-**Recipient**
+**Valor**
 
-Same as legacy transactions
+La cantidad de ether que se enviará al destino.
 
-**Access list**
+**Datos**
 
-Same as EIP-2930 transactions
-
-**Value**
-
-Same as legacy transactions
-
-**Data**
-
-Same as legacy transactions
+La carga de datos binarios de longitud variable.
 
 **v,r,s**
 
-Same as legacy transactions
+Los tres componentes de una firma digital ECDSA de la EOA de origen.
 
-As with all transaction types, the message structure is serialized using the RLP encoding scheme.
+La estructura del mensaje de la transacción se serializa mediante el esquema de codificación de *prefijo de longitud recursiva (RLP)*, que se creó específicamente para una serialización de datos sencilla y exacta a nivel de bytes en Ethereum. Todos los números en Ethereum se codifican como enteros big-endian, con longitudes que son múltiplos de 8 bits.
 
-### EIP-4844 Transactions
+Se debe tener en cuenta que las etiquetas de los campos (`to`, `gas limit`, etc.) se muestran aquí para mayor claridad, pero no forman parte de los datos serializados de la transacción, que contienen los valores de los campos codificados en RLP. En general, RLP no contiene delimitadores ni etiquetas de campos. El prefijo de longitud de RLP se utiliza para identificar la longitud de cada campo. Todo lo que esté más allá de la longitud definida pertenece al siguiente campo de la estructura.
 
-[EIP-4844](https://oreil.ly/JMJmB) transactions were introduced with the Cancun hard fork on March 13, 2024, using `0x03` as transaction type. We've already mentioned them in the section "KZG Commitment" in Chapter 4, and we'll discuss them further in Chapter 16. They are also called *blob-carrying transactions* because they come with a sidecar—a *blob*—which contains a large amount of data (about 131,000 bytes each) that is not accessible by the EVM but whose commitment can be accessed.
+Aunque esta es la estructura real de la transacción que se transmite, la mayoría de las representaciones internas y las visualizaciones de la interfaz de usuario la enriquecen con información adicional derivada de la transacción o de la blockchain. Por ejemplo, se puede notar que no hay datos "from" en la dirección que identifica la EOA de origen. Esto se debe a que la clave pública de la EOA puede derivarse de los componentes `v`, `r`, `s` de la firma ECDSA. A su vez, la dirección puede derivarse de la clave pública. Cuando se ve una transacción que muestra un campo `from`, este fue agregado por el software utilizado para visualizar la transacción. Otros metadatos que el software cliente agrega con frecuencia a la transacción incluyen el número de bloque (una vez que se publica y se incluye en la blockchain) y un ID de transacción (hash calculado). De nuevo, estos datos se derivan de la transacción y no forman parte del propio mensaje de la transacción.
 
-A new type of gas—the *blob gas*—is used for blobs. It's completely separated and independent from normal gas. It follows its own targeting rule even though it's still deeply inspired by EIP-1559. The idea is that if the blob gas used is greater than the target blob gas used, then the blob gas price increases; otherwise, it decreases.
+### Transacciones EIP-2930
 
-The serialized binary message shares the same format as EIP-1559 with two new additions:
+Las transacciones [EIP-2930](https://oreil.ly/1dSza) son las primeras en utilizar la envoltura de transacciones tipadas de EIP-2718, con `0x01` como tipo de transacción. Son básicamente iguales al tipo de transacción anterior, pero se agrega un nuevo campo llamado *lista de acceso*. Es un arreglo de (direcciones, slots de almacenamiento persistente) que permite al usuario pagar por adelantado por las direcciones y los slots de almacenamiento persistente a los que accederá la transacción. De esta manera, durante la ejecución en la EVM, se le cobra menos gas al usuario.
 
-**Max fee per blob gas**
-
-The price of blob gas (in wei) that the originator is willing to pay for blobs
-
-**Blob versioned hashed**
-
-A list of 32-byte values representing the versioned hash of every KZG commitment related to the blob
-
-> **Note**  
+> **Nota**  
 >
-> With the Cancun hard fork and the introduction of EIP-4844 transactions, the block header is expanded with two new elements:
+> Para ser más precisos, las direcciones y sus slots de almacenamiento persistente contenidos en la lista de acceso se incluyen, respectivamente, en `accessed_addresses` y `accessed_storage_keys`, que la EVM utiliza para diferenciar entre un acceso caliente y uno frío. Los accesos fríos cobran mucho más gas que los calientes. Por ejemplo, el código de operación `SLOAD` cobra 100 gas si el slot de almacenamiento persistente al que se accede está caliente, y 2,100 en caso contrario.
+
+Este nuevo tipo de transacción se introdujo principalmente para abordar problemas derivados de [EIP-2929](https://oreil.ly/_9kTv). EIP-2929 aumentó los costos de gas de los códigos de operación de acceso al estado, lo que provocó que algunos contratos inteligentes fallaran al procesar transacciones correctamente debido a errores por agotamiento de gas. Al introducir las listas de acceso, los usuarios pueden pagar por adelantado por las direcciones y los slots de almacenamiento persistente a los que accederán sus transacciones, evitando estas fallas.
+
+### Transacciones EIP-1559
+
+Las transacciones [EIP-1559](https://oreil.ly/ZBON6) se introdujeron durante el hard fork London el 5 de agosto de 2021, utilizando `0x02` como tipo de transacción. Cambian por completo la estructura del mercado de comisiones en Ethereum al introducir un nuevo parámetro del protocolo: la *comisión base*.
+
+La comisión base representa la comisión mínima que debes pagar para enviar una transacción en la red Ethereum. El límite de gas del bloque se duplica de 15 millones a 30 millones de gas, y se introduce el *objetivo de gas del bloque*, igual a la mitad del límite de gas del bloque: 15 millones de gas. La idea es mantener, en promedio, la misma cantidad de carga en la red Ethereum que antes, pero permitir que los bloques tengan un tamaño mucho mayor (potencialmente el doble) si es necesario.
+
+Para mantener los bloques en un promedio de 15 millones de gas utilizado, la comisión base no es un valor fijo: cambia según la tasa de utilización de los bloques. Si el gas utilizado de un bloque es mayor que el objetivo de gas del bloque, la comisión base aumenta; si el gas utilizado es menor que el objetivo de gas, disminuye.
+
+El límite de gas del bloque (casi) siempre se ha incrementado en bloques específicos a valores fijos y redondeados: 10 millones, 12.5 millones, 15 millones y 30 millones, como se puede ver en la Figura 6-1. De hecho, aunque los validadores (y los mineros con el antiguo protocolo de consenso PoW) pueden ajustar ligeramente el objetivo de gas en cada bloque, lo que se traduce directamente en el límite de gas, el límite de gas del bloque es un valor crucial, y todos suelen seguir las recomendaciones de los desarrolladores principales.
+
+![Evolución del límite de gas del bloque a lo largo del tiempo](images/ch6/maet_0601.png)
+
+**Figura 6-1.** Evolución del límite de gas del bloque
+
+Las comisiones base no van a los validadores (o mineros) que crean bloques; en cambio, se queman de inmediato, reduciendo el suministro total de ETH. Se introduce una nueva comisión, la *comisión de prioridad*, que se puede considerar como la propina que se paga a los validadores (o mineros) para incentivarlos a incluir las transacciones propias en el siguiente bloque.
+
+> **Consejo**  
 >
-> **Blob gas used**
+> En teoría, se podrían crear transacciones que solo paguen la comisión base, que es obligatoria, y una comisión de prioridad de cero. El protocolo no obliga a pagar una propina a los validadores. Pero, en la práctica, siempre se debería incluirla para que las transacciones se confirmen en un tiempo razonable. Se debe tener en cuenta que las billeteras normalmente gestionan las comisiones base y de prioridad de forma automática y las establecen en los valores correctos.
+
+Una transacción EIP-1559 es un mensaje binario serializado que contiene los siguientes datos:
+
+**ID de cadena**
+
+Igual que en las transacciones heredadas
+
+**Nonce**
+
+Igual que en las transacciones heredadas
+
+**Comisión de prioridad máxima por gas**
+
+El precio del gas (en wei) que el emisor está dispuesto a pagar directamente a los validadores como propina por incluir la transacción en el bloque
+
+**Comisión máxima por gas**
+
+El precio del gas (en wei) que el emisor está dispuesto a pagar en total, incluidas la comisión base y la comisión de prioridad
+
+**Límite de gas**
+
+Igual que en las transacciones heredadas
+
+**Destinatario**
+
+Igual que en las transacciones heredadas
+
+**Lista de acceso**
+
+Igual que en las transacciones EIP-2930
+
+**Valor**
+
+Igual que en las transacciones heredadas
+
+**Datos**
+
+Igual que en las transacciones heredadas
+
+**v,r,s**
+
+Igual que en las transacciones heredadas
+
+Como ocurre con todos los tipos de transacciones, la estructura del mensaje se serializa mediante el esquema de codificación RLP.
+
+### Transacciones EIP-4844
+
+Las transacciones [EIP-4844](https://oreil.ly/JMJmB) se introdujeron con el hard fork Cancun el 13 de marzo de 2024, utilizando `0x03` como tipo de transacción. Ya las mencionamos en la sección "Compromiso KZG" del Capítulo 4, y las analizaremos con más detalle en el Capítulo 16. También se denominan *transacciones portadoras de blobs* porque vienen con un anexo, un *blob*, que contiene una gran cantidad de datos (alrededor de 131,000 bytes cada uno) a los que la EVM no puede acceder, pero a cuyo compromiso sí puede acceder.
+
+Se utiliza un nuevo tipo de gas, el *gas de blobs*, para los blobs. Está completamente separado del gas normal y es independiente de este. Sigue su propia regla de objetivo, aunque sigue estando profundamente inspirado en EIP-1559. La idea es que, si el gas de blobs utilizado es mayor que el objetivo de gas de blobs utilizado, el precio del gas de blobs aumenta; de lo contrario, disminuye.
+
+El mensaje binario serializado comparte el mismo formato que EIP-1559 con dos nuevas adiciones:
+
+**Comisión máxima por gas de blobs**
+
+El precio del gas de blobs (en wei) que el emisor está dispuesto a pagar por los blobs
+
+**Hash versionado de blob**
+
+Una lista de valores de 32 bytes que representan el hash versionado de cada compromiso KZG relacionado con el blob
+
+> **Nota**  
 >
-> The total amount of blob gas used by all EIP-4844 transactions in the block
+> Con el hard fork Cancun y la introducción de las transacciones EIP-4844, el encabezado del bloque se amplía con dos nuevos elementos:
 >
-> **Excess blob gas**
+> **Gas de blobs utilizado**
 >
-> A running total of blob gas consumed in excess of the target, prior to the block
+> La cantidad total de gas de blobs utilizado por todas las transacciones EIP-4844 del bloque
+>
+> **Exceso de gas de blobs**
+>
+> Un total acumulado del gas de blobs consumido por encima del objetivo, antes del bloque
 
-### EIP-7702 Transactions
+### Transacciones EIP-7702
 
-[EIP-7702](https://oreil.ly/W_28X) transactions were included in the Pectra hard fork on May 7, 2025, using `0x04` as transaction type. They allow EOAs to set the code in their account. Traditionally, EOAs have an empty code; they can just start a transaction but cannot really perform complex operations, unless they are interacting with a smart contract. EIP-7702 changes this, making it possible for EOAs to do operations such as the following.
+Las transacciones [EIP-7702](https://oreil.ly/W_28X) se incluyeron en el hard fork Pectra el 7 de mayo de 2025, utilizando `0x04` como tipo de transacción. Permiten a las EOA establecer el código de su cuenta. Tradicionalmente, las EOA tienen un código vacío; solo pueden iniciar una transacción, pero no pueden realizar realmente operaciones complejas, a menos que interactúen con un contrato inteligente. EIP-7702 cambia esto y permite a las EOA realizar operaciones como las siguientes.
 
-**Batching**
+**Agrupación por lotes**
 
-Allows multiple operations from the same user in one atomic transaction, such as an ERC-20 approval followed by spending that approval, which is a very common workflow in many decentralized exchanges.
+Permite realizar múltiples operaciones del mismo usuario en una sola transacción atómica, como una aprobación ERC-20 seguida del uso de esa aprobación, lo que constituye un flujo de trabajo muy común en muchas plataformas de intercambio descentralizadas.
 
-**Sponsorship**
+**Patrocinio**
 
-Account X pays for a transaction on behalf of account Y.
+La cuenta X paga una transacción en nombre de la cuenta Y.
 
-**Privilege deescalation**
+**Reducción de privilegios**
 
-Users can sign subkeys and give them specific permissions that are much weaker than global access to the account—for example, a permission to spend up to 1% of the total balance per day or to interact only with a specific application.
+Los usuarios pueden firmar subclaves y darles permisos específicos que son mucho más limitados que el acceso global a la cuenta; por ejemplo, un permiso para gastar hasta el 1% del saldo total por día o para interactuar únicamente con una aplicación específica.
 
-The low-level details are quite complicated, and we recommend reading the [EIP official website](https://oreil.ly/W_28X) if you're interested. The high-level overview, though, is simple yet really powerful. EIP-7702 allows EOAs to assign themselves a *delegation designator*. This delegation designator points to a smart contract (live on the Ethereum mainnet), and when a transaction is sent to the EOA, it executes the code at the designated address as if that were the EOA's actual code, as shown in Figure 6-2.
+Los detalles de bajo nivel son bastante complicados, y recomendamos leer el [sitio web oficial de la EIP](https://oreil.ly/W_28X) si resulta de interés. Sin embargo, la descripción general de alto nivel es sencilla y, a la vez, muy potente. EIP-7702 permite a las EOA asignarse un *designador de delegación*. Este designador de delegación apunta a un contrato inteligente (activo en la red principal de Ethereum) y, cuando se envía una transacción a la EOA, esta ejecuta el código de la dirección designada como si fuera el código real de la EOA, como se muestra en la Figura 6-2.
 
-![EIP-7702 delegation designator](images/ch6/maet_0602.png)
+![Designador de delegación de EIP-7702](images/ch6/maet_0602.png)
 
-**Figure 6-2.** EIP-7702 delegation mechanism
+**Figura 6-2.** Mecanismo de delegación de EIP-7702
 
-## The Transaction Nonce
+## El nonce de la transacción
 
-The *nonce* is one of the most important and least understood components of a transaction. Its definition in the "Yellow Paper" reads:
+El *nonce* es uno de los componentes más importantes y menos comprendidos de una transacción. Su definición en el "Yellow Paper" dice:
 
-> Nonce: A scalar value equal to the number of transactions sent from this address or, in the case of accounts with associated code, the number of contract-creations made by this account.
+> Nonce: Un valor escalar igual al número de transacciones enviadas desde esta dirección o, en el caso de las cuentas con código asociado, al número de creaciones de contratos realizadas por esta cuenta.
 
-Strictly speaking, the nonce is an attribute of the originating address—that is, it only has meaning in the context of the sending address. However, the nonce is stored explicitly as part of the account’s state. For an externally owned account (EOA), it increments whenever a transaction from that account is included in the blockchain, even if execution reverts. EIP-7702 authorization processing can also increment it.
+Estrictamente hablando, el nonce es un atributo de la dirección de origen; es decir, solo tiene significado en el contexto de la dirección del remitente. Sin embargo, el nonce se almacena explícitamente como parte del estado de la cuenta. Para una cuenta de propiedad externa (EOA), se incrementa cada vez que una transacción de esa cuenta se incluye en la blockchain, incluso si la ejecución se revierte. El procesamiento de autorizaciones de EIP-7702 también puede incrementarlo.
 
-There are two scenarios where the existence of a transaction-counting nonce is important: the usability feature of transactions being included in the order of creation and the vital feature of transaction-duplication protection. Let's look at an example scenario for each of these:
+Hay dos escenarios en los que es importante la existencia de un nonce que cuente las transacciones: la característica de usabilidad de que las transacciones se incluyan en el orden de creación y la característica vital de protección contra la duplicación de transacciones. Veamos un escenario de ejemplo para cada uno:
 
-**Scenario 1**
+**Escenario 1**
 
-Imagine you want to make two transactions. You have an important payment to make of 6 ether and another payment of 8 ether. You sign and broadcast the 6-ether transaction first because it is the more important one, and then you sign and broadcast the 8-ether transaction. Sadly, you have overlooked the fact that your account contains only 10 ether, so the network can't accept both transactions: one of them will fail. Because you sent the more important 6-ether one first, you understandably expect that one to go through and the 8-ether one to be rejected. However, in a decentralized system like Ethereum, nodes may receive the transactions in either order; there is no guarantee that a particular node will have one transaction propagated to it before the other. As such, it will almost certainly be the case that some nodes receive the 6-ether transaction first and others receive the 8-ether transaction first. Without the nonce, it would be random as to which one gets accepted and which rejected. However, with the nonce included, the first transaction you sent will have a nonce of, let's say, 3, while the 8-ether transaction has the next nonce value (i.e., 4). So that transaction will be ignored until the transactions with nonces from 0 to 3 have been processed, even if it is received first. Phew!
+Imaginemos que queremos realizar dos transacciones. Tenemos que hacer un pago importante de 6 ether y otro pago de 8 ether. Firmamos y difundimos primero la transacción de 6 ether porque es la más importante, y después firmamos y difundimos la transacción de 8 ether. Lamentablemente, hemos pasado por alto que nuestra cuenta solo contiene 10 ether, por lo que la red no puede aceptar ambas transacciones: una de ellas fallará. Como enviamos primero la de 6 ether, que es la más importante, es comprensible que esperemos que se complete y que la de 8 ether sea rechazada. Sin embargo, en un sistema descentralizado como Ethereum, los nodos pueden recibir las transacciones en cualquier orden; no hay garantía de que una transacción se propague a un nodo determinado antes que la otra. Por lo tanto, es casi seguro que algunos nodos reciban primero la transacción de 6 ether y otros reciban primero la de 8 ether. Sin el nonce, sería aleatorio cuál se acepta y cuál se rechaza. Sin embargo, con el nonce incluido, la primera transacción que enviamos tendrá un nonce de, digamos, 3, mientras que la transacción de 8 ether tendrá el siguiente valor de nonce (es decir, 4). Por lo tanto, esa transacción se ignorará hasta que se hayan procesado las transacciones con nonces de 0 a 3, incluso si se recibe primero. ¡Uf!
 
-**Scenario 2**
+**Escenario 2**
 
-Now imagine you have an account with 100 ether. Fantastic! You find someone online who will accept payment in ether for a mcguffin-widget that you really want to buy. You send them 2 ether, and they send you the mcguffin-widget. Lovely. To make that 2-ether payment, you signed a transaction sending 2 ether from your account to their account and then broadcast it to the Ethereum network to be verified and included on the blockchain. Now, without a nonce value in the transaction, a second transaction sending 2 ether to the same address a second time will look exactly the same as the first transaction. This means that anyone who sees your transaction on the Ethereum network (which means everyone, including the recipient or your enemies) can "replay" the transaction again and again and again until all your ether is gone, simply by copying and pasting your original transaction and resending it to the network. However, with the nonce value included in the transaction data, every single transaction is unique, even when sending the same amount of ether to the same recipient address multiple times. Thus, with the incrementing nonce as part of the transaction, it is simply not possible for anyone to "duplicate" a payment you have made.
+Ahora imaginemos que tenemos una cuenta con 100 ether. ¡Fantástico! Encontramos a alguien en línea que acepta pagos en ether por un artilugio mcguffin que realmente queremos comprar. Le enviamos 2 ether y esa persona nos envía el artilugio mcguffin. Excelente. Para realizar ese pago de 2 ether, firmamos una transacción que enviaba 2 ether de nuestra cuenta a la suya y luego la difundimos a la red Ethereum para que se verificara y se incluyera en la blockchain. Ahora bien, sin un valor de nonce en la transacción, una segunda transacción que envíe 2 ether a la misma dirección por segunda vez se verá exactamente igual que la primera transacción. Esto significa que cualquiera que vea nuestra transacción en la red Ethereum (lo que significa todos, incluidos el destinatario o nuestros enemigos) puede "repetir" la transacción una y otra vez hasta que se agote todo nuestro ether, simplemente copiando y pegando nuestra transacción original y reenviándola a la red. Sin embargo, con el valor de nonce incluido en los datos de la transacción, cada transacción es única, incluso cuando se envía la misma cantidad de ether a la misma dirección de destinatario varias veces. Por lo tanto, con el nonce incremental como parte de la transacción, sencillamente no es posible que alguien "duplique" un pago que hayamos realizado.
 
-In summary, it is important to note that use of the nonce is actually vital for an account-based protocol, in contrast to the *unspent transaction output (UTXO)* mechanism of the Bitcoin protocol.
+En resumen, es importante señalar que el uso del nonce es realmente vital para un protocolo basado en cuentas, en contraste con el mecanismo de *salida de transacción no gastada (UTXO)* del protocolo Bitcoin.
 
-### Keeping Track of Nonces
+### Seguimiento de los nonces
 
-In this and future sections, we'll use the Foundry suite—in particular, the `cast` tool, which is really helpful for interacting with the blockchain in a very easy way. Make sure to install it if you want to replicate the following examples.
+En esta sección y en las siguientes, utilizaremos el conjunto de herramientas Foundry; en particular, la herramienta `cast`, que resulta muy útil para interactuar con la blockchain de una forma muy sencilla. Es necesario instalarla si se desea reproducir los siguientes ejemplos.
 
-First, we need to set up our wallet that we're going to use throughout this chapter. Open a terminal window and type:
+Primero, debemos configurar la billetera que vamos a usar a lo largo de este capítulo. Abra una ventana de terminal y escriba:
 
 ```bash
 $ cast wallet new
@@ -227,11 +227,11 @@ Address:     0x7e41354AfE84800680ceB104c5Fc99eCB98A25f0
 Private key: 0xd6d2672c6b4489e6bcd4e93b9af620fa0204b639b7d7f93765479c0846be0b58
 ```
 
-> **Warning**  
+> **Advertencia**  
 >
-> If you send funds to the address mentioned here, you are wasting your money as the private key is known and anyone could use it to send all the funds to themselves.
+> Si envía fondos a la dirección mencionada aquí, estará desperdiciando su dinero, ya que la clave privada es conocida y cualquiera podría usarla para enviarse todos los fondos.
 
-Now, we need to import the private key into the computer keystore so that we can later leverage it easily:
+Ahora, debemos importar la clave privada al almacén de claves de la computadora para poder usarla fácilmente más adelante:
 
 ```bash
 $ cast wallet import example \
@@ -240,9 +240,9 @@ Enter password:
 `example` keystore was saved successfully. Address: 0x7e41354afe84800680ceb104c5fc99ecb98a25f0
 ```
 
-You can optionally (recommended) set a password that will be required when you create transactions with that account. Now we're correctly set up, but we still don't have any ETH.
+Opcionalmente, puede establecer una contraseña (recomendado) que se le solicitará cuando cree transacciones con esa cuenta. Ahora tenemos todo configurado correctamente, pero todavía no tenemos ETH.
 
-You can always check your balance. First, you need to get the address associated with the account:
+Siempre puede consultar su saldo. Primero, debe obtener la dirección asociada con la cuenta:
 
 ```bash
 $ cast wallet address --account example
@@ -250,50 +250,50 @@ Enter keystore password:
 0x7e41354AfE84800680ceB104c5Fc99eCB98A25f0
 ```
 
-Then, you can query the blockchain for the balance. In all the examples in this chapter, we're going to use Ethereum Sepolia, a testnet blockchain:
+Luego, puede consultar el saldo en la blockchain. En todos los ejemplos de este capítulo, vamos a usar Ethereum Sepolia, una blockchain de pruebas:
 
 ```bash
 $ cast balance 0x7e41354AfE84800680ceB104c5Fc99eCB98A25f0 --rpc-url https://ethereum-sepolia-rpc.publicnode.com
 0
 ```
 
-> **Note**  
+> **Nota**  
 >
-> Note the `--rpc-url` flag in the last `cast` command. It should point to an RPC endpoint of the blockchain you're interested in. Reliable RPC endpoints often require a payment, but if you just want to experiment with it (as we'll do in this chapter), there are a lot of free options, such as:
+> Observe la opción `--rpc-url` en el último comando `cast`. Debe apuntar a un punto de conexión RPC de la blockchain que le interese. Los puntos de conexión RPC confiables suelen requerir un pago, pero si solo quiere experimentar con ellos (como haremos en este capítulo), hay muchas opciones gratuitas, como:
 >
 > - [Public Node](https://www.publicnode.com)
 > - [LlamaNodes](https://llamarpc.com/eth)
 > - [ChainList](https://chainlist.org)
 
 
-To get some free Sepolia ETH tokens, you can use one of the online faucets. We're going to use the Google Cloud Web3 faucet that gives 0.05 ETH, shown in Figure 6-3. Go to [Ethereum Sepolia Faucet](https://cloud.google.com/application/web3/faucet/ethereum/sepolia). Paste your address and click the "Receive 0.05 Sepolia ETH" button. You should receive 0.05 ETH really soon.
+Para obtener algunos tokens ETH de Sepolia gratuitos, puede usar uno de los faucets en línea. Vamos a usar el faucet de Google Cloud Web3 que entrega 0.05 ETH, que se muestra en la Figura 6-3. Vaya a [Ethereum Sepolia Faucet](https://cloud.google.com/application/web3/faucet/ethereum/sepolia). Pegue su dirección y haga clic en el botón "Receive 0.05 Sepolia ETH". Debería recibir 0.05 ETH muy pronto.
 
-![Google Cloud Web3 faucet interface](images/ch6/maet_0603.png)
+![Interfaz del faucet de Google Cloud Web3](images/ch6/maet_0603.png)
 
-**Figure 6-3.** Google Cloud Web3 faucet
+**Figura 6-3.** Faucet de Google Cloud Web3
 
-You can check that your balance is changed now and is different than 0:
+Puede comprobar que su saldo ahora ha cambiado y es distinto de 0:
 
 ```bash
 $ cast balance 0x7e41354AfE84800680ceB104c5Fc99eCB98A25f0 --rpc-url https://ethereum-sepolia-rpc.publicnode.com
 50000000000000000
 ```
 
-Great! Now we're completely set up, and we can go back to our experiments with the transaction nonce.
+¡Excelente! Ahora tenemos todo configurado y podemos volver a nuestros experimentos con el nonce de la transacción.
 
-In practical terms, the nonce is an up-to-date count of the number of confirmed (i.e., on-chain) transactions that have originated from an account. To find out what the nonce is, you can interrogate the blockchain using `cast`. Just open a new terminal window and type:
+En términos prácticos, el nonce es un contador actualizado de la cantidad de transacciones confirmadas (es decir, en la cadena) que se han originado desde una cuenta. Para averiguar cuál es el nonce, puede consultar la blockchain usando `cast`. Simplemente abra una nueva ventana de terminal y escriba:
 
 ```bash
 $ cast nonce 0x7e41354AfE84800680ceB104c5Fc99eCB98A25f0 --rpc-url https://ethereum-sepolia-rpc.publicnode.com
 0
 ```
 
-> **Tip**  
+> **Consejo**  
 >
-> The nonce is a zero-based counter, meaning the first transaction has nonce 0. In fact, in this example we haven't sent any transactions yet. Also note that the RPC response always points to the next available nonce—for example, if an address has already sent 10 transactions, meaning that it has used nonces from 0 to 9, the RPC response to a nonce query would be 10.
+> El nonce es un contador que comienza en cero, lo que significa que la primera transacción tiene el nonce 0. De hecho, en este ejemplo todavía no hemos enviado ninguna transacción. Observe también que la respuesta RPC siempre indica el siguiente nonce disponible; por ejemplo, si una dirección ya ha enviado 10 transacciones, lo que significa que ha usado los nonces del 0 al 9, la respuesta RPC a una consulta del nonce sería 10.
 
 
-Let's try to send some ETH now. We'll send 0.001 ether to `vitalik.eth`, which is the ENS address of Vitalik Buterin, cofounder of Ethereum:
+Intentemos enviar algo de ETH ahora. Enviaremos 0.001 ether a `vitalik.eth`, que es la dirección ENS de Vitalik Buterin, cofundador de Ethereum:
 
 ```bash
 $ cast send --account example vitalik.eth --value 0.001ether --rpc-url https://ethereum-sepolia-rpc.publicnode.com
@@ -317,9 +317,9 @@ authorizationList
 to                      0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045
 ```
 
-Your wallet will keep track of nonces for each address it manages. It's fairly simple to do that as long as you are only originating transactions from a single point. Let's say you are writing your own wallet software or some other application that originates transactions. How do you track nonces?
+Su billetera llevará un registro de los nonces de cada dirección que gestione. Hacerlo es bastante sencillo siempre que origine transacciones desde un único punto. Supongamos que está escribiendo su propio software de billetera o alguna otra aplicación que origine transacciones. ¿Cómo lleva el registro de los nonces?
 
-When you create a new transaction, you assign the next nonce in the sequence. But until it is confirmed, it will not count toward the nonce total. Let's look at this example by quickly sending the following commands one after the other:
+Cuando crea una nueva transacción, le asigna el siguiente nonce de la secuencia. Pero hasta que se confirme, no contará para el total de nonces. Veamos este ejemplo ejecutando rápidamente los siguientes comandos uno tras otro:
 
 ```bash
 $ cast nonce 0x7e41354AfE84800680ceB104c5Fc99eCB98A25f0 --rpc-url https://ethereum-sepolia-rpc.publicnode.com
@@ -332,14 +332,14 @@ $ cast nonce 0x7e41354AfE84800680ceB104c5Fc99eCB98A25f0 --rpc-url https://ethere
 11
 ```
 
-As you can see, the transaction we sent didn't immediately increase the nonce count; it stayed equal to 10 even after sending the transaction. If we wait a few seconds to allow for network communications to settle down and the transaction to be included in a block, the nonce call will return the expected number, 11.
+Como puede ver, la transacción que enviamos no incrementó inmediatamente el contador de nonces; se mantuvo en 10 incluso después de enviar la transacción. Si esperamos unos segundos para que se completen las comunicaciones de red y la transacción se incluya en un bloque, la llamada para consultar el nonce devolverá el número esperado, 11.
 
-> **Note**  
+> **Nota**  
 >
-> Note the `--async` flag used in the `cast send` command: if you don't use it, `cast` will block the terminal until the transaction is confirmed inside a block. With that flag, it sends the transaction to the network and immediately returns the transaction hash, without waiting for it to be included in a block.
+> Observe la opción `--async` utilizada en el comando `cast send`: si no la usa, `cast` bloqueará la terminal hasta que la transacción se confirme dentro de un bloque. Con esa opción, envía la transacción a la red y devuelve inmediatamente el hash de la transacción, sin esperar a que se incluya en un bloque.
 
 
-Now let's take a look at a different example:
+Ahora veamos un ejemplo diferente:
 
 ```bash
 $ cast nonce 0x7e41354AfE84800680ceB104c5Fc99eCB98A25f0 --rpc-url https://ethereum-sepolia-rpc.publicnode.com
@@ -354,239 +354,239 @@ $ cast nonce 0x7e41354AfE84800680ceB104c5Fc99eCB98A25f0 --rpc-url https://ethere
 12
 ```
 
-Before sending the transaction, our nonce count is 11; then we send the transaction and immediately ask for the new nonce. As we would expect from the previous example, the nonce is not updated yet since the transaction is still pending in the mempool and has not been included in a block. Nevertheless, we use a new query that is actually able to get the real nonce number even though the transaction is still not confirmed (`0xc` is 12 in hexadecimal format). After a few seconds, the transaction gets added to a block and the `cast nonce` call returns the new correct value.
+Antes de enviar la transacción, nuestro contador de nonces está en 11; luego enviamos la transacción e inmediatamente consultamos el nuevo nonce. Como cabría esperar a partir del ejemplo anterior, el nonce todavía no se ha actualizado, ya que la transacción sigue pendiente en la mempool y no se ha incluido en un bloque. Sin embargo, usamos una nueva consulta que sí puede obtener el número real del nonce aunque la transacción aún no esté confirmada (`0xc` es 12 en formato hexadecimal). Después de unos segundos, la transacción se agrega a un bloque y la llamada `cast nonce` devuelve el nuevo valor correcto.
 
-The difference between `cast nonce` and `eth_getTransactionCount pending` is simply that the first considers only confirmed transactions—that is, included in a block—while the latter tries to also include transactions that are still pending in the mempool.
+La diferencia entre `cast nonce` y `eth_getTransactionCount pending` es simplemente que el primero considera solo las transacciones confirmadas, es decir, incluidas en un bloque, mientras que el segundo intenta incluir también las transacciones que aún están pendientes en la mempool.
 
-> **Warning**  
+> **Advertencia**  
 >
-> Be careful when using `eth_getTransactionCount pending` for counting pending transactions. In fact, even though it tries to return the real nonce value for an address, there is no way to be completely sure that there are no other pending transactions waiting in the mempool to be confirmed.
+> Tenga cuidado al usar `eth_getTransactionCount pending` para contar transacciones pendientes. De hecho, aunque intenta devolver el valor real del nonce de una dirección, no hay forma de tener la certeza absoluta de que no haya otras transacciones pendientes en la mempool esperando ser confirmadas.
 >
-> The public mempool is not a universal thing. Every node has its own mempool: a sort of dynamic repository for pending transactions, temporarily holding them until they are confirmed on the blockchain. It can be customized by setting different rules for accepting or rejecting new transactions. While it's true that RPC companies have a big network of nodes and should have a (almost) complete view of all pending transactions, you should still be wary of treating that value as 100% correct.
+> La mempool pública no es universal. Cada nodo tiene su propia mempool: una especie de repositorio dinámico de transacciones pendientes que las almacena temporalmente hasta que se confirman en la blockchain. Se puede personalizar estableciendo diferentes reglas para aceptar o rechazar nuevas transacciones. Si bien es cierto que las empresas de RPC tienen una gran red de nodos y deberían tener una visión (casi) completa de todas las transacciones pendientes, aun así debe tener cuidado al tratar ese valor como 100% correcto.
 
-### Gaps in Nonces, Duplicate Nonces, and Confirmation
+### Huecos en los nonces, nonces duplicados y confirmación
 
-It is important to keep track of nonces if you are creating transactions programmatically, especially if you are doing so from multiple independent processes simultaneously.
+Es importante llevar un registro de los nonces si está creando transacciones de forma programática, especialmente si lo hace desde varios procesos independientes simultáneamente.
 
-The Ethereum network processes transactions sequentially based on the nonce. That means that if you transmit a transaction with nonce 0 and then transmit a transaction with nonce 2, the second transaction will not be included in any blocks. It will be stored in the mempool, while the Ethereum network waits for the missing nonce to appear. All nodes will assume that the missing nonce has simply been delayed and that the transaction with nonce 2 was received out of sequence.
+La red Ethereum procesa las transacciones secuencialmente según el nonce. Eso significa que, si transmite una transacción con nonce 0 y luego transmite una transacción con nonce 2, la segunda transacción no se incluirá en ningún bloque. Se almacenará en la mempool mientras la red Ethereum espera a que aparezca el nonce faltante. Todos los nodos supondrán que el nonce faltante simplemente se ha retrasado y que la transacción con nonce 2 se recibió fuera de secuencia.
 
-If you then transmit a transaction with the missing nonce 1, both transactions (nonces 1 and 2) will be processed and included (if valid, of course). Once you fill the gap, the network can mine the out-of-sequence transaction that it held in the mempool.
+Si luego transmite una transacción con el nonce 1 faltante, ambas transacciones (nonces 1 y 2) se procesarán e incluirán (si son válidas, por supuesto). Una vez que llene el hueco, la red podrá minar la transacción fuera de secuencia que mantenía en la mempool.
 
-What this means is that if you create several transactions in sequence and one of them does not get officially included in any blocks, all the subsequent transactions will be "stuck," waiting for the missing nonce. A transaction can create an inadvertent "gap" in the nonce sequence because it is invalid or has insufficient gas. To get things moving again, you have to transmit a valid transaction with the missing nonce. You should be equally mindful that once a transaction with the "missing" nonce is validated by the network, all the broadcast transactions with subsequent nonces will incrementally become valid; it is not possible to "recall" a transaction!
+Esto significa que, si crea varias transacciones en secuencia y una de ellas no se incluye oficialmente en ningún bloque, todas las transacciones posteriores quedarán "atascadas", esperando el nonce faltante. Una transacción puede crear un "hueco" involuntario en la secuencia de nonces porque no es válida o tiene gas insuficiente. Para que todo vuelva a avanzar, debe transmitir una transacción válida con el nonce faltante. También debe tener presente que, una vez que la red valida una transacción con el nonce "faltante", todas las transacciones difundidas con nonces posteriores pasarán a ser válidas de forma progresiva; ¡no es posible "retirar" una transacción!
 
-If, on the other hand, you accidentally duplicate a nonce—for example, by transmitting two transactions with the same nonce but different recipients or values—then one of them will be confirmed and one will be rejected. Which one is confirmed will be determined by the sequence in which they arrive at the first validating node that receives them—that is, it will be fairly random.
+Si, por el contrario, duplica accidentalmente un nonce, por ejemplo, al transmitir dos transacciones con el mismo nonce pero con destinatarios o valores diferentes, una de ellas se confirmará y la otra se rechazará. La que se confirme estará determinada por la secuencia en que lleguen al primer nodo validador que las reciba; es decir, será bastante aleatorio.
 
-As you can see, keeping track of nonces is necessary, and if your application doesn't manage that process correctly, you will run into problems. Unfortunately, things get even more difficult if you are trying to do this concurrently, as we will see in the next section.
+Como puede ver, es necesario llevar un registro de los nonces y, si su aplicación no gestiona ese proceso correctamente, tendrá problemas. Desafortunadamente, las cosas se complican aún más si intenta hacerlo de manera concurrente, como veremos en la siguiente sección.
 
-### Concurrency, Transaction Origination, and Nonces
+### Concurrencia, origen de transacciones y nonces
 
-*Concurrency* is a complex aspect of computer science, and it crops up unexpectedly sometimes, especially in decentralized and distributed real-time systems like Ethereum.
+La *concurrencia* es un aspecto complejo de las ciencias de la computación y a veces surge de forma inesperada, especialmente en sistemas descentralizados y distribuidos en tiempo real como Ethereum.
 
-In simple terms, concurrency is when you have simultaneous computation by multiple independent systems. These can be in the same program (e.g., multithreading), on the same CPU (e.g., multiprocessing), or on different computers (e.g., distributed systems). Ethereum, by definition, is a system that allows concurrency of operations (nodes, clients, DApps) but enforces a singleton state through consensus.
+En términos sencillos, la concurrencia ocurre cuando varios sistemas independientes realizan cálculos simultáneamente. Estos pueden estar en el mismo programa (p. ej., con múltiples hilos), en la misma CPU (p. ej., con múltiples procesos) o en diferentes computadoras (p. ej., en sistemas distribuidos). Ethereum, por definición, es un sistema que permite la concurrencia de operaciones (nodos, clientes, DApps), pero impone un estado único mediante el consenso.
 
-Now, imagine that you have multiple independent wallet applications that are generating transactions from the same address or addresses. One example of such a situation would be an exchange processing withdrawals from the exchange's *hot wallet* (a wallet whose keys are stored online, in contrast to a *cold wallet* where the keys are never online). Ideally, you'd want to have more than one computer processing withdrawals, so it doesn't become a bottleneck or single point of failure. However, this quickly becomes problematic because having more than one computer producing withdrawals will result in some thorny concurrency problems, not least of which is the selection of nonces. How do multiple computers generating, signing, and broadcasting transactions from the same hot wallet account coordinate?
+Ahora, imagine que tiene varias aplicaciones de billetera independientes que generan transacciones desde la misma dirección o las mismas direcciones. Un ejemplo de esta situación sería una plataforma de intercambio que procesa retiros desde su *billetera caliente* (una billetera cuyas claves se almacenan en línea, a diferencia de una *billetera fría*, cuyas claves nunca están en línea). Idealmente, querría tener más de una computadora procesando retiros, para que no se convierta en un cuello de botella o un punto único de falla. Sin embargo, esto pronto se vuelve problemático, porque tener más de una computadora generando retiros provocará algunos problemas complejos de concurrencia, entre los cuales la selección de nonces no es menor. ¿Cómo se coordinan varias computadoras que generan, firman y difunden transacciones desde la misma cuenta de billetera caliente?
 
-You could use a single computer to assign nonces, on a first-come, first-served basis, to computers signing transactions. However, this computer is now a single point of failure. Worse, if several nonces are assigned and one of them never gets used (because of a failure in the computer processing the transaction with that nonce), all subsequent transactions will get stuck.
+Podría usar una sola computadora para asignar nonces, por orden de llegada, a las computadoras que firman transacciones. Sin embargo, esta computadora ahora es un punto único de falla. Peor aún, si se asignan varios nonces y uno de ellos nunca se usa (debido a una falla en la computadora que procesa la transacción con ese nonce), todas las transacciones posteriores quedarán atascadas.
 
-Another approach would be to generate the transactions but not assign a nonce to them (and therefore leave them unsigned—remember that the nonce is an integral part of the transaction data and therefore needs to be included in the digital signature that authenticates the transaction). You could then queue them to a single node that signs them and keeps track of nonces. Again, though, this would be a choke point in the process: the signing and tracking of nonces is the part of your operation that is likely to become congested under load, whereas generating the unsigned transaction is the part you don't really need to parallelize. You would have some concurrency, but it would be lacking in a critical part of the process.
+Otro enfoque sería generar las transacciones sin asignarles un nonce (y, por lo tanto, dejarlas sin firmar; recuerde que el nonce es una parte integral de los datos de la transacción y, por lo tanto, debe incluirse en la firma digital que autentica la transacción). Luego podría ponerlas en una cola para que un único nodo las firme y lleve el registro de los nonces. Sin embargo, una vez más, esto sería un cuello de botella en el proceso: la firma y el seguimiento de los nonces es la parte de su operación que probablemente se congestione bajo carga, mientras que generar la transacción sin firmar es la parte que en realidad no necesita paralelizar. Tendría cierta concurrencia, pero faltaría en una parte crítica del proceso.
 
-In the end, these concurrency problems, on top of the difficulty of tracking account balances and transaction confirmations in independent processes, force most implementations toward avoiding concurrency and creating bottlenecks, such as a single process handling all withdrawal transactions in an exchange or a setup of multiple hot wallets that can work completely independently for withdrawals and only need to be intermittently rebalanced.
+En definitiva, estos problemas de concurrencia, sumados a la dificultad de llevar un registro de los saldos de las cuentas y las confirmaciones de transacciones en procesos independientes, obligan a la mayoría de las implementaciones a evitar la concurrencia y crear cuellos de botella, como un único proceso que gestiona todas las transacciones de retiro en una plataforma de intercambio o una configuración de varias billeteras calientes que pueden funcionar de manera completamente independiente para los retiros y solo necesitan reequilibrarse de forma intermitente.
 
-## Transaction Gas
+## Gas de las transacciones
 
-We talked about *gas* a little in earlier chapters, and we'll discuss it in more detail in Chapter 14. However, let's cover some basics about the role of the `gasPrice` and `gasLimit` components of a transaction.
+Hablamos un poco sobre el *gas* en capítulos anteriores y lo analizaremos con más detalle en el Capítulo 14. Sin embargo, veamos algunos conceptos básicos sobre el papel de los componentes `gasPrice` y `gasLimit` de una transacción.
 
-Gas is the fuel of Ethereum. Gas is not ether: it's a separate virtual currency with its own exchange rate against ether. Ethereum uses gas to control the amount of resources that a transaction can use, since it will be processed on thousands of computers around the world. The open-ended (Turing-complete) computation model requires some form of metering to avoid DoS attacks or inadvertent resource-devouring transactions.
+El gas es el combustible de Ethereum. El gas no es ether: es una moneda virtual independiente con su propio tipo de cambio frente al ether. Ethereum usa gas para controlar la cantidad de recursos que una transacción puede usar, ya que se procesará en miles de computadoras de todo el mundo. El modelo de cómputo sin restricciones (Turing completo) requiere alguna forma de medición para evitar ataques DoS o transacciones que consuman recursos desmesuradamente de forma involuntaria.
 
-Gas is separate from ether to protect the system from the volatility that might arise along with rapid changes in the value of ether and as a way to manage the important and sensitive ratios between the costs of the various resources that gas pays for (computation, memory, and storage).
+El gas es independiente del ether para proteger el sistema de la volatilidad que podría surgir con los cambios rápidos en el valor del ether y como una forma de gestionar las importantes y delicadas relaciones entre los costos de los diversos recursos que se pagan con gas (cómputo, memoria y almacenamiento persistente).
 
-The `gasPrice` field in a transaction allows the transaction originator to set the price they are willing to pay in exchange for gas. The price is measured in wei per gas unit.
+El campo `gasPrice` de una transacción permite que quien la origina establezca el precio que está dispuesto a pagar a cambio de gas. El precio se mide en wei por unidad de gas.
 
-> **Tip**  
+> **Consejo**  
 >
-> The popular site [Etherscan](https://oreil.ly/ZIqcq) provides information on the current prices of gas and other relevant gas metrics for the Ethereum main network.
+> El popular sitio [Etherscan](https://oreil.ly/ZIqcq) proporciona información sobre los precios actuales del gas y otras métricas de gas relevantes para la red principal de Ethereum.
 
 
-Wallets can adjust the `gasPrice` in transactions they originate to achieve faster confirmation of transactions. The higher the `gasPrice`, the faster the transaction is likely to be confirmed. Conversely, lower-priority transactions can carry a reduced price, resulting in slower confirmation. The minimum value that `gasPrice` can be set to is equal to the base fee (we've introduced it with EIP-1559 transactions) of the block in which they are included.
+Las billeteras pueden ajustar el `gasPrice` de las transacciones que originan para lograr una confirmación más rápida. Cuanto mayor sea el `gasPrice`, más probable será que la transacción se confirme rápidamente. Por el contrario, las transacciones de menor prioridad pueden tener un precio reducido, lo que da como resultado una confirmación más lenta. El valor mínimo que se puede establecer para `gasPrice` es igual a la comisión base (que presentamos con las transacciones EIP-1559) del bloque en el que se incluyen.
 
-> **Note**  
+> **Nota**  
 >
-> Before the London hard fork and EIP-1559, the minimum acceptable `gasPrice` was zero. That means that wallets could generate completely free transactions. Depending on capacity, these might never be confirmed, but there was nothing in the protocol that prohibited free transactions. You can find several examples of such transactions successfully included on the Ethereum blockchain during the first months of Ethereum.
+> Antes de el hard fork London y EIP-1559, el `gasPrice` mínimo aceptable era cero. Eso significa que las billeteras podían generar transacciones completamente gratuitas. Según la capacidad, estas podrían no confirmarse nunca, pero no había nada en el protocolo que prohibiera las transacciones gratuitas. Puede encontrar varios ejemplos de estas transacciones incluidas con éxito en la blockchain de Ethereum durante los primeros meses de Ethereum.
 
-### EIP-1559: Base Fee and Priority Fee
+### EIP-1559: comisión base y comisión de prioridad
 
-As we have already briefly explained, EIP-1559 completely changes the structure of the fee market on Ethereum by introducing a new protocol parameter: the base fee. It represents the minimum gas price that a transaction needs to pay to be considered valid and included in a block.
+Como ya explicamos brevemente, EIP-1559 cambia por completo la estructura del mercado de comisiones en Ethereum al introducir un nuevo parámetro del protocolo: la comisión base. Representa el precio mínimo del gas que una transacción debe pagar para considerarse válida e incluirse en un bloque.
 
-The difference between the base fee and the actual gas fee paid by a transaction is called the *priority fee*. It flows directly to the validator that creates the block in which that transaction lives.
+La diferencia entre la comisión base y la comisión de gas que realmente paga una transacción se denomina *comisión de prioridad*. Se destina directamente al validador que crea el bloque en el que se encuentra esa transacción.
 
-### How to Know the "Correct" Gas Price
+### Cómo conocer el precio "correcto" del gas
 
-Cast offers a gas-price suggestion by calculating a median price across several blocks:
+Cast ofrece una sugerencia de precio del gas calculando la mediana del precio a lo largo de varios bloques:
 
 ```bash
 $ cast gas-price --rpc-url https://ethereum-sepolia-rpc.publicnode.com
 4845187414
 ```
 
-The second important field related to gas is `gasLimit`. In simple terms, `gasLimit` gives the maximum number of units of gas that the transaction originator is willing to buy in order to complete the transaction. For simple payments—meaning transactions that transfer ether from one EOA to another EOA—the gas amount needed is fixed at 21,000 gas units. To calculate how much ether that will cost, you multiply 21,000 by the `gasPrice` (or the `maxFeePerGas` for EIP-1559 transactions) you're willing to pay.
+El segundo campo importante relacionado con el gas es `gasLimit`. En términos sencillos, `gasLimit` indica la cantidad máxima de unidades de gas que quien origina la transacción está dispuesto a comprar para completarla. Para pagos simples, es decir, transacciones que transfieren ether de una EOA a otra EOA, la cantidad de gas necesaria es fija: 21,000 unidades de gas. Para calcular cuánto ether costará, multiplique 21,000 por el `gasPrice` (o el `maxFeePerGas` para transacciones EIP-1559) que está dispuesto a pagar.
 
-If your transaction's destination address is a contract, then the amount of gas needed can be estimated but cannot be determined with accuracy. That's because a contract can evaluate different conditions that lead to different execution paths, with different total gas costs. The contract may execute only a simple computation or a more complex one, depending on conditions that are outside of your control and cannot be predicted. To demonstrate this, let's look at an example: we can write a smart contract that increments a counter each time it is called and executes a particular loop a number of times equal to the call count. Maybe on the one-hundredth call, it gives out a special prize, like a lottery, but it needs to do additional computation to calculate the prize. If you call the contract 99 times, one thing happens, but on the one-hundredth call, something very different happens. The amount of gas you would pay for that depends on how many other transactions have called that function before your transaction is included in a block. Perhaps your estimate is based on being the 99th transaction, but just before your transaction is confirmed someone else calls the contract for the 99th time. Now you're the one-hundredth transaction to call, and the computation effort (and gas cost) is much higher.
+Si la dirección de destino de su transacción es un contrato, la cantidad de gas necesaria puede estimarse, pero no determinarse con precisión. Esto se debe a que un contrato puede evaluar diferentes condiciones que llevan a distintas rutas de ejecución, con diferentes costos totales de gas. El contrato puede ejecutar solo un cálculo simple o uno más complejo, según condiciones que están fuera de su control y no pueden predecirse. Para demostrarlo, veamos un ejemplo: podemos escribir un contrato inteligente que incremente un contador cada vez que se lo llama y ejecute un bucle determinado tantas veces como indique el contador de llamadas. Tal vez en la centésima llamada entregue un premio especial, como una lotería, pero necesite realizar cálculos adicionales para calcular el premio. Si llama al contrato 99 veces, ocurre una cosa, pero en la centésima llamada ocurre algo muy diferente. La cantidad de gas que pagaría por eso depende de cuántas otras transacciones hayan llamado a esa función antes de que su transacción se incluya en un bloque. Quizá su estimación se base en que será la transacción número 99, pero justo antes de que se confirme su transacción, alguien más llama al contrato por 99.ª vez. Ahora su transacción es la centésima en llamar, y el esfuerzo de cómputo (y el costo de gas) es mucho mayor.
 
-To borrow a common analogy used in Ethereum, you can think of `gasLimit` as the capacity of the fuel tank in your car (your car is the transaction). You fill the tank with as much gas as you think it will need for the journey (the computation needed to validate your transaction). You can estimate the amount to some degree, but there might be unexpected changes to your journey, such as a diversion (a more complex execution path), that increase fuel consumption.
+Retomando una analogía común en Ethereum, puede pensar en `gasLimit` como la capacidad del tanque de combustible de su automóvil (su automóvil es la transacción). Llena el tanque con tanto gas como cree que necesitará para el viaje (el cómputo necesario para validar su transacción). Puede estimar la cantidad hasta cierto punto, pero podría haber cambios inesperados en su viaje, como un desvío (una ruta de ejecución más compleja), que aumenten el consumo de combustible.
 
-The fuel-tank analogy is imperfect. Before a transaction is accepted, the sender must have enough ether to cover its value and the maximum possible gas cost: gasLimit × maxFeePerGas for an EIP-1559 transaction, or gasLimit × gasPrice for a legacy transaction. Once execution begins, that maximum amount is reserved, and the sender is ultimately charged only for the gas consumed, at the transaction’s effective gas price. Any unused gas is refunded. The base fee is burned, while the priority fee is paid to the validator.
+La analogía del tanque de combustible es imperfecta. Antes de que se acepte una transacción, el remitente debe tener suficiente ether para cubrir su valor y el costo máximo posible de gas: gasLimit × maxFeePerGas para una transacción EIP-1559, o gasLimit × gasPrice para una transacción heredada. Una vez que comienza la ejecución, se reserva ese monto máximo y, en última instancia, al remitente solo se le cobra el gas consumido, al precio efectivo del gas de la transacción. Todo gas no utilizado se reembolsa. La comisión base se quema, mientras que la comisión de prioridad se paga al validador.
 
-## Transaction Recipient
+## Destinatario de la transacción
 
-The recipient of a transaction is specified in the `to` field. This contains a 20-byte Ethereum address. The address can be an EOA or a contract address.
+El destinatario de una transacción se especifica en el campo `to`. Este contiene una dirección de Ethereum de 20 bytes. La dirección puede ser una EOA o una dirección de contrato.
 
-Ethereum does no further validation of this field. Any 20-byte value is considered valid. If the 20-byte value corresponds to an address without a corresponding private key or without a corresponding contract, the transaction is still valid. Ethereum has no way of knowing whether an address was correctly derived from a public key (and therefore from a private key) in existence.
+Ethereum no realiza ninguna validación adicional de este campo. Cualquier valor de 20 bytes se considera válido. Si el valor de 20 bytes corresponde a una dirección sin una clave privada correspondiente o sin un contrato correspondiente, la transacción sigue siendo válida. Ethereum no tiene forma de saber si una dirección se derivó correctamente de una clave pública (y, por lo tanto, de una clave privada) existente.
 
-> **Warning**  
+> **Advertencia**  
 >
-> The Ethereum protocol does not validate recipient addresses in transactions. You can send to an address that has no corresponding private key or contract, thereby "burning" the ether, rendering it forever unspendable. Validation should be done at the user interface level.
+> El protocolo de Ethereum no valida las direcciones de los destinatarios en las transacciones. Puede enviar a una dirección que no tenga una clave privada o un contrato correspondiente, con lo que "quema" el ether y hace que sea imposible gastarlo para siempre. La validación debe realizarse a nivel de la interfaz de usuario.
 
-Sending a transaction to the wrong address will probably burn the ether sent, rendering it forever inaccessible (unspendable), since most addresses do not have a known private key, and therefore no signature can be generated to spend it. It is assumed that validation of the address happens at the user interface level (see "Hex Encoding with Checksum in Capitalization (ERC-55)"). In fact, there are a number of valid reasons for burning ether—for example, as a disincentive to cheating in payment channels and other smart contracts—and since the amount of ether is finite, burning ether effectively distributes the value burned to all ether holders (in proportion to the amount of ether they hold).
+Enviar una transacción a la dirección equivocada probablemente queme el ether enviado y lo vuelva inaccesible para siempre (imposible de gastar), ya que la mayoría de las direcciones no tienen una clave privada conocida y, por lo tanto, no se puede generar ninguna firma para gastarlo. Se supone que la validación de la dirección ocurre a nivel de la interfaz de usuario (véase "Codificación hexadecimal con suma de verificación mediante mayúsculas (ERC-55)"). De hecho, existen varias razones válidas para quemar ether, por ejemplo, como desincentivo para hacer trampa en canales de pago y otros contratos inteligentes, y dado que la cantidad de ether es finita, quemar ether distribuye efectivamente el valor quemado entre todos los poseedores de ether (en proporción a la cantidad de ether que poseen).
 
-## Transaction Value and Data
+## Valor y datos de una transacción
 
-The main "payload" of a transaction is contained in two fields: `value` and `data`. Transactions can have both value and data, only value, only data, or neither value nor data. All four combinations are valid.
+La "carga útil" principal de una transacción está contenida en dos campos: `value` y `data`. Las transacciones pueden tener tanto valor como datos, solo valor, solo datos, o ni valor ni datos. Las cuatro combinaciones son válidas.
 
-A transaction with only value is a payment. A transaction with only data is an invocation. A transaction with both value and data is both a payment and an invocation. A transaction with neither value nor data—well, that's probably just a waste of gas! But it is still possible.
+Una transacción con solo valor es un pago. Una transacción con solo datos es una invocación. Una transacción con valor y datos es tanto un pago como una invocación. Una transacción sin valor ni datos... bueno, ¡probablemente sea solo un desperdicio de gas! Pero sigue siendo posible.
 
-Let's try all of these combinations. We'll use `cast` in the same way we did before to send transactions on Sepolia testnet.
+Probemos todas estas combinaciones. Usaremos `cast` de la misma manera que antes para enviar transacciones en la red de pruebas Sepolia.
 
-Our first transaction contains only a value (payment) and no data payload:
+Nuestra primera transacción contiene solo un valor (pago) y ninguna carga de datos:
 
 ```bash
 $ cast send --account example vitalik.eth --value 0.001ether --rpc-url https://ethereum-sepolia-rpc.publicnode.com
 ```
 
-In Figure 6-4, you can see that the value sent is 0.001 ether and the data payload (input data on etherscan) is empty (`0x00`).
+En la Figura 6-4, puede ver que el valor enviado es de 0.001 ether y que la carga de datos (input data en etherscan) está vacía (`0x00`).
 
-![Transaction with only value](images/ch6/maet_0604.png)
+![Transacción con solo valor](images/ch6/maet_0604.png)
 
-**Figure 6-4.** Transaction with only value (payment)
+**Figura 6-4.** Transacción con solo valor (pago)
 
-The next example specifies both a value and a data payload (even though this payload will be ignored as we'll send a transaction to an EOA):
+El siguiente ejemplo especifica tanto un valor como una carga de datos (aunque esta carga útil se ignorará, ya que enviaremos una transacción a una EOA):
 
 ```bash
 $ cast send --account example vitalik.eth 0x0001 --value 0.001ether --rpc-url https://ethereum-sepolia-rpc.publicnode.com
 ```
 
-In Figure 6-5, you can see that input data now contains some value, in particular `0x0001`.
+En la Figura 6-5, puede ver que input data ahora contiene algún valor, en particular `0x0001`.
 
-![Transaction with value and data](images/ch6/maet_0605.png)
+![Transacción con valor y datos](images/ch6/maet_0605.png)
 
-**Figure 6-5.** Transaction with both value and data
+**Figura 6-5.** Transacción con valor y datos
 
-The next transaction includes a data payload but specifies a value of zero:
+La siguiente transacción incluye una carga de datos, pero especifica un valor de cero:
 
 ```bash
 $ cast send --account example vitalik.eth 0x0001 --rpc-url https://ethereum-sepolia-rpc.publicnode.com
 ```
 
-Figure 6-6 shows a confirmation screen indicating a value of zero ether sent in the transaction and the data payload equals to `0x0001`.
+La Figura 6-6 muestra una pantalla de confirmación que indica un valor de cero ether enviado en la transacción y que la carga de datos es igual a `0x0001`.
 
-![Transaction with only data](images/ch6/maet_0606.png)
+![Transacción con solo datos](images/ch6/maet_0606.png)
 
-**Figure 6-6.** Transaction with only data (invocation)
+**Figura 6-6.** Transacción con solo datos (invocación)
 
-Finally, the last transaction includes neither a value to send nor a data payload:
+Por último, la última transacción no incluye ni un valor para enviar ni una carga de datos:
 
 ```bash
 $ cast send --account example vitalik.eth --rpc-url https://ethereum-sepolia-rpc.publicnode.com
 ```
 
-Figure 6-7 shows our transaction that sent zero ether and included an empty payload.
+La Figura 6-7 muestra nuestra transacción, que envió cero ether e incluyó una carga útil vacía.
 
-![Transaction with neither value nor data](images/ch6/maet_0607.png)
+![Transacción sin valor ni datos](images/ch6/maet_0607.png)
 
-**Figure 6-7.** Transaction with neither value nor data
+**Figura 6-7.** Transacción sin valor ni datos
 
-## Transmitting Value to EOAs and Contracts
+## Transmisión de valor a EOA y contratos
 
-When you construct an Ethereum transaction that contains a value, that is the equivalent of a payment. Such transactions behave differently depending on whether the destination address is a contract or not.
+Cuando construye una transacción de Ethereum que contiene un valor, eso equivale a un pago. Estas transacciones se comportan de manera diferente según si la dirección de destino es un contrato o no.
 
-For EOA addresses—or rather, for any address that isn't flagged as a contract on the blockchain—Ethereum will record a state change, adding the value you sent to the balance of the address. If the address has not been seen before, it will be added to the client's internal representation of the state and its balance initialized to the value of your payment.
+Para las direcciones de EOA, o más bien, para cualquier dirección que no esté marcada como un contrato en la blockchain, Ethereum registrará un cambio de estado y sumará el valor que envió al saldo de la dirección. Si la dirección no se ha visto antes, se agregará a la representación interna del estado del cliente y su saldo se inicializará con el valor de su pago.
 
-If the destination address (`to`) is a contract (or an EOA that has previously delegated a contract through an EIP-7702 transaction), then the EVM will execute the contract and will attempt to call the function named in the data payload of your transaction. If there is no data in your transaction, the EVM will call a *fallback function* and, if that function is payable, will execute it to determine what to do next. If there is no fallback function, then the effect of the transaction will be to increase the balance of the contract, exactly like a payment to a wallet.
+Si la dirección de destino (`to`) es un contrato (o una EOA que previamente haya delegado un contrato mediante una transacción EIP-7702), la EVM ejecutará el contrato e intentará llamar a la función indicada en la carga de datos de su transacción. Si no hay datos en su transacción, la EVM llamará a una *función de respaldo* y, si esa función admite pagos, la ejecutará para determinar qué hacer a continuación. Si no hay una función de respaldo, el efecto de la transacción será aumentar el saldo del contrato, exactamente igual que un pago a una billetera.
 
-A contract can reject incoming payments by throwing an exception immediately when a function is called or as determined by conditions coded in a function. If the function terminates successfully (without an exception), then the contract's state is updated to reflect an increase in the contract's ether balance.
+Un contrato puede rechazar los pagos entrantes al lanzar una excepción inmediatamente cuando se llama a una función o según lo determinen las condiciones codificadas en una función. Si la función termina correctamente (sin una excepción), el estado del contrato se actualiza para reflejar un aumento en el saldo de ether del contrato.
 
-## Transmitting a Data Payload to an EOA or Contract
+## Transmisión de una carga de datos a una EOA o un contrato
 
-When your transaction contains data, it is most likely addressed to a contract address. That doesn't mean you cannot send a data payload to an EOA—that is completely valid in the Ethereum protocol. However, in that case, the interpretation of the data is up to the wallet you use to access the EOA. It is ignored by the Ethereum protocol. Most wallets also ignore any data received in a transaction to an EOA they control. In the future, standards may emerge that allow wallets to interpret data the way contracts do, thereby allowing transactions to invoke functions running inside user wallets. The critical difference is that any interpretation of the data payload by an EOA is not subject to Ethereum's consensus rules, unlike a contract execution.
+Cuando su transacción contiene datos, lo más probable es que esté dirigida a una dirección de contrato. Eso no significa que no pueda enviar una carga de datos a una EOA: eso es completamente válido en el protocolo de Ethereum. Sin embargo, en ese caso, la interpretación de los datos depende de la billetera que utilice para acceder a la EOA. El protocolo de Ethereum los ignora. La mayoría de las billeteras también ignoran cualquier dato recibido en una transacción dirigida a una EOA que controlan. En el futuro, podrían surgir estándares que permitan a las billeteras interpretar los datos de la misma manera que los contratos, lo que permitiría que las transacciones invoquen funciones que se ejecutan dentro de las billeteras de los usuarios. La diferencia fundamental es que cualquier interpretación de la carga de datos por parte de una EOA no está sujeta a las reglas de consenso de Ethereum, a diferencia de la ejecución de un contrato.
 
-For now, let's assume your transaction is delivering data to a contract address. In that case, the data will be interpreted by the EVM as a contract invocation. Most contracts use this data more specifically as a function invocation, calling the named function and passing any encoded arguments to the function.
+Por ahora, supongamos que su transacción entrega datos a una dirección de contrato. En ese caso, la EVM interpretará los datos como una invocación de contrato. La mayoría de los contratos usan estos datos más específicamente como una invocación de función, llamando a la función indicada y pasándole los argumentos codificados.
 
-The data payload sent to a contract that is compatible with an *application binary interface (ABI)*, which you can assume all contracts are, is a hex-serialized encoding of the following:
+La carga de datos enviada a un contrato que es compatible con una *interfaz binaria de aplicación (ABI)*, lo cual puede suponer que se cumple para todos los contratos, es una codificación serializada en hexadecimal de lo siguiente:
 
-**A function selector**
+**Un selector de función**
 
-The first 4 bytes of the Keccak-256 hash of the function's prototype. This allows the contract to unambiguously identify which function you wish to invoke.
+Los primeros 4 bytes del hash Keccak-256 del prototipo de la función. Esto permite que el contrato identifique de forma inequívoca qué función desea invocar.
 
-**The function arguments**
+**Los argumentos de la función**
 
-The function's arguments, encoded according to the rules for the various elementary types defined in the ABI specification.
+Los argumentos de la función, codificados según las reglas para los distintos tipos elementales definidos en la especificación de la ABI.
 
-In Example 2-1, we defined a function for withdrawals:
+En el Ejemplo 2-1, definimos una función para retiros:
 
 ```solidity
 function withdraw(uint256 _withdrawAmount, address payable _to) public {
 ```
 
-The prototype of a function is defined as the string containing the name of the function, followed by the data types of each of its arguments, enclosed in parentheses and separated by commas. The function name here is `withdraw`, and it takes two arguments:
+El prototipo de una función se define como la cadena que contiene el nombre de la función, seguido de los tipos de datos de cada uno de sus argumentos, encerrados entre paréntesis y separados por comas. El nombre de la función aquí es `withdraw`, y recibe dos argumentos:
 
-- `_withdrawAmount` that is a `uint256`
-- `_to` that is an `address`
+- `_withdrawAmount`, que es un `uint256`
+- `_to`, que es un `address`
 
-So the prototype of `withdraw` would be:
+Por lo tanto, el prototipo de `withdraw` sería:
 
 ```
 withdraw(uint256,address)
 ```
 
-> **Note**  
+> **Nota**  
 >
-> The `payable` keyword is used in Solidity to indicate that the address can receive ether, but it's not part of the function selector calculation. Only the base type `address` is included in the prototype.
+> La palabra clave `payable` se usa en Solidity para indicar que la dirección puede recibir ether, pero no forma parte del cálculo del selector de función. Solo el tipo base `address` se incluye en el prototipo.
 
-Let's calculate the Keccak-256 hash of this string:
+Calculemos el hash Keccak-256 de esta cadena:
 
 ```bash
 $ cast keccak256 "withdraw(uint256,address)"
 0x00f714ce93c4a188ecc0c802ca78036f638c1c4b3ee9b98f3ed75364b45f50b1
 ```
 
-The first 4 bytes of the hash are `0x00f714ce`. That's our function selector value, which will tell the contract which function we want to call.
+Los primeros 4 bytes del hash son `0x00f714ce`. Ese es el valor de nuestro selector de función, que le indicará al contrato qué función queremos llamar.
 
-Next, let's calculate two values to pass as the argument `withdraw_amount` and `_to`. We want to withdraw 0.000001 ether to the address `vitalik.eth`, which is `0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045`. Let's encode them together with the function selector calculated in the previous step in order to obtain the final data payload (it's also called *calldata*):
+A continuación, calculemos dos valores para pasar como los argumentos `withdraw_amount` y `_to`. Queremos retirar 0.000001 ether a la dirección `vitalik.eth`, que es `0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045`. Codifiquémoslos junto con el selector de función calculado en el paso anterior para obtener la carga de datos final (también se denomina *calldata*):
 
 ```bash
 $ cast calldata "withdraw(uint256,address)" 0.000001ether 0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045
 0x00f714ce000000000000000000000000000000000000000000000000000000e8d4a51000000000000000000000000000d8da6bf26964af9d7eed9e03e53415d37aa96045
 ```
 
-That's the data payload for our transaction, invoking the `withdraw` function and requesting 0.000001 ether as the `withdraw_amount` and `vitalik.eth` as the `_to` address.
+Esa es la carga de datos de nuestra transacción, que invoca la función `withdraw` y solicita 0.000001 ether como `withdraw_amount` y `vitalik.eth` como la dirección `_to`.
 
-## Special Transaction: Contract Creation
+## Transacción especial: creación de contratos
 
-One special case that we should mention is a transaction that creates a new contract on the blockchain, deploying it for future use. *Contract-creation transactions* are identified by an empty `to` field (null). When the `to` field is empty, the Ethereum protocol interprets this as a request to deploy a new contract, with the bytecode provided in the `data` field.
+Un caso especial que debemos mencionar es una transacción que crea un nuevo contrato en la blockchain y lo despliega para su uso futuro. Las *transacciones de creación de contratos* se identifican por un campo `to` vacío (nulo). Cuando el campo `to` está vacío, el protocolo de Ethereum lo interpreta como una solicitud para desplegar un nuevo contrato, con el bytecode proporcionado en el campo `data`.
 
-Note that the *zero address* (`0x0000000000000000000000000000000000000000`) is a distinct concept: it is a valid 20-byte address that can receive ether. Sending a transaction to the zero address does not create a contract, it simply transfers ether to that address like any other transaction. The zero address sometimes receives payments from various addresses. There are two explanations for this: either this is by accident, resulting in the loss of ether, or it is an intentional *ether burn* (deliberately destroying ether by sending it to an address from which it can never be spent). However, if you want to do an intentional ether burn, you should make your intention clear to the network and use the specially designated burn address instead:
+Tenga en cuenta que la *dirección cero* (`0x0000000000000000000000000000000000000000`) es un concepto distinto: es una dirección válida de 20 bytes que puede recibir ether. Enviar una transacción a la dirección cero no crea un contrato, simplemente transfiere ether a esa dirección como cualquier otra transacción. La dirección cero a veces recibe pagos de varias direcciones. Hay dos explicaciones para esto: o bien es accidental, lo que resulta en la pérdida de ether, o bien es una *quema de ether* intencional (destruir ether deliberadamente al enviarlo a una dirección desde la cual nunca se podrá gastar). Sin embargo, si desea realizar una quema de ether intencional, debe dejar clara su intención a la red y usar en su lugar la dirección de quema especialmente designada:
 
 ```
 0x000000000000000000000000000000000000dEaD
 ```
 
-> **Warning**  
+> **Advertencia**  
 >
-> Any ether sent to the designated burn address will become unspendable and will be lost forever.
+> Cualquier ether enviado a la dirección de quema designada será imposible de gastar y se perderá para siempre.
 
 
-A contract-creation transaction need only contain a data payload that contains the compiled bytecode that will create the contract. The only effect of this transaction is to create the contract. You can include an ether amount in the `value` field if you want to set the new contract up with a starting balance, but that is entirely optional. If you send a value (ether) to the contract-creation address without a data payload (no contract), then the effect is the same as sending to a burn address—there is no contract to credit, so the ether is lost.
+Una transacción de creación de contrato solo necesita contener una carga de datos que contenga el bytecode compilado que creará el contrato. El único efecto de esta transacción es crear el contrato. Puede incluir una cantidad de ether en el campo `value` si desea configurar el nuevo contrato con un saldo inicial, pero eso es completamente opcional. Si envía un valor (ether) a la dirección de creación de contrato sin una carga de datos (sin contrato), el efecto es el mismo que enviar a una dirección de quema: no hay ningún contrato al cual acreditar el valor, por lo que el ether se pierde.
 
-As an example, we can create the `Faucet.sol` contract used in Chapter 2 by manually creating a transaction with an empty `to` field and the contract bytecode in the data payload. The contract needs to be compiled into a bytecode representation. This can be done with the Solidity compiler:
+Como ejemplo, podemos crear el contrato `Faucet.sol` utilizado en el Capítulo 2 creando manualmente una transacción con un campo `to` vacío y el bytecode del contrato en la carga de datos. El contrato debe compilarse en una representación en bytecode. Esto se puede hacer con el compilador de Solidity:
 
 ```bash
 $ solc --bin Faucet.sol
@@ -594,21 +594,21 @@ Binary:
 6080604052348015600e575f5ffd5…0033
 ```
 
-The same information can be obtained from the Remix online compiler.
+La misma información se puede obtener del compilador en línea Remix.
 
-Now we can use the binary output to create the transaction:
+Ahora podemos usar la salida binaria para crear la transacción:
 
 ```bash
 $ cast send --account example --rpc-url https://ethereum-sepolia-rpc.publicnode.com --create 6080604052348015600e575f5ffd5…0033
 ```
 
-Once the contract is published, we can see it on the Etherscan block explorer, as shown in Figure 6-8.
+Una vez publicado el contrato, podemos verlo en el explorador de bloques Etherscan, como se muestra en la Figura 6-8.
 
-![Contract creation on Etherscan](images/ch6/maet_0608.png)
+![Creación de contrato en Etherscan](images/ch6/maet_0608.png)
 
-**Figure 6-8.** Contract creation transaction on Etherscan
+**Figura 6-8.** Transacción de creación de contrato en Etherscan
 
-We can look at the receipt of the transaction (using the transaction hash to reference it) to get information about the contract:
+Podemos consultar el recibo de transacción (usando el hash de la transacción para referenciarla) para obtener información sobre el contrato:
 
 ```bash
 $ cast receipt 0xa6b077d7d0ea21ff5f32a5a7243a81f0ab63e3b5e09c8e388c230fb067967cbb \
@@ -632,21 +632,21 @@ blobGasUsed
 authorizationList
 ```
 
-This includes the address of the contract (see `contractAddress`), which we can use to send funds to and receive funds from the contract as shown in the previous section.
+Esto incluye la dirección del contrato (véase `contractAddress`), que podemos usar para enviar fondos al contrato y recibir fondos de él, como se muestra en la sección anterior.
 
-Let's start by saving the newly created contract address in a variable:
+Comencemos por guardar la dirección del contrato recién creado en una variable:
 
 ```bash
 $ CONTRACT_ADDRESS=0x4658eD241397F08cba8d5F3a69c7774cebE7f67F
 ```
 
-Now we can fund it with some ether:
+Ahora podemos depositarle algo de ether:
 
 ```bash
 $ cast send --account example $CONTRACT_ADDRESS --value 0.02ether --rpc-url https://ethereum-sepolia-rpc.publicnode.com
 ```
 
-And finally, let's call the `withdraw` function using the data payload we calculated previously, withdrawing 0.000001 ether to the `vitalik.eth` address:
+Y, por último, llamemos a la función `withdraw` usando la carga de datos que calculamos anteriormente, retirando 0.000001 ether a la dirección `vitalik.eth`:
 
 ```bash
 $ cast send --account example $CONTRACT_ADDRESS \
@@ -654,177 +654,177 @@ $ cast send --account example $CONTRACT_ADDRESS \
   --rpc-url https://ethereum-sepolia-rpc.publicnode.com
 ```
 
-After a while, both transactions are visible on Etherscan, as shown in Figure 6-9.
+Después de un tiempo, ambas transacciones son visibles en Etherscan, como se muestra en la Figura 6-9.
 
-![Contract interactions on Etherscan](images/ch6/maet_0609.png)
+![Interacciones con el contrato en Etherscan](images/ch6/maet_0609.png)
 
-**Figure 6-9.** Contract funding and withdrawal transactions
+**Figura 6-9.** Transacciones de depósito de fondos y retiro del contrato
 
-## Digital Signatures
+## Firmas digitales
 
-So far, we have not delved into any detail about digital signatures. In this section, we will look at how digital signatures work and how they can be used to present proof of ownership of a private key without revealing that private key.
+Hasta ahora, no hemos profundizado en los detalles de las firmas digitales. En esta sección, veremos cómo funcionan las firmas digitales y cómo pueden utilizarse para presentar una prueba de propiedad de una clave privada sin revelar esa clave privada.
 
-### The ECDSA
+### El ECDSA
 
-The digital signature algorithm used in Ethereum is the *Elliptic Curve Digital Signature Algorithm (ECDSA)*. It's based on elliptic curve private–public key pairs, as described in "Elliptic Curve Cryptography Explained".
+El algoritmo de firma digital utilizado en Ethereum es el *algoritmo de firma digital de curva elíptica (ECDSA)*. Se basa en pares de claves privada–pública de curva elíptica, como se describe en "Explicación de la criptografía de curva elíptica".
 
-A digital signature serves three purposes in Ethereum (see the following sidebar). First, the signature proves that the owner of the private key, who is by implication the owner of an Ethereum account, has authorized the spending of ether or the execution of a contract. Second, it guarantees *nonrepudiation*: the proof of authorization is undeniable. Third, the signature proves that the transaction data has not been and cannot be modified by anyone after the transaction has been signed.
+Una firma digital cumple tres propósitos en Ethereum (véase el siguiente recuadro). Primero, la firma demuestra que el propietario de la clave privada, quien por implicación es el propietario de una cuenta de Ethereum, ha autorizado el gasto de ether o la ejecución de un contrato. Segundo, garantiza el *no repudio*: la prueba de autorización es innegable. Tercero, la firma demuestra que los datos de la transacción no han sido modificados ni pueden ser modificados por nadie después de que la transacción haya sido firmada.
 
-#### Definition of a Digital Signature
+#### Definición de una firma digital
 
-According to [Wikipedia](https://oreil.ly/kRnY2), a digital signature is a mathematical scheme for presenting the authenticity of digital messages or documents. A valid digital signature gives a recipient reason to believe that the message was created by a known sender (authentication), that the sender cannot deny having sent the message (nonrepudiation), and that the message was not altered in transit (integrity).
+Según [Wikipedia](https://oreil.ly/kRnY2), una firma digital es un esquema matemático para presentar la autenticidad de mensajes o documentos digitales. Una firma digital válida le da al destinatario razones para creer que el mensaje fue creado por un remitente conocido (autenticación), que el remitente no puede negar haber enviado el mensaje (no repudio) y que el mensaje no fue alterado en tránsito (integridad).
 
-### How Digital Signatures Work
+### Cómo funcionan las firmas digitales
 
-A digital signature is a mathematical scheme that consists of two parts. The first part is an algorithm for creating a signature, using a private key (the signing key), from a message (which in our case is the transaction). The second part is an algorithm that allows anyone to verify the signature by using only the message and a public key.
+Una firma digital es un esquema matemático que consta de dos partes. La primera parte es un algoritmo para crear una firma, utilizando una clave privada (la clave de firma), a partir de un mensaje (que en nuestro caso es la transacción). La segunda parte es un algoritmo que permite a cualquier persona verificar la firma utilizando únicamente el mensaje y una clave pública.
 
-#### Creating a digital signature
+#### Creación de una firma digital
 
-In Ethereum's implementation of ECDSA, the "message" being signed is the transaction, or more accurately, the Keccak-256 hash of the RLP-encoded data from the transaction. The signing key is the EOA's private key. The result is the signature:
+En la implementación de ECDSA de Ethereum, el "mensaje" que se firma es la transacción o, más precisamente, el hash Keccak-256 de los datos de la transacción codificados en RLP. La clave de firma es la clave privada de la EOA. El resultado es la firma:
 
 ```
 Sig = Fsig (Fkeccak256 (m), k)
 ```
 
-where:
+donde:
 
-- `k` is the signing private key
-- `m` is the RLP-encoded transaction
-- `Fkeccak256` is the Keccak-256 hash function
-- `Fsig` is the signing algorithm
-- `Sig` is the resulting signature
+- `k` es la clave privada de firma
+- `m` es la transacción codificada en RLP
+- `Fkeccak256` es la función hash Keccak-256
+- `Fsig` es el algoritmo de firma
+- `Sig` es la firma resultante
 
-The function `Fsig` produces a signature `Sig` that is composed of two values, commonly referred to as `r` and `s`:
+La función `Fsig` produce una firma `Sig` que se compone de dos valores, comúnmente denominados `r` y `s`:
 
 ```
 Sig = (r, s)
 ```
 
-#### Verifying the signature
+#### Verificación de la firma
 
-To verify the signature, you must have the signature (`r` and `s`), the serialized transaction, and the public key that corresponds to the private key used to create the signature. Essentially, verification of a signature means only the owner of the private key that generated this public key could have produced this signature on this transaction.
+Para verificar la firma, se debe contar con la firma (`r` y `s`), la transacción serializada y la clave pública que corresponde a la clave privada utilizada para crear la firma. En esencia, verificar una firma significa que solo el propietario de la clave privada que generó esta clave pública podría haber producido esta firma para esta transacción.
 
-The signature-verification algorithm takes the message (i.e., a hash of the transaction for our usage), the signer's public key, and the signature (`r` and `s` values) and returns true if the signature is valid for this message and public key.
+El algoritmo de verificación de firmas recibe el mensaje (es decir, un hash de la transacción para nuestro caso de uso), la clave pública del firmante y la firma (los valores `r` y `s`), y devuelve verdadero si la firma es válida para este mensaje y esta clave pública.
 
-### ECDSA Math
+### Matemáticas de ECDSA
 
-As mentioned previously, signatures are created by a mathematical function `Fsig` that produces a signature composed of two values, `r` and `s`. In this section, we'll look at the function `Fsig` in more detail.
+Como se mencionó anteriormente, las firmas se crean mediante una función matemática `Fsig` que produce una firma compuesta por dos valores, `r` y `s`. En esta sección, examinaremos la función `Fsig` con más detalle.
 
-The signature algorithm first generates an *ephemeral* (temporary) private key in a cryptographically secure way. This temporary key is used in the calculation of the `r` and `s` values to ensure that the sender's actual private key can't be calculated by attackers watching signed transactions on the Ethereum network.
+El algoritmo de firma primero genera una clave privada *efímera* (temporal) de forma criptográficamente segura. Esta clave temporal se utiliza en el cálculo de los valores `r` y `s` para garantizar que los atacantes que observan las transacciones firmadas en la red Ethereum no puedan calcular la clave privada real del remitente.
 
-As we know from Chapter 4, the ephemeral private key is used to derive the corresponding (ephemeral) public key, so we have:
+Como sabemos por el Capítulo 4, la clave privada efímera se utiliza para derivar la clave pública (efímera) correspondiente, por lo que tenemos:
 
-- A cryptographically secure random number `q`, which is used as the ephemeral private key
-- The corresponding ephemeral public key `Q`, generated from `q` and the elliptic curve generator point `G`
+- Un número aleatorio criptográficamente seguro `q`, que se utiliza como clave privada efímera
+- La clave pública efímera correspondiente `Q`, generada a partir de `q` y del punto generador `G` de la curva elíptica
 
-The `r` value of the digital signature is then the x coordinate of the ephemeral public key `Q`.
+El valor `r` de la firma digital es entonces la coordenada x de la clave pública efímera `Q`.
 
-From there, the algorithm calculates the `s` value of the signature, such that:
+A partir de ahí, el algoritmo calcula el valor `s` de la firma, de modo que:
 
 ```
 s ≡ q-1 (Keccak256(m) + r * k) (mod p)
 ```
 
-where:
+donde:
 
-- `q` is the ephemeral private key
-- `r` is the x coordinate of the ephemeral public key
-- `k` is the signing (EOA owner's) private key
-- `m` is the transaction data
-- `p` is the prime order of the elliptic curve
+- `q` es la clave privada efímera
+- `r` es la coordenada x de la clave pública efímera
+- `k` es la clave privada de firma (del propietario de la EOA)
+- `m` son los datos de la transacción
+- `p` es el orden primo de la curva elíptica
 
-Verification is the inverse of the signature-generation function, using the `r` and `s` values and the sender's public key to calculate a value `Q`, which is a point on the elliptic curve (the ephemeral public key used in signature creation). The steps are as follows:
+La verificación es la inversa de la función de generación de firmas: utiliza los valores `r` y `s` y la clave pública del remitente para calcular un valor `Q`, que es un punto de la curva elíptica (la clave pública efímera utilizada en la creación de la firma). Los pasos son los siguientes:
 
-1. Check all inputs are correctly formed.
-2. Calculate `w = s-1 mod p`.
-3. Calculate `u1 = Keccak256(m) * w mod p`.
-4. Calculate `u2 = r * w mod p`.
-5. Finally, calculate the point on the elliptic curve `Q ≡ u1 * G + u2 * K (mod p)`
+1. Verificar que todas las entradas estén correctamente formadas.
+2. Calcular `w = s-1 mod p`.
+3. Calcular `u1 = Keccak256(m) * w mod p`.
+4. Calcular `u2 = r * w mod p`.
+5. Por último, calcular el punto de la curva elíptica `Q ≡ u1 * G + u2 * K (mod p)`
 
-where:
+donde:
 
-- `r` and `s` are the signature values
-- `K` is the signer's (EOA owner's) public key
-- `m` is the transaction data that was signed
-- `G` is the elliptic curve generator point
-- `p` is the prime order of the elliptic curve
+- `r` y `s` son los valores de la firma
+- `K` es la clave pública del firmante (propietario de la EOA)
+- `m` son los datos de la transacción que se firmaron
+- `G` es el punto generador de la curva elíptica
+- `p` es el orden primo de la curva elíptica
 
-If the x coordinate of the calculated point `Q` is equal to `r`, then the verifier can conclude that the signature is valid. Note that in verifying the signature, the private key is neither known nor revealed.
+Si la coordenada x del punto calculado `Q` es igual a `r`, entonces quien verifica puede concluir que la firma es válida. Nótese que, al verificar la firma, la clave privada no se conoce ni se revela.
 
-> **Tip**  
+> **Consejo**  
 >
-> ECDSA is necessarily a fairly complicated piece of math; a full explanation is beyond the scope of this book. A number of guides online take you through it step-by-step: search for "ECDSA explained" or try [this one](https://oreil.ly/KUv9P).
+> ECDSA implica necesariamente matemáticas bastante complejas; una explicación completa está fuera del alcance de este libro. Varias guías en línea explican el proceso paso a paso: busque "ECDSA explained" o consulte [esta guía](https://oreil.ly/KUv9P).
 
-## Transaction Signing in Practice
+## Firma de transacciones en la práctica
 
-To produce a valid transaction, the originator must digitally sign the message using the ECDSA. When we say "sign the transaction," we actually mean "sign the Keccak-256 hash of the RLP-serialized transaction data." The signature is applied to the hash of the transaction data, not the transaction itself.
+Para producir una transacción válida, el originador debe firmar digitalmente el mensaje utilizando ECDSA. Cuando decimos "firmar la transacción", en realidad queremos decir "firmar el hash Keccak-256 de los datos de la transacción serializados en RLP". La firma se aplica al hash de los datos de la transacción, no a la transacción en sí.
 
-To sign a transaction in Ethereum, the originator must:
+Para firmar una transacción en Ethereum, el originador debe:
 
-1. Create a transaction data structure, containing all the fields required for that particular transaction type.
-2. Produce an RLP-encoded serialized message of the transaction data structure.
-3. Compute the Keccak-256 hash of this serialized message.
-4. Compute the ECDSA signature, signing the hash with the originating EOA's private key.
-5. Append the ECDSA signature's computed `v`, `r`, and `s` values to the transaction.
+1. Crear una estructura de datos de transacción que contenga todos los campos requeridos para ese tipo particular de transacción.
+2. Producir un mensaje serializado codificado en RLP a partir de la estructura de datos de la transacción.
+3. Calcular el hash Keccak-256 de este mensaje serializado.
+4. Calcular la firma ECDSA, firmando el hash con la clave privada de la EOA de origen.
+5. Añadir a la transacción los valores calculados `v`, `r` y `s` de la firma ECDSA.
 
-The special signature variable `v` indicates two things: the chain ID and the recovery identifier to help the ECDSArecover function check the signature. In nonlegacy transactions, the `v` variable no longer encodes the chain ID because that is directly included as one of the items that forms the transaction itself. For more information on the chain ID, see "Raw Transaction Creation with EIP-155". The recovery identifier is used to indicate the parity of the y component of the public key (see "The Signature Prefix Value (v) and Public Key Recovery" for more details).
+La variable especial de firma `v` indica dos cosas: el ID de la cadena y el identificador de recuperación que ayuda a la función ECDSArecover a verificar la firma. En las transacciones no heredadas, la variable `v` ya no codifica el ID de la cadena porque este se incluye directamente como uno de los elementos que forman la transacción en sí. Para obtener más información sobre el ID de la cadena, consulte "Creación de transacciones en bruto con EIP-155". El identificador de recuperación se utiliza para indicar la paridad del componente y de la clave pública (consulte "El valor de prefijo de la firma (v) y la recuperación de la clave pública" para obtener más detalles).
 
-> **Note**  
+> **Nota**  
 >
-> At block 2,675,000, Ethereum implemented the Spurious Dragon hard fork, which, among other changes, introduced a new signing scheme that includes transaction replay protection (preventing transactions meant for one network from being replayed on others). This new signing scheme is specified in EIP-155. This change affects the form of the transaction and its signature, so attention must be paid to the first of the three signature variables (i.e., `v`), which takes one of two forms and indicates the data fields included in the transaction message being hashed.
+> En el bloque 2,675,000, Ethereum implementó el hard fork Spurious Dragon, que, entre otros cambios, introdujo un nuevo esquema de firma que incluye protección contra la reproducción de transacciones (lo que impide que las transacciones destinadas a una red se reproduzcan en otras). Este nuevo esquema de firma se especifica en EIP-155. Este cambio afecta la forma de la transacción y su firma, por lo que se debe prestar atención a la primera de las tres variables de firma (es decir, `v`), que adopta una de dos formas e indica los campos de datos incluidos en el mensaje de la transacción del que se calcula el hash.
 
-### Raw Transaction Creation and Signing
+### Creación y firma de transacciones en bruto
 
-In this section, we'll create a raw transaction and sign it, using the `ethers.js` library. Example 6-1 demonstrates the functions that would normally be used inside a wallet or an application that signs transactions on behalf of a user.
+En esta sección, crearemos una transacción en bruto y la firmaremos utilizando la biblioteca `ethers.js`. El Ejemplo 6-1 muestra las funciones que normalmente se utilizarían dentro de una billetera o una aplicación que firma transacciones en nombre de un usuario.
 
-**Example 6-1. Creating and signing a raw Ethereum transaction**
+**Ejemplo 6-1. Creación y firma de una transacción de Ethereum en bruto**
 
 ```javascript
-// Load requirements first:
+// Cargar primero los requisitos:
 //
 // npm install ethers
 //
 // Run with: node eip1559_tx.js
 import { ethers } from "ethers";
 
-// Create provider with your RPC endpoint
+// Crear un proveedor con su punto de conexión RPC
 const provider = new ethers.JsonRpcProvider("https://ethereum-sepolia-rpc.publicnode.com");
 
-// Private key
+// Clave privada
 const privKey = "0xd6d2672c6b4489e6bcd4e93b9af620fa0204b639b7d7f93765479c0846be0b58";
 
-// Create a wallet instance
+// Crear una instancia de billetera
 const wallet = new ethers.Wallet(privKey);
 
-// Get nonce and create transaction data
+// Obtener el nonce y crear los datos de la transacción
 const txData = {
-  nonce: await provider.getTransactionCount(wallet.address), // Get nonce from provider
-  to: "0xb0920c523d582040f2bcb1bd7fb1c7c1ecebdb34", // Receiver address
-  value: ethers.parseEther("0.0001"), // Amount to send (0.0001 ETH here)
-  gasLimit: ethers.toBeHex(0x30000), // Gas limit
-  maxFeePerGas: ethers.parseUnits("100", "gwei"), // Max fee per gas
-  maxPriorityFeePerGas: ethers.parseUnits("2", "gwei"), // Max priority fee
-  data: "0x", // Optional data
-  chainId: 11155111, // Sepolia chain ID
+  nonce: await provider.getTransactionCount(wallet.address), // Obtener el nonce del proveedor
+  to: "0xb0920c523d582040f2bcb1bd7fb1c7c1ecebdb34", // Dirección del destinatario
+  value: ethers.parseEther("0.0001"), // Monto a enviar (0.0001 ETH aquí)
+  gasLimit: ethers.toBeHex(0x30000), // Límite de gas
+  maxFeePerGas: ethers.parseUnits("100", "gwei"), // Comisión máxima por gas
+  maxPriorityFeePerGas: ethers.parseUnits("2", "gwei"), // Comisión de prioridad máxima
+  data: "0x", // Datos opcionales
+  chainId: 11155111, // ID de la cadena Sepolia
 };
 
-// Calculate RLP-encoded transaction hash (pre-signed)
+// Calcular el hash de la transacción codificada en RLP (antes de firmarla)
 const unsignedTx = ethers.Transaction.from(txData).unsignedSerialized;
 console.log("RLP-Encoded Tx (Unsigned): " + unsignedTx);
 const txHash = ethers.keccak256(unsignedTx);
 console.log("Tx Hash (Unsigned): " + txHash);
 
-// Sign the transaction
+// Firmar la transacción
 async function signAndSend() {
-  // Sign the transaction with the wallet
+  // Firmar la transacción con la billetera
   const signedTx = await wallet.signTransaction(txData);
   console.log("Signed Raw Transaction: " + signedTx);
 
-  // Send the signed transaction to the Ethereum network
+  // Enviar la transacción firmada a la red Ethereum
   const txResponse = await provider.broadcastTransaction(signedTx);
   console.log("Transaction Hash: " + txResponse.hash);
 
-  // Wait for the transaction to be mined
+  // Esperar a que se mine la transacción
   const receipt = await txResponse.wait();
   console.log("Transaction Receipt: ", receipt);
 }
@@ -832,7 +832,7 @@ async function signAndSend() {
 signAndSend().catch(console.error);
 ```
 
-Running the example code produces the following results:
+La ejecución del código de ejemplo produce los siguientes resultados:
 
 ```bash
 $ node eip1559_tx.js 
@@ -861,37 +861,37 @@ Transaction Receipt:  TransactionReceipt {
 }
 ```
 
-### Low-Level Manual Construction of an EIP-1559 Raw Transaction
+### Construcción manual de bajo nivel de una transacción en bruto EIP-1559
 
-The following example demonstrates the complete low-level process for creating and signing an EIP-1559 (type 0x02) transaction by manually building the field list, RLP-encoding it, and signing the typed payload. This approach reveals exactly what happens inside `wallet.signTransaction`.
+El siguiente ejemplo muestra el proceso completo de bajo nivel para crear y firmar una transacción EIP-1559 (tipo 0x02) mediante la construcción manual de la lista de campos, su codificación en RLP y la firma de la carga útil con tipo. Este enfoque revela exactamente lo que ocurre dentro de `wallet.signTransaction`.
 
 ```javascript
 // npm install ethers@6
 import { ethers } from "ethers";
 const RLP = require('@ethereumjs/rlp');
 
-// Replace with your own RPC and private key
-const rpcUrl = "https://ethereum-sepolia-rpc.publicnode.com"; // or mainnet, etc.
+// Reemplazar con su propio RPC y clave privada
+const rpcUrl = "https://ethereum-sepolia-rpc.publicnode.com"; // o la red principal, etc.
 const provider = new ethers.JsonRpcProvider(rpcUrl);
 const privateKey = "0xYOUR_PRIVATE_KEY_HERE";
 const wallet = new ethers.Wallet(privateKey, provider);
 
-const recipient = "0xRECIPENT_ADDRESS"; // example address
+const recipient = "0xRECIPENT_ADDRESS"; // dirección de ejemplo
 
 async function createAndSendRawEip1559Tx() {
-  const network = await provider.getNetwork(); // This is a RPC call
+  const network = await provider.getNetwork(); // Esta es una llamada RPC
   const chainId = network.chainId;
-  const nonce = await provider.getTransactionCount(wallet.address); // This is a RPC call
+  const nonce = await provider.getTransactionCount(wallet.address); // Esta es una llamada RPC
 
-  // Example parameters — adjust as needed (or use provider.estimateGas + getFeeData)
-  const maxPriorityFeePerGas = ethers.parseUnits("2", "gwei");   // tip
-  const maxFeePerGas = ethers.parseUnits("30", "gwei");         // fee cap (base fee + tip)
+  // Parámetros de ejemplo: ajustar según sea necesario (o usar provider.estimateGas + getFeeData)
+  const maxPriorityFeePerGas = ethers.parseUnits("2", "gwei");   // propina
+  const maxFeePerGas = ethers.parseUnits("30", "gwei");         // tope de comisión (comisión base + propina)
   const gasLimit = 21000n;
   const value = ethers.parseEther("0.01"); // 0.01 ETH
-  const data = "0x"; // or contract calldata
-  const accessList = []; // [] or proper access list for EIP-2930 style savings
+  const data = "0x"; // o calldata del contrato
+  const accessList = []; // [] o una lista de acceso adecuada para ahorros al estilo EIP-2930
 
-  // Unsigned fields in strict order for Transaction Type 2
+  // Campos sin firmar en orden estricto para el tipo de transacción 2
   const unsignedFields = [
     chainId,                              // chainId
     nonce,                                // nonce
@@ -904,24 +904,24 @@ async function createAndSendRawEip1559Tx() {
     accessList                            // accessList
   ];
 
-  // RLP-encode the unsigned fields
+  // Codificar los campos sin firmar con RLP
   const encodedUnsigned = RLP.encode(unsignedFields);
 
-  // Prepend the transaction type byte (0x02)
+  // Anteponer el byte del tipo de transacción (0x02)
   const txType = Buffer.from('02', 'hex');
   const fullTx = Buffer.concat([txType, encodedUnsigned]);
 
-  // This is the signing hash
+  // Este es el hash que se firma
   const signingHash = ethers.keccak256(fullTx);
 
-  // Sign the hash
+  // Firmar el hash
   const signingKey = new ethers.SigningKey(wallet.privateKey);
   const signature = signingKey.sign(ethers.getBytes(signingHash));
 
-  // For typed transactions we use yParity (0 or 1) instead of legacy v
+  // Para las transacciones tipadas usamos yParity (0 o 1) en lugar del valor v heredado
   const signedFields = [
     ...unsignedFields,
-    signature.v - 27, // yParity (0 or 1)
+    signature.v - 27, // yParity (0 o 1)
     signature.r,
     signature.s
   ];
@@ -932,7 +932,7 @@ async function createAndSendRawEip1559Tx() {
 
   console.log("Raw transaction hex:\n", rawTransaction);
 
-  // Send the raw transaction
+  // Enviar la transacción en bruto
   const txHash = await provider.send("eth_sendRawTransaction", [rawTransaction]);
   console.log("Transaction sent! Hash:", txHash);
 
@@ -943,291 +943,291 @@ async function createAndSendRawEip1559Tx() {
 createAndSendRawEip1559Tx().catch(console.error);
 ```
 
-## Deserializing the Transaction
+## Deserialización de la transacción
 
-Now that we have created and sent a transaction to the Ethereum network from scratch, we can follow the inverse process and try to rebuild each field of the transaction, starting with the signed raw transaction we get from the previous example. This will help you understand how each field of the transaction is actually included in the transaction itself—you just need to extract it in the correct way.
+Ahora que hemos creado y enviado una transacción a la red Ethereum desde cero, podemos seguir el proceso inverso e intentar reconstruir cada campo de la transacción, a partir de la transacción en bruto firmada que obtuvimos en el ejemplo anterior. Esto ayudará a entender cómo se incluye realmente cada campo de la transacción en la propia transacción: solo se necesita extraerlo de la manera correcta.
 
-Let's start with the entire signed raw transaction:
+Comencemos con la transacción en bruto firmada completa:
 
 ```
 0x02f87583aa36a714847735940085174876e8008303000094b0920c523d582040f2bcb1bd7fb1c7c1ecebdb34865af3107a400080c001a03f8ed18cb03ee0fe3fbc3f0a7477a2f68db6ec84450e77e702b82a3f2c873aa4a0205c4f6a16ea8ad13a148cc3105814cd4a6860cd26a771651199c85ccb7c7f0f
 ```
 
-Recalling EIP-2718, all Ethereum transactions are made by:
+Recordando EIP-2718, todas las transacciones de Ethereum se componen de:
 
-- The first byte that specifies the transaction type
-- The transaction type payload
+- El primer byte, que especifica el tipo de transacción
+- La carga útil del tipo de transacción
 
-This almost always translates in the RLP encoding of all the fields of that specific transaction type.
+Esto casi siempre se traduce en la codificación RLP de todos los campos de ese tipo específico de transacción.
 
-Our transaction starts with a `0x02`. This represents the transaction type, and `0x02` means it's an EIP-1559 transaction. The next part is the RLP encoding of all the transaction fields that make up the EIP-1559 transaction.
+Nuestra transacción comienza con `0x02`. Esto representa el tipo de transacción, y `0x02` significa que es una transacción EIP-1559. La siguiente parte es la codificación RLP de todos los campos que componen la transacción EIP-1559.
 
-To quickly decode them, we can use `cast` and the `from-rlp` command, providing the rest of the transaction as input:
+Para decodificarlos rápidamente, podemos usar `cast` y el comando `from-rlp`, proporcionando el resto de la transacción como entrada:
 
 ```bash
 $ cast from-rlp f87583aa36a714847735940085174876e8008303000094b0920c523d582040f2bcb1bd7fb1c7c1ecebdb34865af3107a400080c001a03f8ed18cb03ee0fe3fbc3f0a7477a2f68db6ec84450e77e702b82a3f2c873aa4a0205c4f6a16ea8ad13a148cc3105814cd4a6860cd26a771651199c85ccb7c7f0f
 ["0xaa36a7","0x14","0x77359400","0x174876e800","0x030000","0xb0920c523d582040f2bcb1bd7fb1c7c1ecebdb34","0x5af3107a4000","0x",[],"0x01","0x3f8ed18cb03ee0fe3fbc3f0a7477a2f68db6ec84450e77e702b82a3f2c873aa4","0x205c4f6a16ea8ad13a148cc3105814cd4a6860cd26a771651199c85ccb7c7f0f"]
 ```
 
-You can see that the output of the last `cast` command contains a list of hexadecimal items: they are the fields of the EIP-1559 transaction. Let's analyze them one by one and reconstruct the transaction:
+Se puede ver que la salida del último comando `cast` contiene una lista de elementos hexadecimales: son los campos de la transacción EIP-1559. Analicémoslos uno por uno y reconstruyamos la transacción:
 
 **`0xaa36a7`**
 
-The Sepolia chain ID: 11155111 in decimal.
+El ID de cadena de Sepolia: 11155111 en decimal.
 
 **`0x14`**
 
-The nonce used in the transaction: 20. You can go to the block explorer and see that it's actually correct.
+El nonce utilizado en la transacción: 20. Se puede ir al explorador de bloques y comprobar que es correcto.
 
 **`0x77359400`**
 
-The max priority fee per gas: 2000000000 in decimal. It translates to 2 gwei per gas.
+La comisión de prioridad máxima por gas: 2000000000 en decimal. Equivale a 2 gwei por gas.
 
 **`0x174876e800`**
 
-The max fee per gas: 100000000000 in decimal. It translates to 100 gwei per gas.
+La comisión máxima por gas: 100000000000 en decimal. Equivale a 100 gwei por gas.
 
 **`0x030000`**
 
-The gas limit: 196608 in decimal.
+El límite de gas: 196608 en decimal.
 
 **`0xb0920c523d582040f2bcb1bd7fb1c7c1ecebdb34`**
 
-The recipient address.
+La dirección del destinatario.
 
 **`0x5af3107a4000`**
 
-The value in wei sent from the sender to the recipient: 10^14 in decimal. It translates to 0.0001 ether.
+El valor en wei enviado del remitente al destinatario: 10^14 en decimal. Equivale a 0.0001 ether.
 
 **`0x`**
 
-The empty data payload.
+La carga de datos vacía.
 
 **`[]`**
 
-The empty access list.
+La lista de acceso vacía.
 
 **`0x01`**
 
-The `v` value of the signature; `0x01` means an odd y coordinate of the elliptic curve (`0x00` means an even y coordinate).
+El valor `v` de la firma; `0x01` significa una coordenada y impar de la curva elíptica (`0x00` significa una coordenada y par).
 
 **`0x3f8ed18cb03ee0fe3fbc3f0a7477a2f68db6ec84450e77e702b82a3f2c873aa4`**
 
-The `r` value of the signature.
+El valor `r` de la firma.
 
 **`0x205c4f6a16ea8ad13a148cc3105814cd4a6860cd26a771651199c85ccb7c7f0f`**
 
-The `s` value of the signature.
+El valor `s` de la firma.
 
-## Raw Transaction Creation with EIP-155
+## Creación de transacciones en bruto con EIP-155
 
-The EIP-155 "Simple Replay Attack Protection" standard specifies a replay-attack-protected transaction encoding, which includes a chain ID inside the transaction data prior to signing. This ensures that transactions created for one blockchain (e.g., the Ethereum main network) are invalid on another blockchain (e.g., Ethereum Classic or the Sepolia test network). Therefore, transactions broadcast on one network cannot be replayed on another, hence the name of the standard.
+El estándar EIP-155 "Simple Replay Attack Protection" especifica una codificación de transacciones protegida contra ataques de repetición, que incluye un ID de cadena dentro de los datos de la transacción antes de firmarla. Esto garantiza que las transacciones creadas para una blockchain (p. ej., la red principal de Ethereum) no sean válidas en otra blockchain (p. ej., Ethereum Classic o la red de pruebas Sepolia). Por lo tanto, las transacciones difundidas en una red no pueden repetirse en otra; de ahí el nombre del estándar.
 
-By including the chain ID in the data being signed, the transaction signature prevents any changes since the signature is invalidated if the chain ID is modified. Therefore, EIP-155 makes it impossible for a transaction to be replayed on another chain because the signature's validity depends on the chain ID.
+Al incluir el ID de cadena en los datos que se firman, la firma de la transacción impide cualquier cambio, ya que se invalida si se modifica el ID de cadena. Por lo tanto, EIP-155 hace imposible que una transacción se repita en otra cadena porque la validez de la firma depende del ID de cadena.
 
-The chain ID field takes a value according to the network the transaction is meant for, as outlined in Table 6-2.
+El campo de ID de cadena toma un valor según la red a la que está destinada la transacción, como se indica en la Tabla 6-2.
 
-**Table 6-2. Chain identifiers**
+**Tabla 6-2. Identificadores de cadena**
 
-| Chain | Chain ID |
+| Cadena | ID de cadena |
 |-------|----------|
-| Ethereum mainnet | 1 |
+| Red principal de Ethereum | 1 |
 | Ethereum Sepolia | 11155111 |
 | Ethereum Holesky | 17000 |
 
-For an exhaustive list of chain identifiers, see [ChainList](https://chainlist.org).
+Para obtener una lista exhaustiva de identificadores de cadena, consulte [ChainList](https://chainlist.org).
 
-The resulting transaction structure is RLP encoded, hashed, and signed. For more details, see the EIP-155 specification.
+La estructura de transacción resultante se codifica con RLP, se calcula su hash y se firma. Para obtener más detalles, consulte la especificación EIP-155.
 
-## The Signature Prefix Value (v) and Public Key Recovery
+## El valor de prefijo de la firma (v) y la recuperación de la clave pública
 
-As mentioned in "The Structure of a Transaction", the transaction message doesn't include a "from" field. That's because the originator's public key can be computed directly from the ECDSA signature. Once you have the public key, you can compute the address easily. The process of recovering the signer's public key is called *public key recovery*.
+Como se mencionó en "La estructura de una transacción", el mensaje de la transacción no incluye un campo "from". Esto se debe a que la clave pública del originador se puede calcular directamente a partir de la firma ECDSA. Una vez que se tiene la clave pública, se puede calcular la dirección fácilmente. El proceso de recuperar la clave pública del firmante se denomina *recuperación de la clave pública*.
 
-Given the values `r` and `s` that were computed in "ECDSA Math", we can compute two possible public keys.
+Dados los valores `r` y `s` que se calcularon en "Matemáticas de ECDSA", podemos calcular dos posibles claves públicas.
 
-First, we compute two elliptic curve points, `R` and `R′`, from the x coordinate `r` value that is in the signature. There are two points because the elliptic curve is symmetric across the x-axis, so for any value x, there are two possible values that fit the curve, one on each side of the x-axis.
+Primero, calculamos dos puntos de la curva elíptica, `R` y `R′`, a partir del valor `r` de la coordenada x que está en la firma. Hay dos puntos porque la curva elíptica es simétrica respecto al eje x, por lo que, para cualquier valor x, hay dos valores posibles que pertenecen a la curva, uno a cada lado del eje x.
 
-From `r` we also calculate `r–1`, which is the multiplicative inverse of `r`.
+A partir de `r` también calculamos `r–1`, que es el inverso multiplicativo de `r`.
 
-Finally, we calculate `z`, which is the n lowest bits of the message hash, where n is the order of the elliptic curve.
+Por último, calculamos `z`, que corresponde a los n bits menos significativos del hash del mensaje, donde n es el orden de la curva elíptica.
 
-The two possible public keys are then:
+Las dos posibles claves públicas son entonces:
 
 ```
 K1 = r–1 (sR – zG)
 ```
 
-and:
+y:
 
 ```
 K2 = r–1 (sR′ – zG)
 ```
 
-where:
+donde:
 
-- `K1` and `K2` are the two possibilities for the signer's public key
-- `r-1` is the multiplicative inverse of the signature's `r` value
-- `s` is the signature's `s` value
-- `R` and `R′` are the two possibilities for the ephemeral public key `Q`
-- `z` is the n-lowest bits of the message hash
-- `G` is the elliptic curve generator point
+- `K1` y `K2` son las dos posibilidades para la clave pública del firmante
+- `r-1` es el inverso multiplicativo del valor `r` de la firma
+- `s` es el valor `s` de la firma
+- `R` y `R′` son las dos posibilidades para la clave pública efímera `Q`
+- `z` corresponde a los n bits menos significativos del hash del mensaje
+- `G` es el punto generador de la curva elíptica
 
-To make things more efficient, the transaction signature includes a prefix value `v`, which tells us which of the two possible R values is the ephemeral public key. If `v` is even, then `R` is the correct value. If `v` is odd, then it is `R′`. That way, we need to calculate only one value for R and only one value for K.
+Para hacer el proceso más eficiente, la firma de la transacción incluye un valor de prefijo `v`, que nos indica cuál de los dos valores R posibles es la clave pública efímera. Si `v` es par, entonces `R` es el valor correcto. Si `v` es impar, entonces es `R′`. De esta manera, solo necesitamos calcular un valor para R y un valor para K.
 
-## Separating Signing and Transmission (Offline Signing)
+## Separación de la firma y la transmisión (firma sin conexión)
 
-Once a transaction is signed, it is ready to transmit to the Ethereum network. The three steps of creating, signing, and broadcasting a transaction normally happen as a single operation—for example, using the `cast send` command. However, as you saw in "Raw Transaction Creation and Signing", you can create and sign the transaction in two separate steps. Once you have a signed transaction, you can then transmit it using `ethers.JsonRpcProvider("..."").broadcastTransaction`, which takes a hex-encoded and signed transaction and transmits it on the Ethereum network.
+Una vez que una transacción está firmada, está lista para transmitirse a la red Ethereum. Los tres pasos de crear, firmar y difundir una transacción normalmente ocurren como una sola operación; por ejemplo, al usar el comando `cast send`. Sin embargo, como se vio en "Creación y firma de transacciones en bruto", se puede crear y firmar la transacción en dos pasos separados. Una vez que se tiene una transacción firmada, se puede transmitirla usando `ethers.JsonRpcProvider("..."").broadcastTransaction`, que toma una transacción firmada y codificada en hexadecimal y la transmite a la red Ethereum.
 
-Why would you want to separate the signing and transmission of transactions? The most common reason is security. The computer that signs a transaction must have unlocked private keys loaded in memory. The computer that does the transmitting must be connected to the internet (and be running an Ethereum client). If these two functions are on one computer, then you have private keys on an online system, which is quite dangerous.
+¿Por qué se querría separar la firma y la transmisión de las transacciones? La razón más común es la seguridad. La computadora que firma una transacción debe tener las claves privadas desbloqueadas y cargadas en la memoria. La computadora que realiza la transmisión debe estar conectada a internet (y ejecutar un cliente de Ethereum). Si estas dos funciones están en una misma computadora, entonces se tienen claves privadas en un sistema conectado a internet, lo cual es bastante peligroso.
 
-> **Warning**  
+> **Advertencia**  
 >
-> If you keep your private keys online, you're exposed to several forms of attacks, such as malware and remote hacking, and you're much more susceptible to phishing attacks, too.
+> Si se mantienen las claves privadas en línea, se está expuesto a varias formas de ataque, como software malicioso e intrusiones remotas, y también se es mucho más susceptible a los ataques de suplantación de identidad.
 
-Separating the functions of signing and transmitting and performing them on different machines (on an offline and an online device, respectively) is called *offline signing* and is a common security practice.
+Separar las funciones de firma y transmisión y realizarlas en máquinas diferentes (en un dispositivo sin conexión y en uno conectado a internet, respectivamente) se denomina *firma sin conexión* y es una práctica de seguridad común.
 
-Figure 6-10 shows the process, which follows these steps:
+La Figura 6-10 muestra el proceso, que sigue estos pasos:
 
-1. Create an unsigned transaction on the online computer where the current state of the account—notably, the current nonce and funds available—can be retrieved.
-2. Transfer the unsigned transaction to an "air-gapped" offline device for transaction signing (e.g., via a QR code or USB flash drive).
-3. Transmit the signed transaction (back) to an online device for broadcast on the Ethereum blockchain (e.g., via a QR code or USB flash drive).
+1. Crear una transacción sin firmar en la computadora conectada a internet, donde se puede obtener el estado actual de la cuenta, en particular, el nonce actual y los fondos disponibles.
+2. Transferir la transacción sin firmar a un dispositivo sin conexión "aislado físicamente" para firmarla (p. ej., mediante un código QR o una memoria USB).
+3. Transmitir la transacción firmada (de vuelta) a un dispositivo conectado a internet para su difusión en la blockchain de Ethereum (p. ej., mediante un código QR o una memoria USB).
 
-![Offline signing workflow](images/ch6/maet_0610.png)
+![Flujo de trabajo de firma sin conexión](images/ch6/maet_0610.png)
 
-**Figure 6-10.** Offline signing process
+**Figura 6-10.** Proceso de firma sin conexión
 
-Depending on the level of security you need, your "offline signing" computer can have varying degrees of separation from the online computer, ranging from an isolated and firewalled subnet (online but segregated) to a completely offline system known as an *air-gapped system*. In an air-gapped system, there is no network connectivity at all—the computer is separated from the online environment by a gap of "air." To sign transactions, you transfer them to and from the air-gapped computer using data storage media or (better) a webcam and QR code. Of course, this means you must manually transfer every transaction you want signed, and this doesn't scale.
+Según el nivel de seguridad que se necesite, la computadora de "firma sin conexión" puede tener distintos grados de separación de la computadora conectada a internet, desde una subred aislada y protegida por un cortafuegos (conectada, pero segregada) hasta un sistema completamente sin conexión conocido como *sistema aislado físicamente*. En un sistema aislado físicamente, no hay conectividad de red en absoluto: la computadora está separada del entorno en línea por una brecha de "aire". Para firmar transacciones, se transfieren hacia y desde la computadora aislada físicamente mediante medios de almacenamiento de datos o (mejor aún) una cámara web y un código QR. Por supuesto, esto significa que se debe transferir manualmente cada transacción que se desee firmar, y esto no es escalable.
 
-While not many environments can utilize a fully air-gapped system, even a small degree of isolation has significant security benefits. For example, an isolated subnet with a firewall that allows through only a message-queue protocol can offer a much reduced attack surface and much higher security than signing on the online system. Many companies use a protocol such as ZeroMQ (0MQ) for this purpose. With a setup like that, transactions are serialized and queued for signing. The queuing protocol transmits the serialized message, in a way similar to a TCP socket, to the signing computer. The signing computer reads the serialized transactions from the queue (carefully), applies a signature with the appropriate key, and places them on an outgoing queue. The outgoing queue transmits the signed transactions to a computer with an Ethereum client that dequeues them and transmits them.
+Aunque no muchos entornos pueden utilizar un sistema completamente aislado de la red, incluso un pequeño grado de aislamiento ofrece beneficios de seguridad significativos. Por ejemplo, una subred aislada con un firewall que solo permite el paso de un protocolo de cola de mensajes puede ofrecer una superficie de ataque mucho menor y una seguridad mucho mayor que firmar en el sistema en línea. Muchas empresas utilizan un protocolo como ZeroMQ (0MQ) para este propósito. Con una configuración así, las transacciones se serializan y se ponen en cola para su firma. El protocolo de cola transmite el mensaje serializado, de manera similar a un socket TCP, a la computadora de firma. La computadora de firma lee las transacciones serializadas de la cola (con cuidado), aplica una firma con la clave adecuada y las coloca en una cola de salida. La cola de salida transmite las transacciones firmadas a una computadora con un cliente de Ethereum que las extrae de la cola y las transmite.
 
-## Transaction Life Cycle
+## Ciclo de vida de una transacción
 
-In this section, we'll explore the full life cycle of a transaction, starting from the moment it's signed to when it's included in a block and the block gets finalized.
+En esta sección, exploraremos el ciclo de vida completo de una transacción, desde el momento en que se firma hasta que se incluye en un bloque y el bloque se finaliza.
 
-### Creating and Signing the Transaction
+### Creación y firma de la transacción
 
-The first step is to create the transaction, choosing the transaction type and filling all the fields required for it. For example, in the section "Raw Transaction Creation and Signing", we created an EIP-1559 transaction.
+El primer paso es crear la transacción, eligiendo el tipo de transacción y completando todos los campos que requiere. Por ejemplo, en la sección "Creación y firma de transacciones en bruto", creamos una transacción EIP-1559.
 
-Once we have the transaction, we need to sign it with the correct private key (or the transaction will be invalid due to the invalid signature) in order to obtain the final and definitive signed transaction. This is the actual piece of data that we need to send to the network and wait for it to be included in a block.
+Una vez que tenemos la transacción, debemos firmarla con la clave privada correcta (o la transacción será inválida debido a la firma inválida) para obtener la transacción firmada final y definitiva. Estos son los datos concretos que debemos enviar a la red y esperar a que se incluyan en un bloque.
 
-### Sending the Transaction to the Network
+### Envío de la transacción a la red
 
-The transaction needs to be included in a block to be considered confirmed by the Ethereum protocol; otherwise, it's just a signed transaction that only we know about.
+La transacción debe incluirse en un bloque para que el protocolo de Ethereum la considere confirmada; de lo contrario, es solo una transacción firmada que únicamente nosotros conocemos.
 
-> **Tip**  
+> **Consejo**  
 >
-> It's very important to understand that the Ethereum protocol considers valid only transactions that are included into blocks that are part of the valid chain. To update its state, you need to send your signed transaction to the network and wait for it to include your transaction into a block. Your signed transaction alone doesn't do anything if it's not included into a block.
+> Es muy importante entender que el protocolo de Ethereum solo considera válidas las transacciones que se incluyen en bloques que forman parte de la cadena válida. Para actualizar su estado, se debe enviar la transacción firmada a la red y esperar a que esta la incluya en un bloque. La transacción firmada por sí sola no hace nada si no se incluye en un bloque.
 
-So we need to send our signed transaction to the network. To do that, we just need to send our transaction to an Ethereum node: this can be our own node or a third-party one, such as Alchemy, Infura, or Public Node (which is the one we used in our previous example).
+Así que debemos enviar nuestra transacción firmada a la red. Para hacerlo, solo debemos enviar nuestra transacción a un nodo de Ethereum: puede ser nuestro propio nodo o uno de un tercero, como Alchemy, Infura o Public Node (que es el que usamos en nuestro ejemplo anterior).
 
-> **Note**  
+> **Nota**  
 >
-> By default, all wallets use a third-party node so that a user doesn't need to install anything to start using the Ethereum network. Nevertheless, if you want to maximize your privacy and really don't want to depend on anyone, you should use your own client. You can refer to Chapter 3 for a detailed guide on how to install your first Ethereum node.
+> De forma predeterminada, todas las billeteras utilizan un nodo de un tercero para que el usuario no tenga que instalar nada para comenzar a utilizar la red Ethereum. Sin embargo, si se desea maximizar la privacidad y realmente no depender de nadie, se debe utilizar un cliente propio. Se puede consultar el Capítulo 3 para obtener una guía detallada sobre cómo instalar el primer nodo de Ethereum.
 
 
-When our signed transaction reaches the first node, the node performs some validation in order to immediately remove spam invalid transactions. If the validation succeeds, then the node adds the transaction to its *mempool* and propagates it to a subsection of all its peers. Each of them validates it, adds it to its own mempool, and propagates it further.
+Cuando nuestra transacción firmada llega al primer nodo, el nodo realiza algunas validaciones para eliminar de inmediato las transacciones inválidas enviadas como spam. Si la validación tiene éxito, el nodo agrega la transacción a su *mempool* y la propaga a un subconjunto de todos sus pares. Cada uno de ellos la valida, la agrega a su propia mempool y continúa propagándola.
 
-This process is part of the Ethereum P2P gossip protocol, and the result is that within just a few seconds, an Ethereum transaction propagates to all the Ethereum nodes around the globe. From the perspective of each node, it is not possible to discern the origin of the transaction. The neighbor that sent it to the node may be the originator of the transaction or may have received it from one of its neighbors. To be able to track the origins of transactions or interfere with propagation, an attacker would have to control a significant percentage of all nodes. This is part of the security and privacy design of P2P networks, especially as applied to blockchain networks.
+Este proceso forma parte del protocolo gossip P2P de Ethereum, y el resultado es que, en apenas unos segundos, una transacción de Ethereum se propaga a todos los nodos de Ethereum del mundo. Desde la perspectiva de cada nodo, no es posible determinar el origen de la transacción. El vecino que la envió al nodo puede ser quien originó la transacción o puede haberla recibido de uno de sus vecinos. Para poder rastrear los orígenes de las transacciones o interferir con su propagación, un atacante tendría que controlar un porcentaje significativo de todos los nodos. Esto forma parte del diseño de seguridad y privacidad de las redes P2P, especialmente cuando se aplica a redes de blockchain.
 
-> **Note**  
+> **Nota**  
 >
-> You may wonder why nodes don't flood transactions to all their neighbors and instead send them to just a subsection of neighbors. The answer is efficiency and bandwidth preservation. In fact, it would be highly inefficient to send all transactions to all nodes: there would be lots of duplicate messages, network traffic would be huge, and scalability would be poor as network traffic would grow exponentially with the number of transactions.
+> Quizá surja la pregunta de por qué los nodos no envían masivamente las transacciones a todos sus vecinos y, en cambio, las envían solo a un subconjunto de ellos. La respuesta es la eficiencia y la conservación del ancho de banda. De hecho, sería muy ineficiente enviar todas las transacciones a todos los nodos: habría muchos mensajes duplicados, el tráfico de red sería enorme y la escalabilidad sería deficiente, ya que el tráfico de red crecería exponencialmente con la cantidad de transacciones.
 
-### Building the Block
+### Construcción del bloque
 
-Right now, our transaction has reached almost all the Ethereum nodes, but it's still not confirmed because it's not included into a block—until a validator that is selected to propose the next block finally takes all the transactions from its own mempool, adds them to the block, and publishes the block to the network.
+En este momento, nuestra transacción ha llegado a casi todos los nodos de Ethereum, pero aún no está confirmada porque no se ha incluido en un bloque; esto ocurre cuando un validador seleccionado para proponer el siguiente bloque finalmente toma todas las transacciones de su propia mempool, las agrega al bloque y publica el bloque en la red.
 
-Once transactions are included into a block, they modify the Ethereum state, either by modifying the balance of an account (in the case of a simple payment) or by invoking contracts that change their internal state. These changes are recorded alongside the transaction, in the form of a *transaction receipt*, which may also include events. In the example in "Raw Transaction Creation and Signing", you can find the final receipt of our transaction.
+Una vez que las transacciones se incluyen en un bloque, modifican el estado de Ethereum, ya sea modificando el saldo de una cuenta (en el caso de un pago simple) o invocando contratos que cambian su estado interno. Estos cambios se registran junto con la transacción, en forma de un *recibo de transacción*, que también puede incluir eventos. En el ejemplo de "Creación y firma de transacciones en bruto", se puede encontrar el recibo final de nuestra transacción.
 
-### Finalizing the Transaction
+### Finalización de la transacción
 
-Our transaction is now included into a block and has already modified the Ethereum state. Nevertheless, the block that contains it could still be reverted and substituted with another one that doesn't include our transaction, even though that's highly unlikely to happen. This is called *block reorganization*, or *block reorgs* for short.
+Nuestra transacción ahora está incluida en un bloque y ya ha modificado el estado de Ethereum. Sin embargo, el bloque que la contiene aún podría revertirse y sustituirse por otro que no incluya nuestra transacción, aunque es muy poco probable que eso ocurra. Esto se denomina *reorganización de bloques*, o *reorgs de bloques* para abreviar.
 
-To be completely sure that our transaction cannot be reverted, we need to wait for the block that includes it to be finalized by the Ethereum consensus protocol (we'll explore that in much more detail in Chapter 15). This usually takes around 12 minutes.
+Para estar completamente seguros de que nuestra transacción no puede revertirse, debemos esperar a que el protocolo de consenso de Ethereum finalice el bloque que la incluye (exploraremos esto con mucho más detalle en el Capítulo 15). Esto suele tardar alrededor de 12 minutos.
 
-> **Note**  
+> **Nota**  
 >
-> Even though it's true that you should wait for the finalization to be completely sure that your transaction is confirmed on the blockchain, you can usually wait for only a couple of blocks. Wallets usually show your transaction as confirmed immediately after it has been included into a block.
+> Aunque es cierto que se debe esperar a la finalización para tener la certeza absoluta de que la transacción está confirmada en la blockchain, por lo general se puede esperar solo un par de bloques. Las billeteras suelen mostrar la transacción como confirmada inmediatamente después de que se haya incluido en un bloque.
 
-## An Alternative Life Cycle
+## Un ciclo de vida alternativo
 
-The life cycle we explored in the previous section is the old standard flow that a transaction follows, from its start to its end inside a finalized block. Over the past three to four years, and even more nowadays, a new life cycle has been established for transactions. To explain it, we need to introduce a concept called *proposer and builder separation*.
+El ciclo de vida que exploramos en la sección anterior es el flujo estándar tradicional que sigue una transacción, desde su inicio hasta su final dentro de un bloque finalizado. Durante los últimos tres o cuatro años, y aún más en la actualidad, se ha establecido un nuevo ciclo de vida para las transacciones. Para explicarlo, debemos presentar un concepto llamado *separación entre proponente y constructor*.
 
-### MEV and Proposer and Builder Separation
+### MEV y separación entre proponente y constructor
 
-As we'll explore further in Chapter 15, every 12 seconds a validator is required to propose a new block to advance the Ethereum chain. The validator collects transactions from its mempool, organizes them to fill the block, and publishes the block to the network so that all other nodes can validate and propagate the block.
+Como exploraremos con más detalle en el Capítulo 15, cada 12 segundos un validador debe proponer un nuevo bloque para hacer avanzar la cadena de Ethereum. El validador recopila transacciones de su mempool, las organiza para llenar el bloque y publica el bloque en la red para que todos los demás nodos puedan validarlo y propagarlo.
 
-Traditionally, Ethereum nodes have prioritized transactions based on the transaction fees paid to the validator (specifically, the priority fee for EIP-1559 transactions) in order to maximize profit. This approach was the standard method for optimizing miner and validator earnings for many years.
+Tradicionalmente, los nodos de Ethereum han priorizado las transacciones en función de las comisiones de transacción pagadas al validador (específicamente, la comisión de prioridad para las transacciones EIP-1559) con el fin de maximizar las ganancias. Este enfoque fue el método estándar para optimizar los ingresos de mineros y validadores durante muchos años.
 
-However, with the rising popularity of Ethereum during the 2020 "DeFi Summer," and even more so during the 2021 bull run, a new phenomenon emerged: *maximal extractable value* (*MEV*, previously called miner extractable value). This concept has significantly altered how Ethereum miners and validators create blocks.
+Sin embargo, con la creciente popularidad de Ethereum durante el "DeFi Summer" de 2020, y aún más durante el mercado alcista de 2021, surgió un nuevo fenómeno: el *valor máximo extraíble* (*MEV*, anteriormente llamado valor extraíble por mineros). Este concepto ha alterado significativamente la forma en que los mineros y validadores de Ethereum crean bloques.
 
-MEV refers to the maximum value that block producers can extract from a block by making strategic decisions about:
+MEV se refiere al valor máximo que los productores de bloques pueden extraer de un bloque al tomar decisiones estratégicas sobre:
 
-- Which transactions to include in the block
-- The order of transactions within the block
-- Which transactions to exclude from the block
+- Qué transacciones incluir en el bloque
+- El orden de las transacciones dentro del bloque
+- Qué transacciones excluir del bloque
 
-While this may sound innocuous, it had and still has a huge impact on block-production dynamics. For example, think about a transaction that is going to buy a big quantity of a certain token X on a decentralized exchange such as Uniswap. The validator can see this transaction and know in advance that it'll make the price go up by a lot. That means the validator could add two transactions to profit from this situation:
+Aunque esto puede parecer inocuo, tuvo y sigue teniendo un enorme impacto en la dinámica de producción de bloques. Por ejemplo, pensemos en una transacción que va a comprar una gran cantidad de cierto token X en una plataforma de intercambio descentralizada como Uniswap. El validador puede ver esta transacción y saber de antemano que hará que el precio suba mucho. Eso significa que el validador podría agregar dos transacciones para obtener ganancias de esta situación:
 
-1. The first is a transaction that buys some tokens X, and it's ordered to happen before the big buy transaction.
-2. The second sells the tokens X bought in the previous transaction, and it's ordered to happen after the big buy transaction.
+1. La primera es una transacción que compra algunos tokens X, y se ordena para que ocurra antes de la transacción de compra grande.
+2. La segunda vende los tokens X comprados en la transacción anterior, y se ordena para que ocurra después de la transacción de compra grande.
 
-This is called a *sandwich attack*: the validator profits from the slippage created by the big buy transaction. Let's demonstrate this concept with a toy (and simplified) example.
+Esto se denomina un *ataque sándwich*: el validador obtiene ganancias del deslizamiento de precio generado por la transacción de compra grande. Demostremos este concepto con un ejemplo sencillo (y simplificado).
 
-A user submits a transaction (tx1) buying one thousand tokens xyz, as shown in Figure 6-11. Suppose the price of the token xyz is $1,000, so this user is going to buy $1 million worth of tokens. This buy pressure will raise the price of the token to $1,010.
+Un usuario envía una transacción (tx1) que compra mil tokens xyz, como se muestra en la Figura 6-11. Supongamos que el precio del token xyz es de $1,000, por lo que este usuario va a comprar tokens por un valor de $1 millón. Esta presión de compra elevará el precio del token a $1,010.
 
-![User submitting a large buy transaction](images/ch6/maet_0611.png)
+![Usuario que envía una transacción de compra grande](images/ch6/maet_0611.png)
 
-**Figure 6-11.** User transaction before MEV intervention
+**Figura 6-11.** Transacción del usuario antes de la intervención de MEV
 
-But the validator sees an opportunity to make money by front-running tx1. They create two transactions: tx0 and tx2, where tx0 contains a buy order of 10 xyz tokens and tx2 a sell order of the same amount. The validator places these transactions exactly before and after the user's tx1, as you can see in Figure 6-12. Remember that the validator can do this because they are the actor who is actually creating the block, so they can freely choose the ordering of transactions in it.
+Pero el validador ve una oportunidad de ganar dinero al hacer front-running a tx1. Crea dos transacciones: tx0 y tx2, donde tx0 contiene una orden de compra de 10 tokens xyz y tx2 una orden de venta de la misma cantidad. El validador coloca estas transacciones exactamente antes y después de la tx1 del usuario, como se puede ver en la Figura 6-12. Se debe recordar que el validador puede hacer esto porque es el actor que realmente está creando el bloque, por lo que puede elegir libremente el orden de las transacciones dentro de él.
 
-![Validator sandwiching user transaction](images/ch6/maet_0612.png)
+![Validador que intercala la transacción del usuario en un ataque sándwich](images/ch6/maet_0612.png)
 
-**Figure 6-12.** Sandwich attack by validator
+**Figura 6-12.** Ataque sándwich del validador
 
-The outcome is that the validator is able to buy 10 tokens xyz at $1,000 and sell them at $1,010, making a profit of $10 × 10 = $100.
+El resultado es que el validador puede comprar 10 tokens xyz a $1,000 y venderlos a $1,010, obteniendo una ganancia de $10 × 10 = $100.
 
-This is a very simple strategy used by validators to maximize their profits. There are lots of other, more complex strategies. Competition is so high that a new actor has emerged: *builders*.
+Esta es una estrategia muy simple que utilizan los validadores para maximizar sus ganancias. Hay muchas otras estrategias más complejas. La competencia es tan intensa que ha surgido un nuevo actor: los *constructores*.
 
-In fact, running all these strategies requires a lot of processing power, much more than the average validator has (remember, you can run a validator node with just 16 GB of ram). That means MEV was also threatening the decentralization of the validators, favoring big entities that could afford to spend millions of dollars on infrastructure and on people working hard on discovering new profitable strategies to build "better" blocks.
+De hecho, ejecutar todas estas estrategias requiere mucha capacidad de procesamiento, mucho más de lo que tiene el validador promedio (se debe recordar que se puede ejecutar un nodo validador con solo 16 GB de RAM). Eso significa que MEV también amenazaba la descentralización de los validadores, favoreciendo a grandes entidades que podían permitirse gastar millones de dólares en infraestructura y en personas que trabajaran intensamente para descubrir nuevas estrategias rentables para construir bloques "mejores".
 
-The solution to this problem came in January 2021 with the release of Flashbots v0.1. It enables block proposers (miners first, validators now) to trustlessly outsource the task of finding the optimal block construction to these new entities called builders. Thanks to this separation of duties—builders filling the block with transactions and creating the block with the highest amount of fee paid to validators (builders take a portion of this fee, too) and validators proposing the block to the network—validators can still run on average vendor machines.
+La solución a este problema llegó en enero de 2021 con el lanzamiento de Flashbots v0.1. Permite a los proponentes de bloques (primero mineros, ahora validadores) delegar, sin necesidad de confianza, la tarea de encontrar la construcción óptima del bloque a estas nuevas entidades llamadas constructores. Gracias a esta separación de funciones, los validadores pueden seguir ejecutándose en equipos comerciales de prestaciones promedio: los constructores llenan el bloque con transacciones y crean el bloque con el mayor monto de comisión pagado a los validadores (los constructores también se quedan con una parte de esta comisión), y los validadores proponen el bloque a la red.
 
-### Private Mempools
+### Mempools privadas
 
-The MEV ecosystem has grown so much that right now, builders compete not only to find the best strategy to maximize profits but also on the transactions they can use to fill the block. The more transactions they have, the better they can apply their strategies.
+El ecosistema de MEV ha crecido tanto que, en la actualidad, los constructores compiten no solo por encontrar la mejor estrategia para maximizar las ganancias, sino también por las transacciones que pueden utilizar para llenar el bloque. Cuantas más transacciones tengan, mejor podrán aplicar sus estrategias.
 
-That has led to the creation of *private mempools*. These mempools allow users or entities to submit transactions directly to block producers without exposing them to the general network. They play a significant role in mitigating risks like front-running and enabling privacy-focused workflows.
+Eso ha llevado a la creación de *mempools privadas*. Estas mempools permiten a los usuarios o entidades enviar transacciones directamente a los productores de bloques sin exponerlas a la red general. Desempeñan un papel importante en la mitigación de riesgos como el front-running y en la habilitación de flujos de trabajo centrados en la privacidad.
 
-Flashbots developed its own solution called [Flashbots Protect](https://oreil.ly/Jq4rT). MetaMask, the most popular wallet, has started to use private mempools by default for its users (called [smart transactions](https://oreil.ly/nnZVR)).
+Flashbots desarrolló su propia solución llamada [Flashbots Protect](https://oreil.ly/Jq4rT). MetaMask, la billetera más popular, ha comenzado a utilizar mempools privadas de forma predeterminada para sus usuarios (llamados [smart transactions](https://oreil.ly/nnZVR)).
 
-### New Transaction Life Cycle
+### Nuevo ciclo de vida de las transacciones
 
-MEV, proposer and builder separation, and private mempools have drastically changed the environment of block production. Nowadays, lots of transactions don't follow the usual life cycle we explained in the previous section; after they are created and signed, they are sent directly to a builder through a private mempool. The builder will take care of them, trying to include them in an optimal block and finally sending the whole block to the validator who is going to propose the next block. The transactions skip the public mempool propagation and directly appear in a built block.
+MEV, la separación entre proponente y constructor, y las mempools privadas han cambiado drásticamente el entorno de la producción de bloques. Hoy en día, muchas transacciones no siguen el ciclo de vida habitual que explicamos en la sección anterior; después de crearse y firmarse, se envían directamente a un constructor a través de una mempool privada. El constructor se encargará de ellas, intentando incluirlas en un bloque óptimo y, finalmente, enviando el bloque completo al validador que va a proponer el siguiente bloque. Las transacciones omiten la propagación por la mempool pública y aparecen directamente en un bloque construido.
 
-## Multiple-Signature Transactions
+## Transacciones de múltiples firmas
 
-If you are familiar with Bitcoin's scripting capabilities, you know it is possible to create a Bitcoin *multisig* account that can only spend funds when multiple parties sign the transaction (e.g., two of two or three of four signatures). Ethereum's basic EOA value transactions have no provisions for multiple signatures; however, arbitrary signing restrictions can be enforced by smart contracts with any conditions you can think of to handle the transfer of ether and tokens alike.
+Si se conocen las capacidades de scripting de Bitcoin, se sabe que es posible crear una cuenta *multifirma* de Bitcoin que solo puede gastar fondos cuando varias partes firman la transacción (p. ej., dos de dos o tres de cuatro firmas). Las transacciones básicas de transferencia de valor de las EOA de Ethereum no contemplan múltiples firmas; sin embargo, los contratos inteligentes pueden imponer restricciones de firma arbitrarias con cualquier condición que se pueda imaginar para gestionar la transferencia tanto de ether como de tokens.
 
-To take advantage of this capability, ether has to be transferred to a wallet contract that is programmed with the desired spending rules, such as multisignature requirements or spending limits (or combinations of the two). The wallet contract then sends the funds when prompted by an authorized EOA once the spending conditions have been satisfied. For example, to protect your ether under a multisig condition, transfer the ether to a multisig contract. Whenever you want to send funds to another account, all the required users will need to send transactions to the contract using a regular wallet app, effectively authorizing the contract to perform the final transaction.
+Para aprovechar esta capacidad, el ether debe transferirse a un contrato de billetera programado con las reglas de gasto deseadas, como requisitos de múltiples firmas o límites de gasto (o combinaciones de ambos). El contrato de billetera envía entonces los fondos cuando una EOA autorizada se lo solicita, una vez que se han cumplido las condiciones de gasto. Por ejemplo, para proteger el ether propio bajo una condición de multifirma, se transfiere el ether a un contrato multifirma. Siempre que se desee enviar fondos a otra cuenta, todos los usuarios requeridos deberán enviar transacciones al contrato mediante una aplicación de billetera normal, autorizando así al contrato a realizar la transacción final.
 
-These contracts can also be designed to require multiple signatures before executing local code or to trigger other contracts. The security of the scheme is ultimately determined by the multisig contract code.
+Estos contratos también pueden diseñarse para requerir múltiples firmas antes de ejecutar código local o para activar otros contratos. La seguridad del esquema está determinada, en última instancia, por el código del contrato multifirma.
 
-The ability to implement multisignature transactions as a smart contract demonstrates the flexibility of Ethereum. Currently, Gnosis Safe has become the de facto standard for creating multisignature accounts. This suite of battle-tested smart contracts is widely used by major protocols and DAOs, securing more than $6 billion in ETH and more than $74 billion worth of ERC-20 tokens as of November 2024, as illustrated in Figure 6-13.
+La capacidad de implementar transacciones de múltiples firmas como un contrato inteligente demuestra la flexibilidad de Ethereum. Actualmente, Gnosis Safe se ha convertido en el estándar de facto para crear cuentas de múltiples firmas. Este conjunto de contratos inteligentes probados en condiciones reales es ampliamente utilizado por los principales protocolos y las DAO, y protege más de $6 mil millones en ETH y más de $74 mil millones en tokens ERC-20 a noviembre de 2024, como se ilustra en la Figura 6-13.
 
-![Gnosis Safe value secured over time](images/ch6/maet_0613.png)
+![Valor protegido por Gnosis Safe a lo largo del tiempo](images/ch6/maet_0613.png)
 
-**Figure 6-13.** Gnosis Safe securing billions in value
+**Figura 6-13.** Gnosis Safe protege miles de millones en valor
 
-> **Note**  
+> **Nota**  
 >
-> With Gnosis Safe, the usual workflow to execute a transaction is as follows:
+> Con Gnosis Safe, el flujo de trabajo habitual para ejecutar una transacción es el siguiente:
 >
-> 1. One of the signers of the Safe proposes a transaction that they want to sign and send to the Ethereum network.
-> 2. Other signers see the transaction and sign it if they agree with its purpose.
-> 3. When a quorum is reached, the transaction is finally sent to the network, where it gets processed and executed.
+> 1. Uno de los firmantes del Safe propone una transacción que quiere firmar y enviar a la red Ethereum.
+> 2. Los demás firmantes ven la transacción y la firman si están de acuerdo con su propósito.
+> 3. Cuando se alcanza un cuórum, la transacción finalmente se envía a la red, donde se procesa y ejecuta.
 
-## Conclusion
+## Conclusión
 
-Transactions are the starting point of every activity in the Ethereum system. Transactions are the "inputs" that cause the EVM to evaluate contracts, update balances, and more generally modify the state of the Ethereum blockchain. Next, we will work with smart contracts in a lot more detail and learn how to program in the Solidity contract-oriented language.
+Las transacciones son el punto de partida de toda actividad en el sistema Ethereum. Las transacciones son las "entradas" que hacen que la EVM evalúe contratos, actualice saldos y, de forma más general, modifique el estado de la blockchain de Ethereum. A continuación, trabajaremos con contratos inteligentes con mucho más detalle y aprenderemos a programar en Solidity, el lenguaje orientado a contratos.

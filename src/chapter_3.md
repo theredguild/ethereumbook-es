@@ -1,214 +1,214 @@
-# Chapter 3. Ethereum Nodes
+# Capítulo 3. Nodos de Ethereum
 
-An Ethereum node is a software application that implements the Ethereum specification and communicates over the P2P network with other Ethereum nodes.
+Un nodo de Ethereum es una aplicación de software que implementa la especificación de Ethereum y se comunica a través de la red P2P con otros nodos de Ethereum.
 
-Initially, a node only had to run a single client to completely implement all the requirements to be part of the Ethereum ecosystem. On September 15, 2022, The Merge hard fork happened, changing the consensus protocol from a PoW-based scheme to Gasper, the new PoS-based consensus protocol. This also led to the separation of concerns—consensus and execution—and the creation of a new type of Ethereum client: a consensus client.
+Al principio, un nodo solo tenía que ejecutar un único cliente para implementar por completo todos los requisitos necesarios para formar parte del ecosistema de Ethereum. El 15 de septiembre de 2022 se produjo el hard fork The Merge, que cambió el protocolo de consenso de un esquema basado en PoW a Gasper, el nuevo protocolo de consenso basado en PoS. Esto también llevó a separar las responsabilidades de consenso y ejecución y a crear un nuevo tipo de cliente de Ethereum: un cliente de consenso.
 
-And so, at the time of writing, an Ethereum node must run two pieces of software at the same time to be compatible with the latest spec, as shown in Figure 3-1, with the definitions as follows:
+Así, al momento de escribir este libro, un nodo de Ethereum debe ejecutar dos programas al mismo tiempo para ser compatible con la especificación más reciente, como se muestra en la figura 3-1, con las siguientes definiciones:
 
-**Consensus client**
+**Cliente de consenso**
 
-This new software is now in charge of the consensus protocol that lets all nodes agree on a single history of the blockchain.
+Este nuevo software ahora está a cargo del protocolo de consenso que permite que todos los nodos acuerden un único historial de la blockchain.
 
-**Execution client**
+**Cliente de ejecución**
 
-This software focuses on receiving all the blocks and transactions happening on the network, executing them inside the EVM, and verifying their correctness.
+Este software se centra en recibir todos los bloques y las transacciones que se producen en la red, ejecutarlos dentro de la EVM y verificar que sean correctos.
 
-![Figure 3-1. The architecture of an Ethereum node](./images/ch3/maet_0301.png)
+![Figura 3-1. Arquitectura de un nodo de Ethereum](./images/ch3/maet_0301.png)
 
-Different Ethereum clients—both execution and consensus clients—interoperate if they comply with the reference specification and the standardized communication protocols. While these different clients are implemented by different teams and in different programming languages, they all “speak” the same protocol and follow the same rules. As such, they can all be used to operate and interact with the same Ethereum network.
+Los distintos clientes de Ethereum, tanto de ejecución como de consenso, interoperan si cumplen con la especificación de referencia y los protocolos de comunicación estandarizados. Aunque distintos equipos implementan estos clientes en diferentes lenguajes de programación, todos "hablan" el mismo protocolo y siguen las mismas reglas. Por lo tanto, todos pueden usarse para operar e interactuar con la misma red de Ethereum.
 
-Ethereum is an open source project, and the source code for all major clients is available under open source licenses (e.g., LGPL v3.0), free to download and use for any purpose. Open source means more than simply free to use, though. It also means that Ethereum is developed by an open community of volunteers and can be modified by anyone. More eyes mean more trustworthy code.
+Ethereum es un proyecto de código abierto, y el código fuente de todos los clientes principales está disponible bajo licencias de código abierto (por ejemplo, LGPL v3.0), y se puede descargar y usar gratuitamente para cualquier propósito. Sin embargo, código abierto significa más que simplemente uso gratuito. También significa que una comunidad abierta de voluntarios desarrolla Ethereum y que cualquiera puede modificarlo. Más ojos significan código más confiable.
 
-Ethereum was originally defined by a single formal specification called the “Yellow Paper,” which was written by one of the original coauthors of this book, Gavin Wood. Even though this specification is periodically updated as major changes are made to Ethereum, there is a clear path toward two different reference implementations, one for execution clients and one for consensus clients. These reference implementations are written in Python and prioritize readability and simplicity.
+Ethereum se definió originalmente mediante una única especificación formal llamada "Yellow Paper", escrita por uno de los coautores originales de este libro, Gavin Wood. Aunque esta especificación se actualiza periódicamente a medida que se introducen cambios importantes en Ethereum, hay un camino claro hacia dos implementaciones de referencia diferentes, una para clientes de ejecución y otra para clientes de consenso. Estas implementaciones de referencia están escritas en Python y priorizan la legibilidad y la simplicidad.
 
-> **Note**  
+> **Nota**  
 >
-> These specs are not intended to be full-node implementations. They serve as executable pseudocode specifications.
+> Estas especificaciones no están pensadas como implementaciones de nodos completos. Funcionan como especificaciones en pseudocódigo ejecutable.
 
-This is in contrast to Bitcoin, for example, which is not defined in any formal way. Where Bitcoin’s “specification” is the reference implementation Bitcoin Core, Ethereum’s execution specification is documented in a paper that combines an English and a mathematical (formal) specification. This formal specification, in addition to various Ethereum Improvement Proposals (EIPs) and the new consensus specification written in Python, defines the standard behavior of an Ethereum node.
+Esto contrasta, por ejemplo, con Bitcoin, que no se define de ninguna manera formal. Mientras que la "especificación" de Bitcoin es la implementación de referencia Bitcoin Core, la especificación de ejecución de Ethereum se documenta en un artículo que combina una especificación en inglés y otra matemática (formal). Esta especificación formal, junto con diversas propuestas de mejora de Ethereum (EIP) y la nueva especificación de consenso escrita en Python, define el comportamiento estándar de un nodo de Ethereum.
 
-As a result of Ethereum’s clear formal specification, there are a number of independently developed yet interoperable software implementations of an Ethereum client. Ethereum has a greater diversity of implementations running on the network than any other blockchain, which is generally regarded as a good thing. Indeed, this has, for example, proven to be an excellent way of defending against attacks on the network because exploitation of a particular client’s implementation strategy simply hassles the developers while they patch the exploit, while other clients keep the network running almost unaffected.
+Como resultado de la clara especificación formal de Ethereum, existen varias implementaciones de software de un cliente de Ethereum desarrolladas de forma independiente pero interoperables. Ethereum tiene una mayor diversidad de implementaciones en funcionamiento en la red que cualquier otra blockchain, algo que en general se considera positivo. De hecho, esto ha demostrado ser, por ejemplo, una excelente forma de defenderse de los ataques a la red, porque explotar la estrategia de implementación de un cliente en particular solo causa inconvenientes a sus desarrolladores mientras corrigen la vulnerabilidad, en tanto los demás clientes mantienen la red en funcionamiento casi sin verse afectados.
 
-## Ethereum Networks
+## Redes de Ethereum
 
-A variety of Ethereum-based networks exist that largely conform to the formal specification defined in the original Ethereum “Yellow Paper” but that may or may not interoperate with one another.
+Existen diversas redes basadas en Ethereum que se ajustan en gran medida a la especificación formal definida en el "Yellow Paper" original de Ethereum, pero que pueden interoperar entre sí o no.
 
-Several EVM-compatible chains, such as Ethereum Classic, BNB Chain, and Polygon, share large portions of the execution spec, though many deviate in consensus and parameters. While they are mostly compatible at the protocol level, these networks often have features or attributes that require maintainers of Ethereum client software to make small changes to support each network. Because of this, not every version of Ethereum client software runs every Ethereum-based blockchain.
+Varias cadenas compatibles con la EVM, como Ethereum Classic, BNB Chain y Polygon, comparten grandes partes de la especificación de ejecución, aunque muchas difieren en el consenso y los parámetros. Si bien son mayormente compatibles a nivel de protocolo, estas redes suelen tener características o atributos que requieren que quienes mantienen el software de los clientes de Ethereum hagan pequeños cambios para admitir cada red. Por eso, no todas las versiones del software de los clientes de Ethereum ejecutan todas las blockchains basadas en Ethereum.
 
-As of June 2025, there are five main implementations of the Ethereum execution protocol, written in four different languages, and five implementations of the Ethereum consensus protocol, written in five different languages:
+A junio de 2025, existen cinco implementaciones principales del protocolo de ejecución de Ethereum, escritas en cuatro lenguajes diferentes, y cinco implementaciones del protocolo de consenso de Ethereum, escritas en cinco lenguajes diferentes:
 
-The execution clients are:
+Los clientes de ejecución son:
 
-- Geth, written in Go
-- Nethermind, written in C#
-- Besu, written in Java
-- Erigon, written in Go
-- Reth, written in Rust
+- Geth, escrito en Go
+- Nethermind, escrito en C#
+- Besu, escrito en Java
+- Erigon, escrito en Go
+- Reth, escrito en Rust
 
-The consensus clients are:
+Los clientes de consenso son:
 
-- Lighthouse, written in Rust
-- Lodestar, written in TypeScript
-- Nimbus, written in Nim
-- Prysm, written in Go
-- Teku, written in Java
+- Lighthouse, escrito en Rust
+- Lodestar, escrito en TypeScript
+- Nimbus, escrito en Nim
+- Prysm, escrito en Go
+- Teku, escrito en Java
 
-In this section, we will look at the following two execution clients:
+En esta sección, veremos los siguientes dos clientes de ejecución:
 
 **Geth**
 
-The oldest and most widely used execution client, maintained by the Ethereum Foundation
+El cliente de ejecución más antiguo y más utilizado, mantenido por la Ethereum Foundation
 
 **Reth**
 
-A new Rust-based execution client created by Paradigm after Parity/OpenEthereum was discontinued
+Un nuevo cliente de ejecución basado en Rust creado por Paradigm después de que se discontinuara Parity/OpenEthereum
 
-And we will look at the following two consensus clients:
+Y veremos los siguientes dos clientes de consenso:
 
 **Prysm**
 
-The first consensus client, now maintained by Offchain Labs
+El primer cliente de consenso, ahora mantenido por Offchain Labs
 
 **Lighthouse**
 
-The most used consensus client, maintained by Sigma Prime
+El cliente de consenso más utilizado, mantenido por Sigma Prime
 
-We’ll show how to set up a node using each client. Specifically, we’ll use the Geth-Prysm and Reth-Lighthouse combinations, and we’ll explore some of their command-line options and APIs.
+Mostraremos cómo configurar un nodo con cada cliente. En concreto, usaremos las combinaciones Geth-Prysm y Reth-Lighthouse, y exploraremos algunas de sus opciones de línea de comandos y API.
 
-> **Note**  
+> **Nota**  
 >
-> These pairs are just examples; you can choose to combine whatever execution and consensus clients you like the most to run an Ethereum node.
+> Estas parejas son solo ejemplos; se puede elegir la combinación de clientes de ejecución y de consenso que se prefiera para ejecutar un nodo de Ethereum.
 
-## Should I Run a Full Node?
+## ¿Debería ejecutar un nodo completo?
 
-The health, resilience, and censorship resistance of blockchains depend on them having many independently operated and geographically dispersed full nodes—that is, nodes that download the entirety of the blockchain and keep data indefinitely. Each full node can help other new nodes obtain the block data to bootstrap their operations as well as offer the operator an authoritative and independent verification of all transactions and contracts.
+La salud, la resiliencia y la resistencia a la censura de las blockchains dependen de que tengan muchos nodos completos operados de forma independiente y distribuidos geográficamente, es decir, nodos que descargan la totalidad de la blockchain y conservan los datos indefinidamente. Cada nodo completo puede ayudar a otros nodos nuevos a obtener los datos de los bloques para iniciar sus operaciones, además de ofrecer a su operador una verificación autorizada e independiente de todas las transacciones y los contratos.
 
-> **Note**
+> **Nota**
 >
-> To be really precise, there is a distinction between these nodes:  
+> Para ser realmente precisos, hay una distinción entre estos nodos:  
 >
-> **Archive nodes**  
-> Ethereum nodes that keep all data indefinitely  
+> **Nodos de archivo**  
+> Nodos de Ethereum que conservan todos los datos indefinidamente  
 >
-> **Full nodes**  
-> Ethereum nodes that discard historical state and receipts—usually the default option when you spin up a node
+> **Nodos completos**  
+> Nodos de Ethereum que descartan el estado histórico y los recibos, lo que suele ser la opción predeterminada al poner en marcha un nodo
 
-However, running a full node will incur a cost in hardware resources and bandwidth. A full node must download at least 2 TB of data (as of June 2025, depending on the client configuration) and store it on a local hard drive. This data burden increases quite rapidly every day as new transactions and blocks are added. We discuss this topic in greater detail in the later section “Hardware Requirements for a Full Node”.
+Sin embargo, ejecutar un nodo completo implica un costo en recursos de hardware y ancho de banda. Un nodo completo debe descargar al menos 2 TB de datos (a junio de 2025, según la configuración del cliente) y almacenarlos en un disco duro local. Esta carga de datos aumenta con bastante rapidez cada día a medida que se agregan nuevas transacciones y bloques. Analizamos este tema con más detalle en la sección posterior "Requisitos de hardware para un nodo completo".
 
-A full node running on a live mainnet network is not necessary for Ethereum development. You can do almost everything you need to do with a testnet node (which connects you to one of the smaller public test blockchains), with a local private blockchain like Anvil, or with a hosted node API offered by a service provider like Infura or Alchemy.
+No es necesario contar con un nodo completo en funcionamiento en la red principal para desarrollar en Ethereum. Se puede hacer casi todo lo necesario con un nodo de una red de prueba (que conecta con una de las blockchains públicas de prueba más pequeñas), con una blockchain privada local como Anvil o con una API de un nodo alojado que ofrezca un proveedor de servicios como Infura o Alchemy.
 
-You also have the option of running a remote client, which does not store a local copy of the blockchain or validate blocks and transactions. These clients offer the functionality of a wallet and can create and broadcast transactions. Remote clients can be used to connect to existing networks, such as your own full node, a public blockchain, a public or permissioned (proof-of-authority) testnet, or a private local blockchain. In practice, you will likely use a remote client, such as MetaMask, Rabby Wallet, or Coinbase Wallet, as a convenient way to switch between all the different node options.
+También existe la opción de ejecutar un cliente remoto, que no almacena una copia local de la blockchain ni valida bloques y transacciones. Estos clientes ofrecen la funcionalidad de una billetera y pueden crear y difundir transacciones. Los clientes remotos pueden usarse para conectarse a redes existentes, como un nodo completo propio, una blockchain pública, una red de prueba pública o con permiso (de prueba de autoridad), o una blockchain privada local. En la práctica, es probable que se use un cliente remoto, como MetaMask, Rabby Wallet o Coinbase Wallet, como una forma cómoda de alternar entre las distintas opciones de nodos.
 
-The terms remote client and wallet are used interchangeably, although there are some differences. Usually, a remote client offers an API (such as the web3.js API) in addition to the transaction functionality of a wallet.
+Los términos cliente remoto y billetera se usan indistintamente, aunque hay algunas diferencias. Por lo general, un cliente remoto ofrece una API (como la API de web3.js), además de la funcionalidad de transacciones de una billetera.
 
-Do not confuse the concept of a remote client in Ethereum with that of a light client (which is analogous to a Simplified Payment Verification [SPV] client in Bitcoin). Light clients validate block headers and use Merkle proofs to validate the inclusion of transactions in the blockchain and determine their effects, giving them a similar level of security as a full node. Conversely, Ethereum remote clients do not validate block headers or transactions. They entirely trust a full node to give them access to the blockchain and hence lose significant security and anonymity guarantees. You can mitigate these problems by using a full node you run yourself.
+No se debe confundir el concepto de cliente remoto en Ethereum con el de cliente ligero (que es análogo a un cliente de verificación simplificada de pagos [SPV] en Bitcoin). Los clientes ligeros validan los encabezados de los bloques y usan pruebas de Merkle para validar la inclusión de las transacciones en la blockchain y determinar sus efectos, lo que les da un nivel de seguridad similar al de un nodo completo. En cambio, los clientes remotos de Ethereum no validan encabezados de bloques ni transacciones. Confían por completo en que un nodo completo les dé acceso a la blockchain y, por lo tanto, pierden importantes garantías de seguridad y anonimato. Estos problemas pueden mitigarse usando un nodo completo operado por uno mismo.
 
-### Full Node Advantages and Disadvantages
+### Ventajas y desventajas de un nodo completo
 
-Choosing to run a full node helps with the operation of the networks you connect it to but also incurs some mild to moderate costs for you. Let’s look at some of the advantages and disadvantages.
+Elegir ejecutar un nodo completo ayuda al funcionamiento de las redes a las que se lo conecta, pero también implica algunos costos de leves a moderados. Veamos algunas ventajas y desventajas.
 
-**Advantages**:
+**Ventajas**:
 
-- Supports the resilience and censorship resistance of Ethereum-based networks
-- Authoritatively validates all transactions
-- Can interact with any contract on the public blockchain without an intermediary
-- Can directly deploy contracts into the public blockchain without an intermediary
-- Can query (read only) the blockchain status (accounts, contracts, etc.) offline
-- Can query the blockchain without letting a third party know the information you’re reading
+- Contribuye a la resiliencia y la resistencia a la censura de las redes basadas en Ethereum
+- Valida todas las transacciones de manera autorizada
+- Puede interactuar con cualquier contrato de la blockchain pública sin intermediarios
+- Puede desplegar contratos directamente en la blockchain pública sin intermediarios
+- Puede consultar (solo lectura) el estado de la blockchain (cuentas, contratos, etc.) sin conexión
+- Puede consultar la blockchain sin revelar a un tercero la información que se está leyendo
 
-**Disadvantages**:
+**Desventajas**:
 
-- Requires significant and growing hardware and bandwidth resources
-- May require several days to fully sync when first started
-- Must be maintained, upgraded, and kept online to remain synced
+- Requiere recursos de hardware y ancho de banda considerables y crecientes
+- Puede requerir varios días para sincronizarse por completo cuando se inicia por primera vez
+- Debe mantenerse, actualizarse y permanecer en línea para seguir sincronizado
 
-### Public Testnet Advantages and Disadvantages
+### Ventajas y desventajas de una red de prueba pública
 
-Whether or not you choose to run a full node, you will probably want to run a public testnet node. Let’s look at some of the advantages and disadvantages of using a public testnet.
+Se elija o no ejecutar un nodo completo, probablemente se querrá ejecutar un nodo de una red de prueba pública. Veamos algunas ventajas y desventajas de usar una red de prueba pública.
 
-**Advantages:**
+**Ventajas:**
 
-- A testnet node needs to sync and store much less data—about 100–300 GB depending on the network (as of June 2025).
-- A testnet node can fully sync in a few hours.
-- Deploying contracts or making transactions requires test ether, which has no value and can be acquired for free from several “faucets.”
-- Testnets are public blockchains with many other users and contracts, running “live.”
+- Un nodo de una red de prueba necesita sincronizar y almacenar muchos menos datos, unos 100–300 GB según la red (a junio de 2025).
+- Un nodo de una red de prueba puede sincronizarse por completo en pocas horas.
+- Desplegar contratos o realizar transacciones requiere ether de prueba, que no tiene valor y se puede obtener gratis de varios "faucets".
+- Las redes de prueba son blockchains públicas con muchos otros usuarios y contratos, que funcionan "en vivo".
 
-**Disadvantages:**
+**Desventajas:**
 
-- You can’t use “real” money on a testnet; it runs on test ether. Consequently, you can’t test security against real adversaries, as there is nothing at stake.
-- There are some aspects of a public blockchain that you cannot test realistically on a testnet. For example, transaction fees, although necessary to send transactions, are not a consideration on a testnet, since gas is free (meaning that testnet ETH doesn’t have any real economic value). Further, the testnets do not experience network congestion like the public mainnet sometimes does.
-- Some testnets are designed for specific purposes, and they could be slightly different than Ethereum mainnet.
+- No se puede usar dinero "real" en una red de prueba; funciona con ether de prueba. En consecuencia, no se puede probar la seguridad frente a adversarios reales, ya que no hay nada en juego.
+- Hay algunos aspectos de una blockchain pública que no se pueden probar de manera realista en una red de prueba. Por ejemplo, las comisiones por transacción, aunque son necesarias para enviar transacciones, no son un factor a considerar en una red de prueba, ya que el gas es gratuito (lo que significa que el ETH de la red de prueba no tiene ningún valor económico real). Además, las redes de prueba no sufren la congestión que a veces experimenta la red principal pública.
+- Algunas redes de prueba están diseñadas para fines específicos y podrían ser ligeramente diferentes de la red principal de Ethereum.
 
-### Local Blockchain Simulation Advantages and Disadvantages
+### Ventajas y desventajas de una simulación local de blockchain
 
-For many testing purposes, the best option is to launch a single-instance private blockchain. Anvil is one of the most popular local blockchain simulations that you can run and interact with without any other participants.
+Para muchos fines de prueba, la mejor opción es iniciar una blockchain privada de una sola instancia. Anvil es una de las simulaciones locales de blockchain más populares que se pueden ejecutar y con las que se puede interactuar sin otros participantes.
 
-**Advantages:**
+**Ventajas:**
 
-- No syncing and almost no data on disk; you produce the first block yourself.
-- No need to obtain test ether; you “award” yourself block rewards that you can use for testing.
-- No other users, just you.
-- No other contracts, just the ones you deploy after you launch it.
+- No requiere sincronización y casi no hay datos en disco; uno mismo produce el primer bloque.
+- No es necesario obtener ether de prueba; uno mismo se "otorga" recompensas de bloque que puede usar para las pruebas.
+- No hay otros usuarios, solo uno mismo.
+- No hay otros contratos, solo los que se desplieguen después de iniciarla.
 
-**Disadvantages:**
+**Desventajas:**
 
-- Having no other users means that your local chain doesn’t behave the same as a public blockchain. There’s no competition for transaction space or sequencing of transactions.
-- No block producers other than you means that block production is more predictable; therefore, you can’t test some scenarios that occur on a public blockchain. It’s worth mentioning that Anvil (and other tools like Hardhat) let you configure the block production modes to try to reproduce mainnet-like behavior, but still, it’s not the same as being on Ethereum mainnet.
-- Having no other contracts means you have to deploy everything you want to test, including dependencies and contract libraries. Luckily for you, tools like Anvil let you fork the Ethereum mainnet chain at arbitrary blocks and experiment with your smart contracts in a mainnet-like state.
+- La ausencia de otros usuarios significa que la cadena local no se comporta igual que una blockchain pública. No hay competencia por el espacio para transacciones ni por su secuenciación.
+- Que no haya otros productores de bloques significa que la producción de bloques es más predecible; por lo tanto, no se pueden probar algunos escenarios que ocurren en una blockchain pública. Vale la pena mencionar que Anvil (y otras herramientas como Hardhat) permite configurar los modos de producción de bloques para intentar reproducir un comportamiento similar al de la red principal, pero aun así no es lo mismo que estar en la red principal de Ethereum.
+- Que no haya otros contratos significa que hay que desplegar todo lo que se quiera probar, incluidas las dependencias y las bibliotecas de contratos. Por suerte, herramientas como Anvil permiten bifurcar la cadena de la red principal de Ethereum en bloques arbitrarios y experimentar con los contratos inteligentes en un estado similar al de la red principal.
 
-## Running an Ethereum Node
+## Ejecución de un nodo de Ethereum
 
-If you have the time and resources, you should attempt to run a full node, even if only to learn more about the process. In this section, we cover how to download, compile, and run the Ethereum clients Geth-Prysm and Reth-Lighthouse. This requires some familiarity with using the command-line interface (CLI) on your operating system. It’s worth installing these clients, whether you choose to run them as full nodes, as testnet nodes, or as clients to a local private blockchain.
+Si se dispone del tiempo y los recursos, se debería intentar ejecutar un nodo completo, aunque solo sea para aprender más sobre el proceso. En esta sección, explicamos cómo descargar, compilar y ejecutar los clientes de Ethereum Geth-Prysm y Reth-Lighthouse. Esto requiere cierta familiaridad con el uso de la interfaz de línea de comandos (CLI) del sistema operativo. Vale la pena instalar estos clientes, tanto si se decide ejecutarlos como nodos completos, como nodos de una red de prueba o como clientes de una blockchain privada local.
 
-### Hardware Requirements for a Full Node
+### Requisitos de hardware para un nodo completo
 
-Before we get started, you should ensure that you have a computer with sufficient resources to run an Ethereum full node. You will need at least 2 TB of disk space to store a full copy of the Ethereum blockchain. If you also want to run a full node on the Ethereum testnet, you will need at least an additional 100–400 GB. Downloading 2 TB of blockchain data can take a long time, so it’s recommended that you work on a fast internet connection.
+Antes de comenzar, hay que asegurarse de tener una computadora con recursos suficientes para ejecutar un nodo completo de Ethereum. Se necesitarán al menos 2 TB de espacio en disco para almacenar una copia completa de la blockchain de Ethereum. Si también se quiere ejecutar un nodo completo en la red de prueba de Ethereum, se necesitarán al menos 100–400 GB adicionales. Descargar 2 TB de datos de la blockchain puede llevar mucho tiempo, por lo que se recomienda trabajar con una conexión rápida a internet.
 
-Syncing the Ethereum blockchain is very input/output (I/O) intensive. It is best to have a solid-state drive (SSD). If you have a mechanical hard-disk drive (HDD), you will need at least 8 GB of RAM to use as cache. Otherwise, you may discover that your system is too slow to keep up and fully sync.
+La sincronización de la blockchain de Ethereum exige muchas operaciones de entrada/salida (E/S). Lo mejor es tener una unidad de estado sólido (SSD). Si se tiene una unidad de disco duro mecánica (HDD), se necesitarán al menos 8 GB de RAM para usar como caché. De lo contrario, es posible que el sistema sea demasiado lento para mantenerse al día y sincronizarse por completo.
 
-Here is a summary of the minimum requirements to sync a full copy of an Ethereum-based blockchain:
+Este es un resumen de los requisitos mínimos para sincronizar una copia completa de una blockchain basada en Ethereum:
 
-- CPU with 2 or more cores
-- At least 2 TB free storage space
-- 8 GB RAM minimum with an SSD, or 8+ GB if you have an HDD (SSD is highly preferable)
-- 7+ Mbps download internet service
+- CPU con 2 o más núcleos
+- Al menos 2 TB de espacio de almacenamiento libre
+- Un mínimo de 8 GB de RAM con una SSD, u 8+ GB si se tiene un HDD (es mucho más recomendable una SSD)
+- Servicio de internet con 7+ Mbps de descarga
 
-If you want to sync in a reasonable amount of time and store all the development tools, libraries, clients, and blockchains we discuss in this book, you will want a more capable computer. Here are our recommended specifications:
+Si se quiere sincronizar en un tiempo razonable y almacenar todas las herramientas de desarrollo, bibliotecas, clientes y blockchains que analizamos en este libro, conviene tener una computadora más potente. Estas son nuestras especificaciones recomendadas:
 
-- Fast CPU with 4+ cores—a higher clock speed is more important than core count
-- 16+ GB RAM
-- Fast NVMe SSD with at least 2 TB free space
-- 24+ Mbps download internet service
+- CPU rápida con 4+ núcleos; una frecuencia de reloj más alta es más importante que la cantidad de núcleos
+- 16+ GB de RAM
+- SSD NVMe rápida con al menos 2 TB de espacio libre
+- Servicio de internet con 24+ Mbps de descarga
 	
-It’s difficult to predict how fast a blockchain’s size will increase and when more disk space will be required, so it’s recommended to check the blockchain’s latest size before you start syncing.
+Es difícil predecir qué tan rápido aumentará el tamaño de una blockchain y cuándo se necesitará más espacio en disco, por lo que se recomienda comprobar su tamaño más reciente antes de comenzar la sincronización.
 
-> **Note**
+> **Nota**
 >
-> The disk-size requirements listed here assume you will be running a node with default settings, where the blockchain is “pruned” of old state data. If you instead run a full “archival” node, where all state is kept on disk, it will likely require more than 2 TB (up to 12–15 TB) of disk space, depending on the client. Always consult the latest hardware requirements on the official client website before running a node.
+> Los requisitos de espacio en disco que se indican aquí suponen que se ejecutará un nodo con la configuración predeterminada, en la que se "podan" los datos de estado antiguos de la blockchain. Si, en cambio, se ejecuta un nodo "de archivo" completo, en el que se conserva todo el estado en disco, es probable que se requieran más de 2 TB (hasta 12–15 TB) de espacio en disco, según el cliente. Antes de ejecutar un nodo, siempre se deben consultar los requisitos de hardware más recientes en el sitio web oficial del cliente.
 
-### Software Requirements for Building and Running a Client
+### Requisitos de software para compilar y ejecutar un cliente
 
-This section covers Geth-Prysm and Reth-Lighthouse client software. It also assumes you are using a Unix-like command-line environment. The examples show the commands and output as they appear on macOS running the Bash shell (command-line execution environment). Instructions work unchanged on most Linux distros. Windows users can use Windows Subsystem for Linux (WSL2).
+Esta sección trata sobre el software de los clientes Geth-Prysm y Reth-Lighthouse. También supone que se está usando un entorno de línea de comandos de tipo Unix. Los ejemplos muestran los comandos y las salidas tal como aparecen en macOS con el shell Bash (entorno de ejecución de línea de comandos). Las instrucciones funcionan sin cambios en la mayoría de las distribuciones de Linux. Los usuarios de Windows pueden usar Windows Subsystem for Linux (WSL2).
 
-> **Tip**
+> **Consejo**
 >
-> In many of the examples in this chapter, we will be using the operating system’s CLI (also known as a shell), accessed via a terminal application. The shell will display a prompt; you type a command, and the shell responds with some text and a new prompt for your next command. The prompt may look different on your system, but in the following examples, it is denoted by a $ symbol. In the examples, when you see text after a $ symbol, don’t type the $ symbol but type the command immediately following it (shown in bold), then press Enter to execute the command. In the examples, the lines below each command are the operating system’s responses to that command. When you see the next $ prefix, you’ll know it’s a new command and you should repeat the process.
+> En muchos de los ejemplos de este capítulo, usaremos la CLI del sistema operativo (también conocida como shell), a la que se accede mediante una aplicación de terminal. El shell mostrará un indicador; se escribe un comando y el shell responde con texto y un nuevo indicador para el siguiente comando. El indicador puede verse diferente en cada sistema, pero en los siguientes ejemplos se representa con el símbolo $. En los ejemplos, cuando se vea texto después de un símbolo $, no se debe escribir el símbolo $, sino el comando que aparece inmediatamente después (en negrita), y luego presionar Enter para ejecutarlo. En los ejemplos, las líneas que aparecen debajo de cada comando son las respuestas del sistema operativo a ese comando. Cuando aparezca el siguiente prefijo $, se sabrá que se trata de un nuevo comando y se deberá repetir el proceso.
 
-Before we get started, you may need to install some software. If you’ve never done any software development on the computer you are currently using, you will probably need to install some basic tools. For the examples that follow, you will need to install git, the source-code management system; golang, the Go programming language and standard libraries; and Rust, a systems programming language.
+Antes de comenzar, puede ser necesario instalar algo de software. Si nunca se ha desarrollado software en la computadora que se está usando, probablemente sea necesario instalar algunas herramientas básicas. Para los ejemplos que siguen, se necesitará instalar git, el sistema de gestión de código fuente; golang, el lenguaje de programación Go y sus bibliotecas estándar; y Rust, un lenguaje de programación de sistemas.
 
-Here are the documentation pages for the four clients we’ll use in this example:
+Estas son las páginas de documentación de los cuatro clientes que usaremos en este ejemplo:
 
 - [Geth](https://oreil.ly/zYviP)
 - [Prysm](https://oreil.ly/9-2FC)
 - [Reth](https://oreil.ly/KDmMt)
 - [Lighthouse](https://oreil.ly/RRpAs)
 
-Feel free to consult these websites to understand more details about each client’s architecture and for troubleshooting during installation.
+Se pueden consultar estos sitios web para conocer más detalles sobre la arquitectura de cada cliente y para resolver problemas durante la instalación.
 
-### Preparation Phase
+### Fase de preparación
 
-Starting from your home directory, create a folder in your computer called *ethereum-node1* and then two subfolders within it called *execution* and *consensus*:
+Desde el directorio personal, se debe crear una carpeta en la computadora llamada *ethereum-node1* y luego dos subcarpetas dentro de ella llamadas *execution* y *consensus*:
 
 ```bash
 $ mkdir ethereum-node1
@@ -217,7 +217,7 @@ $ mkdir execution
 $ mkdir consensus
 ```
 
-Now you should have a folder structure like this:
+Ahora debería haber una estructura de carpetas como esta:
 
 ```bash
 ethereum-node1
@@ -225,23 +225,23 @@ ethereum-node1
 └── execution
 ```
 
-Repeat the previous step with a new folder called *ethereum-node2*:
+Se debe repetir el paso anterior con una nueva carpeta llamada *ethereum-node2*:
 
 ```bash
-$ cd .. # this command is used to go back to your home directory
+$ cd .. # este comando se usa para volver al directorio personal
 $ mkdir ethereum-node2
 $ cd ethereum-node2
 $ mkdir execution
 $ mkdir consensus
 ```
 
-In the end you should have two root folders — *ethereum-node1* and *ethereum-node2* — with two subfolders within each root folder: *execution* and *consensus*.
+Al final debería haber dos carpetas raíz, *ethereum-node1* y *ethereum-node2*, con dos subcarpetas dentro de cada carpeta raíz: *execution* y *consensus*.
 
-You will also need to install [Go](https://golang.org/) and [Rust](https://www.rust-lang.org/). You can have a look at their official websites for a guide on how to install them.
+También será necesario instalar [Go](https://golang.org/) y [Rust](https://www.rust-lang.org/). Se pueden consultar sus sitios web oficiales para obtener una guía de instalación.
 
 ### Geth-Prysm
 
-Go into the newly created folder *ethereum-node1*:
+Se debe entrar en la carpeta recién creada *ethereum-node1*:
 
 ```bash
 $ cd ethereum-node1
@@ -249,24 +249,24 @@ $ cd ethereum-node1
 
 #### Geth
 
-First we’re going to install Geth by building it from the source code. Geth is a Go language implementation of the execution specs that is actively developed by the Ethereum Foundation, so it is considered the “official” implementation of the Ethereum client. Typically, every Ethereum-based blockchain will have its own Geth implementation. If you’re running Geth, then you’ll want to make sure you grab the correct version for your blockchain using one of the following repository links:
+Primero vamos a instalar Geth compilándolo a partir del código fuente. Geth es una implementación en lenguaje Go de las especificaciones de ejecución que la Ethereum Foundation desarrolla activamente, por lo que se considera la implementación "oficial" del cliente de Ethereum. Por lo general, cada blockchain basada en Ethereum tendrá su propia implementación de Geth. Si se va a ejecutar Geth, conviene asegurarse de obtener la versión correcta para la blockchain mediante uno de los siguientes enlaces a repositorios:
 
 - [Ethereum](https://oreil.ly/qzK-O)
 - [BNB Chain](https://oreil.ly/tGtL3)
 - [Polygon PoS](https://oreil.ly/ZWhh3)
 
-> **Note**
+> **Nota**
 >
-> You can skip these instructions and install a precompiled binary for your platform of choice. The precompiled releases are much easier to install and can be found in the “releases” section of any of the repositories listed here. However, you may learn more by downloading and compiling the software yourself.
+> Se pueden omitir estas instrucciones e instalar un binario precompilado para la plataforma que se prefiera. Las versiones precompiladas son mucho más fáciles de instalar y se encuentran en la sección "releases" de cualquiera de los repositorios que se enumeran aquí. Sin embargo, se puede aprender más al descargar y compilar el software por cuenta propia.
 
-**Cloning the repository**. The first step is to clone the Git repository to get a copy of the source code. To make a local clone of your chosen repository, use the git command as follows in the execution subfolder:
+**Clonación del repositorio**. El primer paso es clonar el repositorio Git para obtener una copia del código fuente. Para crear un clon local del repositorio elegido, se debe usar el comando git de la siguiente manera en la subcarpeta execution:
 
 ```bash
 $ cd execution
 $ git clone https://github.com/ethereum/go-ethereum.git
 ```
 
-You should see a progress report as the repository is copied to your local system:
+Debería aparecer un informe de progreso a medida que se copia el repositorio al sistema local:
 
 ```bash
 Cloning into 'go-ethereum'...
@@ -278,9 +278,9 @@ Receiving objects: 100% (130745/130745), 204.15 MiB | 6.13 MiB/s, done.
 Resolving deltas: 100% (80729/80729), done.
 ```
 
-Great! Now that you have a local copy of Geth, you can compile an executable for your platform.
+¡Excelente! Ahora que se tiene una copia local de Geth, se puede compilar un ejecutable para la plataforma.
 
-**Building Geth from source code**. To build Geth, change to the directory where the source code was downloaded and use the make command after selecting the latest release—right now, it’s v1.14.3, but you can always check for the latest one:
+**Compilación de Geth a partir del código fuente**. Para compilar Geth, se debe cambiar al directorio en el que se descargó el código fuente y usar el comando make después de seleccionar la versión más reciente; en este momento es la v1.14.3, pero siempre se puede comprobar cuál es la última:
 
 ```bash
 $ cd go-ethereum
@@ -288,7 +288,7 @@ $ git checkout v1.14.3
 $ make geth
 ```
 
-If all goes well, you will see the Go compiler building each component until it produces the Geth executable:
+Si todo sale bien, se verá cómo el compilador de Go compila cada componente hasta producir el ejecutable de Geth:
 
 ```bash
 go run build/ci.go install ./cmd/geth
@@ -302,7 +302,7 @@ Done building.
 Run "./build/bin/geth" to launch geth.
 ```
 
-Let’s make sure Geth works without actually starting it:
+Comprobemos que Geth funciona sin iniciarlo realmente:
 
 ```bash
 $ ./build/bin/geth version
@@ -315,47 +315,47 @@ Operating System: darwin
 [...]
 ```
 
-Your `geth version` command may show slightly different information, but you should see a version report much like the one shown here.
+El comando `geth version` puede mostrar información ligeramente distinta, pero debería aparecer un informe de versión muy similar al que se muestra aquí.
 
-Don’t run Geth yet because we still need to install a consensus client to let the Ethereum node sync up to the tip of the chain.
+Todavía no se debe ejecutar Geth, porque aún tenemos que instalar un cliente de consenso para que el nodo de Ethereum pueda sincronizarse hasta el extremo más reciente de la cadena.
 
 #### Prysm
 
-Now it’s the consensus client’s turn. Prysm is a Go language implementation of the consensus specs that is actively developed by Offchain Labs. Initially, it was by far the most used consensus client after The Merge. Now, thanks to a great community effort to boost client diversity, its share of the market is greatly reduced, standing at 37%.
+Ahora es el turno del cliente de consenso. Prysm es una implementación en lenguaje Go de las especificaciones de consenso que Offchain Labs desarrolla activamente. Al principio, era por mucho el cliente de consenso más utilizado después de The Merge. Ahora, gracias a un gran esfuerzo de la comunidad para impulsar la diversidad de clientes, su cuota de mercado se ha reducido considerablemente y se sitúa en el 37%.
 
-**Installing the binary**. Prysm can be built from source code as we did for Geth, but it’s a bit more complicated. The suggested way to install it is the following method. First, go to the *consensus* folder:
+**Instalación del binario**. Prysm puede compilarse a partir del código fuente como hicimos con Geth, pero es un poco más complicado. La forma de instalación sugerida es el siguiente método. Primero, se debe ir a la carpeta *consensus*:
 
 ```bash
-$ cd ../.. # this command is used to go back in the ethereum-node1 folder
+$ cd ../.. # este comando se usa para volver a la carpeta ethereum-node1
 $ cd consensus
 ```
 
-Now, run the following command:
+Ahora se debe ejecutar el siguiente comando:
 
 ```bash
 $ curl https://raw.githubusercontent.com/prysmaticlabs/prysm/master/prysm.sh --output prysm.sh && chmod +x prysm.sh
 ```
 
-**Generating a JWT Secret**. The execution and consensus clients that made up an Ethereum node are two distinct pieces of software, but they always have to interact with each other. To achieve that, there is a sort of password that is used by both the execution and the consensus client to authenticate their connection. Now we need to generate it:
+**Generación de un secreto JWT**. Los clientes de ejecución y de consenso que conforman un nodo de Ethereum son dos programas distintos, pero siempre tienen que interactuar entre sí. Para lograrlo, existe una especie de contraseña que tanto el cliente de ejecución como el de consenso usan para autenticar su conexión. Ahora debemos generarla:
 
 ```bash
 $ ./prysm.sh beacon-chain generate-auth-secret
 ```
 
-A *jwt.hex* file should appear. Let’s move it to the parent folder:
+Debería aparecer un archivo *jwt.hex*. Movámoslo a la carpeta superior:
 
 ```bash
 $ mv jwt.hex ../jwt.hex
 ```
 
-#### Run the node
+#### Ejecución del nodo
 
-Now that you have both the execution and the consensus clients and you have correctly generated the JWT secret, you can spin up the clients and have an Ethereum full node running.
+Ahora que se tienen los clientes de ejecución y de consenso y se ha generado correctamente el secreto JWT, se pueden poner en marcha los clientes y tener un nodo completo de Ethereum en funcionamiento.
 
-**Running the execution client**. First, you need to run the execution client, Geth. Navigate back to the *execution* folder and run this command:
+**Ejecución del cliente de ejecución**. Primero, se debe ejecutar el cliente de ejecución, Geth. Se debe volver a la carpeta *execution* y ejecutar este comando:
 
 ```bash
-$ cd .. # this command is used to go back in the ethereum-node1 folder
+$ cd .. # este comando se usa para volver a la carpeta ethereum-node1
 $ cd execution
 $ ./go-ethereum/build/bin/geth --mainnet \
 	--http \
@@ -363,7 +363,7 @@ $ ./go-ethereum/build/bin/geth --mainnet \
 	--authrpc.jwtsecret=../jwt.hex
 ```
 
-If you see something like this, everything is running fine:
+Si aparece algo como esto, todo está funcionando bien:
 
 ```bash
 INFO [06-08|17:56:38.738] Starting Geth on Ethereum mainnet...
@@ -375,7 +375,7 @@ INFO [06-08|17:56:38.771] Allocated trie memory caches             clean=614.00M
 INFO [06-08|17:56:38.772] Using pebble as the backing database…
 ```
 
-**Running the consensus client**. Now you should run the consensus client, Prysm. Don’t close the terminal tab in which the execution client lives. Just open a new terminal window or tab and navigate to the *consensus* folder:
+**Ejecución del cliente de consenso**. Ahora se debe ejecutar el cliente de consenso, Prysm. No se debe cerrar la pestaña de la terminal en la que está el cliente de ejecución. Solo hay que abrir una nueva ventana o pestaña de terminal e ir a la carpeta *consensus*:
 
 ```bash
 $ cd ethereum-node1
@@ -388,7 +388,7 @@ $ ./prysm.sh beacon-chain \
 	--genesis-beacon-api-url=https://beaconstate.info
 ```
 
-You could be asked to accept Prysm terms and conditions. If that’s the case, type **accept**, and you should be done:
+Es posible que se solicite aceptar los términos y condiciones de Prysm. En ese caso, se debe escribir **accept** y eso debería ser todo:
 
 ```bash
 Prysm Terms of Use
@@ -399,9 +399,9 @@ TERMS AND CONDITIONS: https://github.com/prysmaticlabs/prysm/blob/develop/TERMS_
 Type “accept” to accept this terms and conditions [accept/decline]: (default: decline):
 ```
 
-And you’re done! You should see both the execution and consensus client start logging lots of data on the terminal.
+¡Y listo! Debería verse que tanto el cliente de ejecución como el de consenso comienzan a registrar muchos datos en la terminal.
 
-Execution client:
+Cliente de ejecución:
 
 ```bash
 INFO [06-08|18:08:49.039] Forkchoice requested sync to new head    number=20,048,206 hash=8df21a..4afb49 finalized=unknown
@@ -411,7 +411,7 @@ INFO [06-08|18:09:00.508] Syncing beacon headers                   downloaded=37
 INFO [06-08|18:09:01.637] Forkchoice requested sync to new head    number=20,048,207 hash=d99dab..0293c9 finalized=unknown
 ```
 
-Consensus client:
+Cliente de consenso:
 
 ```bash
 [2024-06-08 18:09:24]  INFO blockchain: Called new payload with optimistic block payloadBlockHash=0xd44520a09a7a slot=9253245
@@ -422,21 +422,21 @@ Consensus client:
 [2024-06-08 18:09:28]  INFO sync: Subscribed to topic=/eth2/6a95a1a9/beacon_attestation_35/ssz_snappy[2024-06-08 18:09:36]  INFO blockchain: Called new payload with optimistic block payloadBlockHash=0xff879102f29e slot=9253246
 ```
 
-Now you have an Ethereum full node that is syncing up to the tip of the chain. Note that the synchronization can take a lot of time (hours or days depending on your hardware and internet connectivity).
+Ahora se tiene un nodo completo de Ethereum que se está sincronizando hasta el extremo más reciente de la cadena. Hay que tener en cuenta que la sincronización puede llevar mucho tiempo (horas o días, según el hardware y la conexión a internet).
 
-> **Note**
+> **Nota**
 >
-> If you want to learn more about the specific commands and CLI flags we’ve used in this example, the official docs for [Geth](https://oreil.ly/zYviP) and [Prysm](https://oreil.ly/4sn6-) are the best places to look.
+> Para obtener más información sobre los comandos específicos y las opciones de la CLI que usamos en este ejemplo, lo mejor es consultar la documentación oficial de [Geth](https://oreil.ly/zYviP) y [Prysm](https://oreil.ly/4sn6-).
 
 ### Reth-Lighthouse
 
-Let’s do the same thing but using two different clients: Reth as the execution client and Lighthouse as the consensus client.
+Hagamos lo mismo, pero usando dos clientes diferentes: Reth como cliente de ejecución y Lighthouse como cliente de consenso.
 
 #### Reth
 
-First, you need to install Reth. Go into the *ethereum-node2* folder and then into the execution folder.
+Primero, se debe instalar Reth. Se debe entrar en la carpeta *ethereum-node2* y luego en la carpeta execution.
 
-**Cloning the repository**. The first step is to clone the Git repository to get a copy of the source code. Go back to your home directory and type the following commands:
+**Clonación del repositorio**. El primer paso es clonar el repositorio Git para obtener una copia del código fuente. Se debe volver al directorio personal y escribir los siguientes comandos:
 
 ```bash
 $ cd ethereum-node2
@@ -444,22 +444,22 @@ $ cd execution
 $ git clone https://github.com/paradigmxyz/reth
 ```
 
-Great! Now that you have a local copy of Reth, you can compile an executable for your platform.
+¡Excelente! Ahora que se tiene una copia local de Reth, se puede compilar un ejecutable para la plataforma.
 
-**Building Reth from source code**. To build Reth, you need to run the following command:
+**Compilación de Reth a partir del código fuente**. Para compilar Reth, se debe ejecutar el siguiente comando:
 
 ```bash
 $ cd reth
 $ cargo install --locked --path bin/reth --bin reth
 ```
 
-It could take more than 10 minutes to complete the installation. When it’s done, you can check if Reth is correctly installed by running:
+La instalación podría tardar más de 10 minutos en completarse. Al terminar, se puede comprobar si Reth se instaló correctamente ejecutando:
 
 ```bash
 $ reth --version
 ```
 
-You should see something like (the version can change):
+Debería aparecer algo como esto (la versión puede cambiar):
 
 ```bash
 reth Version: 0.2.0-beta.6-dev
@@ -470,30 +470,30 @@ Build Features: jemallocBuild Profile: maxperf+
 
 #### Lighthouse
 
-Now you need to install Lighthouse, the consensus client. Go back to the *ethereum-node2* folder and dive into the *consensus* folder:
+Ahora se debe instalar Lighthouse, el cliente de consenso. Se debe volver a la carpeta *ethereum-node2* y entrar en la carpeta *consensus*:
 
 ```bash
-$ cd .. # this command is used to go back in the ethereum-node2 folder
+$ cd .. # este comando se usa para volver a la carpeta ethereum-node2
 $ cd consensus
 ```
 
-You have to install some dependencies first. If you are on a macOS, you need to run:
+Primero hay que instalar algunas dependencias. Si se usa macOS, se debe ejecutar:
 
 ```bash
 $ brew install cmake
 ```
 
-If you’re using a different operating system, you can refer to the [Lighthouse official documentation](https://oreil.ly/vEghS).
+Si se usa otro sistema operativo, se puede consultar la [documentación oficial de Lighthouse](https://oreil.ly/vEghS).
 
-**Cloning the repository**. The first step is to clone the Git repository to get a copy of the source code:
+**Clonación del repositorio**. El primer paso es clonar el repositorio Git para obtener una copia del código fuente:
 
 ```bash
 $ git clone https://github.com/sigp/lighthouse.git
 ```
 
-Great! Now that you have a local copy of Lighthouse, you can compile an executable for your platform.
+¡Excelente! Ahora que se tiene una copia local de Lighthouse, se puede compilar un ejecutable para la plataforma.
 
-**Building Lighthouse from source code**. To build Lighthouse, you need to run the following command:
+**Compilación de Lighthouse a partir del código fuente**. Para compilar Lighthouse, se debe ejecutar el siguiente comando:
 
 ```bash
 $ cd lighthouse
@@ -501,22 +501,22 @@ $ git checkout stable
 $ make
 ```
 
-This could take more than 10 minutes to complete.
+Esto podría tardar más de 10 minutos en completarse.
 
-#### Run the node
+#### Ejecución del nodo
 
-Again, you need to run the execution client, Reth, first.
+Una vez más, primero se debe ejecutar el cliente de ejecución, Reth.
 
-**Running the execution client**. Navigate back to the *execution* folder and run this command:
+**Ejecución del cliente de ejecución**. Se debe volver a la carpeta *execution* y ejecutar este comando:
 
 ```bash
-$ cd ../.. # this command is used to go back to the ethereum-node2 folder
-$ cp ../ethereum-node1/jwt.hex ./jwt.hex # we use the same jwt.hex file we generated before
+$ cd ../.. # este comando se usa para volver a la carpeta ethereum-node2
+$ cp ../ethereum-node1/jwt.hex ./jwt.hex # usamos el mismo archivo jwt.hex que generamos antes
 $ cd execution
 $ reth node --full --http --http.api all --authrpc.jwtsecret=../jwt.hex
 ```
 
-If you see something like this, everything is running fine:
+Si aparece algo como esto, todo está funcionando bien:
 
 ```bash
 2024-06-08T16:58:43.498297Z  INFO Starting reth version="0.2.0-beta.6-dev (ac29b4b73)"
@@ -526,7 +526,7 @@ If you see something like this, everything is running fine:
 2024-06-08T16:58:43.514917Z  INFO Pre-merge hard forks (block based):…
 ```
 
-**Running the consensus client**. Now you should run the consensus client, Lighthouse. Don’t close the terminal tab in which the execution client lives. Just open a new terminal window or tab and navigate into the *consensus* folder:
+**Ejecución del cliente de consenso**. Ahora se debe ejecutar el cliente de consenso, Lighthouse. No se debe cerrar la pestaña de la terminal en la que está el cliente de ejecución. Solo hay que abrir una nueva ventana o pestaña de terminal e ir a la carpeta *consensus*:
 
 ```bash
 $ cd ethereum-node2
@@ -539,9 +539,9 @@ $ lighthouse bn \
 	--http
 ```
 
-And you’re done! You should see both the execution and consensus client start logging lots of data on the terminal.
+¡Y listo! Debería verse que tanto el cliente de ejecución como el de consenso comienzan a registrar muchos datos en la terminal.
 
-Execution client:
+Cliente de ejecución:
 
 ```bash
 2024-06-08T17:03:03.355648Z  INFO Received headers total=10000 from_block=18458372 to_block=18448373
@@ -550,7 +550,7 @@ Execution client:
 2024-06-08T17:03:04.913377Z  INFO Received headers total=10000 from_block=18428372 to_block=18418373
 ```
 
-Consensus client:
+Cliente de consenso:
 
 ```bash
 Jun 08 17:03:24.929 INFO New block received                      root: 0xa49c057026cea3190df38548d49963e271ebdc4d6f93d2301adc4034d6563113, slot: 9253515
@@ -558,43 +558,43 @@ Jun 08 17:03:29.001 WARN Head is optimistic                      execution_block
 Jun 08 17:03:29.001 INFO Synced                                  slot: 9253515, block: 0xa49c…3113, epoch: 289172, finalized_epoch: 289170, finalized_root: 0xca35…2b06, exec_hash: 0x5a14…a7a5 (unverified), peers: 31, service: slot_notifier
 ```
 
-Now you have an Ethereum full node that is syncing up to the tip of the chain. Note that the synchronization can take a lot of time (hours or days depending on your hardware and internet connectivity).
+Ahora se tiene un nodo completo de Ethereum que se está sincronizando hasta el extremo más reciente de la cadena. Hay que tener en cuenta que la sincronización puede llevar mucho tiempo (horas o días, según el hardware y la conexión a internet).
 
-> **Note**
+> **Nota**
 >
-> If you want to learn more about the specific commands and CLI flags we’ve used in this example, the official docs for [Reth](https://reth.rs) and [Lighthouse](https://oreil.ly/vEghS) are the best places to look.
+> Para obtener más información sobre los comandos específicos y las opciones de la CLI que usamos en este ejemplo, lo mejor es consultar la documentación oficial de [Reth](https://reth.rs) y [Lighthouse](https://oreil.ly/vEghS).
 
-The next section explains the challenges with the initial synchronization of Ethereum’s blockchain.
+La siguiente sección explica las dificultades de la sincronización inicial de la blockchain de Ethereum.
 
-> **Tip**
+> **Consejo**
 >
-> Do all these steps look complicated and confusing to you? But you would still like to contribute to the network and really don’t depend on any trusted third party running your own Ethereum full node?
+> ¿Todos estos pasos parecen complicados y confusos? ¿Aun así se quiere contribuir a la red y no depender realmente de ningún tercero de confianza al ejecutar un nodo completo de Ethereum propio?
 >
-> There is a perfect solution for you: it’s the BuidlGuidl Client, a project that created a one-line command that lets you run an Ethereum node. You don’t believe it? [See it yourself](https://oreil.ly/9FKZd).
+> Existe una solución perfecta: BuidlGuidl Client, un proyecto que creó un comando de una sola línea que permite ejecutar un nodo de Ethereum. ¿Cuesta creerlo? [Se puede comprobar aquí](https://oreil.ly/9FKZd).
 >
-> Another option is to use [Dappnode](https://dappnode.com). You can choose two different solutions:
+> Otra opción es usar [Dappnode](https://dappnode.com). Se puede elegir entre dos soluciones diferentes:
 >
-> - Buy a plug-n-play device that comes with an Ethereum full node built in.
+> - Comprar un dispositivo listo para usar que incluye un nodo completo de Ethereum integrado.
 >
-> - Install Dappnode Core software that makes it really easy to launch an Ethereum full node.
+> - Instalar el software Dappnode Core, que facilita mucho la puesta en marcha de un nodo completo de Ethereum.
 
-## The First Synchronization of Ethereum-Based Blockchains
+## Primera sincronización de blockchains basadas en Ethereum
 
-Normally when syncing an Ethereum blockchain, your client will download and validate every block and every transaction since the very start—that is, from the genesis block. While it is possible to fully sync the blockchain this way, the sync will take a very long time and has high resource requirements (it will need much more RAM and will take a very long time indeed if you don’t have fast storage).
+Normalmente, al sincronizar una blockchain de Ethereum, el cliente descargará y validará cada bloque y cada transacción desde el inicio mismo, es decir, desde el bloque génesis. Si bien es posible sincronizar por completo la blockchain de esta manera, la sincronización llevará mucho tiempo y requiere muchos recursos (necesitará mucha más RAM y, de hecho, llevará muchísimo tiempo si no se dispone de almacenamiento rápido).
 
-Many Ethereum-based blockchains were the victims of DoS attacks at the end of 2016. Affected blockchains will tend to sync slowly when doing a full sync. For example, on Ethereum, a new client will make rapid progress until it reaches block 2,283,397. This block was mined on September 18, 2016, and marks the beginning of the DoS attacks. From this block to block 2,700,031 (November 26, 2016), the validation of transactions becomes extremely slow, memory intensive, and I/O intensive. This results in validation times exceeding one minute per block on contemporary 2016 hardware. Ethereum implemented a series of upgrades, using hard forks, to address the underlying vulnerabilities that were exploited in the DoS attacks. These upgrades also cleaned up the blockchain by removing some 20 million empty accounts created by spam transactions.
+Muchas blockchains basadas en Ethereum fueron víctimas de ataques de DoS a fines de 2016. Las blockchains afectadas tenderán a sincronizarse lentamente cuando se realice una sincronización completa. Por ejemplo, en Ethereum, un cliente nuevo avanzará con rapidez hasta llegar al bloque 2,283,397. Este bloque se minó el 18 de septiembre de 2016 y marca el comienzo de los ataques de DoS. Desde este bloque hasta el bloque 2,700,031 (26 de noviembre de 2016), la validación de las transacciones se vuelve extremadamente lenta y exige mucha memoria y muchas operaciones de E/S. Esto da como resultado tiempos de validación superiores a un minuto por bloque en el hardware de la época, de 2016. Ethereum implementó una serie de actualizaciones mediante hard forks para abordar las vulnerabilidades subyacentes que se explotaron en los ataques de DoS. Estas actualizaciones también limpiaron la blockchain al eliminar unos 20 millones de cuentas vacías creadas por transacciones de spam.
 
-If you are syncing with full validation, your client will slow, and it may take several days, or perhaps even longer, to validate the blocks affected by the DoS attacks. Fortunately, most Ethereum clients include an option to perform a “fast” synchronization that skips the full validation of transactions until it has synced to the tip of the blockchain, then resumes full validation starting from the new tip of the chain. For execution clients, the option to enable fast synchronization is typically snap sync. For consensus clients, the option for fast synchronization is checkpoint sync.
+Si se está sincronizando con validación completa, el cliente se ralentizará y puede llevar varios días, o quizá incluso más, validar los bloques afectados por los ataques de DoS. Por suerte, la mayoría de los clientes de Ethereum incluye una opción para realizar una sincronización "rápida" que omite la validación completa de las transacciones hasta haberse sincronizado con el extremo más reciente de la blockchain, y luego reanuda la validación completa a partir del nuevo extremo de la cadena. Para los clientes de ejecución, la opción para habilitar la sincronización rápida suele ser snap sync. Para los clientes de consenso, la opción de sincronización rápida es checkpoint sync.
 
-In this tutorial, we’ve been using by default fast synchronization both with snap sync on the execution client and checkpoint sync on the consensus client, with the exception of Reth, which doesn’t support snap sync yet (as of June 2025).
+En este tutorial, hemos usado de forma predeterminada la sincronización rápida tanto con snap sync en el cliente de ejecución como con checkpoint sync en el cliente de consenso, con la excepción de Reth, que todavía no admite snap sync (a junio de 2025).
 
-## The JSON-RPC Interface
+## La interfaz JSON-RPC
 
-Ethereum clients offer an API and a set of RPC commands, which are encoded as JSON. You will see this referred to as the JSON-RPC API. Essentially, the JSON-RPC API is an interface that allows us to write programs that use an Ethereum client as a gateway to an Ethereum network and blockchain.
+Los clientes de Ethereum ofrecen una API y un conjunto de comandos RPC codificados en JSON. Esto se conoce como la API JSON-RPC. En esencia, la API JSON-RPC es una interfaz que nos permite escribir programas que usan un cliente de Ethereum como puerta de enlace a una red y una blockchain de Ethereum.
 
-Usually, the RPC interface is offered as an HTTP service on port 8545. For security reasons, it is restricted by default to accept connections only from localhost (the IP address of your own computer, which is 127.0.0.1).
+Por lo general, la interfaz RPC se ofrece como un servicio HTTP en el puerto 8545. Por razones de seguridad, está restringida de forma predeterminada para aceptar conexiones solo desde localhost (la dirección IP de la propia computadora, que es 127.0.0.1).
 
-To access the JSON-RPC API, you can use a specialized library (written in the programming language of your choice) that provides “stub” function calls corresponding to each available RPC command, or you can manually construct HTTP requests and send/receive JSON-encoded requests. You can even use a generic command-line HTTP client like curl to call the RPC interface. Let’s try that. First, ensure that you have the execution client configured and running. Then, switch to a new terminal window and type the following command:
+Para acceder a la API JSON-RPC, se puede usar una biblioteca especializada (escrita en el lenguaje de programación que se prefiera) que proporcione llamadas a funciones "stub" correspondientes a cada comando RPC disponible, o se pueden construir solicitudes HTTP manualmente y enviar/recibir solicitudes codificadas en JSON. Incluso se puede usar un cliente HTTP genérico de línea de comandos como curl para invocar la interfaz RPC. Probémoslo. Primero, hay que asegurarse de tener el cliente de ejecución configurado y en funcionamiento. Luego, se debe cambiar a una nueva ventana de terminal y escribir el siguiente comando:
 
 ```bash
 $ curl -X POST -H "Content-Type: application/json" --data \
@@ -604,43 +604,43 @@ $ curl -X POST -H "Content-Type: application/json" --data \
 {"jsonrpc":"2.0","id":1,"result":"Geth/1.14.3-stable/darwin-arm64/go1.22.2"}
 ```
 
-In this example, we use curl to make an HTTP connection to the address *http://localhost:8545*. We are already running the execution client, which offers the JSON-RPC API as an HTTP service on port 8545. We instruct curl to use the HTTP POST method and to identify the content as type **application/json**. Finally, we pass a JSON-encoded request as the data component of our HTTP request. Most of our command line is just setting up curl to make the HTTP connection correctly. The interesting part is the actual JSON-RPC command we issue:
+En este ejemplo, usamos curl para establecer una conexión HTTP con la dirección *http://localhost:8545*. Ya estamos ejecutando el cliente de ejecución, que ofrece la API JSON-RPC como un servicio HTTP en el puerto 8545. Indicamos a curl que use el método HTTP POST e identifique el contenido como de tipo **application/json**. Por último, pasamos una solicitud codificada en JSON como componente de datos de nuestra solicitud HTTP. La mayor parte de nuestra línea de comandos solo configura curl para establecer la conexión HTTP correctamente. Lo interesante es el comando JSON-RPC que enviamos:
 
 ```bash
 {"jsonrpc":"2.0","method":"web3_clientVersion","params":[],"id":1}
 ```
 
-The JSON-RPC request is formatted according to the [JSON-RPC 2.0 specification](https://oreil.ly/m0HLL). Each request object contains four members:
+La solicitud JSON-RPC tiene el formato indicado en la [especificación JSON-RPC 2.0](https://oreil.ly/m0HLL). Cada objeto de solicitud contiene cuatro miembros:
 
 **jsonrpc**
 
-Version of the JSON-RPC protocol. This must be exactly "2.0".
+Versión del protocolo JSON-RPC. Debe ser exactamente "2.0".
 
 **method**
 
-The name of the method to be invoked.
+El nombre del método que se va a invocar.
 
 **params**
 
-A structured value that holds the parameter values to be used during the invocation of the method. This member may be omitted.
+Un valor estructurado que contiene los valores de los parámetros que se usarán durante la invocación del método. Este miembro puede omitirse.
 
 **id**
 
-An identifier established by the client that must contain a string, number, or NULL value if included. The server must reply with the same value in the response object if included. This member is used to correlate the context between the two objects.
+Un identificador establecido por el cliente que, si se incluye, debe contener una cadena, un número o un valor NULL. Si se incluye, el servidor debe responder con el mismo valor en el objeto de respuesta. Este miembro se usa para correlacionar el contexto entre los dos objetos.
 
-> **Tip**
+> **Consejo**
 >
-> The **id** member is used primarily when you are making multiple requests in a single JSON-RPC call, a practice called batching. Batching is used to avoid the overhead of a new HTTP and TCP connection for every request. In the Ethereum context, for example, we would use batching if we wanted to retrieve thousands of transactions over one HTTP connection. When batching, you set a different id for each request and then match it to the id in each response from the JSON-RPC server. The easiest way to implement this is to maintain a counter and increment the value for each request.
+> El miembro **id** se usa principalmente cuando se realizan varias solicitudes en una sola llamada JSON-RPC, una práctica llamada procesamiento por lotes. El procesamiento por lotes se usa para evitar la sobrecarga de una nueva conexión HTTP y TCP para cada solicitud. En el contexto de Ethereum, por ejemplo, usaríamos procesamiento por lotes si quisiéramos recuperar miles de transacciones a través de una sola conexión HTTP. Al procesar por lotes, se establece un id diferente para cada solicitud y luego se lo hace coincidir con el id de cada respuesta del servidor JSON-RPC. La forma más sencilla de implementar esto es mantener un contador e incrementar su valor con cada solicitud.
 
-The response we receive is:
+La respuesta que recibimos es:
 
 ```bash
 {"jsonrpc":"2.0","id":1,"result":"Geth/1.14.3-stable/darwin-arm64/go1.22.2"}
 ```
 
-This tells us that the JSON-RPC API is being served by Geth client version 1.14.3-stable.
+Esto nos indica que el cliente Geth versión 1.14.3-stable está sirviendo la API JSON-RPC.
 
-Let’s try something a bit more interesting. In the next example, we ask the JSON-RPC API for the current price of gas in wei:
+Probemos algo un poco más interesante. En el siguiente ejemplo, pedimos a la API JSON-RPC el precio actual del gas en wei:
 
 ```bash
 $ curl -X POST -H "Content-Type: application/json" --data \
@@ -651,18 +651,18 @@ $ curl -X POST -H "Content-Type: application/json" --data \
 ```
 
 
-The response, 0x1B1717FC7, tells us that the current gas price is 7.27 gwei (gigawei or billion wei). If, like us, you don’t think in hexadecimal, you can convert it to decimal on the command line with a little Bash-fu:
+La respuesta, 0x1B1717FC7, nos indica que el precio actual del gas es 7.27 gwei (gigawei o mil millones de wei). Si, como nosotros, no se piensa en hexadecimal, se puede convertir a decimal en la línea de comandos con un poco de destreza en Bash:
 
 ```bash
 $ echo $((0x1B1717FC7))
 7271972807
 ```
 
-The full JSON-RPC API can be investigated on the [Ethereum wiki](https://oreil.ly/lO2Z0).
+Se puede explorar la API JSON-RPC completa en la [wiki de Ethereum](https://oreil.ly/lO2Z0).
 
-> **Tip**
+> **Consejo**
 >
-> In this section, we used raw curl requests to show the Ethereum JSON-RPC interface. In real life, you probably want to access it through a better, more programmatic way. Here is where libraries come into play. Feel free to explore the three most famous and used ones:
+> En esta sección, usamos solicitudes directas con curl para mostrar la interfaz JSON-RPC de Ethereum. En la práctica, probablemente convenga acceder a ella de una manera mejor y más programática. Aquí es donde entran en juego las bibliotecas. Se pueden explorar las tres más conocidas y utilizadas:
 >
 > - [ethers.js](https://oreil.ly/JKvSJ)
 >
@@ -670,88 +670,88 @@ The full JSON-RPC API can be investigated on the [Ethereum wiki](https://oreil.l
 >
 > - [alloy](https://alloy.rs)
 
-## Remote Ethereum Clients
+## Clientes remotos de Ethereum
 
-Remote clients offer a subset of the functionality of a full client. They do not store the full Ethereum blockchain, so they are faster to set up and require far less data storage.
+Los clientes remotos ofrecen un subconjunto de la funcionalidad de un cliente completo. No almacenan la blockchain completa de Ethereum, por lo que son más rápidos de configurar y requieren mucho menos espacio de almacenamiento de datos.
 
-These clients typically provide the ability to do one or more of the following:
+Estos clientes suelen permitir realizar una o más de las siguientes tareas:
 
-- Manage private keys and Ethereum addresses in a wallet
-- Create, sign, and broadcast transactions
-- Interact with smart contracts using the data payload
-- Browse and interact with DApps
-- Offer links to external services, such as block explorers
-- Convert ether units and retrieve exchange rates from external sources
-- Inject a Web3 instance into the web browser as a JavaScript object
-- Use a Web3 instance provided or injected into the browser by another client
-- Access RPC services on a local or remote Ethereum node
+- Administrar claves privadas y direcciones de Ethereum en una billetera
+- Crear, firmar y difundir transacciones
+- Interactuar con contratos inteligentes mediante la carga de datos
+- Explorar DApps e interactuar con ellas
+- Ofrecer enlaces a servicios externos, como exploradores de bloques
+- Convertir unidades de ether y obtener tipos de cambio de fuentes externas
+- Inyectar una instancia de Web3 en el navegador web como un objeto JavaScript
+- Usar una instancia de Web3 proporcionada o inyectada en el navegador por otro cliente
+- Acceder a servicios RPC en un nodo local o remoto de Ethereum
 
-Remote clients commonly offer some of the functions of a full-node Ethereum client without synchronizing a local copy of the Ethereum blockchain by connecting to a full node being run elsewhere—for example, by you locally on your machine or on a web server or by a third party on its server.
+Los clientes remotos suelen ofrecer algunas de las funciones de un cliente de nodo completo de Ethereum sin sincronizar una copia local de la blockchain de Ethereum, al conectarse a un nodo completo que se ejecuta en otro lugar, por ejemplo, operado por uno mismo de forma local en su computadora o en un servidor web, o por un tercero en su servidor.
 
-Let’s look at some of the most popular remote clients and the functions they offer.
+Veamos algunos de los clientes remotos más populares y las funciones que ofrecen.
 
-### Mobile (Smartphone) Wallets
+### Billeteras móviles (para teléfonos inteligentes)
 
-Most production mobile wallets operate as remote clients because smartphones do not have adequate resources to run a full Ethereum client. Light clients are in development and are not in general use for Ethereum. The most famous one is [Helios](https://oreil.ly/4joTo), which is still experimental software.
+La mayoría de las billeteras móviles en producción funciona como clientes remotos porque los teléfonos inteligentes no tienen recursos adecuados para ejecutar un cliente completo de Ethereum. Los clientes ligeros están en desarrollo y no son de uso generalizado en Ethereum. El más conocido es [Helios](https://oreil.ly/4joTo), que todavía es software experimental.
 
-Popular mobile wallets include the following (we list these merely as examples; this is not an endorsement or an indication of the security or functionality of these wallets):
+Entre las billeteras móviles populares se incluyen las siguientes (las enumeramos solo como ejemplos; esto no constituye una recomendación ni una indicación de la seguridad o funcionalidad de estas billeteras):
 
 **Coinbase Wallet**
 
-A mobile wallet that supports a bunch of different chains, such as Ethereum (and all L2s), EVM-compatible L1s, Bitcoin, Solana, Litecoin, and Dogecoin. It can also connect to a Coinbase account.
+Una billetera móvil que admite muchas cadenas diferentes, como Ethereum (y todas las L2), L1 compatibles con la EVM, Bitcoin, Solana, Litecoin y Dogecoin. También puede conectarse a una cuenta de Coinbase.
 
 **Phantom**
 
-Phantom is another multichain wallet that is compatible with Ethereum, Solana, Bitcoin, and Polygon.
+Phantom es otra billetera multicadena compatible con Ethereum, Solana, Bitcoin y Polygon.
 
 **Trust Wallet**
 
-A mobile multichain wallet that supports more than one hundred blockchains. Trust Wallet is available for iOS and Android.
+Una billetera móvil multicadena que admite más de cien blockchains. Trust Wallet está disponible para iOS y Android.
 
 **Uniswap Wallet**
 
-A mobile wallet that supports only Ethereum and EVM-compatible L2s and L1s. It’s made by the Uniswap team. It’s quite new, available both for iOS and Android.
+Una billetera móvil que solo admite Ethereum y L2 y L1 compatibles con la EVM. La desarrolla el equipo de Uniswap. Es bastante nueva y está disponible tanto para iOS como para Android.
 
-### Browser Wallets
+### Billeteras de navegador
 
-A variety of wallets and DApp browsers are available as plug-ins or extensions of web browsers like Chrome and Firefox. These are remote clients that run inside your browser. Some of the more popular ones include:
+Hay diversas billeteras y navegadores de DApps disponibles como complementos o extensiones de navegadores web como Chrome y Firefox. Son clientes remotos que se ejecutan dentro del navegador. Entre los más populares se incluyen:
 
 **MetaMask**
 
-[MetaMask](https://metamask.io), introduced in [Chapter 2](https://masteringethereum.xyz/chapter_2.html#getting-started-with-metamask), is a versatile browser-based wallet, RPC client, and basic contract explorer. It is available on Chrome, Firefox, Opera, and Brave Browser.
+[MetaMask](https://metamask.io), presentado en el [capítulo 2](https://masteringethereum.xyz/chapter_2.html#getting-started-with-metamask), es una billetera versátil basada en navegador, un cliente RPC y un explorador básico de contratos. Está disponible en Chrome, Firefox, Opera y Brave Browser.
 
 **Phantom**
 
-Phantom also has a web browser wallet that has a very nice and clean UI.
+Phantom también tiene una billetera para navegador web con una interfaz de usuario muy agradable y sencilla.
 
 **Rabby Wallet**
 
-Rabby is a new multichain web browser wallet that supports more than one hundred different blockchains (EVM-compatible chains).
+Rabby es una nueva billetera multicadena para navegador web que admite más de cien blockchains diferentes (cadenas compatibles con la EVM).
 
 **Coinbase Wallet**
 
-Coinbase Wallet also has the web browser wallet. It has the same features as the mobile version.
+Coinbase Wallet también tiene una billetera para navegador web. Tiene las mismas características que la versión móvil.
 
-### Hardware Wallets
+### Billeteras de hardware
 
-The majority of mobile and browser wallets can be coupled with the higher security of hardware wallets: offline devices designed to never connect to the internet and built to resist tampering and other forms of physical attacks, providing a higher level of security. Several companies are building these kinds of devices, but two of the most widely used are Ledger and Trezor.
+La mayoría de las billeteras móviles y de navegador puede combinarse con la mayor seguridad de las billeteras de hardware: dispositivos sin conexión diseñados para no conectarse nunca a internet y construidos para resistir manipulaciones y otras formas de ataques físicos, lo que proporciona un nivel de seguridad más alto. Varias empresas están construyendo este tipo de dispositivos, pero dos de los más utilizados son Ledger y Trezor.
 
-## Conclusion
+## Conclusión
 
-In this chapter, we explored Ethereum clients. You downloaded, installed, and synchronized a client, becoming a participant in the Ethereum network and contributing to the health and stability of the system by replicating the blockchain on your own computer.
+En este capítulo, exploramos los clientes de Ethereum. Se descargó, instaló y sincronizó un cliente, con lo que se pasó a participar en la red de Ethereum y a contribuir a la salud y la estabilidad del sistema al replicar la blockchain en la propia computadora.
 
-In the future, new types of Ethereum clients will be available since the research and development around Ethereum is huge. Interesting areas include:
+En el futuro, habrá nuevos tipos de clientes de Ethereum, ya que la investigación y el desarrollo en torno a Ethereum son enormes. Algunas áreas de interés son:
 
-**History pruning**
+**Poda del historial**
 
-Prune historical data to lower the storage requirement for a full node
+Podar los datos históricos para reducir los requisitos de almacenamiento de un nodo completo
 
-**Verkle trees and statelessness**
+**Árboles de Verkle y ausencia de estado**
 
-Be able to verify a block without having the full Ethereum state
+Poder verificar un bloque sin disponer del estado completo de Ethereum
 
 **zk-EVM**
 
-Verify the correctness of a block by verifying a zero-knowledge proof without having to reexecute all the transactions in the block
+Verificar que un bloque sea correcto mediante la verificación de una prueba de conocimiento cero, sin tener que volver a ejecutar todas las transacciones del bloque
 
-We’ll explore each of these concepts in the following chapters, but first, we need to uncover the true magic that makes all this possible: cryptography.
+Exploraremos cada uno de estos conceptos en los siguientes capítulos, pero primero tenemos que descubrir la verdadera magia que hace posible todo esto: la criptografía.

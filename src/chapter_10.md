@@ -1,176 +1,176 @@
-# Chapter 10. Tokens
+# Capítulo 10. Tokens
 
-The word *token* derives from the Old English *tācen*, meaning a sign or symbol. It is commonly used to refer to privately issued, special-purpose, coin-like items of insignificant intrinsic value, such as transportation tokens, laundry tokens, and arcade-game tokens. Nowadays, tokens administered on blockchains are redefining the word to mean blockchain-based abstractions that can be owned and that represent assets, currency, or access rights.
+La palabra *token* deriva del inglés antiguo *tācen*, que significa signo o símbolo. Se usa habitualmente para referirse a objetos similares a monedas, emitidos de forma privada para un propósito específico y con un valor intrínseco insignificante, como las fichas de transporte, lavandería y máquinas de videojuegos. Hoy, los tokens administrados en blockchains están redefiniendo la palabra para designar abstracciones basadas en blockchain que pueden poseerse y que representan activos, monedas o derechos de acceso.
 
-The association between the word *token* and insignificant value has a lot to do with the limited use of the physical versions of tokens. Often restricted to specific businesses, organizations, or locations, physical tokens are not easily exchangeable and typically have only one function. With blockchain tokens, these restrictions are lifted or, to be more accurate, are completely redefinable. Many blockchain tokens serve multiple purposes globally and can be traded for one another or for other currencies on global liquid markets. With the restrictions on use and ownership gone, the “insignificant value” expectation is also a thing of the past.
+La asociación entre la palabra *token* y un valor insignificante tiene mucho que ver con el uso limitado de las versiones físicas de los tokens. A menudo restringidos a empresas, organizaciones o lugares específicos, los tokens físicos no se intercambian fácilmente y suelen tener una sola función. Con los tokens de blockchain, estas restricciones desaparecen o, para ser más precisos, pueden redefinirse por completo. Muchos tokens de blockchain cumplen múltiples propósitos a escala mundial y pueden intercambiarse entre sí o por otras monedas en mercados líquidos globales. Al desaparecer las restricciones de uso y propiedad, la expectativa de un "valor insignificante" también queda en el pasado.
 
-In this chapter, we look at various uses for tokens and how they are created. We also discuss attributes of tokens, such as fungibility and intrinsicality. Finally, we examine the standards and technologies that they are based on and experiment by building our own tokens.
+En este capítulo examinamos diversos usos de los tokens y cómo se crean. También analizamos atributos de los tokens, como la fungibilidad y el carácter intrínseco. Por último, examinamos los estándares y las tecnologías en los que se basan y experimentamos creando nuestros propios tokens.
 
-## How Tokens Are Used
+## Cómo se usan los tokens
 
-The most obvious use of tokens is as digital private currencies. However, this is only one possible use. Tokens can be programmed to serve many different functions, which often overlap. For example, a token can simultaneously convey a voting right, an access right, and ownership of a resource. As the following list shows, currency is just the first “app”:
+El uso más evidente de los tokens es como monedas privadas digitales. Sin embargo, este es solo uno de sus posibles usos. Los tokens pueden programarse para cumplir muchas funciones diferentes, que a menudo se superponen. Por ejemplo, un token puede otorgar simultáneamente un derecho de voto, un derecho de acceso y la propiedad de un recurso. Como muestra la siguiente lista, la moneda es apenas la primera "aplicación":
 
-**Currency**
+**Moneda**
 
-A token can serve as a form of currency, with a value determined through private trade.
+Un token puede servir como una forma de moneda, con un valor determinado mediante intercambios privados.
 
-**Resource**
+**Recurso**
 
-A token can represent a resource earned or produced in a sharing economy or resource-sharing environment—for example, a storage or CPU token representing resources that can be shared over a network.
+Un token puede representar un recurso obtenido o producido en una economía colaborativa o en un entorno de recursos compartidos; por ejemplo, un token de almacenamiento o CPU que represente recursos que pueden compartirse a través de una red.
 
-**Asset**
+**Activo**
 
-A token can represent ownership of an intrinsic or extrinsic, tangible or intangible asset—for example, gold, real estate, a car, oil, energy, MMOG items, and so on.
+Un token puede representar la propiedad de un activo intrínseco o extrínseco, tangible o intangible; por ejemplo, oro, bienes raíces, un automóvil, petróleo, energía, objetos de MMOG, etcétera.
 
-**Access**
+**Acceso**
 
-A token can represent access rights and can grant access to a digital or physical property, such as a discussion forum, an exclusive website, a hotel room, or a rental car.
+Un token puede representar derechos de acceso y conceder acceso a una propiedad digital o física, como un foro de discusión, un sitio web exclusivo, una habitación de hotel o un automóvil de alquiler.
 
-**Equity**
+**Participación accionaria**
 
-A token can represent shareholder equity in a digital organization (e.g., a DAO) or legal entity (e.g., a corporation).
+Un token puede representar una participación accionaria en una organización digital (p. ej., una DAO) o una entidad jurídica (p. ej., una sociedad).
 
-**Voting**
+**Voto**
 
-A token can represent voting rights in a digital or legal system.
+Un token puede representar derechos de voto en un sistema digital o jurídico.
 
-**Collectible**
+**Objeto de colección**
 
-A token can represent a digital collectible (e.g., CryptoPunks) or physical collectible (e.g., a painting).
+Un token puede representar un objeto de colección digital (p. ej., CryptoPunks) o físico (p. ej., una pintura).
 
-**Identity**
+**Identidad**
 
-A token can represent a digital identity (e.g., an avatar) or a legal identity (e.g., a national ID).
+Un token puede representar una identidad digital (p. ej., un avatar) o una identidad legal (p. ej., un documento nacional de identidad).
 
-**Attestation**
+**Atestación**
 
-A token can represent a certification or attestation of fact by some authority or by a decentralized reputation system (e.g., a marriage record, birth certificate, or college degree).
+Un token puede representar una certificación o atestación de un hecho por parte de alguna autoridad o de un sistema de reputación descentralizado (p. ej., un acta de matrimonio, un certificado de nacimiento o un título universitario).
 
-**Utility**
+**Utilidad**
 
-A token can be used to access or pay for a service.
+Un token puede usarse para acceder a un servicio o pagarlo.
 
-Often, a single token encompasses several of these functions. Sometimes it is hard to discern between them because the physical equivalents have always been inextricably linked. For example, in the physical world, a driver’s license (attestation) is also an identity document (identity), and the two cannot be separated. In the digital realm, previously commingled functions can be separated and developed independently (e.g., an anonymous attestation).
+A menudo, un solo token abarca varias de estas funciones. A veces es difícil distinguirlas porque sus equivalentes físicos siempre han estado inseparablemente vinculados. Por ejemplo, en el mundo físico, una licencia de conducir (atestación) también es un documento de identidad (identidad), y ambos no pueden separarse. En el ámbito digital, las funciones que antes estaban mezcladas pueden separarse y desarrollarse de forma independiente (p. ej., una atestación anónima).
 
-## Tokens and Fungibility
+## Tokens y fungibilidad
 
-[Wikipedia](https://oreil.ly/ge7zP) says, “In economics, fungibility is the property of a good or a commodity whose individual units are essentially interchangeable.” Tokens are *fungible* when we can substitute any single unit of the token for another without any difference in its value or function.
+[Wikipedia](https://oreil.ly/ge7zP) dice: "En economía, la fungibilidad es la propiedad de un bien o una mercancía cuyas unidades individuales son esencialmente intercambiables". Los tokens son *fungibles* cuando podemos sustituir cualquier unidad individual del token por otra sin que cambie su valor o su función.
 
-*Nonfungible* *tokens* (NFTs) are tokens that each represent a unique tangible or intangible item and therefore are not interchangeable. For example, a token that represents ownership of a *specific* Van Gogh painting is not equivalent to another token that represents a Picasso, even though they may be part of the same “art ownership token” system. Similarly, a token representing a *specific* digital collectible, such as a specific CryptoKitty, is not interchangeable with any other CryptoKitty. Each NFT is associated with a unique identifier, such as a serial number.
+Los *tokens* *no fungibles* (NFT) son tokens que representan, cada uno, un objeto tangible o intangible único y, por lo tanto, no son intercambiables. Por ejemplo, un token que representa la propiedad de una pintura *específica* de Van Gogh no equivale a otro token que representa un Picasso, aunque ambos puedan formar parte del mismo sistema de "tokens de propiedad de arte". Del mismo modo, un token que representa un objeto de colección digital *específico*, como un CryptoKitty concreto, no es intercambiable con ningún otro CryptoKitty. Cada NFT está asociado a un identificador único, como un número de serie.
 
-We will see examples of both fungible and nonfungible tokens later in this chapter.
+Más adelante en este capítulo veremos ejemplos de tokens tanto fungibles como no fungibles.
 
-> **Note**
+> **Nota**
 >
-> Note that *fungible* is often used to mean “directly exchangeable for money” (for example, a casino token can be “cashed in,” while laundry tokens typically cannot). This is *not* the sense in which we use the word here.
+> Hay que tener en cuenta que *fungible* suele usarse con el sentido de "directamente intercambiable por dinero" (por ejemplo, una ficha de casino puede "canjearse por efectivo", mientras que las fichas de lavandería normalmente no). Este *no* es el sentido en que usamos la palabra aquí.
 
-## Counterparty Risk
+## Riesgo de contraparte
 
-*Counterparty risk* is the risk that the *other* party in a transaction will fail to meet their obligations. Some types of transactions suffer additional counterparty risk because there are more than two parties involved. For example, if you hold a certificate of deposit for a precious metal and you sell that to someone, there are at least three parties in that transaction: the seller, the buyer, and the custodian of the precious metal. Someone holds the physical asset; by necessity, they become party to the fulfillment of the transaction and add counterparty risk to any transaction involving that asset. In general, when an asset is traded indirectly through the exchange of a token of ownership, there is additional counterparty risk from the custodian of the asset. Do they have the asset? Will they recognize (or allow) the transfer of ownership based on the transfer of a token (such as a certificate, deed, title, or digital token)? In the world of digital tokens representing assets, as in the nondigital world, it is important to understand who holds the asset that is represented by the token and what rules apply to that underlying asset.
+El *riesgo de contraparte* es el riesgo de que la *otra* parte de una transacción no cumpla sus obligaciones. Algunos tipos de transacciones tienen un riesgo de contraparte adicional porque intervienen más de dos partes. Por ejemplo, si se posee un certificado de depósito de un metal precioso y se vende a alguien, hay al menos tres partes en esa transacción: el vendedor, el comprador y el custodio del metal precioso. Alguien tiene el activo físico; por necesidad, pasa a ser parte del cumplimiento de la transacción y agrega riesgo de contraparte a cualquier transacción que involucre ese activo. En general, cuando un activo se negocia indirectamente mediante el intercambio de un token de propiedad, existe un riesgo de contraparte adicional por parte del custodio del activo. ¿Tiene el activo? ¿Reconocerá (o permitirá) la transferencia de propiedad basada en la transferencia de un token (como un certificado, una escritura, un título o un token digital)? En el mundo de los tokens digitales que representan activos, al igual que en el mundo no digital, es importante entender quién tiene el activo representado por el token y qué reglas se aplican a ese activo subyacente.
 
-## Tokens and Intrinsicality
+## Tokens y carácter intrínseco
 
-The word *intrinsic* derives from the Latin *intra*, meaning “from within.” Some tokens represent digital items that are intrinsic to the blockchain. Those digital assets are governed by consensus rules, just like the tokens themselves. This has an important implication: tokens that represent intrinsic assets do not carry additional counterparty risk. If you hold the keys for a CryptoKitty, there is no other party holding that CryptoKitty for you—you own it directly. The blockchain consensus rules apply, and your ownership (i.e., control) of the private keys is equivalent to ownership of the asset, without any intermediary.
+La palabra *intrínseco* deriva del latín *intra*, que significa "desde dentro". Algunos tokens representan objetos digitales intrínsecos a la blockchain. Esos activos digitales se rigen por reglas de consenso, al igual que los propios tokens. Esto tiene una implicación importante: los tokens que representan activos intrínsecos no conllevan un riesgo de contraparte adicional. Si se poseen las claves de un CryptoKitty, no hay otra parte que tenga ese CryptoKitty en nuestro nombre: lo poseemos directamente. Se aplican las reglas de consenso de la blockchain, y la propiedad (es decir, el control) de las claves privadas equivale a la propiedad del activo, sin intermediarios.
 
-Conversely, many tokens are used to represent *extrinsic* things, such as real estate, corporate voting shares, trademarks, gold bars, and bonds. The ownership of these items, which are not “within” the blockchain, is governed by law, custom, and policy, separate from the consensus rules that govern the token. In other words, token issuers and owners may still depend on real-world nonsmart contracts. As a result, these extrinsic assets carry additional counterparty risk because they are held by custodians, recorded in external registries, or controlled by laws and policies outside the blockchain environment.
+En cambio, muchos tokens se usan para representar cosas *extrínsecas*, como bienes raíces, acciones corporativas con derecho a voto, marcas registradas, lingotes de oro y bonos. La propiedad de estos objetos, que no están "dentro" de la blockchain, se rige por leyes, costumbres y políticas separadas de las reglas de consenso que rigen el token. En otras palabras, los emisores y propietarios de tokens aún pueden depender de contratos no inteligentes del mundo real. Por ello, estos activos extrínsecos conllevan un riesgo de contraparte adicional porque están en manos de custodios, inscritos en registros externos o sujetos a leyes y políticas ajenas al entorno de la blockchain.
 
-One of the most important ramifications of blockchain-based tokens is the ability to convert extrinsic assets into intrinsic assets and thereby remove counterparty risk. A good example is moving from equity in a corporation (extrinsic) to an equity or voting token in a DAO or similar (intrinsic) organization. Stablecoins serve as another example, acting as blockchain-based tokens pegged to fiat currencies and backed by extrinsic assets like treasury bills and cash reserves.
+Una de las consecuencias más importantes de los tokens basados en blockchain es la capacidad de convertir activos extrínsecos en activos intrínsecos y eliminar así el riesgo de contraparte. Un buen ejemplo es pasar de una participación accionaria en una sociedad (extrínseca) a un token de participación o de voto en una DAO o una organización similar (intrínseca). Las stablecoins son otro ejemplo: actúan como tokens basados en blockchain vinculados a monedas fiduciarias y respaldados por activos extrínsecos, como letras del Tesoro y reservas de efectivo.
 
-## Utility, Equity, or Cash Grab?
+## ¿Utilidad, participación accionaria o afán de recaudar dinero?
 
-Almost every Ethereum project seems to launch with some sort of token. But do all these projects really need tokens? The slogan “Tokenize all the things” sounds catchy, but the reality is far more complex. Tokens can be powerful tools for organizing and incentivizing communities, but they’ve also become synonymous with speculation and hype.
+Casi todos los proyectos de Ethereum parecen lanzarse con algún tipo de token. Pero ¿realmente necesitan tokens todos estos proyectos? El lema "Tokenizarlo todo" suena atractivo, pero la realidad es mucho más compleja. Los tokens pueden ser herramientas poderosas para organizar e incentivar comunidades, pero también se han vuelto sinónimo de especulación y publicidad exagerada.
 
-In theory, tokens serve two primary purposes. First, there are *utility tokens.* These are designed to provide access to a service or resource within a specific ecosystem. For example, a token might represent storage space on a decentralized network or access to premium features in a DApp. The token’s value, in this case, is tied to its function within the platform. Second, we have *equity tokens*, which are supposed to function like shares in a company. These tokens can represent ownership or control in a project, such as voting rights in a DAO or a share of profits.
+En teoría, los tokens cumplen dos propósitos principales. Primero están los *tokens de utilidad.* Se diseñan para proporcionar acceso a un servicio o recurso dentro de un ecosistema específico. Por ejemplo, un token podría representar espacio de almacenamiento en una red descentralizada o acceso a funciones prémium en una DApp. En este caso, el valor del token está ligado a su función dentro de la plataforma. En segundo lugar, tenemos los *tokens de participación accionaria*, que supuestamente funcionan como acciones de una empresa. Estos tokens pueden representar propiedad o control en un proyecto, como derechos de voto en una DAO o una participación en las ganancias.
 
-In practice, the distinction between these categories is often blurred. Many utility tokens remain largely speculative, with users holding them more as assets than as access credentials. Equity-like tokens may grant governance rights but often lack mechanisms to ensure meaningful participation. Some projects integrate their tokens deeply into their economic models, but these cases remain the exception rather than the rule.
+En la práctica, la distinción entre estas categorías suele ser difusa. Muchos tokens de utilidad siguen siendo en gran medida especulativos, y los usuarios los conservan más como activos que como credenciales de acceso. Los tokens similares a acciones pueden otorgar derechos de gobernanza, pero a menudo carecen de mecanismos que aseguren una participación significativa. Algunos proyectos integran sus tokens profundamente en sus modelos económicos, pero estos casos siguen siendo la excepción y no la regla.
 
-This brings us to the question: are tokens inherently bad? Not at all. Tokens can be incredibly effective for creating and incentivizing communities or powering decentralized governance in a DAO. But the reality is that most tokens are launched with profit, not utility, as the primary motivator. If you’re thinking of launching a token or investing in one, it’s worth asking some tough questions. Does the token truly serve a necessary purpose in the protocol, or is it just a fundraising tool? Would the project work just as well without it? Answering these questions honestly can help you distinguish between genuine innovation and marketing-driven hype.
+Esto nos lleva a preguntarnos: ¿son los tokens inherentemente malos? En absoluto. Los tokens pueden ser increíblemente eficaces para crear e incentivar comunidades o impulsar la gobernanza descentralizada en una DAO. Pero la realidad es que la mayoría de los tokens se lanzan motivados principalmente por las ganancias, no por la utilidad. Si se piensa lanzar un token o invertir en uno, conviene hacerse algunas preguntas difíciles. ¿Cumple realmente el token un propósito necesario en el protocolo o es solo una herramienta de recaudación de fondos? ¿Funcionaría igual de bien el proyecto sin él? Responder estas preguntas con honestidad puede ayudar a distinguir la innovación genuina del entusiasmo impulsado por el marketing.
 
-It’s clear that the token landscape is still evolving, and tokens are not inherently good or bad; their value depends on how they’re designed and implemented. The challenge lies in separating the meaningful from the meaningless and resisting the lure of the next meme coin.
+Está claro que el ámbito de los tokens sigue evolucionando y que los tokens no son inherentemente buenos ni malos; su valor depende de cómo se diseñen e implementen. El desafío está en separar lo significativo de lo irrelevante y resistir el atractivo de la próxima moneda meme.
 
-> **Note**
+> **Nota**
 >
-> During the writing of this chapter (January 2025), the newly elected president Donald Trump launched his own meme coin, which reached a market cap of $15 billion within a single day. Many had anticipated favorable crypto policies from his presidency, but instead, we got a meme coin. This event highlights the speculative frenzy dominating crypto, where hype often triumphs over substance.
+> Durante la redacción de este capítulo (enero de 2025), el presidente recién electo Donald Trump lanzó su propia moneda meme, que alcanzó una capitalización de mercado de $15 mil millones en un solo día. Muchos habían anticipado políticas favorables a las criptomonedas durante su presidencia, pero en cambio recibimos una moneda meme. Este suceso pone de relieve el frenesí especulativo que domina el mundo de las criptomonedas, donde el entusiasmo publicitario suele imponerse a la sustancia.
 
-## It’s a Duck!
+## ¡Es un pato!
 
-Tokens have long been a favorite fundraising tool for startups. They promise innovation, decentralization, and sometimes outright financial freedom. But here’s the catch: offering securities to the public is a regulated activity in most jurisdictions, and tokens can easily cross the line into securities territory. For years, projects have tried to sidestep regulations by branding their tokens as “utility tokens,” claiming they’re just a presale of access to future services. The logic goes: if the token isn’t an equity share, it’s not a security. But as the old saying goes, “If it walks like a duck and quacks like a duck, it’s a duck.” And regulators, especially the US Securities and Exchange Commission (SEC), are paying attention to these ducks.
+Los tokens llevan mucho tiempo siendo una herramienta de recaudación de fondos favorita de las empresas emergentes. Prometen innovación, descentralización y, a veces, plena libertad financiera. Pero hay un problema: ofrecer valores al público es una actividad regulada en la mayoría de las jurisdicciones, y los tokens pueden cruzar fácilmente la línea que los convierte en valores. Durante años, los proyectos han intentado eludir las regulaciones al presentar sus tokens como "tokens de utilidad", afirmando que son solo una preventa de acceso a servicios futuros. La lógica es la siguiente: si el token no es una acción, no es un valor. Pero, como dice el viejo refrán, "Si camina como un pato y grazna como un pato, es un pato". Y los reguladores, especialmente la Comisión de Bolsa y Valores de Estados Unidos (SEC), están prestando atención a estos patos.
 
-Over the last few years, the SEC has taken an increasingly aggressive stance against token offerings, striking down projects that try to straddle the line between utility and equity. For example, in 2020, the SEC sued Ripple Labs over their XRP token, arguing it was an unregistered security. Ripple claimed XRP was a currency, not a security, but the court’s partial rulings showed how nuanced these cases can be.
+En los últimos años, la SEC ha adoptado una postura cada vez más agresiva contra las ofertas de tokens, frenando proyectos que intentan situarse entre la utilidad y la participación accionaria. Por ejemplo, en 2020, la SEC demandó a Ripple Labs por su token XRP, argumentando que era un valor no registrado. Ripple sostuvo que XRP era una moneda, no un valor, pero los fallos parciales del tribunal mostraron cuántos matices pueden tener estos casos.
 
-Even Ethereum itself wasn’t exempt from scrutiny. Back in 2018, former SEC officials declared that ether was “sufficiently decentralized” and thus not a security. But as recently as 2024, the SEC suggested that Ethereum’s transition to PoS could bring it back under the microscope. Why? Because staking rewards resemble dividends, and dividends are a hallmark of securities. These developments show just how fluid and unpredictable the regulatory landscape has become.
+Ni siquiera Ethereum quedó exento del escrutinio. En 2018, antiguos funcionarios de la SEC declararon que ether estaba "suficientemente descentralizado" y, por lo tanto, no era un valor. Pero tan recientemente como en 2024, la SEC sugirió que la transición de Ethereum a PoS podría volver a ponerlo bajo la lupa. ¿Por qué? Porque las recompensas de staking se parecen a los dividendos, y los dividendos son una característica distintiva de los valores. Estos acontecimientos muestran cuán cambiante e impredecible se ha vuelto el panorama regulatorio.
 
-What’s fascinating—and frustrating—is how often these cases boil down to semantics. Projects claim their tokens are utility tools, like tickets to a service. But if the primary motivation for buyers is speculation, the SEC sees a security, plain and simple. The challenge is that the legal framework used to make these determinations was created long before blockchain technology existed. The Howey Test, developed in the 1940s to define investment contracts, wasn’t designed for decentralized networks or programmable assets. As a result, applying it to crypto projects isn’t always straightforward. Innovators want to raise money and build communities, but regulators want to protect investors from being misled. The result? A courtroom drama that plays out over and over, with billions of dollars and entire ecosystems hanging in the balance.
+Lo fascinante, y frustrante, es la frecuencia con que estos casos se reducen a cuestiones semánticas. Los proyectos afirman que sus tokens son herramientas de utilidad, como boletos para un servicio. Pero si la motivación principal de los compradores es la especulación, la SEC ve un valor, sin más. La dificultad es que el marco jurídico utilizado para hacer estas determinaciones se creó mucho antes de que existiera la tecnología blockchain. La prueba de Howey, desarrollada en la década de 1940 para definir los contratos de inversión, no se diseñó para redes descentralizadas ni activos programables. Por ello, aplicarla a proyectos de criptomonedas no siempre es sencillo. Los innovadores quieren recaudar dinero y construir comunidades, pero los reguladores quieren proteger a los inversionistas de los engaños. ¿El resultado? Un drama judicial que se repite una y otra vez, con miles de millones de dólares y ecosistemas enteros en juego.
 
-## Tokens on Ethereum
+## Tokens en Ethereum
 
-Blockchain tokens existed before Ethereum. In some ways, the first blockchain currency, Bitcoin, is a token itself. Many token platforms were also developed on Bitcoin and other cryptocurrencies before Ethereum. However, the introduction of the first token standard on Ethereum led to an explosion of tokens.
+Los tokens de blockchain existían antes de Ethereum. En cierto sentido, la primera moneda de blockchain, Bitcoin, es en sí misma un token. También se desarrollaron muchas plataformas de tokens sobre Bitcoin y otras criptomonedas antes de Ethereum. Sin embargo, la introducción del primer estándar de tokens en Ethereum dio lugar a una explosión de tokens.
 
-Vitalik Buterin suggested tokens as one of the most obvious and useful applications of a generalized programmable blockchain such as Ethereum. In fact, during Ethereum’s first year, it was common to see Buterin and others wearing T-shirts emblazoned with the Ethereum logo and a smart contract sample on the back. There were several variations of this T-shirt, but the most common showed an implementation of a token.
+Vitalik Buterin propuso los tokens como una de las aplicaciones más evidentes y útiles de una blockchain programable de propósito general como Ethereum. De hecho, durante el primer año de Ethereum era común ver a Buterin y a otros con camisetas que llevaban el logotipo de Ethereum y un ejemplo de contrato inteligente en la espalda. Había varias versiones de esta camiseta, pero la más común mostraba una implementación de un token.
 
-Before we delve into the details of creating tokens on Ethereum, it is important to have an overview of how tokens work on Ethereum. Tokens are different from ether because the Ethereum protocol does not know anything about them. Sending ether is an intrinsic action of the Ethereum platform, but sending or even owning tokens is not. The ether balance of Ethereum accounts is handled at the protocol level, whereas the token balance of Ethereum accounts is handled at the smart contract level. To create a new token on Ethereum, you must create a new smart contract. Once the smart contract is deployed, it handles everything, including ownership, transfers, and access rights. You can write your smart contract to perform all the necessary actions any way you want, but it is probably wisest to follow an existing standard. We will look at such standards next.
+Antes de entrar en los detalles de la creación de tokens en Ethereum, es importante tener una visión general de cómo funcionan. Los tokens son distintos de ether porque el protocolo de Ethereum no sabe nada sobre ellos. Enviar ether es una acción intrínseca de la plataforma Ethereum, pero enviar tokens o incluso poseerlos no lo es. El saldo de ether de las cuentas de Ethereum se administra a nivel de protocolo, mientras que el saldo de tokens de las cuentas de Ethereum se administra a nivel de contrato inteligente. Para crear un token nuevo en Ethereum, es necesario crear un contrato inteligente nuevo. Una vez desplegado, el contrato inteligente se ocupa de todo, incluida la propiedad, las transferencias y los derechos de acceso. Se puede escribir el contrato inteligente para realizar todas las acciones necesarias de cualquier manera, pero probablemente lo más prudente sea seguir un estándar existente. A continuación examinaremos esos estándares.
 
-## The ERC-20 Token Standard
+## El estándar de tokens ERC-20
 
-The first standard was introduced in November 2015 by Fabian Vogelsteller as an ERC. It was automatically assigned GitHub issue number 20, giving rise to the name “ERC-20 token.” The vast majority of tokens are currently based on the ERC-20 standard. The ERC-20 request for comments eventually became EIP-20, but it is still mostly referred to by the original name, ERC-20.
+El primer estándar fue presentado en noviembre de 2015 por Fabian Vogelsteller como un ERC. Se le asignó automáticamente el número de issue 20 de GitHub, lo que dio origen al nombre "token ERC-20". La gran mayoría de los tokens se basan actualmente en el estándar ERC-20. La solicitud de comentarios ERC-20 finalmente se convirtió en EIP-20, pero aún suele denominarse por su nombre original, ERC-20.
 
-ERC-20 is a standard for fungible tokens, meaning that different units of an ERC-20 token are interchangeable and have no unique properties. The [ERC-20 standard](https://oreil.ly/Psw-O) defines a common interface for contracts implementing a token such that any compatible token can be accessed and used in the same way. The interface consists of a number of functions that must be present in every implementation of the standard as well as some optional functions and attributes that may be added by developers.
+ERC-20 es un estándar para tokens fungibles, lo que significa que las distintas unidades de un token ERC-20 son intercambiables y no tienen propiedades únicas. El [estándar ERC-20](https://oreil.ly/Psw-O) define una interfaz común para los contratos que implementan un token, de manera que se pueda acceder a cualquier token compatible y usarlo del mismo modo. La interfaz consta de varias funciones que deben estar presentes en toda implementación del estándar, así como de algunas funciones y atributos opcionales que los desarrolladores pueden agregar.
 
-### ERC-20 required functions and events
+### Funciones y eventos obligatorios de ERC-20
 
-A token contract that is compliant with ERC-20 must provide at least the following functions and events:
+Un contrato de token que cumpla con ERC-20 debe proporcionar, como mínimo, las siguientes funciones y eventos:
 
 `totalSupply`
 
-Returns the total units of this token that currently exist. ERC-20 tokens can have a fixed or a variable supply.
+Devuelve el total de unidades de este token que existen actualmente. Los tokens ERC-20 pueden tener una oferta fija o variable.
 
 `balanceOf`
 
-Given an address, returns the token balance of that address.
+Dada una dirección, devuelve el saldo de tokens de esa dirección.
 
 `transfer`
 
-Given an address and amount, transfers that number of tokens to that address from the balance of the address that executed the transfer.
+Dadas una dirección y una cantidad, transfiere ese número de tokens a esa dirección desde el saldo de la dirección que ejecutó la transferencia.
 
 `transferFrom`
 
-Given a sender, recipient, and amount, transfers tokens from one account to another. Used in combination with `approve`.
+Dados un remitente, un destinatario y una cantidad, transfiere tokens de una cuenta a otra. Se usa en combinación con `approve`.
 
 `approve`
 
-Given a recipient address and amount, authorizes that address to execute several transfers up to that amount from the account that issued the approval.
+Dadas una dirección de destinatario y una cantidad, autoriza a esa dirección a ejecutar varias transferencias hasta alcanzar esa cantidad desde la cuenta que emitió la aprobación.
 
 `allowance`
 
-Given an owner address and a spender address, returns the remaining amount that the spender is approved to withdraw from the owner.
+Dadas una dirección de propietario y una dirección de quien gasta, devuelve la cantidad restante que este último está autorizado a retirar del propietario.
 
 `transfer`
 
-Event triggered upon a successful transfer (call to `transfer` or `transferFrom`), even for zero-value transfers.
+Evento que se activa tras una transferencia exitosa (llamada a `transfer` o `transferFrom`), incluso en transferencias de valor cero.
 
 `approval`
 
-Event logged upon a successful call to `approve`.
+Evento registrado tras una llamada exitosa a `approve`.
 
-#### ERC-20 optional functions
+#### Funciones opcionales de ERC-20
 
-In addition to the required functions listed in the previous section, the following optional functions are also defined by the standard:
+Además de las funciones obligatorias enumeradas en la sección anterior, el estándar también define las siguientes funciones opcionales:
 
-**Name**
+**Nombre**
 
-Returns the human-readable name (e.g., “US dollars”) of the token.
+Devuelve el nombre legible por personas (p. ej., "dólares estadounidenses") del token.
 
-**Symbol**
+**Símbolo**
 
-Returns a human-readable symbol (e.g., “USD”) for the token.
+Devuelve un símbolo legible por personas (p. ej., "USD") para el token.
 
 **decimals**
 
-Returns the number of decimals used to divide token amounts. For example, if the number of decimals is 2, then a token amount of 1,000 actually means a balance of 10.
+Devuelve el número de decimales utilizados para dividir las cantidades de tokens. Por ejemplo, si el número de decimales es 2, una cantidad de tokens de 1,000 en realidad significa un saldo de 10.
 
-#### The ERC-20 interface defined in Solidity
+#### La interfaz ERC-20 definida en Solidity
 
-Here’s what an ERC-20 interface specification looks like in Solidity:
+Así se ve una especificación de la interfaz ERC-20 en Solidity:
 
 ```solidity
 contract ERC20 {
@@ -187,61 +187,61 @@ contract ERC20 {
 }
 ```
 
-#### ERC-20 data structures
+#### Estructuras de datos de ERC-20
 
-If you examine any ERC-20 implementation, you will see that it contains two data structures: one to track balances and one to track allowances. In Solidity, they are implemented with a *data mapping*.
+Si examinamos cualquier implementación de ERC-20, veremos que contiene dos estructuras de datos: una para llevar el registro de los saldos y otra para las autorizaciones de gasto. En Solidity se implementan con un *mapeo de datos*.
 
-The first data mapping implements an internal table of token balances, by owner. This allows the token contract to keep track of who owns the tokens. Each transfer is a deduction from one balance and an addition to another balance:
+El primer mapeo de datos implementa una tabla interna de saldos de tokens por propietario. Esto permite al contrato de token llevar el registro de quién posee los tokens. Cada transferencia resta de un saldo y suma a otro:
 
 ```solidity
 mapping(address account => uint256) _balances;
 ```
 
-The second data structure is a data mapping of allowances. As we will see in the next section, with ERC-20 tokens, an owner of a token can delegate authority to a spender, allowing them to spend a specific amount (allowance) from the owner’s balance. The ERC-20 contract keeps track of the allowances with a two-dimensional mapping, with the primary key being the address of the token owner, mapping to a spender address and an allowance amount:
+La segunda estructura de datos es un mapeo de autorizaciones de gasto. Como veremos en la siguiente sección, con los tokens ERC-20, el propietario de un token puede delegar autoridad a alguien para que gaste una cantidad específica (la autorización de gasto) de su saldo. El contrato ERC-20 lleva el registro de las autorizaciones con un mapeo bidimensional, cuya clave principal es la dirección del propietario del token, que se mapea a una dirección autorizada para gastar y a un monto autorizado:
 
 ```solidity
 mapping(address account => mapping(address spender => uint256)) public _allowances;
 ```
 
-#### ERC-20 workflows: “Transfer” and “approve and transferFrom”
+#### Flujos de trabajo de ERC-20: "Transfer" y "approve y transferFrom"
 
-The ERC-20 token standard has two transfer functions. You might be wondering why.
+El estándar de tokens ERC-20 tiene dos funciones de transferencia. Quizás se pregunte por qué.
 
-ERC-20 allows for two different workflows. The first is a straightforward single-transaction workflow using the `transfer` function. This workflow is the one used by wallets to send tokens to other wallets. The vast majority of token transactions happen with the `transfer` workflow.
+ERC-20 permite dos flujos de trabajo diferentes. El primero es un flujo sencillo de una sola transacción que usa la función `transfer`. Este es el flujo que usan las billeteras para enviar tokens a otras billeteras. La gran mayoría de las transacciones de tokens se realizan con el flujo `transfer`.
 
-Executing the transfer contract is very simple. If Alice wants to send 10 tokens to Bob, her wallet sends a transaction to the token contract’s address, calling the `transfer` function with Bob’s address and `10` as the arguments. The token contract adjusts Alice’s balance (–10) and Bob’s balance (+10) and issues a `Transfer` event.
+Ejecutar el contrato de transferencia es muy sencillo. Si Alice quiere enviar 10 tokens a Bob, su billetera envía una transacción a la dirección del contrato de token, llamando a la función `transfer` con la dirección de Bob y `10` como argumentos. El contrato de token ajusta el saldo de Alice (–10) y el de Bob (+10) y emite un evento `Transfer`.
 
-The second workflow is a two-transaction workflow that uses `approve` followed by `transferFrom`. This workflow allows a token owner to delegate their control to another address. It is most often used to delegate control to a contract for distribution of tokens, but it can also be used by exchanges. For example, if a company is selling tokens for an ICO, they can `approve` a crowdsale contract address to distribute a certain number of tokens. The crowdsale contract can then `transferFrom` the token contract owner’s balance to each buyer of the token, as illustrated in Figure 10-1.
+El segundo flujo consta de dos transacciones y usa `approve` seguido de `transferFrom`. Este flujo permite al propietario de un token delegar su control a otra dirección. Se usa principalmente para delegar el control a un contrato para distribuir tokens, pero las plataformas de intercambio también pueden usarlo. Por ejemplo, si una empresa vende tokens para una ICO, puede usar `approve` para autorizar a la dirección de un contrato de venta colectiva a distribuir cierta cantidad de tokens. El contrato de venta colectiva puede entonces usar `transferFrom` para transferir desde el saldo del propietario del contrato de token a cada comprador del token, como se ilustra en la Figura 10-1.
 
-![The two-step approve and transferFrom workflow of ERC-20 tokens](images/ch10/maet_1001.png)
+![El flujo de dos pasos approve y transferFrom de los tokens ERC-20](images/ch10/maet_1001.png)
 
-**Figure 10-1.** The two-step `approve` and `transferFrom` workflow of ERC-20 tokens
+**Figura 10-1.** El flujo de dos pasos `approve` y `transferFrom` de los tokens ERC-20
 
-> **Note**
+> **Nota**
 >
-> An *initial coin offering* (ICO) is a crowdfunding mechanism used by companies and organizations to raise money by selling tokens. The term is derived from *initial public offering* (IPO), which is the process by which a public company offers shares for sale to investors on a stock exchange. Unlike the highly regulated IPO markets, ICOs are open, global, and messy.
+> Una *oferta inicial de monedas* (ICO) es un mecanismo de financiamiento colectivo que usan empresas y organizaciones para recaudar dinero mediante la venta de tokens. El término deriva de *oferta pública inicial* (IPO), el proceso mediante el cual una empresa pública ofrece acciones a inversionistas en una bolsa de valores. A diferencia de los mercados de IPO, que están muy regulados, las ICO son abiertas, globales y desordenadas.
 
-For the `approve` and `transferFrom` workflow, two transactions are needed. Let’s say that Alice wants to allow the `AliceICO` contract to sell 50% of all the AliceCoin tokens to buyers like Bob and Charlie. First, Alice launches the `AliceCoin` ERC-20 contract, issuing all the AliceCoin to her own address. Then, Alice launches the `AliceICO` contract that can sell tokens for ether. Next, Alice initiates the `approve` and `transferFrom` workflow. She sends a transaction to the `AliceCoin` contract, calling `approve` with the address of the `AliceICO` contract and 50% of the `totalSupply` as arguments. This will trigger the `Approval` event. Now, the `AliceICO` contract can sell AliceCoin.
+Para el flujo `approve` y `transferFrom` se necesitan dos transacciones. Supongamos que Alice quiere permitir que el contrato `AliceICO` venda el 50% de todos los tokens AliceCoin a compradores como Bob y Charlie. Primero, Alice lanza el contrato ERC-20 `AliceCoin`, emitiendo todos los AliceCoin a su propia dirección. Después, Alice lanza el contrato `AliceICO`, que puede vender tokens a cambio de ether. A continuación, Alice inicia el flujo `approve` y `transferFrom`. Envía una transacción al contrato `AliceCoin`, llamando a `approve` con la dirección del contrato `AliceICO` y el 50% de `totalSupply` como argumentos. Esto activará el evento `Approval`. Ahora el contrato `AliceICO` puede vender AliceCoin.
 
-When the `AliceICO` contract receives ether from Bob, it needs to send some AliceCoin to Bob in return. Within the `AliceICO` contract is an exchange rate between AliceCoin and ether. The exchange rate that Alice set when she created the `AliceICO` contract determines how many tokens Bob will receive for the amount of ether sent to the `AliceICO` contract. When the `AliceICO` contract calls the AliceCoin `transferFrom` function, it sets Alice’s address as the sender and Bob’s address as the recipient and uses the exchange rate to determine how many AliceCoin tokens will be transferred to Bob in the `value` field. The `AliceCoin` contract transfers the balance from Alice’s address to Bob’s address and triggers a `Transfer` event. The `AliceICO` contract can call `transferFrom` an unlimited number of times, as long as it doesn’t exceed the approval limit Alice set. The `AliceICO` contract can keep track of how many AliceCoin tokens it can sell by calling the `allowance` function.
+Cuando el contrato `AliceICO` recibe ether de Bob, debe enviarle algunos AliceCoin a cambio. Dentro del contrato `AliceICO` hay un tipo de cambio entre AliceCoin y ether. El tipo de cambio que Alice estableció al crear el contrato `AliceICO` determina cuántos tokens recibirá Bob por la cantidad de ether enviada al contrato `AliceICO`. Cuando el contrato `AliceICO` llama a la función `transferFrom` de AliceCoin, establece la dirección de Alice como remitente y la de Bob como destinatario, y usa el tipo de cambio para determinar en el campo `value` cuántos tokens AliceCoin se transferirán a Bob. El contrato `AliceCoin` transfiere el saldo de la dirección de Alice a la de Bob y activa un evento `Transfer`. El contrato `AliceICO` puede llamar a `transferFrom` un número ilimitado de veces, siempre que no supere el límite de aprobación establecido por Alice. El contrato `AliceICO` puede llevar el registro de cuántos tokens AliceCoin puede vender llamando a la función `allowance`.
 
-#### ERC-2612: Gasless transfers with “permit”
+#### ERC-2612: transferencias sin gas con "permit"
 
-In Chapter 9, we fully explored the ins and outs of the traditional `transfer` and `transferFrom` flows with ERC-20 tokens. While these methods have been the backbone of token transfers, they’re not without their limitations. A direct transfer requires the token owner to submit an on-chain transaction. In the approve and transferFrom workflow, the owner submits the initial approve transaction, while the spender or authorized contract submits the subsequent transferFrom. The owner therefore needs native cryptocurrency to pay for the approval, which can be a significant hurdle for a new wallet without native funds.
+En el Capítulo 9 exploramos en profundidad los flujos tradicionales `transfer` y `transferFrom` con tokens ERC-20. Si bien estos métodos han sido la base de las transferencias de tokens, tienen sus limitaciones. Una transferencia directa requiere que el propietario del token envíe una transacción en la cadena. En el flujo approve y transferFrom, el propietario envía la transacción approve inicial, mientras que quien gasta o el contrato autorizado envía la posterior transferFrom. Por lo tanto, el propietario necesita criptomoneda nativa para pagar la aprobación, lo que puede ser un obstáculo considerable para una billetera nueva sin fondos nativos.
 
-This is where ERC-2612 steps in. It’s a clever addition to the ERC-20 token standard that lets users approve token transfers without having to touch the blockchain themselves. Here’s how it works: instead of sending an on-chain transaction to approve a transfer, you just sign the necessary data—things like the recipient’s address, the number of tokens, the expiration time, and a nonce—using your wallet. This creates a signature, and whoever needs to execute the transfer (whether it’s the recipient or another party) can submit that signature to the `permit` method of the token contract. The contract reads the signature, verifies it, and processes the approval, all without you needing to pay gas for the initial step. It’s efficient and secure, and it takes a lot of the hassle out of the process.
+Aquí entra en juego ERC-2612. Es una ingeniosa incorporación al estándar de tokens ERC-20 que permite a los usuarios aprobar transferencias de tokens sin tener que interactuar directamente con la blockchain. Funciona así: en lugar de enviar una transacción en la cadena para aprobar una transferencia, se firman los datos necesarios, como la dirección del destinatario, el número de tokens, el tiempo de vencimiento y un nonce, mediante la billetera. Esto crea una firma, y quien necesite ejecutar la transferencia (ya sea el destinatario u otra parte) puede enviar esa firma al método `permit` del contrato de token. El contrato lee la firma, la verifica y procesa la aprobación, todo sin que el usuario tenga que pagar gas por el paso inicial. Es eficiente y seguro, y elimina buena parte de las complicaciones del proceso.
 
-For ERC-2612 to work, token developers need to extend their ERC-20 contracts to include this functionality. Once it’s in place, it offers two key benefits for users. First, it simplifies the whole process. Instead of having to approve every single transfer, users can grant permission with one signature. Second, it saves on gas costs since you’re cutting down the number of transactions needed.
+Para que ERC-2612 funcione, los desarrolladores de tokens deben ampliar sus contratos ERC-20 para incluir esta funcionalidad. Una vez incorporada, ofrece dos beneficios clave para los usuarios. Primero, simplifica todo el proceso. En lugar de tener que aprobar cada transferencia, los usuarios pueden otorgar permiso con una firma. Segundo, ahorra costos de gas al reducir el número de transacciones necesarias.
 
-#### ERC-20 implementations
+#### Implementaciones de ERC-20
 
-While it is possible to implement a token that is compatible with ERC-20 in about 30 lines of Solidity code, most implementations are more complex. This is to account for potential security vulnerabilities. The EIP-20 standard mentions two implementations, developed by Consensys and OpenZeppelin. The Consensys EIP-20 token has not been maintained since 2018, while [OpenZeppelin’s ERC-20 token](https://oreil.ly/7d7RD) became the de facto standard for developers and is actively maintained. This implementation forms the basis of OpenZeppelin libraries implementing more complex ERC-20-compatible tokens with fundraising caps, tokenized vaults, vesting schedules, and other features.
+Aunque es posible implementar un token compatible con ERC-20 en unas 30 líneas de código Solidity, la mayoría de las implementaciones son más complejas. Esto se debe a la necesidad de contemplar posibles vulnerabilidades de seguridad. El estándar EIP-20 menciona dos implementaciones, desarrolladas por Consensys y OpenZeppelin. El token EIP-20 de Consensys no recibe mantenimiento desde 2018, mientras que el [token ERC-20 de OpenZeppelin](https://oreil.ly/7d7RD) se convirtió en el estándar de facto para los desarrolladores y recibe mantenimiento activo. Esta implementación es la base de las bibliotecas de OpenZeppelin que implementan tokens compatibles con ERC-20 más complejos, con límites de recaudación, bóvedas tokenizadas, cronogramas de adquisición de derechos y otras funciones.
 
-### Launching Our Own ERC-20 Token
+### Lanzamiento de nuestro propio token ERC-20
 
-Let’s create and launch our own token. For this example, we will use the Foundry framework. The example assumes that you have already [installed Foundry](https://oreil.ly/dfDGh) and configured it and that you are familiar with its basic operation.
+Creemos y lancemos nuestro propio token. Para este ejemplo usaremos el framework Foundry. El ejemplo supone que ya se ha [instalado Foundry](https://oreil.ly/dfDGh), que se lo ha configurado y que se conoce su funcionamiento básico.
 
-We will call our token the “Mastering Ethereum Token,” with the symbol MET. First, let’s create and initialize a Foundry project directory with the following commands:
+Llamaremos a nuestro token "Mastering Ethereum Token", con el símbolo MET. Primero, creemos e inicialicemos un directorio de proyecto de Foundry con los siguientes comandos:
 
 ```bash
 $ mkdir METoken
@@ -249,7 +249,7 @@ $ cd METoken
 $ forge init
 ```
 
-You should now have the following directory structure:
+Ahora debería tener la siguiente estructura de directorios:
 
 ```
 METoken/
@@ -266,9 +266,9 @@ METoken/
     └── Counter.t.sol
 ```
 
-`Counter` is Foundry’s default example contract, which comes with its own test and deploy scripts. We will remove all its related files to make room for our token contract.
+`Counter` es el contrato de ejemplo predeterminado de Foundry, que incluye sus propios scripts de prueba y despliegue. Eliminaremos todos sus archivos relacionados para dejar espacio a nuestro contrato de token.
 
-For our example, we will import the OpenZeppelin library, the industry standard for Solidity-based tokens:
+Para nuestro ejemplo importaremos la biblioteca OpenZeppelin, el estándar de la industria para tokens basados en Solidity:
 
 ```bash
 $ forge install OpenZeppelin/openzeppelin-contracts
@@ -276,11 +276,11 @@ $ forge install OpenZeppelin/openzeppelin-contracts
 Installed openzeppelin-contracts v5.2.0
 ```
 
-Inside *METoken/lib/openzeppelin-contracts/contracts*, we can now see all the OpenZeppelin contracts. The OpenZeppelin library includes a lot more than the ERC-20 token, but we will use only a small part of it.
+Dentro de *METoken/lib/openzeppelin-contracts/contracts* ahora podemos ver todos los contratos de OpenZeppelin. La biblioteca OpenZeppelin incluye mucho más que el token ERC-20, pero solo usaremos una pequeña parte.
 
-Next, let’s write our token contract. Create a new file, *METoken.sol*, and copy the code in Example 10-1. Our contract is very simple since it inherits all its functionality from the OpenZeppelin library.
+A continuación, escribamos nuestro contrato de token. Cree un archivo nuevo, *METoken.sol*, y copie el código del Ejemplo 10-1. Nuestro contrato es muy sencillo porque hereda toda su funcionalidad de la biblioteca OpenZeppelin.
 
-**Example 10-1. METoken.sol: a Solidity contract implementing an ERC-20 token**
+**Ejemplo 10-1. METoken.sol: un contrato Solidity que implementa un token ERC-20**
 
 ```solidity
 pragma solidity 0.8.28;
@@ -292,9 +292,9 @@ contract METoken is ERC20 {
 }
 ```
 
-Here we are passing `"METoken"` and `"MET"` as name and symbol to the constructor of the ERC-20 contract. The token initial supply is provided during the deployment as a constructor parameter and will be sent to the deployer of this token contract (`msg.sender`). We are using the default value for decimals, 18, which is the widely adopted standard for ERC-20 tokens.
+Aquí pasamos `"METoken"` y `"MET"` como nombre y símbolo al constructor del contrato ERC-20. La oferta inicial del token se proporciona durante el despliegue como parámetro del constructor y se enviará a quien despliega este contrato de token (`msg.sender`). Usamos el valor predeterminado de decimales, 18, que es el estándar ampliamente adoptado para los tokens ERC-20.
 
-We can now use Foundry to compile the `METoken` contract:
+Ahora podemos usar Foundry para compilar el contrato `METoken`:
 
 ```bash
 $ forge build
@@ -304,7 +304,7 @@ $ forge build
 Compiler run successful!
 ```
 
-Let’s set up a deploy script to bring the `METoken` contract to the blockchain. Create a new file *METokenDeploy.s.sol*, in the *METoken/script* folder and copy the following code:
+Preparemos un script de despliegue para llevar el contrato `METoken` a la blockchain. Cree un archivo nuevo, *METokenDeploy.s.sol*, en la carpeta *METoken/script* y copie el siguiente código:
 
 ```solidity
 pragma solidity 0.8.28;
@@ -320,17 +320,17 @@ contract METokenDeployer is Script {
 }
 ```
 
-In this example, we are passing 50 million as the initial supply. Did you notice that we are multiplying by 1e18? Those are the token decimals. Remember that in order to have a balance of *X* tokens, we need a token amount of *X* × 10 ^ decimals.
+En este ejemplo pasamos 50 millones como oferta inicial. ¿Notó que multiplicamos por 1e18? Esos son los decimales del token. Recuerde que, para tener un saldo de *X* tokens, necesitamos una cantidad de tokens de *X* × 10 ^ decimals.
 
-> **Note**
+> **Nota**
 >
-> The suffix *.s.sol* for scripts is a Foundry naming convention to quickly identify the purpose of a file. It is not a requirement—it’s enough to place the script files inside the script folder—but it’s a very good practice that will come in handy during development. The same applies to tests with the *.t.sol* suffix.
+> El sufijo *.s.sol* para scripts es una convención de nombres de Foundry que permite identificar rápidamente el propósito de un archivo. No es un requisito, basta con colocar los archivos de script dentro de la carpeta script, pero es una práctica muy recomendable que será útil durante el desarrollo. Lo mismo se aplica a las pruebas con el sufijo *.t.sol*.
 
-Before we deploy on one of the Ethereum test networks, let’s start a local blockchain to test everything. We will use another tool in the Foundry toolbox: Anvil, a local Ethereum development node. To use it, just open a new terminal and type `anvil`. The console will show a list of available accounts, their private keys, the chain ID, the RPC URL, and other information. The RPC URL is the endpoint that allows Foundry (or any Ethereum client) to communicate with our local blockchain node, enabling transactions, contract deployment, and data retrieval. Anvil’s default RPC is *http://127.0.0.1:8545*. To tell our deploy script to deploy on our local blockchain, we need to provide Anvil’s RPC URL as a console parameter with the flag `--rpc-url "http://127.0.0.1:8545"`.
+Antes de desplegar en una de las redes de prueba de Ethereum, iniciemos una blockchain local para probar todo. Usaremos otra herramienta del conjunto de Foundry: Anvil, un nodo de desarrollo local de Ethereum. Para usarlo, abra una terminal nueva y escriba `anvil`. La consola mostrará una lista de cuentas disponibles, sus claves privadas, el ID de cadena, la URL de RPC y otra información. La URL de RPC es el punto de conexión que permite a Foundry (o a cualquier cliente de Ethereum) comunicarse con nuestro nodo local de blockchain para realizar transacciones, desplegar contratos y recuperar datos. El RPC predeterminado de Anvil es *http://127.0.0.1:8545*. Para indicar a nuestro script de despliegue que despliegue en nuestra blockchain local, debemos proporcionar la URL de RPC de Anvil como parámetro de consola con la opción `--rpc-url "http://127.0.0.1:8545"`.
 
-The final piece we need is the private key of the deployer account. Since this is a local blockchain, the addresses we use on Ethereum mainnet or testnets won’t have any funds here, and we don’t want to expose real private keys unnecessarily. Instead, we’ll use the test accounts generated by Anvil when it starts up. These accounts come preloaded with 10,000 ETH on our local chain, making them perfect for development and testing.
+La última pieza que necesitamos es la clave privada de la cuenta que realiza el despliegue. Como esta es una blockchain local, las direcciones que usamos en la red principal o las redes de prueba de Ethereum no tendrán fondos aquí, y no queremos exponer claves privadas reales innecesariamente. En su lugar, usaremos las cuentas de prueba que Anvil genera al iniciarse. Estas cuentas vienen precargadas con 10,000 ETH en nuestra cadena local, lo que las hace ideales para desarrollo y pruebas.
 
-We are ready to deploy our token by running:
+Estamos listos para desplegar nuestro token ejecutando:
 
 ```bash
 $ forge script script/METokenDeploy.s.sol --broadcast --rpc-url "http://127.0.0.1:8545"
@@ -340,11 +340,11 @@ No files changed, compilation skipped
 Script ran successfully.
 ```
 
-> **Note**
+> **Nota**
 >
-> You might be wondering what the `--broadcast` flag is for. That is to tell Foundry to actually broadcast the transaction to the blockchain. Without that, Foundry would just simulate the transaction.
+> Quizás se pregunte para qué sirve la opción `--broadcast`. Sirve para indicar a Foundry que transmita efectivamente la transacción a la blockchain. Sin ella, Foundry solo simularía la transacción.
 
-The console output informed us that the deploy script ran successfully. If we take a look at the terminal where we are running Anvil, we will notice a lot of activity, among which is our contract creation:
+La salida de la consola nos informó que el script de despliegue se ejecutó correctamente. Si miramos la terminal donde ejecutamos Anvil, notaremos mucha actividad, incluida la creación de nuestro contrato:
 
 ```
    Transaction: 0xd01e3a90e1f2ee60112658e92f4ebf04c24df67d2ec1315cfb79d145729d15ec
@@ -355,28 +355,28 @@ The console output informed us that the deploy script ran successfully. If we ta
     Block Time: "Fri, 31 Jan 2025 19:10:42 +0000"
 ```
 
-Our METoken was successfully deployed at the following address:
+Nuestro METoken se desplegó correctamente en la siguiente dirección:
 
 ```
 0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512
 ```
 
-Alternatively, we can deploy our token using forge’s `create` console command:
+Como alternativa, podemos desplegar nuestro token usando el comando de consola `create` de forge:
 
 ```bash
 $ forge create METoken --broadcast --rpc-url http://127.0.0.1:8545 --private-key
 <DEPLOYER_PRIVATE_KEY> --constructor-args 50000000000000000000000000
 ```
 
-Here, the total supply is passed as a constructor argument, taking decimals into account.
+Aquí, la oferta total se pasa como argumento del constructor, teniendo en cuenta los decimales.
 
-#### Interacting with METoken
+#### Interacción con METoken
 
-We can interact with our contract in several ways. We could use Remix (as we did in Chapter 2), a Solidity REPL like Foundry’s Chisel, or a JavaScript library like ethers.js. We could also execute transactions using Foundry scripts, which are what we are going to use for our examples.
+Podemos interactuar con nuestro contrato de varias maneras. Podríamos usar Remix (como hicimos en el Capítulo 2), un REPL de Solidity como Chisel de Foundry o una biblioteca de JavaScript como ethers.js. También podríamos ejecutar transacciones mediante scripts de Foundry, que es lo que usaremos en nuestros ejemplos.
 
-Ethereum addresses are 40-character hexadecimal strings, which aren’t exactly easy to read. To make our examples clearer, we’ll assign nicknames to the two addresses we’re using: Deployer for the address that deployed the MET contract and Alice for a secondary address. We will also use one of Anvil’s prefunded addresses for Alice.
+Las direcciones de Ethereum son cadenas hexadecimales de 40 caracteres, que no son precisamente fáciles de leer. Para que nuestros ejemplos sean más claros, asignaremos apodos a las dos direcciones que usamos: Deployer para la dirección que desplegó el contrato MET y Alice para una dirección secundaria. Para Alice también usaremos una de las direcciones de Anvil con fondos precargados.
 
-Let’s create a Foundry script to check the Deployer’s METoken balance and send some METoken to Alice. Copy the contents from the following code snippet and paste them in a new file *METoken/script/METokenInteraction.s.sol*:
+Creemos un script de Foundry para consultar el saldo de METoken de Deployer y enviar algunos METoken a Alice. Copie el contenido del siguiente fragmento de código y péguelo en un archivo nuevo, *METoken/script/METokenInteraction.s.sol*:
 
 ```solidity
 pragma solidity 0.8.28;
@@ -408,20 +408,20 @@ contract METokenInteraction is Script {
 }
 ```
 
-We can run the script with the following console command:
+Podemos ejecutar el script con el siguiente comando de consola:
 
 ```bash
 $ forge script script/METokenInteraction.s.sol --private-key <DEPLOYER_PRIVATE_KEY>
 --rpc-url "http://127.0.0.1:8545" -vv
 ```
 
-It’s important to use the same private key that was used for deployment. This ensures that `msg.sender` corresponds to the deployer address, which holds the initial token supply.
+Es importante usar la misma clave privada que se usó para el despliegue. Esto asegura que `msg.sender` corresponda a la dirección que realizó el despliegue, que posee la oferta inicial de tokens.
 
-> **Note**
+> **Nota**
 >
-> Foundry’s `-v` flags control the verbosity level of output when running commands like `forge script` or `forge build`. Increasing the number of `v`s increases the output verbosity to include more information. To show the console logs, we need at least `-vv` while the maximum verbosity is provided by `-vvvv`.
+> Las opciones `-v` de Foundry controlan el nivel de detalle de la salida al ejecutar comandos como `forge script` o `forge build`. Aumentar el número de `v` aumenta el detalle de la salida para incluir más información. Para mostrar los registros de consola necesitamos al menos `-vv`, mientras que `-vvvv` proporciona el máximo detalle.
 
-Once we run the script, the following will be printed in the console:
+Una vez que ejecutemos el script, se imprimirá lo siguiente en la consola:
 
 ```bash
 [⁘] Compiling...
@@ -437,19 +437,19 @@ Script ran successfully.
   Alice final balance: 50000000000000000000
 ```
 
-In this script, we first log the current token balances of the deployer and Alice. Next, we transfer 50 tokens from the deployer to Alice and log the balances again. Keep in mind that 50 tokens are represented as 50e18 because our token has 18 decimals, hence the large number of zeros.
+En este script, primero registramos los saldos actuales de tokens de quien realizó el despliegue y de Alice. Después transferimos 50 tokens del primero a Alice y volvemos a registrar los saldos. Hay que tener en cuenta que 50 tokens se representan como 50e18 porque nuestro token tiene 18 decimales; de ahí la gran cantidad de ceros.
 
-#### Sending ERC-20 tokens to contract addresses
+#### Envío de tokens ERC-20 a direcciones de contratos
 
-So far, we’ve set up an ERC-20 token and transferred some tokens from one account to another. All the accounts we used for these demonstrations are EOAs, meaning they are controlled by a private key, not a contract. What happens if we send MET tokens to a contract address? Let’s find out!
+Hasta ahora configuramos un token ERC-20 y transferimos algunos tokens de una cuenta a otra. Todas las cuentas que usamos para estas demostraciones son EOA, lo que significa que están controladas por una clave privada, no por un contrato. ¿Qué ocurre si enviamos tokens MET a una dirección de contrato? ¡Averigüémoslo!
 
-First, let’s deploy another contract into our test environment. For this example, we will use the *NaiveFaucet.sol* contract that follows:
+Primero despleguemos otro contrato en nuestro entorno de prueba. Para este ejemplo usaremos el contrato *NaiveFaucet.sol* que se muestra a continuación:
 
 ```solidity
 pragma solidity 0.8.28;
 contract NaiveFaucet {
     receive() external payable {}
-    // Function to withdraw Ether from the contract
+    // Función para retirar Ether del contrato
     function withdraw(uint256 amount) public {
         require(amount <= address(this).balance, "Insufficient balance in faucet");
         payable(msg.sender).transfer(amount);
@@ -457,7 +457,7 @@ contract NaiveFaucet {
 }
 ```
 
-Our directory should look like this:
+Nuestro directorio debería verse así:
 
 ```
 METoken/
@@ -466,7 +466,7 @@ METoken/
 |   +---- METoken.sol
 ```
 
-Let’s compile and deploy the `NaiveFaucet` contract:
+Compilemos y despleguemos el contrato `NaiveFaucet`:
 
 ```bash
 $ forge create NaiveFaucet --broadcast --rpc-url http://localhost:8545
@@ -480,7 +480,7 @@ Deployed to: 0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0
 Transaction hash: 0x4d1947547e3cfec8db670f3c1b7ff309b41de8aacee42165578a3ddf8619f63f
 ```
 
-Great, our `NaiveFaucet` contract has been deployed to the address `0x9fE46736679​d2D9a65F0992F2272dE9f3c7fa6e0`. Now, let’s send some MET to the `NaiveFaucet` contract by copying the following script to *METoken/script/METokenSend.s.sol*:
+Muy bien, nuestro contrato `NaiveFaucet` se desplegó en la dirección `0x9fE46736679​d2D9a65F0992F2272dE9f3c7fa6e0`. Ahora enviemos algunos MET al contrato `NaiveFaucet` copiando el siguiente script en *METoken/script/METokenSend.s.sol*:
 
 ```solidity
 pragma solidity 0.8.28;
@@ -506,7 +506,7 @@ contract METokenSend is Script {
 }
 ```
 
-We can run it with:
+Podemos ejecutarlo con:
 
 ```bash
 $ forge script script/METokenSend.s.sol --private-key <DEPLOYER_PRIVATE_KEY>
@@ -521,25 +521,25 @@ Script ran successfully.
   Faucet balance: 100000000000000000000
 ```
 
-Again, we need to use the deployer private key to make it work as that is the address that initiates the transfer.
+De nuevo, debemos usar la clave privada de quien realizó el despliegue para que funcione, porque esa es la dirección que inicia la transferencia.
 
-We have transferred 100 MET to the `NaiveFaucet` contract. Now, how do we withdraw those tokens?
+Transferimos 100 MET al contrato `NaiveFaucet`. Ahora bien, ¿cómo retiramos esos tokens?
 
-Remember, *NaiveFaucet.sol* is a pretty simple contract. It only has one function, `withdraw`, which is for withdrawing *ether*. It doesn’t have a function for withdrawing MET or any other ERC-20 token. If we use `withdraw`, it will try to send ether, but since `NaiveFaucet` doesn’t have a balance of ether yet, it will fail.
+Recuerde que *NaiveFaucet.sol* es un contrato bastante sencillo. Solo tiene una función, `withdraw`, que sirve para retirar *ether*. No tiene una función para retirar MET ni ningún otro token ERC-20. Si usamos `withdraw`, intentará enviar ether, pero como `NaiveFaucet` aún no tiene saldo de ether, fallará.
 
-The `METoken` contract knows that `NaiveFaucet` has a balance, but the only way it can transfer that balance is if it receives a `transfer` call from the address of the contract. Somehow, we need to make the `NaiveFaucet` contract call the `transfer` function in `METoken`.
+El contrato `METoken` sabe que `NaiveFaucet` tiene un saldo, pero la única manera de transferir ese saldo es recibir una llamada a `transfer` desde la dirección del contrato. De algún modo, necesitamos hacer que el contrato `NaiveFaucet` llame a la función `transfer` de `METoken`.
 
-If you’re wondering what to do next, don’t. There is no solution to this problem. The MET sent to `NaiveFaucet` is stuck, forever. Only the `NaiveFaucet` contract can transfer it, and the `NaiveFaucet` contract doesn’t have code to call the `transfer` function of an ERC-20 token contract.
+Si se pregunta qué hacer a continuación, no lo haga. Este problema no tiene solución. Los MET enviados a `NaiveFaucet` quedan atrapados para siempre. Solo el contrato `NaiveFaucet` puede transferirlos, y el contrato `NaiveFaucet` no tiene código para llamar a la función `transfer` de un contrato de token ERC-20.
 
-Perhaps you anticipated this problem. Most likely, you didn’t. In fact, neither did hundreds of Ethereum users who accidentally transferred various tokens to contracts that didn’t have any ERC-20 capability. Over the years, a staggering amount of millions of dollars has gotten “stuck” like this and is lost forever.
+Quizás haya previsto este problema. Lo más probable es que no. De hecho, tampoco lo previeron cientos de usuarios de Ethereum que transfirieron accidentalmente diversos tokens a contratos que no tenían ninguna capacidad para gestionar ERC-20. A lo largo de los años, una asombrosa cantidad de millones de dólares ha quedado "atrapada" de esta manera y se ha perdido para siempre.
 
-#### Demonstrating the “approve and transferFrom” workflow
+#### Demostración del flujo "approve y transferFrom"
 
-Our `NaiveFaucet` contract couldn’t handle ERC-20 tokens. Sending tokens to it using the `transfer` function resulted in the loss of those tokens. Let’s rewrite the contract now and make it handle ERC-20 tokens. Specifically, we will turn it into a faucet that gives out MET to anyone who asks.
+Nuestro contrato `NaiveFaucet` no podía gestionar tokens ERC-20. Enviarle tokens con la función `transfer` provocó su pérdida. Reescribamos ahora el contrato para que gestione tokens ERC-20. En concreto, lo convertiremos en un faucet que entregue MET a cualquiera que lo solicite.
 
-Our new faucet contract, *METFaucet.sol*, will look like Example 10-2.
+Nuestro nuevo contrato de faucet, *METFaucet.sol*, se verá como en el Ejemplo 10-2.
 
-**Example 10-2. METFaucet.sol: A faucet for METoken**
+**Ejemplo 10-2. METFaucet.sol: un faucet para METoken**
 
 ```solidity
 pragma solidity 0.8.28;
@@ -551,7 +551,7 @@ contract METFaucet {
         _METoken = IERC20(_metokenAddress);
         _METOwner = metOwner;
     }
-    // Function to withdraw METoken from the contract
+    // Función para retirar METoken del contrato
     function withdraw(uint256 amount) public {
         require(amount <= 10e18, "At most 10 MET");
         require(_METoken.transferFrom(_METOwner, msg.sender, amount), "Transfer failed");
@@ -559,36 +559,36 @@ contract METFaucet {
 }
 ```
 
-We’ve made quite a few changes to the basic `Faucet` example. Since `METFaucet` will use the `transferFrom` function in `METoken`, it will need two additional variables. One will hold the address of the `METoken` contract. The other will hold the address of the owner of the MET, who will approve the faucet withdrawals. In our case, the owner is the deployer since they received the initial supply. The `METFaucet` contract will call `METoken.transferFrom` and instruct it to move MET from the owner to the address where the faucet withdrawal request came from.
+Hicimos bastantes cambios al ejemplo básico de `Faucet`. Como `METFaucet` usará la función `transferFrom` de `METoken`, necesitará dos variables adicionales. Una contendrá la dirección del contrato `METoken`. La otra contendrá la dirección del propietario de los MET, quien aprobará los retiros del faucet. En nuestro caso, el propietario es quien realizó el despliegue, porque recibió la oferta inicial. El contrato `METFaucet` llamará a `METoken.transferFrom` y le indicará que mueva MET desde el propietario a la dirección de la que provino la solicitud de retiro del faucet.
 
-We declare these two variables here:
+Declaramos estas dos variables aquí:
 
 ```solidity
 IERC20 public _METoken;
 address public _METOwner;
 ```
 
-Since our faucet needs to be initialized with the correct addresses for `METoken` and `METOwner`, we need to declare a custom constructor:
+Como nuestro faucet debe inicializarse con las direcciones correctas de `METoken` y `METOwner`, debemos declarar un constructor personalizado:
 
 ```solidity
-// METFaucet constructor - provide the address of the METoken contract and
-// the owner address we will be approved to transferFrom
+// Constructor de METFaucet: proporcionar la dirección del contrato METoken y
+// la dirección del propietario desde la que se nos autorizará a usar transferFrom
 constructor(address _metokenAddress, address metOwner) {
     _METoken = IERC20(_metokenAddress);
     _METOwner = metOwner;
 }
 ```
 
-The next change is to the `withdraw` function. Instead of calling `transfer`, `METFaucet` uses the `transferFrom` function in `METoken` and asks `METoken` to transfer MET to the faucet recipient:
+El siguiente cambio está en la función `withdraw`. En lugar de llamar a `transfer`, `METFaucet` usa la función `transferFrom` de `METoken` y solicita a `METoken` que transfiera MET al destinatario del faucet:
 
 ```solidity
-// Use the transferFrom function of METoken
+// Usar la función transferFrom de METoken
 _METoken.transferFrom(metOwner, msg.sender, withdraw_amount);
 ```
 
-Finally, since our faucet no longer sends ether, we should probably prevent anyone from sending ether to `METFaucet` since we wouldn’t want it to get stuck. To reject incoming ether, it suffices to remove the `receive` function from our contract.
+Por último, como nuestro faucet ya no envía ether, probablemente deberíamos impedir que alguien envíe ether a `METFaucet`, porque no queremos que quede atrapado. Para rechazar ether entrante basta con eliminar la función `receive` de nuestro contrato.
 
-Now that our *METFaucet.sol* code is ready, we can deploy it by providing the MET token address and its deployer as address parameters:
+Ahora que el código de *METFaucet.sol* está listo, podemos desplegarlo proporcionando la dirección del token MET y la de quien lo desplegó como parámetros de dirección:
 
 ```bash
 $ forge create METFaucet --broadcast --rpc-url http://localhost:8545 --private-key
@@ -601,7 +601,7 @@ Deployed to: 0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9
 Transaction hash: 0xa8bfbde9489ee40d41328a80538d0d3e7778b7f3b896c1d51897bf85bb25cec2
 ```
 
-The `METFaucet` contract has been deployed to `0xCf7Ed3AccA5a467e9e704C703E​8D87F634fB0Fc9`, and we are almost ready to test it. First let’s write a *METApprove.s.sol* script to allow the `METFaucet` contract to spend the owner’s MET tokens:
+El contrato `METFaucet` se desplegó en `0xCf7Ed3AccA5a467e9e704C703E​8D87F634fB0Fc9`, y estamos casi listos para probarlo. Primero escribamos un script *METApprove.s.sol* para permitir que el contrato `METFaucet` gaste los tokens MET del propietario:
 
 ```solidity
 pragma solidity 0.8.28;
@@ -624,7 +624,7 @@ contract METApprove is Script {
 }
 ```
 
-We can run it with:
+Podemos ejecutarlo con:
 
 ```bash
 $ forge script script/METApprove.s.sol --broadcast --private-key <DEPLOYER_PRIVATE_KEY>
@@ -638,9 +638,9 @@ Script ran successfully.
   Approve successful
 ```
 
-Now, we can write a script to let a secondary address interact with the `METFaucet` contract to withdraw 10 MET tokens and log its balance before and after the operation. Let’s create a *METFaucetWithdraw.s.sol* script as in Example 10-3.
+Ahora podemos escribir un script para que una dirección secundaria interactúe con el contrato `METFaucet`, retire 10 tokens MET y registre su saldo antes y después de la operación. Creemos un script *METFaucetWithdraw.s.sol* como el del Ejemplo 10-3.
 
-**Example 10-3. METFaucetWithdraw: a faucet withdrawal script**
+**Ejemplo 10-3. METFaucetWithdraw: un script de retiro del faucet**
 
 ```solidity
 pragma solidity 0.8.28;
@@ -662,7 +662,7 @@ contract METFaucetWithdraw is Script {
 }
 ```
 
-We can now run this script from Alice’s address by providing her private key while running the script:
+Ahora podemos ejecutar este script desde la dirección de Alice proporcionando su clave privada al ejecutarlo:
 
 ```bash
 $ forge script script/METFaucetWithdraw.s.sol --broadcast --private-key <ALICE_PRIVATE_KEY>
@@ -677,51 +677,51 @@ Script ran successfully.
   Alice balance after: 10000000000000000000
 ```
 
-As you can see from the results, we can use the `approve` and `transferFrom` workflow to authorize one contract to transfer tokens defined in another token. If properly used, ERC-20 tokens can be used by EOAs and other contracts. However, the burden of managing ERC-20 tokens correctly is pushed to the user interface. If a user incorrectly attempts to transfer ERC-20 tokens to a contract address and that contract is not equipped to receive ERC-20 tokens, the tokens will be lost.
+Como se puede ver en los resultados, podemos usar el flujo `approve` y `transferFrom` para autorizar a un contrato a transferir tokens definidos en otro token. Si se usan correctamente, las EOA y otros contratos pueden usar tokens ERC-20. Sin embargo, la responsabilidad de gestionar correctamente los tokens ERC-20 recae en la interfaz de usuario. Si un usuario intenta incorrectamente transferir tokens ERC-20 a una dirección de contrato y ese contrato no está preparado para recibir tokens ERC-20, los tokens se perderán.
 
-### Issues with ERC-20 Tokens
+### Problemas de los tokens ERC-20
 
-The adoption of the ERC-20 token standard has been truly explosive. Thousands of tokens have been launched, both to experiment with the new capabilities and to raise funds in various “crowdfunding” auctions and ICOs. However, there are some potential pitfalls, as we saw with the issue of transferring tokens to contract addresses.
+La adopción del estándar de tokens ERC-20 ha sido verdaderamente explosiva. Se han lanzado miles de tokens, tanto para experimentar con las nuevas capacidades como para recaudar fondos en diversas subastas de "financiamiento colectivo" e ICO. Sin embargo, existen algunos posibles problemas, como vimos con la transferencia de tokens a direcciones de contratos.
 
-One of the less obvious issues with ERC-20 tokens is that they expose subtle differences between tokens and ether itself. Whereas ether is transferred by a transaction that has a recipient address as its destination, token transfers occur within the *specific token contract state* and have the token contract as their destination, not the recipient’s address. The token contract tracks balances and issues events. In a token transfer, no transaction is actually sent to the recipient of the token. Instead, the recipient’s address is added to a mapping within the token contract itself. A transaction sending ether to an address changes the state of an address. A transaction transferring a token to an address only changes the state of the token contract, not the state of the recipient address. Even a wallet that has support for ERC-20 tokens does not become aware of a token balance unless the user explicitly adds a specific token contract to “watch.” Some wallets watch the most popular token contracts to detect balances held by addresses they control, but that’s limited to a small fraction of existing ERC-20 contracts.
+Uno de los problemas menos evidentes de los tokens ERC-20 es que ponen de manifiesto diferencias sutiles entre los tokens y el propio ether. Mientras que ether se transfiere mediante una transacción cuyo destino es la dirección del destinatario, las transferencias de tokens ocurren dentro del *estado del contrato del token específico* y tienen como destino el contrato de token, no la dirección del destinatario. El contrato de token lleva el registro de los saldos y emite eventos. En una transferencia de tokens, en realidad no se envía ninguna transacción al destinatario del token. En su lugar, la dirección del destinatario se agrega a un mapeo dentro del propio contrato de token. Una transacción que envía ether a una dirección cambia el estado de una dirección. Una transacción que transfiere un token a una dirección solo cambia el estado del contrato de token, no el de la dirección del destinatario. Incluso una billetera compatible con tokens ERC-20 no detecta un saldo de tokens a menos que el usuario agregue explícitamente un contrato de token específico para "vigilarlo". Algunas billeteras vigilan los contratos de tokens más populares para detectar saldos de las direcciones que controlan, pero esto se limita a una pequeña fracción de los contratos ERC-20 existentes.
 
-In fact, it’s unlikely that a user would *want* to track all balances in all possible ERC-20 token contracts. Many ERC-20 tokens are more like email spam than usable tokens. They automatically create balances for accounts that have ether activity in order to attract users. If you have an Ethereum address with a long history of activity, especially if it was created in the presale, you will find it full of “junk” tokens that appeared out of nowhere. Of course, the address isn’t really full of tokens; it’s the token contracts that have your address in them. You only see these balances if these token contracts are being watched by the block explorer or wallet you use to view your address.
+De hecho, es poco probable que un usuario *quiera* llevar el registro de todos los saldos en todos los contratos de tokens ERC-20 posibles. Muchos tokens ERC-20 se parecen más al correo no deseado que a tokens utilizables. Crean automáticamente saldos para cuentas que tienen actividad con ether a fin de atraer usuarios. Si se tiene una dirección de Ethereum con un largo historial de actividad, especialmente si se creó durante la preventa, se la encontrará llena de tokens "basura" que aparecieron de la nada. Por supuesto, la dirección no está realmente llena de tokens; son los contratos de tokens los que contienen la dirección. Solo se ven estos saldos si el explorador de bloques o la billetera que se usa para consultar la dirección vigila esos contratos de tokens.
 
-Tokens don’t behave the same way as ether. Ether is sent with the `send` function and accepted by any payable function in a contract or any externally owned address. Tokens are sent using the `transfer` or `approve` and `transferFrom` functions that exist only in the ERC-20 contract and do not (at least in ERC-20) trigger any payable functions in a recipient contract. Tokens are meant to function just like a cryptocurrency such as ether, but they come with certain differences that break that illusion.
+Los tokens no se comportan igual que ether. Ether se envía con la función `send` y lo acepta cualquier función payable de un contrato o cualquier dirección de propiedad externa. Los tokens se envían mediante las funciones `transfer` o `approve` y `transferFrom`, que existen solo en el contrato ERC-20 y no activan (al menos en ERC-20) ninguna función payable en un contrato destinatario. Se pretende que los tokens funcionen igual que una criptomoneda como ether, pero tienen ciertas diferencias que rompen esa ilusión.
 
-Let’s focus on the `approve` and `transferFrom` pattern. For newer users, the `approve`-`transferFrom` system can be especially misleading. Many assume that transferring tokens is a single operation, so encountering a two-step process feels confusing and counterintuitive. Worse, the `approve` action seems harmless but can be a trap. When users approve a contract, they might unknowingly grant unlimited permissions, allowing malicious actors to drain their tokens later. This gap in understanding makes phishing attacks easier and highlights how the system’s design doesn’t align with how newcomers expect to interact with the blockchain.
+Centrémonos en el patrón `approve` y `transferFrom`. Para los usuarios nuevos, el sistema `approve`-`transferFrom` puede ser especialmente engañoso. Muchos suponen que transferir tokens es una sola operación, por lo que encontrarse con un proceso de dos pasos resulta confuso y poco intuitivo. Peor aún, la acción `approve` parece inofensiva, pero puede ser una trampa. Al aprobar un contrato, los usuarios podrían otorgar permisos ilimitados sin saberlo, permitiendo que actores maliciosos les vacíen los tokens más adelante. Esta falta de comprensión facilita los ataques de phishing y pone de manifiesto que el diseño del sistema no coincide con la manera en que los recién llegados esperan interactuar con la blockchain.
 
-Consider another issue. To send ether or use any Ethereum contract, you need ether to pay for gas. To send tokens, you *also need ether*. You cannot pay for a transaction’s gas with a token, and the token contract can’t pay for the gas for you. For example, let’s say you use an exchange to convert some Bitcoin to a token. You “receive” the token in a wallet that tracks that token’s contract and shows your balance. It looks the same as any of the other cryptocurrencies you have in your wallet. Try sending the token, though, and your wallet will inform you that you need ether to do that. You might be confused—after all, you didn’t need ether to receive the token. Perhaps you have no ether. Perhaps you didn’t even know the token was an ERC-20 token on Ethereum; maybe you thought it was a cryptocurrency with its own blockchain. The illusion just broke.
+Consideremos otro problema. Para enviar ether o usar cualquier contrato de Ethereum se necesita ether para pagar el gas. Para enviar tokens, *también se necesita ether*. No se puede pagar el gas de una transacción con un token, y el contrato de token no puede pagar el gas por el usuario. Por ejemplo, supongamos que se usa una plataforma de intercambio para convertir algo de Bitcoin en un token. Se "recibe" el token en una billetera que lleva el registro del contrato de ese token y muestra el saldo. Se ve igual que cualquiera de las otras criptomonedas de la billetera. Pero al intentar enviarlo, la billetera informa que se necesita ether para hacerlo. Esto puede resultar confuso; al fin y al cabo, no se necesitó ether para recibir el token. Quizás no se tenga ether. Quizás ni siquiera se sabía que el token era un token ERC-20 en Ethereum; tal vez se pensaba que era una criptomoneda con su propia blockchain. La ilusión acaba de romperse.
 
-We can partially address this issue with ERC-2612’s `permit` function and the gas fee sponsorship functionality offered by smart wallets like EIP-4337 and EIP-7702. ERC-2612 lets you approve token allowances by signing off-chain messages, skipping the need for the on-chain approval transaction. EIP-4337 and other smart wallet architectures let third parties pay your gas fees in exchange for reimbursement in ERC-20 tokens. The challenge lies in the limited adoption of ERC-2612 among tokens and the lack of widespread use of smart wallets.
+Podemos abordar parcialmente este problema con la función `permit` de ERC-2612 y la funcionalidad de patrocinio de comisiones de gas que ofrecen billeteras inteligentes como EIP-4337 y EIP-7702. ERC-2612 permite aprobar autorizaciones de gasto de tokens firmando mensajes fuera de la cadena, sin necesidad de una transacción de aprobación en la cadena. EIP-4337 y otras arquitecturas de billeteras inteligentes permiten que terceros paguen las comisiones de gas a cambio de un reembolso en tokens ERC-20. El desafío está en la adopción limitada de ERC-2612 entre los tokens y en la falta de uso generalizado de billeteras inteligentes.
 
-Some of these issues are specific to ERC-20 tokens. Others are more general issues that relate to abstraction and interface boundaries within Ethereum. Some can be solved by changing the token interface, while others may need changes to fundamental structures within Ethereum (such as the distinctions between EOAs and contracts and between transactions and messages). Some may not be “solvable” exactly and may require user interface design to hide the nuances and make the user experience consistent regardless of the underlying distinctions.
+Algunos de estos problemas son específicos de los tokens ERC-20. Otros son problemas más generales relacionados con la abstracción y los límites de las interfaces dentro de Ethereum. Algunos pueden resolverse cambiando la interfaz del token, mientras que otros pueden requerir cambios en estructuras fundamentales de Ethereum (como las distinciones entre EOA y contratos, y entre transacciones y mensajes). Algunos quizás no sean exactamente "solucionables" y requieran un diseño de interfaz de usuario que oculte los matices y haga que la experiencia sea uniforme, independientemente de las distinciones subyacentes.
 
-In the following sections, we will look at various proposals that attempt to address some of these issues.
+En las siguientes secciones examinaremos diversas propuestas que intentan abordar algunos de estos problemas.
 
-### ERC-223: A proposed token contract interface standard
+### ERC-223: una propuesta de estándar de interfaz de contratos de tokens
 
-The ERC-223 proposal attempts to solve the problem of inadvertent transfer of tokens to a contract (that may or may not support tokens) by detecting whether the destination address is a contract or not. ERC-223 requires that contracts designed to accept tokens implement a function named `tokenFallback`. If the destination of a transfer is a contract and the contract does not have support for tokens (i.e., does not implement `tokenFallback`), the transfer fails.
+La propuesta ERC-223 intenta resolver el problema de las transferencias involuntarias de tokens a un contrato (que puede o no admitir tokens) detectando si la dirección de destino es un contrato. ERC-223 exige que los contratos diseñados para aceptar tokens implementen una función llamada `tokenFallback`. Si el destino de una transferencia es un contrato y ese contrato no admite tokens (es decir, no implementa `tokenFallback`), la transferencia falla.
 
-To detect whether the destination address is a contract, the ERC-223 reference implementation uses a small segment of inline bytecode in a rather creative way:
+Para detectar si la dirección de destino es un contrato, la implementación de referencia de ERC-223 usa un pequeño segmento de bytecode en línea de una manera bastante creativa:
 
 ```solidity
 function isContract(address _addr) private view returns (bool is_contract) {
   uint256 length;
     assembly {
-       // retrieve the size of the code on target address; this needs assembly
+       // obtener el tamaño del código en la dirección de destino; esto requiere assembly
        length := extcodesize(_addr)
     }
     return (length>0);
 }
 ```
 
-> **Note**
+> **Nota**
 >
-> `extcodesize` returns the size of the bytecode stored at a given address. Historically, this was the main difference between EOAs and smart contracts: EOAs had no code, and contracts did. But that assumption no longer holds. With EIP-7702, EOAs can now have code attached, blurring the line entirely.
-> There’s also an important edge case: during the constructor phase of a contract, its code has not yet been stored on chain. The EVM only writes the contract’s bytecode to the address after the constructor finishes executing. So if you call `extcodesize` on a contract’s own address from within its constructor (or on another contract that hasn’t finished deploying), it will return `0`, even though that address will eventually contain code. As a result, if an address has no code, it could be an EOA or a contract still under construction. And if it does have code, it could be either a deployed contract or an EOA using a custom code payload. In short, this check no longer reliably tells us whether an address is a contract.
+> `extcodesize` devuelve el tamaño del bytecode almacenado en una dirección dada. Históricamente, esta era la principal diferencia entre las EOA y los contratos inteligentes: las EOA no tenían código y los contratos sí. Pero ese supuesto ya no se cumple. Con EIP-7702, las EOA ahora pueden tener código asociado, lo que desdibuja por completo la distinción.
+> También hay un caso límite importante: durante la fase del constructor de un contrato, su código aún no se ha almacenado en la cadena. La EVM solo escribe el bytecode del contrato en la dirección después de que el constructor termina de ejecutarse. Por lo tanto, si se llama a `extcodesize` sobre la dirección del propio contrato desde su constructor (o sobre otro contrato que aún no terminó de desplegarse), devolverá `0`, aunque esa dirección vaya a contener código más adelante. En consecuencia, si una dirección no tiene código, podría ser una EOA o un contrato aún en construcción. Y si tiene código, podría ser un contrato desplegado o una EOA con una carga de código personalizada. En resumen, esta comprobación ya no nos dice de forma confiable si una dirección es un contrato.
 
-The ERC-223 contract-interface specification is:
+La especificación de la interfaz de contrato ERC-223 es:
 
 ```solidity
 interface ERC223Token {
@@ -740,19 +740,19 @@ interface ERC223Token {
 }
 ```
 
-ERC-223 is not widely implemented, and there is some debate in the [ERC discussion thread](https://oreil.ly/iguyT) about backward compatibility and trade-offs between implementing changes at the contract interface level versus the user interface. The debate continues.
+ERC-223 no está ampliamente implementado, y en el [hilo de discusión del ERC](https://oreil.ly/iguyT) se debate la compatibilidad con versiones anteriores y las ventajas y desventajas de implementar cambios a nivel de la interfaz de contrato frente a la interfaz de usuario. El debate continúa.
 
-### ERC-777: The future that could have been
+### ERC-777: el futuro que pudo haber sido
 
-ERC-777 brings a fresh approach to token interactions by introducing *hooks*: functions triggered during token transfers. These hooks are fully compatible with ERC-20, ensuring that existing systems can interact with ERC-777 tokens seamlessly.
+ERC-777 aporta un nuevo enfoque a las interacciones con tokens al introducir *hooks*: funciones que se activan durante las transferencias de tokens. Estos hooks son plenamente compatibles con ERC-20, lo que garantiza que los sistemas existentes puedan interactuar sin problemas con tokens ERC-777.
 
-The sender’s hook, `tokensToSend`, is executed before tokens leave the account, allowing senders to add logic like logging or conditional checks. On the other hand, the receiver’s hook, `tokensReceived`, springs into action when tokens land in an account. At the core of ERC-777’s hook architecture is the ERC-1820 registry, which keeps track of which addresses have implemented the required hooks: `tokensToSend` for senders and `tokensReceived` for recipients. This ensures that transfers are successful only when both parties are prepared to handle them, preventing common issues like lost tokens.
+El hook del remitente, `tokensToSend`, se ejecuta antes de que los tokens salgan de la cuenta y permite agregar lógica, como registros o comprobaciones condicionales. Por su parte, el hook del receptor, `tokensReceived`, entra en acción cuando los tokens llegan a una cuenta. En el centro de la arquitectura de hooks de ERC-777 está el registro ERC-1820, que lleva el registro de qué direcciones implementaron los hooks necesarios: `tokensToSend` para remitentes y `tokensReceived` para destinatarios. Esto asegura que las transferencias solo se completen cuando ambas partes estén preparadas para gestionarlas, evitando problemas habituales como la pérdida de tokens.
 
-Hooks also simplify transactions. With ERC-20, transferring tokens to a contract often requires a cumbersome two-step process: `approve` and then `transferFrom`. ERC-777 does away with that, allowing atomic transactions through its hooks. It’s efficient, intuitive, and, frankly, overdue.
+Los hooks también simplifican las transacciones. Con ERC-20, transferir tokens a un contrato suele requerir un engorroso proceso de dos pasos: `approve` y después `transferFrom`. ERC-777 elimina esa necesidad y permite transacciones atómicas mediante sus hooks. Es eficiente, intuitivo y, francamente, ya hacía falta.
 
-Another interesting feature of ERC-777 is its operator mechanism, which allows authorized addresses—often smart contracts, such as exchanges or payment processors—to send and burn tokens on behalf of a holder. Holders have the ability to grant or withdraw authorization for operators whenever they choose, giving them full control over which third parties can manage their tokens on their behalf at any given moment. Every authorization or revocation emits an event, providing visibility into authorization changes.
+Otra característica interesante de ERC-777 es su mecanismo de operadores, que permite a direcciones autorizadas, a menudo contratos inteligentes como plataformas de intercambio o procesadores de pagos, enviar y quemar tokens en nombre de un titular. Los titulares pueden otorgar o retirar la autorización a los operadores cuando lo deseen, lo que les da pleno control sobre qué terceros pueden gestionar sus tokens en su nombre en cualquier momento. Cada autorización o revocación emite un evento, lo que permite observar los cambios de autorización.
 
-The ERC-777 contract interface specification is:
+La especificación de la interfaz de contrato ERC-777 es:
 
 ```solidity
 interface ERC777Token {
@@ -781,43 +781,43 @@ interface ERC777Token {
 }
 ```
 
-#### Issues with ERC-777 tokens
+#### Problemas de los tokens ERC-777
 
-While ERC-777 makes token interactions more intuitive, its hooks introduce some significant challenges—most notably, the risk of reentrancy attacks. These attacks take advantage of a contract’s ability to reenter its own logic before fully updating its state, often resulting in severe consequences. The very nature of ERC-777 hooks, which pass execution control to both the sender and receiver during a token transfer, creates an ideal scenario for such exploits. This design means developers must handle these hooks carefully to avoid vulnerabilities.
+Aunque ERC-777 hace más intuitivas las interacciones con tokens, sus hooks introducen algunos desafíos importantes, en particular el riesgo de ataques de reentrada. Estos ataques aprovechan la capacidad de un contrato para volver a entrar en su propia lógica antes de actualizar por completo su estado, a menudo con consecuencias graves. La propia naturaleza de los hooks de ERC-777, que ceden el control de la ejecución tanto al remitente como al receptor durante una transferencia de tokens, crea un escenario ideal para estas explotaciones. Este diseño implica que los desarrolladores deben gestionar estos hooks con cuidado para evitar vulnerabilidades.
 
-The most infamous case of reentrancy caused by ERC-777 tokens integration was the Uniswap v1 incident in April 2020. Uniswap, a decentralized exchange protocol, inadvertently exposed its reserves to exploitation due to ERC-777’s hooks. Attackers could call back into the Uniswap contract mid-operation, exploiting the discrepancy between token and ether reserves to siphon out funds. While this vulnerability was specific to how Uniswap interacted with ERC-777, it’s a stark reminder of the risks these hooks introduce.
+El caso más conocido de reentrada causado por la integración de tokens ERC-777 fue el incidente de Uniswap v1 en abril de 2020. Uniswap, un protocolo de intercambio descentralizado, expuso inadvertidamente sus reservas a una explotación debido a los hooks de ERC-777. Los atacantes podían volver a llamar al contrato de Uniswap en medio de una operación, aprovechando la discrepancia entre las reservas de tokens y de ether para sustraer fondos. Aunque esta vulnerabilidad era específica de cómo Uniswap interactuaba con ERC-777, es un claro recordatorio de los riesgos que introducen estos hooks.
 
-Another issue worth noting is the potential for DoS attacks. Let’s say a contract distributes ERC-777 tokens to multiple accounts. If one of the recipients is a malicious contract programmed to revert the transaction during the `tokensReceived` hook, the entire distribution process would be prevented.
+Otro problema que cabe señalar es la posibilidad de ataques de DoS. Supongamos que un contrato distribuye tokens ERC-777 a múltiples cuentas. Si uno de los destinatarios es un contrato malicioso programado para revertir la transacción durante el hook `tokensReceived`, se impediría todo el proceso de distribución.
 
-These risks highlight why integrating ERC-777 isn’t as simple as swapping out ERC-20. Developers need to adopt best practices like relying on reentrancy locks to mitigate vulnerabilities.
+Estos riesgos muestran por qué integrar ERC-777 no es tan sencillo como sustituir ERC-20. Los desarrolladores deben adoptar buenas prácticas, como usar bloqueos de reentrada para mitigar las vulnerabilidades.
 
-#### The future that could have been
+#### El futuro que pudo haber sido
 
-ERC-777 could have been the next evolution of Ethereum’s token standard. It addresses many pain points of ERC-20, particularly around the user experience and token handling. The ability to prevent lost tokens, enable atomic transactions, and build richer contract interactions are all compelling advancements.
+ERC-777 podría haber sido la siguiente evolución del estándar de tokens de Ethereum. Aborda muchos puntos problemáticos de ERC-20, particularmente en la experiencia de usuario y la gestión de tokens. La capacidad de evitar la pérdida de tokens, permitir transacciones atómicas y construir interacciones más completas entre contratos constituye un conjunto de avances convincentes.
 
-The Ethereum community, however, became hesitant. The potential DoS and reentrancy scenarios cast a long shadow. Developers feared the complexities and risks of integrating ERC-777, even though those risks are manageable with the right precautions. Instead of rising to the challenge, we stuck with the familiar but limited ERC-20. It’s a missed opportunity to embrace a standard that aligns tokens more closely with Ethereum’s philosophy while offering superior functionality.
+Sin embargo, la comunidad de Ethereum comenzó a dudar. Los posibles escenarios de DoS y reentrada proyectaron una larga sombra. Los desarrolladores temían las complejidades y los riesgos de integrar ERC-777, aunque esos riesgos pueden gestionarse con las precauciones adecuadas. En lugar de estar a la altura del desafío, nos quedamos con el conocido pero limitado ERC-20. Es una oportunidad perdida de adoptar un estándar que acerca los tokens a la filosofía de Ethereum y ofrece una funcionalidad superior.
 
-In the end, ERC-777’s hooks aren’t the villain; improper implementation is. With a bit of effort and adherence to secure coding practices, ERC-777 could pave the way for a more seamless Ethereum ecosystem. To further research the matter, a suggested read is the [discussion on the deprecation of ERC-777](https://oreil.ly/J4p9B) by the OpenZeppelin library.
+En definitiva, los hooks de ERC-777 no son el villano; la implementación incorrecta sí lo es. Con algo de esfuerzo y el cumplimiento de prácticas de programación segura, ERC-777 podría abrir el camino a un ecosistema de Ethereum más fluido. Para investigar más sobre el asunto, se recomienda leer la [discusión sobre la descontinuación de ERC-777](https://oreil.ly/J4p9B) por parte de la biblioteca OpenZeppelin.
 
-## ERC-721: NFT Standard
+## ERC-721: estándar de NFT
 
-So far, we’ve explored token standards for fungible tokens, like ERC-20, where each unit is interchangeable and the system cares only about account balances. Now, let’s dive into something different and far more unique: ERC-721, the standard for nonfungible tokens, or as everyone knows them now, NFTs. You may have heard of NFTs during the mania of 2021 when digital collectibles like CryptoPunks, Bored Ape Yacht Club, and NBA Top Shot captured headlines and sold for jaw-dropping sums. Trading platforms like OpenSea and Rarible became household names in the crypto world.
+Hasta ahora exploramos estándares para tokens fungibles, como ERC-20, donde cada unidad es intercambiable y al sistema solo le importan los saldos de las cuentas. Ahora examinemos algo diferente y mucho más singular: ERC-721, el estándar para tokens no fungibles, o NFT, como todos los conocen ahora. Quizás haya oído hablar de los NFT durante la fiebre de 2021, cuando objetos de colección digitales como CryptoPunks, Bored Ape Yacht Club y NBA Top Shot acapararon titulares y se vendieron por sumas asombrosas. Plataformas de compraventa como OpenSea y Rarible se volvieron nombres conocidos en el mundo de las criptomonedas.
 
-But what exactly makes NFTs special? Unlike ERC-20 tokens, NFTs are all about uniqueness. Each token represents ownership of a distinct item, and that item can be anything: a digital collectible, an in-game asset, a piece of art, or even a real-world asset like property or a car. The beauty of ERC-721 lies in its flexibility. It doesn’t care what the token represents as long as it’s unique and can be identified by a number. Under the hood, this is accomplished with a `uint256` identifier for each NFT. Think of it as a serial number that distinguishes one token from another. In ERC-20, we track balances by mapping an account to the amount it holds, but in ERC-721, on top of balances we’re also mapping each unique token ID to its owner:
+Pero ¿qué hace especiales a los NFT exactamente? A diferencia de los tokens ERC-20, los NFT se centran en la singularidad. Cada token representa la propiedad de un objeto distinto, y ese objeto puede ser cualquier cosa: un objeto de colección digital, un activo de un videojuego, una obra de arte o incluso un activo del mundo real, como una propiedad o un automóvil. Lo atractivo de ERC-721 reside en su flexibilidad. No le importa qué representa el token, siempre que sea único y pueda identificarse con un número. Internamente, esto se logra con un identificador `uint256` para cada NFT. Puede pensarse como un número de serie que distingue un token de otro. En ERC-20 llevamos el registro de los saldos mapeando una cuenta a la cantidad que posee, pero en ERC-721, además de los saldos, también mapeamos cada ID de token único a su propietario:
 
 ```solidity
 mapping (uint256 => address) private _owners;
 ```
 
-This subtle shift in structure changes everything. Each NFT is tied to a specific owner, and its history, provenance, and unique attributes can be tracked directly. This is what makes ERC-721 perfect for applications where individuality matters, such as proving ownership of a one-of-a-kind artwork, a rare in-game sword, or even a plot of land in the metaverse.
+Este sutil cambio de estructura lo cambia todo. Cada NFT está vinculado a un propietario específico, y su historial, procedencia y atributos únicos pueden rastrearse directamente. Esto hace que ERC-721 sea perfecto para aplicaciones donde importa la individualidad, como demostrar la propiedad de una obra de arte única, una espada rara de un videojuego o incluso una parcela de tierra en el metaverso.
 
-What makes ERC-721 truly powerful and versatile is the optional ERC-721 metadata extension, which allows each token ID to be tied to a uniform resource identifier (URI). This URI can point to metadata describing the NFT, such as its name, description, and image. The URI might be a standard HTTP link pointing to a centralized server or an Inter-Planetary File System (IPFS) link for decentralized storage. Centralized servers can go offline or disappear entirely, making NFTs dependent on third-party infrastructure. By contrast, IPFS helps ensure that metadata remains accessible and tamper resistant, and it is thus the preferred choice for storing NFT metadata. The ability to associate each token with a metadata URI is what enables NFTs to carry rich, descriptive data and multimedia content, further enhancing their uniqueness and usability.
+Lo que hace verdaderamente potente y versátil a ERC-721 es su extensión opcional de metadatos de ERC-721, que permite vincular cada ID de token a un identificador uniforme de recursos (URI). Este URI puede apuntar a metadatos que describan el NFT, como su nombre, descripción e imagen. El URI podría ser un enlace HTTP estándar a un servidor centralizado o un enlace de Inter-Planetary File System (IPFS) para almacenamiento descentralizado. Los servidores centralizados pueden desconectarse o desaparecer por completo, lo que hace que los NFT dependan de infraestructura de terceros. Por el contrario, IPFS ayuda a asegurar que los metadatos sigan siendo accesibles y resistentes a alteraciones, por lo que es la opción preferida para almacenar metadatos de NFT. La capacidad de asociar cada token con un URI de metadatos es lo que permite a los NFT contener datos descriptivos detallados y contenido multimedia, lo que aumenta aún más su singularidad y utilidad.
 
-The speculative use of NFTs, particularly as digital collectibles, has undeniably dominated the public narrative. These tokens became a symbol of hype, with values driven by scarcity, celebrity endorsements, and community sentiment. Yet, beyond the flashy headlines is a world of practical applications that have the potential to redefine industries. For instance, NFTs can be used in supply chain management to track the provenance of goods, ensuring authenticity and transparency for consumers. They can represent property deeds, streamlining real estate transactions by automating ownership transfers and reducing fraud. NFTs can also be leveraged in education to issue verifiable credentials, like degrees and certificates, that are tamper proof and universally accessible.
+El uso especulativo de los NFT, particularmente como objetos de colección digitales, ha dominado indiscutiblemente el relato público. Estos tokens se convirtieron en un símbolo del entusiasmo desmedido, con valores impulsados por la escasez, el respaldo de celebridades y el sentimiento de la comunidad. Sin embargo, más allá de los titulares llamativos hay un mundo de aplicaciones prácticas con potencial para redefinir industrias. Por ejemplo, los NFT pueden usarse en la gestión de cadenas de suministro para rastrear la procedencia de los bienes y garantizar autenticidad y transparencia a los consumidores. Pueden representar escrituras de propiedad y agilizar las transacciones inmobiliarias al automatizar las transferencias de propiedad y reducir el fraude. Los NFT también pueden usarse en educación para emitir credenciales verificables, como títulos y certificados, que sean imposibles de alterar y universalmente accesibles.
 
-While collectibles brought NFTs into the spotlight, their real promise lies in these practical, transformative uses. By combining uniqueness, traceability, and programmability, ERC-721 tokens are poised to become a foundational building block for the digital economy. Whether you’re minting a quirky piece of art or tokenizing a life-saving medical record, ERC-721 empowers developers to create solutions that go far beyond speculation.
+Aunque los objetos de colección llevaron los NFT al centro de atención, su verdadera promesa está en estos usos prácticos y transformadores. Al combinar singularidad, trazabilidad y programabilidad, los tokens ERC-721 se perfilan como un componente fundamental de la economía digital. Ya sea que se acuñe una obra de arte peculiar o se tokenice un historial médico que salve vidas, ERC-721 permite a los desarrolladores crear soluciones que van mucho más allá de la especulación.
 
-The ERC-721 contract interface specification is as follows:
+La especificación de la interfaz de contrato ERC-721 es la siguiente:
 
 ```solidity
 interface ERC721 /* is ERC165 */ {
@@ -837,15 +837,15 @@ interface ERC721 /* is ERC165 */ {
 }
 ```
 
-## ERC-1155: Multitoken Standard
+## ERC-1155: estándar multitoken
 
-Ethereum has come a long way since ERC-20 and ERC-721, which set the foundations for fungible and nonfungible tokens. ERC-1155, the multitoken standard, combines the strengths of both to enable efficient and versatile token management.
+Ethereum ha recorrido un largo camino desde ERC-20 y ERC-721, que sentaron las bases de los tokens fungibles y no fungibles. ERC-1155, el estándar multitoken, combina las fortalezas de ambos para permitir una gestión eficiente y versátil de tokens.
 
-Imagine you’re a game developer. You want to create a system where players can collect gold coins (fungible), unique swords (nonfungible), and potions that are consumable in stacks (semifungible). With ERC-20 or ERC-721, you’d need a separate smart contract for each type of token. Each new contract would increase gas costs and add complexity because you’d also need to manage permissions and interactions between these contracts. ERC-1155 solves this problem. It lets us deploy a single contract to manage multiple token types. Each token type is identified by a unique ID, and the contract can handle all operations, including transfers, balances, and metadata retrieval, for any combination of token types. This streamlined approach reduces redundancy and transaction costs, making ERC-1155 a widely adopted standard.
+Imagine que desarrolla videojuegos. Quiere crear un sistema donde los jugadores puedan coleccionar monedas de oro (fungibles), espadas únicas (no fungibles) y pociones consumibles en pilas (semifungibles). Con ERC-20 o ERC-721 necesitaría un contrato inteligente separado para cada tipo de token. Cada contrato nuevo aumentaría los costos de gas y agregaría complejidad, porque también habría que gestionar los permisos y las interacciones entre esos contratos. ERC-1155 resuelve este problema. Nos permite desplegar un solo contrato para gestionar múltiples tipos de tokens. Cada tipo de token se identifica con un ID único, y el contrato puede gestionar todas las operaciones, incluidas transferencias, saldos y recuperación de metadatos, para cualquier combinación de tipos de tokens. Este enfoque simplificado reduce la redundancia y los costos de transacción, lo que convierte a ERC-1155 en un estándar ampliamente adoptado.
 
-ERC-1155’s batch operations are a standout feature. They let us transfer or query multiple tokens in a single transaction, saving gas and making the standard more scalable. Additionally, ERC-1155 includes safety mechanisms to prevent issues like locked tokens. When transferring tokens to a smart contract, the receiving contract must implement the `IERC1155Receiver` interface; otherwise, the transaction will revert. These hooks enable advanced interactions during token transfers. For example, a contract could implement custom logic to execute when it receives tokens, such as updating an in-game leaderboard or triggering an event. However, as seen in ERC-777, if these hooks are not handled carefully, they can introduce vulnerabilities, such as reentrancy attacks. Developers must ensure proper safeguards, such as using checks-effects-interactions patterns and reentrancy locks, to secure their contracts when implementing ERC-1155 tokens.
+Las operaciones por lotes son una característica destacada de ERC-1155. Permiten transferir o consultar múltiples tokens en una sola transacción, ahorrando gas y haciendo más escalable el estándar. Además, ERC-1155 incluye mecanismos de seguridad para evitar problemas como tokens bloqueados. Al transferir tokens a un contrato inteligente, el contrato receptor debe implementar la interfaz `IERC1155Receiver`; de lo contrario, la transacción se revertirá. Estos hooks permiten interacciones avanzadas durante las transferencias de tokens. Por ejemplo, un contrato podría implementar lógica personalizada que se ejecute al recibir tokens, como actualizar una tabla de clasificación de un videojuego o activar un evento. Sin embargo, como vimos en ERC-777, si estos hooks no se gestionan con cuidado, pueden introducir vulnerabilidades, como ataques de reentrada. Los desarrolladores deben asegurar medidas de protección adecuadas, como patrones de comprobaciones-efectos-interacciones y bloqueos de reentrada, para proteger sus contratos al implementar tokens ERC-1155.
 
-The ERC-1155 contract interface specification is as follows:
+La especificación de la interfaz de contrato ERC-1155 es la siguiente:
 
 ```solidity
 interface IERC1155 /* is IERC165 */ {
@@ -887,44 +887,44 @@ uint256 id, uint256 value);
 }
 ```
 
-## Using Token Standards
+## Uso de estándares de tokens
 
-In the previous section, we reviewed several proposed standards and a couple of widely deployed standards for token contracts. What exactly do these standards do? Should you use these standards? How should you use them? Should you add functionality beyond these standards? Which standards should you use? We will examine some of those questions next.
+En la sección anterior revisamos varios estándares propuestos y un par de estándares ampliamente desplegados para contratos de tokens. ¿Qué hacen exactamente estos estándares? ¿Deberíamos usarlos? ¿Cómo deberíamos usarlos? ¿Deberíamos agregar funcionalidad más allá de estos estándares? ¿Qué estándares deberíamos usar? A continuación examinaremos algunas de estas preguntas.
 
-### What Are Token Standards and What Is Their Purpose?
+### ¿Qué son los estándares de tokens y cuál es su propósito?
 
-Token standards are the *minimum* specifications for an implementation. What that means is that in order to be compliant with, say, ERC-20, you need to at minimum implement the functions and behavior specified by the ERC-20 standard. You are also free to *add* to the functionality by implementing functions that are not part of the standard.
+Los estándares de tokens son las especificaciones *mínimas* para una implementación. Esto significa que, para cumplir con ERC-20, por ejemplo, es necesario implementar como mínimo las funciones y el comportamiento que especifica el estándar ERC-20. También se tiene libertad para *agregar* funcionalidad implementando funciones que no forman parte del estándar.
 
-The primary purpose of these standards is to encourage *interoperability* between contracts. Thus, all wallets, exchanges, user interfaces, and other infrastructure components can *interface* in a predictable manner with any contract that follows the specification. In other words, if you deploy a contract that follows the ERC-20 standard, all existing wallet users can seamlessly start trading your token without any wallet upgrade or effort on your part.
+El propósito principal de estos estándares es fomentar la *interoperabilidad* entre contratos. De este modo, todas las billeteras, plataformas de intercambio, interfaces de usuario y otros componentes de infraestructura pueden *interactuar* de manera predecible con cualquier contrato que siga la especificación. En otras palabras, si se despliega un contrato que sigue el estándar ERC-20, todos los usuarios de billeteras existentes pueden comenzar a negociar el token sin problemas, sin ninguna actualización de la billetera ni esfuerzo de nuestra parte.
 
-The standards are meant to be *descriptive* rather than *prescriptive*. How you choose to implement those functions is up to you; the internal functioning of the contract is not relevant to the standard. They have some functional requirements, which govern the behavior under specific circumstances, but they do not prescribe an implementation. For example, ERC-20 specifies that a successful transfer updates balances and emits a Transfer event, but it does not prescribe the internal data
-structures or accounting logic used to implement those requirements.
+Los estándares pretenden ser *descriptivos*, no *prescriptivos*. La manera de implementar esas funciones depende de cada quien; el funcionamiento interno del contrato no es relevante para el estándar. Tienen algunos requisitos funcionales que rigen el comportamiento en circunstancias específicas, pero no prescriben una implementación. Por ejemplo, ERC-20 especifica que una transferencia exitosa actualiza los saldos y emite un evento Transfer, pero no prescribe las estructuras de datos
+internas ni la lógica contable utilizadas para implementar esos requisitos.
 
-### Should You Use These Standards?
+### ¿Deberíamos usar estos estándares?
 
-Given all these standards, each developer faces a dilemma: use the existing standards or innovate beyond the restrictions they impose?
+Ante todos estos estándares, cada desarrollador enfrenta un dilema: ¿usar los estándares existentes o innovar más allá de las restricciones que imponen?
 
-This dilemma is not easy to resolve. Standards necessarily restrict your ability to innovate by creating a narrow “rut” that you have to follow. On the other hand, the basic standards have emerged from experience with hundreds of applications and often fit well with the vast majority of use cases.
+Este dilema no es fácil de resolver. Los estándares necesariamente restringen la capacidad de innovar al crear un "carril" estrecho que hay que seguir. Por otra parte, los estándares básicos surgieron de la experiencia con cientos de aplicaciones y suelen adaptarse bien a la gran mayoría de los casos de uso.
 
-As part of this consideration is an even bigger issue: the value of interoperability and broad adoption. If you choose to use an existing standard, you gain the value of all the systems designed to work with that standard. If you choose to depart from the standard, you have to consider the cost of building all the support infrastructure on your own or persuading others to support your implementation as a new standard. The tendency to forge your own path and ignore existing standards is known as “not invented here” syndrome and is antithetical to open source culture. On the other hand, progress and innovation depend on departing from tradition sometimes. It’s a tricky choice, so consider it carefully!
+Como parte de esta consideración hay una cuestión aún mayor: el valor de la interoperabilidad y de una adopción amplia. Si se elige usar un estándar existente, se obtiene el valor de todos los sistemas diseñados para funcionar con él. Si se elige apartarse del estándar, hay que considerar el costo de construir toda la infraestructura de soporte por cuenta propia o de convencer a otros de que respalden la implementación como un estándar nuevo. La tendencia a seguir un camino propio e ignorar los estándares existentes se conoce como síndrome de "no inventado aquí" y es contraria a la cultura del código abierto. Por otra parte, el progreso y la innovación dependen de apartarse de la tradición algunas veces. Es una decisión difícil, ¡así que conviene considerarla con cuidado!
 
-> **Note**
+> **Nota**
 >
-> Per [Wikipedia](https://oreil.ly/TTA96), “not invented here” is a stance adopted by social, corporate, or institutional cultures that avoid using or buying already existing products, research, standards, or knowledge because of their external origins and costs, such as royalties.
+> Según [Wikipedia](https://oreil.ly/TTA96), "no inventado aquí" es una postura adoptada por culturas sociales, empresariales o institucionales que evitan usar o comprar productos, investigaciones, estándares o conocimientos ya existentes debido a su origen externo y sus costos, como las regalías.
 
-### Detecting Standards: EIP-165
+### Detección de estándares: EIP-165
 
-As we’ve seen, standards like ERC-20 simplify interactions between tokens and wallets. But how do we identify which interfaces a smart contract supports? This is where EIP-165 comes in, providing a standardized way for contracts to declare and detect interfaces.
+Como vimos, estándares como ERC-20 simplifican las interacciones entre tokens y billeteras. Pero ¿cómo identificamos qué interfaces admite un contrato inteligente? Aquí entra en juego EIP-165, que proporciona una forma estandarizada para que los contratos declaren y detecten interfaces.
 
-EIP-165 defines a method for contracts to announce the interfaces they implement. Contracts use the `supportsInterface` function to return a `true` or `false` value for a given interface ID (a unique identifier calculated as the XOR of all the function selectors in an interface). For instance, if an interface includes `foo()` and `bar(int256)`, its ID is derived as:
+EIP-165 define un método para que los contratos anuncien las interfaces que implementan. Los contratos usan la función `supportsInterface` para devolver un valor `true` o `false` para un ID de interfaz dado (un identificador único calculado como el XOR de todos los selectores de funciones de una interfaz). Por ejemplo, si una interfaz incluye `foo()` y `bar(int256)`, su ID se obtiene así:
 
 ```
 foo.selector ^ bar.selector
 ```
 
-This approach enables other contracts and tools to verify compatibility before interacting. For example, a marketplace can confirm that an NFT contract supports the ERC-721 interface before listing its tokens.
+Este enfoque permite que otros contratos y herramientas verifiquen la compatibilidad antes de interactuar. Por ejemplo, un mercado puede confirmar que un contrato de NFT admite la interfaz ERC-721 antes de listar sus tokens.
 
-To implement EIP-165, a contract inherits from a base class, such as OpenZeppelin’s ERC-165, and overrides the `supportsInterface` method to include the contract’s supported interfaces:
+Para implementar EIP-165, un contrato hereda de una clase base, como ERC-165 de OpenZeppelin, y sobrescribe el método `supportsInterface` para incluir las interfaces que admite el contrato:
 
 ```solidity
 contract MyContract is IMyContract, ERC165 {
@@ -935,7 +935,7 @@ super.supportsInterface(interfaceId);
 }
 ```
 
-To better grasp how EIP-165 works in practice, let’s look at ERC-1155, a versatile and widely used standard for multitoken contracts:
+Para entender mejor cómo funciona EIP-165 en la práctica, veamos ERC-1155, un estándar versátil y ampliamente usado para contratos multitoken:
 
 ```solidity
 abstract contract ERC1155 is Context, ERC165, IERC1155, IERC1155MetadataURI,
@@ -955,40 +955,40 @@ IERC165) returns (bool) {
 }
 ```
 
-> **Warning**
+> **Advertencia**
 >
-> EIP-165 relies on contracts honestly reporting their capabilities. A malicious or poorly implemented contract could falsely claim to support an interface, leading to potential issues. While EIP-165 improves developer experience and reduces friction, it should not be treated as a security guarantee.
+> EIP-165 depende de que los contratos informen honestamente sus capacidades. Un contrato malicioso o mal implementado podría afirmar falsamente que admite una interfaz y provocar problemas. Aunque EIP-165 mejora la experiencia de los desarrolladores y reduce las dificultades, no debe tratarse como una garantía de seguridad.
 
-For more advanced scenarios, such as when contracts implement interfaces on behalf of others, developers could explore ERC-1820, which uses a global registry to track interface support. While ERC-1820 is more complex than EIP-165, it offers greater flexibility for decentralized systems.
+Para escenarios más avanzados, como cuando los contratos implementan interfaces en nombre de otros, los desarrolladores podrían explorar ERC-1820, que usa un registro global para llevar el registro de la compatibilidad con interfaces. Aunque ERC-1820 es más complejo que EIP-165, ofrece mayor flexibilidad para los sistemas descentralizados.
 
-### Security by Maturity
+### Seguridad por madurez
 
-Beyond the choice of standard, there is the parallel choice of *implementation*. When you decide to use a standard such as ERC-20, you have to then decide how to implement a compatible design. There are a number of existing “reference” implementations that are widely used in the Ethereum ecosystem, or you could write your own from scratch. Again, this choice represents a dilemma that can have serious security implications.
+Además de elegir el estándar, está la elección paralela de la *implementación*. Cuando se decide usar un estándar como ERC-20, después hay que decidir cómo implementar un diseño compatible. Existen varias implementaciones "de referencia" ampliamente usadas en el ecosistema de Ethereum, o se puede escribir una propia desde cero. De nuevo, esta elección representa un dilema que puede tener consecuencias graves para la seguridad.
 
-Existing implementations are “battle-tested.” While it is impossible to prove that they are secure, many of them underpin millions of dollars’ worth of tokens—billions, in some cases. They have been attacked, repeatedly and vigorously. So far, no significant vulnerabilities have been discovered. Writing your own is not easy; there are many subtle ways a contract can be compromised. It is much safer to use a well-tested, widely used implementation. In our examples, we used the OpenZeppelin implementation of the ERC-20 standard because this implementation is security focused from the ground up.
+Las implementaciones existentes están "probadas en batalla". Aunque es imposible demostrar que son seguras, muchas de ellas sustentan tokens por un valor de millones de dólares, miles de millones en algunos casos. Han sido atacadas repetida e intensamente. Hasta ahora no se han descubierto vulnerabilidades significativas. Escribir una implementación propia no es fácil; hay muchas maneras sutiles de comprometer un contrato. Es mucho más seguro usar una implementación bien probada y ampliamente utilizada. En nuestros ejemplos usamos la implementación del estándar ERC-20 de OpenZeppelin porque se centra en la seguridad desde sus bases.
 
-If you use an existing implementation, you can also extend it. Again, be careful with this impulse. Complexity is the enemy of security. Every single line of code you add expands the attack surface of your contract and could represent a vulnerability lying in wait. You might not notice a problem until you put a lot of value on top of the contract and someone breaks it.
+Si se usa una implementación existente, también se la puede ampliar. De nuevo, hay que tener cuidado con este impulso. La complejidad es enemiga de la seguridad. Cada línea de código que se agrega amplía la superficie de ataque del contrato y podría representar una vulnerabilidad latente. Quizás no se detecte un problema hasta que se deposite mucho valor sobre el contrato y alguien lo vulnere.
 
-> **Tip**
+> **Consejo**
 >
-> Standards and implementation choices are important parts of overall secure smart contract design, but they’re not the only considerations (see Chapter 9).
+> Los estándares y las elecciones de implementación son partes importantes del diseño general de contratos inteligentes seguros, pero no son las únicas consideraciones (véase el Capítulo 9).
 
-## Extensions to Token Interface Standards
+## Extensiones de los estándares de interfaces de tokens
 
-The token standards we’ve discussed so far provide essential functionality for creating and managing tokens. However, they’re intentionally minimal, leaving room for projects to extend and adapt them to fit specific needs. Over time, many projects have built on these standards, introducing features that enhance usability, security, and flexibility. OpenZeppelin, a leading library for Ethereum smart contracts, has become the go-to source for such extensions. Let’s explore some of the most notable extensions for ERC-20, ERC-721, and ERC-1155 tokens.
+Los estándares de tokens que hemos analizado hasta ahora proporcionan funcionalidad esencial para crear y gestionar tokens. Sin embargo, son intencionalmente mínimos, lo que deja espacio para que los proyectos los amplíen y adapten a necesidades específicas. Con el tiempo, muchos proyectos han construido sobre estos estándares e introducido funciones que mejoran la facilidad de uso, la seguridad y la flexibilidad. OpenZeppelin, una biblioteca líder para contratos inteligentes de Ethereum, se ha convertido en la fuente de referencia para estas extensiones. Exploremos algunas de las extensiones más destacadas para tokens ERC-20, ERC-721 y ERC-1155.
 
-With ERC-20, for example, we see the addition of burning mechanisms. Burning allows tokens to be permanently removed from circulation, reducing supply, which is useful for deflationary models or token economics that require deliberate supply control. On the flip side, some projects incorporate caps to set hard limits on the total supply, ensuring that no more tokens can ever be minted beyond a predefined threshold.
+Con ERC-20, por ejemplo, vemos la incorporación de mecanismos de quema. La quema permite retirar tokens permanentemente de la circulación y reducir la oferta, lo que resulta útil para modelos deflacionarios o economías de tokens que requieren un control deliberado de la oferta. Por otro lado, algunos proyectos incorporan topes para establecer límites estrictos sobre la oferta total y asegurar que nunca puedan acuñarse más tokens por encima de un umbral predefinido.
 
-Another interesting addition to ERC-20 is voting functionality. This allows token holders to participate in governance decisions directly through their tokens. Projects that implement this create decentralized decision-making processes, enabling stakeholders to have a say in how a protocol evolves.
+Otra incorporación interesante a ERC-20 es la funcionalidad de voto. Permite a los titulares de tokens participar en decisiones de gobernanza directamente mediante sus tokens. Los proyectos que la implementan crean procesos descentralizados de toma de decisiones y permiten que las partes interesadas tengan voz en la evolución de un protocolo.
 
-ERC-721 has seen similar creativity in its extensions. Features like royalty payments let creators earn a percentage of sales whenever their NFTs are traded. URI storage is another common addition that enables metadata to be stored and retrieved dynamically, which is particularly useful for NFTs with evolving properties. Enumerable extensions allow developers to efficiently list all tokens held by an address, making it easier to build marketplaces or wallets.
+ERC-721 ha mostrado una creatividad similar en sus extensiones. Funciones como los pagos de regalías permiten a los creadores obtener un porcentaje de las ventas cada vez que se negocian sus NFT. El almacenamiento de URI es otra incorporación habitual que permite almacenar y recuperar metadatos dinámicamente, lo que resulta especialmente útil para NFT con propiedades que evolucionan. Las extensiones de enumeración permiten a los desarrolladores listar eficientemente todos los tokens que posee una dirección, lo que facilita construir mercados o billeteras.
 
-ERC-1155, the multitoken standard, hasn’t been left behind. Extensions for ERC-1155 include burnable tokens and pausable contracts, allowing for added flexibility in use cases like gaming or tokenized supply chains. Some implementations also enhance metadata handling, ensuring that token details remain accessible and easy to update.
+ERC-1155, el estándar multitoken, no se ha quedado atrás. Las extensiones de ERC-1155 incluyen tokens que pueden quemarse y contratos que pueden pausarse, lo que brinda mayor flexibilidad en casos de uso como videojuegos o cadenas de suministro tokenizadas. Algunas implementaciones también mejoran la gestión de metadatos y aseguran que los detalles de los tokens sigan siendo accesibles y fáciles de actualizar.
 
-Beyond these, countless other extensions exist, addressing needs like crowdfunding, blocklisting, allowlisting, and implementing fees on transfers. Developers often combine these features with other standard libraries like OpenZeppelin’s Ownable or Access Control, tapping into even more battle-tested resources.
+Además de estas, existen innumerables extensiones que abordan necesidades como financiamiento colectivo, listas de bloqueo, listas de permitidos e implementación de comisiones sobre transferencias. Los desarrolladores suelen combinar estas funciones con otras bibliotecas estándar, como Ownable o Access Control de OpenZeppelin, para aprovechar aún más recursos probados en batalla.
 
-With flexibility comes responsibility. Extending token standards involves balancing innovation with interoperability. Writing custom features may seem appealing, but it often introduces unnecessary complexity and risks. Instead, leveraging well-established libraries and extensions, like those from OpenZeppelin, ensures security and code quality and significantly reduces development costs. There’s no need to reinvent the wheel when robust, tested solutions already exist.
+La flexibilidad conlleva responsabilidad. Ampliar los estándares de tokens implica equilibrar la innovación y la interoperabilidad. Escribir funciones personalizadas puede parecer atractivo, pero suele introducir complejidad y riesgos innecesarios. En cambio, aprovechar bibliotecas y extensiones consolidadas, como las de OpenZeppelin, garantiza la seguridad y la calidad del código y reduce considerablemente los costos de desarrollo. No hace falta reinventar la rueda cuando ya existen soluciones robustas y probadas.
 
-## Conclusion
+## Conclusión
 
-Tokens are more than just digital currency; they can represent governance rights, access credentials, identities, and real-world assets. Their versatility is only possible thanks to standards like ERC-20, ERC-721, and ERC-1155, which ensure seamless interoperability across wallets, exchanges, and DApps, creating a more efficient and interconnected blockchain ecosystem. In this chapter, we looked at the different types of tokens and token standards, and you built your first token and related application.
+Los tokens son más que moneda digital; pueden representar derechos de gobernanza, credenciales de acceso, identidades y activos del mundo real. Su versatilidad solo es posible gracias a estándares como ERC-20, ERC-721 y ERC-1155, que garantizan una interoperabilidad fluida entre billeteras, plataformas de intercambio y DApps, creando un ecosistema blockchain más eficiente e interconectado. En este capítulo examinamos los distintos tipos de tokens y estándares de tokens, y construimos un primer token y su aplicación relacionada.

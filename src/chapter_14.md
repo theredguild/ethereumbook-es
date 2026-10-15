@@ -1,396 +1,396 @@
-# Chapter 14. The Ethereum Virtual Machine
+# Capítulo 14. La máquina virtual de Ethereum
 
-At the heart of the Ethereum protocol and operation is the *Ethereum Virtual Machine*, or the *EVM* for short. As you might guess from the name, it is a computation engine, not hugely dissimilar to the virtual machines of Microsoft's .NET framework or interpreters of other bytecode-compiled programming languages, such as Java. In this chapter, we take a detailed look at the EVM, including its instruction set, structure, and operation, within the context of Ethereum state updates.
+En el centro del protocolo y del funcionamiento de Ethereum se encuentra la *máquina virtual de Ethereum* (Ethereum Virtual Machine), o *EVM* para abreviar. Como se puede deducir de su nombre, es un motor de cómputo, no muy distinto de las máquinas virtuales del framework .NET de Microsoft o de los intérpretes de otros lenguajes de programación compilados a bytecode, como Java. En este capítulo, examinamos en detalle la EVM, incluidos su conjunto de instrucciones, su estructura y su funcionamiento, en el contexto de las actualizaciones del estado de Ethereum.
 
-## What Is the EVM?
+## ¿Qué es la EVM?
 
-The EVM is the part of Ethereum that handles smart contract deployment and execution. Simple value-transfer transactions from one EOA to another don't need to involve it, practically speaking, but everything else will involve a state update computed by the EVM. At a high level, the EVM running on the Ethereum blockchain can be thought of as a global decentralized computer containing millions of executable objects, each with its own permanent data store.
+La EVM es la parte de Ethereum que se encarga del despliegue y la ejecución de contratos inteligentes. En la práctica, las transacciones simples de transferencia de valor de una EOA a otra no necesitan involucrarla, pero todo lo demás implica una actualización de estado calculada por la EVM. A grandes rasgos, la EVM que se ejecuta en la blockchain de Ethereum puede concebirse como una computadora global descentralizada que contiene millones de objetos ejecutables, cada uno con su propio almacén permanente de datos.
 
-The EVM is a *quasi-Turing-complete* state machine: "quasi" because all execution processes are limited to a finite number of computational steps by the amount of gas available for any given smart contract execution. As such, the *halting problem* is "solved" (all program executions will halt), and the situation where execution might (accidentally or maliciously) run forever, thus bringing the Ethereum platform to a halt in its entirety, is avoided. We'll explore the halting problem in more detail in later sections.
+La EVM es una máquina de estados *cuasi-Turing completa*: "cuasi" porque todos los procesos de ejecución están limitados a un número finito de pasos de cómputo por la cantidad de gas disponible para cada ejecución de un contrato inteligente. De este modo, se "resuelve" el *problema de la parada* (todas las ejecuciones de programas se detendrán) y se evita la situación en que una ejecución pudiera continuar para siempre, de manera accidental o maliciosa, y paralizar así toda la plataforma Ethereum. Exploraremos el problema de la parada con más detalle en secciones posteriores.
 
-The EVM has a *stack-based architecture*, storing all in-memory values on a stack. It works with a word size of 256 bits, mainly to facilitate native hashing and elliptic curve operations, and it has several addressable data components:
+La EVM tiene una *arquitectura basada en pila* y guarda todos los valores en memoria en una pila. Trabaja con un tamaño de palabra de 256 bits, principalmente para facilitar las operaciones nativas de hash y de curvas elípticas, y tiene varios componentes de datos direccionables:
 
-- An immutable program code ROM, loaded with the bytecode of the smart contract to be executed
-- A volatile memory, with every location explicitly initialized to zero
-- A transient storage that lasts only for the duration of a single transaction (and is not part of the Ethereum state)
-- A permanent storage that is part of the Ethereum state, also zero initialized
+- Una ROM inmutable de código de programa, cargada con el bytecode del contrato inteligente que se ejecutará
+- Una memoria volátil, con cada posición inicializada explícitamente en cero
+- Un almacenamiento transitorio que dura solo una transacción (y no forma parte del estado de Ethereum)
+- Un almacenamiento persistente que forma parte del estado de Ethereum, también inicializado en cero
 
-There is also a set of environment variables and data that is available during execution. We will go through these in more detail later in this chapter.
+También hay un conjunto de variables de entorno y datos disponibles durante la ejecución. Los veremos con más detalle más adelante en este capítulo.
 
-![EVM architecture and execution context](images/ch14/maet_1401.png)
+![Arquitectura de la EVM y contexto de ejecución](images/ch14/maet_1401.png)
 
-Figure 14-1. EVM architecture and execution context
+Figura 14-1. Arquitectura de la EVM y contexto de ejecución
 
-## Comparison with Existing Technology
+## Comparación con tecnologías existentes
 
-The term *virtual machine* is often applied to the virtualization of a real computer, typically by a hypervisor such as VirtualBox or QEMU, or of an entire operating system instance, such as Linux's KVM. These must provide a software abstraction, respectively, of actual hardware and of system calls and other kernel functionality.
+El término *máquina virtual* suele aplicarse a la virtualización de una computadora real, normalmente mediante un hipervisor como VirtualBox o QEMU, o de una instancia completa de un sistema operativo, como KVM de Linux. Estos deben proporcionar una abstracción de software, respectivamente, del hardware real y de las llamadas al sistema y otras funciones del kernel.
 
-The EVM operates in a much more limited domain: it is just a computation engine and as such, provides an abstraction of just computation and storage, similar to the Java virtual machine (JVM) specification, for example. From a high-level viewpoint, the JVM is designed to provide a runtime environment that is agnostic of the underlying host OS or hardware, enabling compatibility across a wide variety of systems. High-level programming languages such as Java or Scala (which use the JVM) or C# (which uses .NET) are compiled into the bytecode instruction set of their respective virtual machines. In the same way, the EVM executes its own bytecode instruction set (described in the next section), which higher-level smart contract programming languages such as Solidity, Vyper, and Yul are compiled into.
+La EVM opera en un ámbito mucho más limitado: es solo un motor de cómputo y, como tal, proporciona una abstracción únicamente del cómputo y el almacenamiento, similar, por ejemplo, a la especificación de la máquina virtual de Java (JVM). Desde una perspectiva general, la JVM está diseñada para proporcionar un entorno de ejecución independiente del sistema operativo o del hardware del equipo anfitrión, lo que permite la compatibilidad con una amplia variedad de sistemas. Los lenguajes de programación de alto nivel, como Java o Scala (que usan la JVM) o C# (que usa .NET), se compilan al conjunto de instrucciones de bytecode de sus respectivas máquinas virtuales. Del mismo modo, la EVM ejecuta su propio conjunto de instrucciones de bytecode (descrito en la siguiente sección), al cual se compilan lenguajes de programación de contratos inteligentes de más alto nivel, como Solidity, Vyper y Yul.
 
-The EVM, therefore, has no scheduling capability because execution ordering is organized externally to it: Ethereum clients run through verified block transactions to determine which smart contracts need executing and in which order. In this sense, the Ethereum world computer is single threaded, like JavaScript. Neither does the EVM have any "system interface" handling or "hardware support"—there is no physical machine to interface with. The Ethereum world computer is completely virtual.
+Por lo tanto, la EVM no tiene capacidad de planificación, porque el orden de ejecución se organiza fuera de ella: los clientes de Ethereum recorren las transacciones de bloques verificados para determinar qué contratos inteligentes deben ejecutarse y en qué orden. En este sentido, la computadora mundial de Ethereum tiene un solo hilo, como JavaScript. La EVM tampoco maneja ninguna "interfaz de sistema" ni ofrece "soporte de hardware": no hay ninguna máquina física con la cual interactuar. La computadora mundial de Ethereum es completamente virtual.
 
-## What Are Other Blockchains Doing?
+## ¿Qué hacen otras blockchains?
 
-The EVM is definitely the most widely used virtual machine in the cryptocurrency space. Most alternative L1 and L2 blockchains use the EVM to maintain compatibility with all the existing tools and frameworks and to attract projects and developers directly from the Ethereum community.
+La EVM es, sin duda, la máquina virtual más utilizada en el ámbito de las criptomonedas. La mayoría de las blockchains alternativas de L1 y L2 usan la EVM para mantener la compatibilidad con todas las herramientas y los frameworks existentes y para atraer proyectos y desarrolladores directamente de la comunidad de Ethereum.
 
-Nevertheless, a bunch of different virtual machines have emerged in recent years: Solana VM, Wasm VM, Cairo VM, and Move VM are probably the most famous and interesting ones, each with its own advantages and disadvantages. They take different approaches to smart contract development:
+Sin embargo, en los últimos años han surgido varias máquinas virtuales diferentes: Solana VM, Wasm VM, Cairo VM y Move VM son probablemente las más conocidas e interesantes, cada una con sus propias ventajas y desventajas. Adoptan distintos enfoques para el desarrollo de contratos inteligentes:
 
-**Custom languages**
+**Lenguajes personalizados**
 
-Some platforms, like Cairo and Move, have created specialized programming languages specifically for writing smart contracts. This is similar to how Ethereum uses Solidity and Vyper for its virtual machine, the EVM.
+Algunas plataformas, como Cairo y Move, han creado lenguajes de programación especializados específicamente para escribir contratos inteligentes. Esto es similar a cómo Ethereum usa Solidity y Vyper para su máquina virtual, la EVM.
 
-**Standard languages**
+**Lenguajes estándar**
 
-Others, such as Solana and those using WebAssembly (Wasm), allow developers to write smart contracts with widely used programming languages. For example, these platforms often support Rust for smart contract development.
+Otras, como Solana y las que usan WebAssembly (Wasm), permiten que los desarrolladores escriban contratos inteligentes con lenguajes de programación de uso extendido. Por ejemplo, estas plataformas suelen admitir Rust para el desarrollo de contratos inteligentes.
 
-Another area where these alternative virtual machines differ from the EVM is the *parallelization* of transactions. We've already said that the EVM processes transactions sequentially, without any kind of parallelization. Some projects took this downside and tried to improve it. For example, both Solana VM and Move VM can handle parallel execution of transactions, even though it's not always possible—that is, when two transactions modify the same piece of storage by interacting with the same contracts, they cannot be executed in parallel.
+Otro ámbito en que estas máquinas virtuales alternativas difieren de la EVM es la *paralelización* de las transacciones. Ya dijimos que la EVM procesa las transacciones de manera secuencial, sin ningún tipo de paralelización. Algunos proyectos tomaron esta desventaja e intentaron mejorarla. Por ejemplo, tanto Solana VM como Move VM pueden manejar la ejecución paralela de transacciones, aunque no siempre es posible: cuando dos transacciones modifican la misma parte del almacenamiento persistente al interactuar con los mismos contratos, no pueden ejecutarse en paralelo.
 
-We must say that these efforts to improve the virtual machine's performance are not being made only outside of Ethereum. In fact, lots of teams are working on breaking the current limits of the EVM by trying to add parallelization and other cool features such as *ahead-of-time* (AOT) or *just-in-time* (JIT) compilation from EVM bytecode to native machine code.
+Debemos señalar que estos esfuerzos por mejorar el rendimiento de la máquina virtual no se realizan únicamente fuera de Ethereum. De hecho, muchos equipos trabajan para superar los límites actuales de la EVM e intentan agregar paralelización y otras funciones interesantes, como la compilación *anticipada* (AOT) o *justo a tiempo* (JIT) del bytecode de la EVM a código máquina nativo.
 
-## The EVM Instruction Set (Bytecode Operations)
+## El conjunto de instrucciones de la EVM (operaciones de bytecode)
 
-The EVM instruction set offers most of the operations you might expect, including:
+El conjunto de instrucciones de la EVM ofrece la mayoría de las operaciones que cabría esperar, entre ellas:
 
-- Arithmetic and bitwise logic operations
-- Execution context inquiries
-- Stack, memory, and storage access
-- Control flow operations
-- Logging, calling, and other operators
+- Operaciones aritméticas y de lógica bit a bit
+- Consultas del contexto de ejecución
+- Acceso a la pila, la memoria y el almacenamiento persistente
+- Operaciones de flujo de control
+- Operadores de registro de eventos, llamadas y otros
 
-In addition to the typical bytecode operations, the EVM has access to account information (e.g., address and balance) and block information (e.g., block number and current gas price).
+Además de las operaciones típicas de bytecode, la EVM tiene acceso a información de las cuentas (p. ej., dirección y saldo) y de los bloques (p. ej., número de bloque y precio actual del gas).
 
-Let's start our exploration of the EVM in more detail by looking at the available *opcodes* and what they do. As you might expect, all operands are taken from the stack, and the result (where applicable) is often put back on the top of the stack.
+Comencemos a explorar la EVM con más detalle examinando los *códigos de operación* (opcodes) disponibles y lo que hacen. Como cabría esperar, todos los operandos se toman de la pila y el resultado (cuando corresponde) suele colocarse de nuevo en la cima de la pila.
 
-The available opcodes can be divided into the following categories:
+Los opcodes disponibles pueden dividirse en las siguientes categorías:
 
-### Arithmetic operations
+### Operaciones aritméticas
 
-The arithmetic opcode instructions include:
-
-```
-ADD        //Add the top two stack items
-MUL        //Multiply the top two stack items
-SUB        //Subtract the top two stack items
-DIV        //Integer division
-SDIV       //Signed integer division
-MOD        //Modulo (remainder) operation
-SMOD       //Signed modulo operation
-ADDMOD     //Addition modulo any number
-MULMOD     //Multiplication modulo any number
-EXP        //Exponential operation
-SIGNEXTEND //Extend the length of a two's complement signed integer
-SHA3       //Compute the Keccak-256 hash of a block of memory
-```
-
-Note that all arithmetic is performed modulo 2^256 (unless otherwise noted) and that the zeroth power of zero, 0^0, is taken to be 1.
-
-### Stack operations
-
-Stack, memory, and storage management instructions include:
+Las instrucciones de opcodes aritméticos incluyen:
 
 ```
-POP     //Remove the top item from the stack
-MLOAD   //Load a word from memory
-MSTORE  //Save a word to memory
-MSTORE8 //Save a byte to memory
-SLOAD   //Load a word from storage
-SSTORE  //Save a word to storage
-TLOAD   //Load a word from transient storage
-TSTORE  //Save a word to transient storage
-MSIZE   //Get the size of the active memory in bytes
-PUSH0   //Place value 0 on the stack
-PUSHx   //Place x byte item on the stack, where x can be any integer from
-        // 1 to 32 (full word) inclusive
-DUPx    //Duplicate the x-th stack item, where x can be any integer from
-        // 1 to 16 inclusive
-SWAPx   //Exchange 1st and (x+1)-th stack items, where x can be any
-        // integer from 1 to 16 inclusive
+ADD        //Sumar los dos elementos superiores de la pila
+MUL        //Multiplicar los dos elementos superiores de la pila
+SUB        //Restar los dos elementos superiores de la pila
+DIV        //División entera
+SDIV       //División entera con signo
+MOD        //Operación de módulo (resto)
+SMOD       //Operación de módulo con signo
+ADDMOD     //Suma módulo cualquier número
+MULMOD     //Multiplicación módulo cualquier número
+EXP        //Operación de exponenciación
+SIGNEXTEND //Extender la longitud de un entero con signo en complemento a dos
+SHA3       //Calcular el hash Keccak-256 de un bloque de memoria
 ```
 
-### Process-flow operations
+Cabe señalar que toda la aritmética se realiza módulo 2^256 (salvo que se indique lo contrario) y que la potencia cero de cero, 0^0, se considera igual a 1.
 
-Instructions for control flow include:
+### Operaciones de pila
 
-```
-STOP      //Halt execution
-JUMP      //Set the program counter to any value
-JUMPI     //Conditionally alter the program counter
-PC        //Get the value of the program counter (prior to the increment
-          //corresponding to this instruction)
-JUMPDEST  //Mark a valid destination for jumps
-```
-
-### System operations
-
-Opcodes for the system executing the program include:
+Las instrucciones de gestión de la pila, la memoria y el almacenamiento persistente incluyen:
 
 ```
-LOGx          //Append a log record with x topics, where x is any integer
-              //from 0 to 4 inclusive
-CREATE        //Create a new account with associated code
-CALL          //Message-call into another account, i.e., run another
-              //account's code
-CALLCODE      //Message-call into this account with another
-              //account's code
-RETURN        //Halt execution and return output data
-DELEGATECALL  //Message-call into this account with an alternative
-              //account's code, but persisting the current values for
-              //sender and value
-STATICCALL    //Static message-call into an account, i.e., it cannot change
-              //the state of any account
-REVERT        //Halt execution, reverting state changes but returning
-              //data and remaining gas
-INVALID       //The designated invalid instruction
-SELFDESTRUCT  //Halt execution and, if executed in the same transaction a
-              //contract was created, register account for deletion. Note
-              //that its usage is highly discouraged and the opcode is
-              //considered deprecated
+POP     //Quitar el elemento superior de la pila
+MLOAD   //Cargar una palabra desde la memoria
+MSTORE  //Guardar una palabra en la memoria
+MSTORE8 //Guardar un byte en la memoria
+SLOAD   //Cargar una palabra desde el almacenamiento persistente
+SSTORE  //Guardar una palabra en el almacenamiento persistente
+TLOAD   //Cargar una palabra desde el almacenamiento transitorio
+TSTORE  //Guardar una palabra en el almacenamiento transitorio
+MSIZE   //Obtener el tamaño de la memoria activa en bytes
+PUSH0   //Colocar el valor 0 en la pila
+PUSHx   //Colocar un elemento de x bytes en la pila, donde x puede ser cualquier entero de
+        // 1 a 32 (palabra completa), inclusive
+DUPx    //Duplicar el elemento x de la pila, donde x puede ser cualquier entero de
+        // 1 a 16, inclusive
+SWAPx   //Intercambiar los elementos 1 y (x+1) de la pila, donde x puede ser cualquier
+        // entero de 1 a 16, inclusive
 ```
 
-### Logic operations
+### Operaciones de flujo del proceso
 
-Opcodes for comparisons and bitwise logic include:
-
-```
-LT     //Less-than comparison
-GT     //Greater-than comparison
-SLT    //Signed less-than comparison
-SGT    //Signed greater-than comparison
-EQ     //Equality comparison
-ISZERO //Simple NOT operator
-AND    //Bitwise AND operation
-OR     //Bitwise OR operation
-XOR    //Bitwise XOR operation
-NOT    //Bitwise NOT operation
-BYTE   //Retrieve a single byte from a full-width 256-bit word
-```
-
-### Environmental operations
-
-Opcodes dealing with execution environment information include:
+Las instrucciones de flujo de control incluyen:
 
 ```
-GAS            //Get the amount of available gas (after the reduction for
-               //this instruction)
-ADDRESS        //Get the address of the currently executing account
-BALANCE        //Get the account balance of any given account
-ORIGIN         //Get the address of the EOA that initiated this EVM
-               //execution
-CALLER         //Get the address of the caller immediately responsible
-               //for this execution
-CALLVALUE      //Get the ether amount deposited by the caller responsible
-               //for this execution
-CALLDATALOAD   //Get the input data sent by the caller responsible for
-               //this execution
-CALLDATASIZE   //Get the size of the input data
-CALLDATACOPY   //Copy the input data to memory
-CODESIZE       //Get the size of code running in the current environment
-CODECOPY       //Copy the code running in the current environment to
-               //memory
-GASPRICE       //Get the gas price specified by the originating
-               //transaction
-EXTCODESIZE    //Get the size of an account's code
-EXTCODECOPY    //Copy an account's code to memory
-RETURNDATASIZE //Get the size of the output data from the previous call
-               //in the current environment
-RETURNDATACOPY //Copy data output from the previous call to memory
+STOP      //Detener la ejecución
+JUMP      //Establecer el contador de programa en cualquier valor
+JUMPI     //Modificar condicionalmente el contador de programa
+PC        //Obtener el valor del contador de programa (antes del incremento
+          //correspondiente a esta instrucción)
+JUMPDEST  //Marcar un destino válido para los saltos
 ```
 
-### Block operations
+### Operaciones del sistema
 
-Opcodes for accessing information on the current block include:
+Los opcodes del sistema que ejecuta el programa incluyen:
 
 ```
-BLOCKHASH  //Get the hash of one of the 256 most recently completed
-           //blocks
-COINBASE   //Get the block's beneficiary address for the block reward
-TIMESTAMP  //Get the block's timestamp
-NUMBER     //Get the block's number
-PREVRANDAO //Get the previous block's RANDAO mix. This opcode replaces the
-           //DIFFICULTY one since The Merge hard fork.
-GASLIMIT   //Get the block's gas limit
+LOGx          //Agregar un registro de evento con x temas, donde x es cualquier entero
+              //de 0 a 4, inclusive
+CREATE        //Crear una cuenta nueva con código asociado
+CALL          //Realizar una llamada de mensaje a otra cuenta, es decir, ejecutar el
+              //código de otra cuenta
+CALLCODE      //Realizar una llamada de mensaje a esta cuenta con el código de
+              //otra cuenta
+RETURN        //Detener la ejecución y devolver datos de salida
+DELEGATECALL  //Realizar una llamada de mensaje a esta cuenta con el código de otra
+              //cuenta, pero conservando los valores actuales de
+              //remitente y valor
+STATICCALL    //Realizar una llamada de mensaje estática a una cuenta, es decir, no puede cambiar
+              //el estado de ninguna cuenta
+REVERT        //Detener la ejecución, revirtiendo los cambios de estado pero devolviendo
+              //datos y el gas restante
+INVALID       //La instrucción designada como inválida
+SELFDESTRUCT  //Detener la ejecución y, si se ejecuta en la misma transacción en que se
+              //creó un contrato, registrar la cuenta para su eliminación. Cabe señalar
+              //que se desaconseja firmemente su uso y que el opcode se
+              //considera obsoleto
 ```
 
-## Ethereum State
+### Operaciones lógicas
 
-The job of the EVM is to update the Ethereum state by computing valid state transitions as a result of smart contract code execution, as defined by the Ethereum protocol. This aspect leads to the description of Ethereum as a *transaction-based state machine*, which reflects the fact that external actors (i.e., account holders and validators) initiate state transitions by creating, accepting, and ordering transactions. It is useful at this point to consider what constitutes the Ethereum state.
+Los opcodes de comparación y lógica bit a bit incluyen:
 
-At the top level, we have the Ethereum *world state*. The world state is a mapping of Ethereum addresses (160-bit values) to accounts. At the lower level, each Ethereum address represents an account comprising an ether balance (stored as the number of wei owned by the account), a nonce (representing the number of transactions successfully sent from this account if it is an EOA or the number of contracts created by it if it is a contract account), the account's storage (which is a permanent data store used only by smart contracts), and the account's program code (again, only if the account is a smart contract account). Traditionally, an EOA would always have no code and an empty storage. However, [EIP-7702](https://eips.ethereum.org/EIPS/eip-7702) (activated in the Pectra upgrade in May 2025) changes this assumption by allowing EOAs to delegate code execution to smart contracts. When an EOA opts into delegation, its code field is set to a 23-byte *delegation designation* with the format `0xef0100 || address`, where `address` is the 20-byte address of the target contract. The `0xef` byte is a banned opcode per [EIP-3541](https://eips.ethereum.org/EIPS/eip-3541), ensuring this designation cannot be confused with deployable contract code. When the EVM encounters a call to a delegated EOA, it loads and executes the code from the target address in the context of the EOA. This means `EXTCODESIZE` on a delegated EOA returns 23 (the size of the delegation designation), while `CODESIZE` executed within the delegated code returns the size of the target contract's code. The EOA can also use storage when executing delegated code, though the protocol recommends using [ERC-7201](https://eips.ethereum.org/EIPS/eip-7201) namespaced storage layouts to prevent collisions when migrating between delegate contracts. Importantly, delegated EOAs can still originate transactions—they remain EOAs that can sign and send transactions, but now with smart contract capabilities. The delegation can be cleared by delegating to the zero address (`0x0000000000000000000000000000000000000000`).
+```
+LT     //Comparación de menor que
+GT     //Comparación de mayor que
+SLT    //Comparación de menor que con signo
+SGT    //Comparación de mayor que con signo
+EQ     //Comparación de igualdad
+ISZERO //Operador NOT simple
+AND    //Operación AND bit a bit
+OR     //Operación OR bit a bit
+XOR    //Operación XOR bit a bit
+NOT    //Operación NOT bit a bit
+BYTE   //Obtener un solo byte de una palabra completa de 256 bits
+```
 
-When a transaction results in smart contract code execution, an EVM is instantiated with all the information required in relation to the current block being created and the specific transaction being processed. In particular, the EVM's program code ROM is loaded with the code of the contract account being called, the program counter is set to zero, the storage is loaded from the contract account's storage, the memory is set to all zeros, and all the block and environment variables are set. A key variable is the gas supply for this execution, which is set to the amount of gas paid for by the sender at the start of the transaction (see "Gas Accounting During Execution" for more details). As code execution progresses, the gas supply is reduced according to the gas cost of the executed operations. If at any point the gas supply is less than zero, we get an *out-of-gas* (OOG) exception: execution immediately halts, and the transaction is abandoned. No changes to the Ethereum state are applied, except for the sender's nonce being incremented and their ether balance going down to pay the block's beneficiary for the resources used to execute the code to the halting point. At this point, you can think of the EVM as running on a sandboxed copy of the Ethereum world state, with this sandboxed version being discarded completely if execution cannot complete for whatever reason. However, if execution does complete successfully, then the real-world state is updated to match the sandboxed version, including any changes to the called contract's storage data, any new contracts created, and any ether balance transfers that were initiated.
+### Operaciones del entorno
 
-Code execution is a recursive process. A contract can call other contracts, with each call resulting in another EVM being instantiated around the new target of the call. Each instantiation has its sandbox world state initialized from the sandbox of the EVM at the level above. Each instantiation (context) is also given a specified amount of gas for its gas supply (not exceeding the amount of gas remaining in the level above, of course) and so may itself halt with an exception due to being given too little gas to complete its execution. Again, in such cases, the sandbox state is discarded, and execution returns to the EVM at the level above.
+Los opcodes que manejan información del entorno de ejecución incluyen:
 
-## Ethereum Stateless
+```
+GAS            //Obtener la cantidad de gas disponible (después de descontar el de
+               //esta instrucción)
+ADDRESS        //Obtener la dirección de la cuenta que se está ejecutando
+BALANCE        //Obtener el saldo de cualquier cuenta dada
+ORIGIN         //Obtener la dirección de la EOA que inició esta ejecución de la
+               //EVM
+CALLER         //Obtener la dirección del llamador directamente responsable
+               //de esta ejecución
+CALLVALUE      //Obtener la cantidad de ether depositada por el llamador responsable
+               //de esta ejecución
+CALLDATALOAD   //Obtener los datos de entrada enviados por el llamador responsable de
+               //esta ejecución
+CALLDATASIZE   //Obtener el tamaño de los datos de entrada
+CALLDATACOPY   //Copiar los datos de entrada a la memoria
+CODESIZE       //Obtener el tamaño del código que se ejecuta en el entorno actual
+CODECOPY       //Copiar el código que se ejecuta en el entorno actual a la
+               //memoria
+GASPRICE       //Obtener el precio del gas especificado por la transacción
+               //de origen
+EXTCODESIZE    //Obtener el tamaño del código de una cuenta
+EXTCODECOPY    //Copiar el código de una cuenta a la memoria
+RETURNDATASIZE //Obtener el tamaño de los datos de salida de la llamada anterior
+               //en el entorno actual
+RETURNDATACOPY //Copiar los datos de salida de la llamada anterior a la memoria
+```
 
-Even though at the time of writing (June 2025), all Ethereum nodes have to compute and maintain the last state—that is, what we previously called the world state—in order to be able to check the correctness of every new block by reexecuting all the transactions it contains, there are plans to get rid of that, at least partially.
+### Operaciones de bloque
 
-The idea is to have a restricted set of actors, such as searchers and builders, that still need to get access to the state to create and publish new blocks, while all other nodes can cryptographically verify those blocks without it. This is called *statelessness*.
+Los opcodes para acceder a información del bloque actual incluyen:
 
-Statelessness is still far in the future of the Ethereum roadmap because it needs some modifications to the core protocol:
+```
+BLOCKHASH  //Obtener el hash de uno de los 256 bloques completados más
+           //recientemente
+COINBASE   //Obtener la dirección del beneficiario del bloque para la recompensa del bloque
+TIMESTAMP  //Obtener la marca de tiempo del bloque
+NUMBER     //Obtener el número del bloque
+PREVRANDAO //Obtener la mezcla RANDAO del bloque anterior. Este opcode sustituye al
+           //opcode DIFFICULTY desde el hard fork The Merge.
+GASLIMIT   //Obtener el límite de gas del bloque
+```
 
-**Enshrined proposer-builder separation (ePBS)**
+## Estado de Ethereum
 
-Separating the work of creating a block by filling it with transactions from the work of proposing it to the P2P network. The first is done by heavily specialized entities called searchers and builders that are able to create super-optimized blocks, while the second is done by Ethereum validator nodes. This is already a reality on mainnet, even though it's still not enshrined in the protocol. In fact, the majority of Ethereum blocks are already being built by a very small set of big builders.
+La función de la EVM es actualizar el estado de Ethereum calculando transiciones de estado válidas como resultado de la ejecución del código de contratos inteligentes, según lo definido por el protocolo de Ethereum. Este aspecto lleva a describir Ethereum como una *máquina de estados basada en transacciones*, lo que refleja que actores externos (es decir, titulares de cuentas y validadores) inician las transiciones de estado al crear, aceptar y ordenar transacciones. En este punto, resulta útil considerar qué constituye el estado de Ethereum.
 
-**Verkle trees**
+En el nivel superior tenemos el *estado global* de Ethereum. El estado global es un mapeo de direcciones de Ethereum (valores de 160 bits) a cuentas. En un nivel inferior, cada dirección de Ethereum representa una cuenta que comprende un saldo de ether (almacenado como el número de wei que posee la cuenta), un nonce (que representa el número de transacciones enviadas correctamente desde esta cuenta si es una EOA, o el número de contratos creados por ella si es una cuenta de contrato), el almacenamiento persistente de la cuenta (un almacén permanente de datos que solo usan los contratos inteligentes) y el código de programa de la cuenta (de nuevo, solo si la cuenta es una cuenta de contrato inteligente). Tradicionalmente, una EOA nunca tendría código y su almacenamiento persistente estaría vacío. Sin embargo, [EIP-7702](https://eips.ethereum.org/EIPS/eip-7702) (activada en la actualización Pectra en mayo de 2025) cambia este supuesto al permitir que las EOA deleguen la ejecución de código a contratos inteligentes. Cuando una EOA opta por la delegación, su campo de código se establece en una *designación de delegación* de 23 bytes con el formato `0xef0100 || address`, donde `address` es la dirección de 20 bytes del contrato de destino. El byte `0xef` es un opcode prohibido según [EIP-3541](https://eips.ethereum.org/EIPS/eip-3541), lo que garantiza que esta designación no pueda confundirse con código de contrato desplegable. Cuando la EVM encuentra una llamada a una EOA delegada, carga y ejecuta el código de la dirección de destino en el contexto de la EOA. Esto significa que `EXTCODESIZE` sobre una EOA delegada devuelve 23 (el tamaño de la designación de delegación), mientras que `CODESIZE` ejecutado dentro del código delegado devuelve el tamaño del código del contrato de destino. La EOA también puede usar almacenamiento persistente al ejecutar código delegado, aunque el protocolo recomienda usar distribuciones de almacenamiento con espacios de nombres de [ERC-7201](https://eips.ethereum.org/EIPS/eip-7201) para evitar colisiones al migrar entre contratos delegados. Es importante destacar que las EOA delegadas aún pueden originar transacciones: siguen siendo EOA que pueden firmar y enviar transacciones, pero ahora con capacidades de contrato inteligente. La delegación puede eliminarse delegando a la dirección cero (`0x0000000000000000000000000000000000000000`).
 
-A replacement of the data structure that Ethereum currently uses to store the state: the Merkle-Patricia trie. This reduces by a lot the size of the cryptographical proof needed to verify the correctness of the state and makes verifying it faster than the legacy Merkle-Patricia trie.
+Cuando una transacción da lugar a la ejecución de código de un contrato inteligente, se crea una instancia de la EVM con toda la información necesaria sobre el bloque actual que se está creando y la transacción específica que se está procesando. En particular, la ROM de código de programa de la EVM se carga con el código de la cuenta de contrato que se llama, el contador de programa se establece en cero, el almacenamiento persistente se carga desde el de la cuenta de contrato, la memoria se pone completamente en ceros y se establecen todas las variables de bloque y de entorno. Una variable clave es la reserva de gas para esta ejecución, que se establece en la cantidad de gas que el remitente pagó al inicio de la transacción (consulte "Contabilización del gas durante la ejecución" para obtener más detalles). A medida que avanza la ejecución del código, la reserva de gas se reduce según el costo de gas de las operaciones ejecutadas. Si en algún momento la reserva de gas es menor que cero, se produce una excepción por *agotamiento de gas* (OOG): la ejecución se detiene inmediatamente y la transacción se abandona. No se aplica ningún cambio al estado de Ethereum, salvo el incremento del nonce del remitente y la reducción de su saldo de ether para pagar al beneficiario del bloque por los recursos utilizados para ejecutar el código hasta el punto de detención. En este momento, puede concebirse que la EVM se ejecuta sobre una copia aislada del estado global de Ethereum, y que esta versión aislada se descarta por completo si la ejecución no puede completarse por cualquier motivo. Sin embargo, si la ejecución se completa correctamente, el estado global real se actualiza para coincidir con la versión aislada, incluidos los cambios en los datos del almacenamiento persistente del contrato llamado, los nuevos contratos creados y las transferencias de saldo de ether que se hayan iniciado.
 
-> **Note**  
+La ejecución del código es un proceso recursivo. Un contrato puede llamar a otros contratos, y cada llamada da lugar a la creación de otra instancia de la EVM en torno al nuevo destino de la llamada. El estado global aislado de cada instancia se inicializa a partir del entorno aislado de la EVM del nivel superior. A cada instancia (contexto) también se le asigna una cantidad específica de gas como reserva (que, por supuesto, no supera la cantidad de gas restante en el nivel superior), por lo que también puede detenerse con una excepción si recibe muy poco gas para completar su ejecución. De nuevo, en esos casos se descarta el estado aislado y la ejecución regresa a la EVM del nivel superior.
+
+## Ethereum sin estado
+
+Aunque al momento de escribir este libro (junio de 2025) todos los nodos de Ethereum deben calcular y mantener el último estado, es decir, lo que antes llamamos estado global, para poder comprobar la validez de cada bloque nuevo volviendo a ejecutar todas las transacciones que contiene, existen planes para eliminar esa necesidad, al menos parcialmente.
+
+La idea es tener un conjunto restringido de actores, como los buscadores y los constructores, que aún necesiten acceder al estado para crear y publicar nuevos bloques, mientras que todos los demás nodos puedan verificar criptográficamente esos bloques sin él. Esto se llama *ausencia de estado*.
+
+La ausencia de estado aún se encuentra lejos en el futuro de la hoja de ruta de Ethereum porque requiere algunas modificaciones del protocolo central:
+
+**Separación entre proponentes y constructores integrada en el protocolo (ePBS)**
+
+Separar el trabajo de crear un bloque llenándolo con transacciones del trabajo de proponerlo a la red P2P. El primero lo realizan entidades muy especializadas llamadas buscadores y constructores, capaces de crear bloques sumamente optimizados, mientras que el segundo lo realizan los nodos validadores de Ethereum. Esto ya es una realidad en la red principal, aunque aún no está integrado en el protocolo. De hecho, la mayoría de los bloques de Ethereum ya son construidos por un conjunto muy pequeño de grandes constructores.
+
+**Árboles de Verkle**
+
+Un reemplazo de la estructura de datos que Ethereum usa actualmente para almacenar el estado: el trie de Merkle-Patricia. Esto reduce enormemente el tamaño de la prueba criptográfica necesaria para verificar la validez del estado y hace que su verificación sea más rápida que con el trie de Merkle-Patricia tradicional.
+
+> **Nota**  
 >
-> Other hash-based binary trees are being tested to possibly replace Verkle trees. The core idea is just to have a data structure for the state that makes it possible to create small proofs that are quick and easy to verify.
+> Se están probando otros árboles binarios basados en hashes como posibles reemplazos de los árboles de Verkle. La idea central es simplemente contar con una estructura de datos para el estado que permita crear pruebas pequeñas, rápidas y fáciles de verificar.
 
-The combination of these two upgrades can lead to a scenario where only the big entities with more powerful hardware that want to create blocks need to store and access the full state. Together with new blocks, they will create a *cryptographic witness*: the minimal set of data that proves the new state has been computed correctly based on the transactions they included into the blocks.
+La combinación de estas dos actualizaciones puede dar lugar a un escenario en el que solo las grandes entidades con hardware más potente que quieran crear bloques necesiten almacenar y acceder al estado completo. Junto con los nuevos bloques, crearán un *testigo criptográfico*: el conjunto mínimo de datos que demuestra que el nuevo estado se calculó correctamente a partir de las transacciones que incluyeron en los bloques.
 
-All other nodes (including validator nodes) store only the *state root*, which is the hash of the entire state. When they receive a new block, they use the related witness to verify its correctness.
+Todos los demás nodos (incluidos los nodos validadores) almacenan solo la *raíz del estado*, que es el hash del estado completo. Cuando reciben un bloque nuevo, usan el testigo correspondiente para verificar su validez.
 
-This makes running an Ethereum node very lightweight since you don't have to store the full state and you don't even need to reexecute all the transactions (inside the EVM), but you are still able to verify that everything is correct so that you don't need to trust third parties. You could even run a node on your smartphone…
+Esto hace que ejecutar un nodo de Ethereum sea muy ligero, porque no es necesario almacenar el estado completo ni siquiera volver a ejecutar todas las transacciones (dentro de la EVM), pero sigue siendo posible verificar que todo es correcto sin tener que confiar en terceros. Incluso se podría ejecutar un nodo en un teléfono inteligente…
 
-Even though research advances quickly, we are probably still a few years away from having statelessness on mainnet.
+Aunque la investigación avanza rápidamente, probablemente aún falten algunos años para contar con ausencia de estado en la red principal.
 
-## Merkle-Patricia Trie
+## Trie de Merkle-Patricia
 
-Right now, the Ethereum state is stored using a very peculiar data structure called a *modified Merkle-Patricia trie*. We briefly mentioned the Merkle-Patricia tree (we'll call it MPT) in the previous section, but it's very important to understand how it works and why as well as how it's used by Ethereum as the way to store the state (and not only that…) because the same reasoning applies to Verkle tries. Before diving into MPTs, you need to know about Merkle trees because they represent the foundation on which MPTs are built.
+Actualmente, el estado de Ethereum se almacena mediante una estructura de datos muy particular llamada *trie de Merkle-Patricia modificado*. Mencionamos brevemente el árbol de Merkle-Patricia (lo llamaremos MPT) en la sección anterior, pero es muy importante entender cómo funciona y por qué, así como de qué manera Ethereum lo usa para almacenar el estado (y no solo eso…), porque el mismo razonamiento se aplica a los tries de Verkle. Antes de profundizar en los MPT, es necesario conocer los árboles de Merkle, porque representan la base sobre la cual se construyen los MPT.
 
-### Merkle trees
+### Árboles de Merkle
 
-Merkle trees are a very old data structure, invented by Ralph Merkle in 1988 in an attempt to construct better digital signatures. They are very efficient when you need to be able to verify that some data exists in a database and it has not been tampered with without needing to send the entire database to prove it.
+Los árboles de Merkle son una estructura de datos muy antigua, inventada por Ralph Merkle en 1988 en un intento de construir mejores firmas digitales. Son muy eficientes cuando se necesita verificar que ciertos datos existen en una base de datos y no han sido manipulados, sin tener que enviar la base de datos completa para demostrarlo.
 
-It's quite easy to create a Merkle tree starting from a collection of data. You need to separate the data into several chunks; then, you hash those chunks together and repeat this last step in a recursive way until you get only one final chunk. That chunk represents the *Merkle root*: a sort of digital fingerprint of all the data used to create the tree.
+Es bastante fácil crear un árbol de Merkle a partir de una colección de datos. Hay que separar los datos en varios fragmentos; luego, se calculan los hashes de esos fragmentos juntos y se repite este último paso de manera recursiva hasta obtener un único fragmento final. Ese fragmento representa la *raíz de Merkle*: una especie de huella digital de todos los datos usados para crear el árbol.
 
-Let's create a binary Merkle tree—the simplest form of a Merkle tree—from scratch so that you can familiarize yourself with it a bit more. We start with eight chunks of data—you could think of them as different words in the English language. We hash each chunk using a specific hash function—Ethereum uses the Keccak-256 hash function, as already mentioned in Chapter 4—obtaining the leaves of the Merkle tree, represented in Figure 14-2 as hash_1, hash_2, and so on. Then, we concatenate each couple of leaves and hash them again, creating hash_12, hash_34, and so on. We repeat this process of concatenating and hashing another two times until we get to a single, final result, which represents our Merkle root: hash_12345678.
+Creemos desde cero un árbol de Merkle binario, la forma más sencilla de árbol de Merkle, para familiarizarnos un poco más con él. Comenzamos con ocho fragmentos de datos, que podrían concebirse como distintas palabras del idioma inglés. Calculamos el hash de cada fragmento mediante una función hash específica, Ethereum usa la función hash Keccak-256, como ya se mencionó en el capítulo 4, y obtenemos las hojas del árbol de Merkle, representadas en la figura 14-2 como hash_1, hash_2 y así sucesivamente. Luego, concatenamos cada par de hojas y volvemos a calcular su hash, creando hash_12, hash_34 y así sucesivamente. Repetimos este proceso de concatenación y cálculo de hash otras dos veces hasta obtener un único resultado final que representa nuestra raíz de Merkle: hash_12345678.
 
-![A binary merkle tree](images/ch14/maet_1402.png)
+![Un árbol de Merkle binario](images/ch14/maet_1402.png)
 
-Figure 14-2. A binary merkle tree
+Figura 14-2. Un árbol de Merkle binario
 
-Now, you may be asking why we need a Merkle tree to store the data. Isn't it more complicated than just storing each chunk in a classical database?
+Ahora quizá surja la pregunta de por qué necesitamos un árbol de Merkle para almacenar los datos. ¿No es más complicado que simplemente almacenar cada fragmento en una base de datos clásica?
 
-The answer is yes, it's much more complex than storing every chunk in a key-value or SQL database. The only reason we use these kinds of data structures is because they are really efficient at providing a cheap cryptographic proof that any one of the chunks is present in the entire collection of data and has not been manipulated. In fact, if we were using a normal database to store data, and we were asked to provide a proof that we have a specific chunk, we would need to publish our entire dataset so that the reader could be sure we're not lying.
+La respuesta es sí, es mucho más complejo que almacenar cada fragmento en una base de datos clave-valor o SQL. La única razón por la que usamos este tipo de estructuras de datos es que son muy eficientes para proporcionar una prueba criptográfica de bajo costo de que cualquiera de los fragmentos está presente en la colección completa de datos y no ha sido manipulado. De hecho, si usáramos una base de datos normal para almacenar datos y nos pidieran una prueba de que tenemos un fragmento específico, tendríamos que publicar todo nuestro conjunto de datos para que el lector pudiera estar seguro de que no mentimos.
 
-Let's use our previous example to see this in practice. Let's say we want to prove that data_1 is included in the dataset. The naive approach is to provide the entire dataset, starting from data_1 up to data_8: eight items in total. With a Merkle tree, we need to provide only hash_2, hash_34, and hash_5678. Then, anyone can compute on their own the Merkle root and compare it with the one we calculated initially (which is shared publicly). If they match, you can be completely sure that data_1 is part of the initial dataset, as you can see in Figure 14-3.
+Usemos nuestro ejemplo anterior para verlo en la práctica. Supongamos que queremos demostrar que data_1 está incluido en el conjunto de datos. El enfoque ingenuo consiste en proporcionar todo el conjunto de datos, desde data_1 hasta data_8: ocho elementos en total. Con un árbol de Merkle, solo necesitamos proporcionar hash_2, hash_34 y hash_5678. Luego, cualquiera puede calcular por su cuenta la raíz de Merkle y compararla con la que calculamos inicialmente (que se comparte públicamente). Si coinciden, se puede tener plena certeza de que data_1 forma parte del conjunto de datos inicial, como puede verse en la figura 14-3.
 
-![The Merkle proof to verify that data_1 is contained in the tree](images/ch14/maet_1403.png)
+![La prueba de Merkle para verificar que data_1 está contenido en el árbol](images/ch14/maet_1403.png)
 
-Figure 14-3. The Merkle proof to verify that data_1 is contained in the tree
+Figura 14-3. La prueba de Merkle para verificar que data_1 está contenido en el árbol
 
-> **Tip**  
+> **Consejo**  
 >
-> To reconstruct the Merkle tree, you can follow these steps:
+> Para reconstruir el árbol de Merkle, se pueden seguir estos pasos:
 >
-> 1. Hash data_1 and get hash_1.
-> 2. Concatenate hash_1 with the provided hash_2, hash it, and get hash_12.
-> 3. Concatenate hash_12 with the provided hash_34, hash it, and get hash_1234.
-> 4. Concatenate hash_1234 with the provided hash_5678, hash it, and get the final Merkle root.
+> 1. Calcular el hash de data_1 y obtener hash_1.
+> 2. Concatenar hash_1 con el hash_2 proporcionado, calcular su hash y obtener hash_12.
+> 3. Concatenar hash_12 con el hash_34 proporcionado, calcular su hash y obtener hash_1234.
+> 4. Concatenar hash_1234 con el hash_5678 proporcionado, calcular su hash y obtener la raíz de Merkle final.
 
-Note that we're using only three items, versus the eight items we would need to use with the naive approach without the Merkle tree. And this is just a toy example—when you have lots of data, the savings are much bigger.
+Nótese que usamos solo tres elementos, frente a los ocho que necesitaríamos con el enfoque ingenuo sin el árbol de Merkle. Y este es solo un ejemplo de juguete: cuando hay muchos datos, el ahorro es mucho mayor.
 
-Speaking in mathematical terms, Merkle trees offer O(log(n)) complexity versus linear O(n) of the naive approach, as shown in Figure 14-4.
+En términos matemáticos, los árboles de Merkle ofrecen una complejidad O(log(n)) frente a la complejidad lineal O(n) del enfoque ingenuo, como se muestra en la figura 14-4.
 
-![Merkle tree complexity comparison](images/ch14/maet_1404.png)
+![Comparación de complejidad de los árboles de Merkle](images/ch14/maet_1404.png)
 
-Figure 14-4. O(n) linear complexity (on the top) versus O(log(n)) complexity (on the bottom)
+Figura 14-4. Complejidad lineal O(n) (arriba) frente a complejidad O(log(n)) (abajo)
 
-In the Ethereum world, this means that it's cheaper and easier to provide proofs regarding the balance of an address, the result of a transaction, or the bytecode of a specific smart contract.
+En el mundo de Ethereum, esto significa que es más barato y fácil proporcionar pruebas sobre el saldo de una dirección, el resultado de una transacción o el bytecode de un contrato inteligente específico.
 
-### Merkle trees in Bitcoin
+### Árboles de Merkle en Bitcoin
 
-Bitcoin pioneered the use of Merkle trees in blockchain technology. In fact, every Bitcoin block contains the Merkle root of all transactions included in the same block so that none of them can be modified without modifying the entire block header (compromising the PoW, too).
+Bitcoin fue pionero en el uso de árboles de Merkle en la tecnología blockchain. De hecho, cada bloque de Bitcoin contiene la raíz de Merkle de todas las transacciones incluidas en ese mismo bloque, de modo que ninguna de ellas pueda modificarse sin modificar todo el encabezado del bloque (comprometiendo también la PoW).
 
-### Merkle-Patricia trie in Ethereum
+### Trie de Merkle-Patricia en Ethereum
 
-Ethereum took the same concept and applied it to itself, with some modifications for its specific needs. Merkle trees are perfectly suited for permanent data that never changes, such as Bitcoin transactions. The Ethereum state changes constantly, though, so we need to tweak Merkle trees to still maintain their useful properties while letting us change the data underneath frequently.
+Ethereum tomó el mismo concepto y lo aplicó a sí mismo, con algunas modificaciones para sus necesidades específicas. Los árboles de Merkle son perfectamente adecuados para datos permanentes que nunca cambian, como las transacciones de Bitcoin. Sin embargo, el estado de Ethereum cambia constantemente, por lo que necesitamos ajustar los árboles de Merkle para mantener sus propiedades útiles y a la vez poder cambiar con frecuencia los datos subyacentes.
 
-This is where the Merkle-Patricia trie enters the scene. The name comes from the union between Merkle trees, Patricia (Practical Algorithm to Retrieve Information Coded in Alphanumeric), and the word *trie* that originates from *retrieval*, reminding us what they are optimized for.
+Aquí entra en escena el trie de Merkle-Patricia. El nombre proviene de la unión de los árboles de Merkle, Patricia (Practical Algorithm to Retrieve Information Coded in Alphanumeric) y la palabra *trie*, que se origina en *retrieval* (recuperación), y nos recuerda para qué están optimizados.
 
-Essentially, Merkle-Patricia tries are modified Merkle trees with 16 children for each node. They are well suited for data like the Ethereum state where you have lots of key-value items (where keys are the addresses and values the account information for each address, such as the balance, the nonce, and the code, if any) because the key itself is encoded in the path you have to follow to reach the correct position in the tree.
+En esencia, los tries de Merkle-Patricia son árboles de Merkle modificados con 16 hijos por nodo. Son muy adecuados para datos como el estado de Ethereum, donde hay muchos elementos clave-valor (en los que las claves son las direcciones y los valores son la información de la cuenta de cada dirección, como el saldo, el nonce y el código, si lo hay), porque la propia clave está codificada en la ruta que hay que seguir para llegar a la posición correcta en el árbol.
 
-Let's say we have the following key-value item we want to store:
+Supongamos que queremos almacenar el siguiente elemento clave-valor:
 
 ```
 car → Schumacher
 ```
 
-Car is hex encoded as (0x) 6 3 6 1 7 2, so you would need to take the sixth child starting from the Merkle root, then again down to the third child, repeating this process until you get to the final value where you can read the value associated with that key—Schumacher in this example—as shown in Figure 14-5.
+Car se codifica en hexadecimal como (0x) 6 3 6 1 7 2, por lo que habría que tomar el sexto hijo a partir de la raíz de Merkle, luego bajar al tercer hijo y repetir este proceso hasta llegar al valor final, donde puede leerse el valor asociado con esa clave, Schumacher en este ejemplo, como se muestra en la figura 14-5.
 
-![Merkle-Patricia trie example](images/ch14/maet_1405.png)
+![Ejemplo de trie de Merkle-Patricia](images/ch14/maet_1405.png)
 
-Figure 14-5. Encoding of the key-value item car --> Schumacher into a Merkle-Patricia trie
+Figura 14-5. Codificación del elemento clave-valor car --> Schumacher en un trie de Merkle-Patricia
 
-In particular, Ethereum uses four Merkle-Patricia tries:
+En particular, Ethereum usa cuatro tries de Merkle-Patricia:
 
-**State trie**
+**Trie de estado**
 
-To store the entire state
+Para almacenar el estado completo
 
-**Transaction trie**
+**Trie de transacciones**
 
-To store all transactions included into a block
+Para almacenar todas las transacciones incluidas en un bloque
 
-**Receipt trie**
+**Trie de recibos**
 
-To store the results of all the transactions included into a block
+Para almacenar los resultados de todas las transacciones incluidas en un bloque
 
-**Storage trie**
+**Trie de almacenamiento persistente**
 
-To store smart contract data
+Para almacenar datos de contratos inteligentes
 
-Every Ethereum block header contains the state, transaction, and receipt trie Merkle root, while every account (contained in the state trie) stores its own storage trie Merkle root.
+El encabezado de cada bloque de Ethereum contiene la raíz de Merkle de los tries de estado, transacciones y recibos, mientras que cada cuenta (contenida en el trie de estado) almacena su propia raíz de Merkle del trie de almacenamiento persistente.
 
-## A Deep Dive into the Components of the EVM
+## Una mirada en profundidad a los componentes de la EVM
 
-In this section, we'll take a closer look at how each component of the EVM works. Finally, we'll examine a real-world example to see everything in action.
+En esta sección, examinaremos con más detalle cómo funciona cada componente de la EVM. Finalmente, analizaremos un ejemplo real para ver todo en acción.
 
-### Stack
+### Pila
 
-The stack is a very simple data structure that follows a *last in, first out* (LIFO) order to perform operations, where every item is a 32-byte object. It can host up to 1,024 items at the same time.
+La pila es una estructura de datos muy sencilla que sigue un orden de *último en entrar, primero en salir* (LIFO) para realizar operaciones, donde cada elemento es un objeto de 32 bytes. Puede alojar hasta 1,024 elementos al mismo tiempo.
 
-The EVM can push and pop items into and from the stack through different kinds of opcodes, and it can manipulate the order of its elements, as you can see in Figure 14-6.
+La EVM puede insertar y extraer elementos de la pila mediante distintos tipos de opcodes y puede manipular el orden de sus elementos, como puede verse en la figura 14-6.
 
-![EVM stack operations](images/ch14/maet_1406.png)
+![Operaciones de pila de la EVM](images/ch14/maet_1406.png)
 
-Figure 14-6. The EVM stack follows a LIFO order of operations
+Figura 14-6. La pila de la EVM sigue un orden de operaciones LIFO
 
-### Memory
+### Memoria
 
-The EVM memory is a byte-addressable data structure: essentially a very long array of bytes. In fact, every byte in the memory is accessible using a 32-byte (256-bit) key, which means it can contain up to 2^256 bytes. It's volatile—that is, it's deleted after the execution ends—and it's always initialized to 0.
+La memoria de la EVM es una estructura de datos direccionable por byte: en esencia, un arreglo de bytes muy largo. De hecho, cada byte de la memoria es accesible mediante una clave de 32 bytes (256 bits), lo que significa que puede contener hasta 2^256 bytes. Es volátil, es decir, se elimina al terminar la ejecución, y siempre se inicializa en 0.
 
-Even though it's possible to read and write single bytes to and from the memory, most operations require reading or writing bigger chunks of data, usually 32-byte chunks, as shown in Figure 14-7.
+Aunque es posible leer y escribir bytes individuales desde y hacia la memoria, la mayoría de las operaciones requieren leer o escribir fragmentos de datos mayores, normalmente de 32 bytes, como se muestra en la figura 14-7.
 
-![EVM memory operations](images/ch14/maet_1407.png)
+![Operaciones de memoria de la EVM](images/ch14/maet_1407.png)
 
-Figure 14-7. EVM memory is a volatile, byte-addressable data structure
+Figura 14-7. La memoria de la EVM es una estructura de datos volátil, direccionable por byte
 
-> **Note**  
+> **Nota**  
 >
-> Technically, you cannot read a single byte from the EVM. You can only read an entire 32-byte word. To achieve the same result as reading a single byte, the EVM needs to load the entire word that contains that byte and then "cut" it in order to return only the selected byte.
+> Técnicamente, no se puede leer un solo byte de la EVM. Solo se puede leer una palabra completa de 32 bytes. Para obtener el mismo resultado que al leer un solo byte, la EVM debe cargar la palabra completa que contiene ese byte y luego "recortarla" para devolver únicamente el byte seleccionado.
 
-### Storage
+### Almacenamiento persistente
 
-The EVM storage is a key-value data structure where keys (most often called *slots*) and values are each 32 bytes long. This is the persistent memory of every smart contract: all values saved on it are kept indefinitely across different transactions and blocks. Each smart contract can only access and modify its own storage, and if you try to access a slot that doesn't contain any values, it will always return the value 0 without throwing any errors. Figure 14-8 shows a very basic representation of two contracts' storage.
+El almacenamiento persistente de la EVM es una estructura de datos clave-valor donde tanto las claves (más comúnmente llamadas *slots*) como los valores tienen una longitud de 32 bytes. Esta es la memoria persistente de cada contrato inteligente: todos los valores guardados en ella se conservan indefinidamente a través de distintas transacciones y bloques. Cada contrato inteligente solo puede acceder y modificar su propio almacenamiento persistente, y si se intenta acceder a un slot que no contiene ningún valor, siempre devolverá el valor 0 sin generar ningún error. La figura 14-8 muestra una representación muy básica del almacenamiento persistente de dos contratos.
 
-![EVM storage](images/ch14/maet_1408.png)
+![Almacenamiento persistente de la EVM](images/ch14/maet_1408.png)
 
-Figure 14-8. The EVM storage is a permanent memory with a key-value data structure
+Figura 14-8. El almacenamiento persistente de la EVM es una memoria permanente con una estructura de datos clave-valor
 
-There is also the *transient storage*, added with [EIP-1153](https://oreil.ly/fRvKl), which behaves in the same way as the normal storage, with the only difference being that it's completely discarded after the execution of the transaction. For this reason, it's much cheaper to use than normal storage.
+También existe el *almacenamiento transitorio*, agregado con [EIP-1153](https://oreil.ly/fRvKl), que se comporta igual que el almacenamiento persistente normal, con la única diferencia de que se descarta por completo después de la ejecución de la transacción. Por este motivo, es mucho más barato de usar que el almacenamiento persistente normal.
 
 ### Calldata
 
-Calldata is an immutable data structure that always contains the bytes sent as input to the next *call frame* (i.e., a sandbox EVM environment). For example, in a contract-creation transaction, the calldata contains the bytecode of the contract that is going to be deployed. It can also be empty, such as in simple ETH transfers.
+Calldata es una estructura de datos inmutable que siempre contiene los bytes enviados como entrada al siguiente *marco de llamada* (es decir, un entorno aislado de la EVM). Por ejemplo, en una transacción de creación de contrato, calldata contiene el bytecode del contrato que se va a desplegar. También puede estar vacío, como en las transferencias simples de ETH.
 
-## Let's Put Everything Together with a Concrete Example
+## Unamos todo con un ejemplo concreto
 
-You are executing a transaction that works on contract A, and you have the following EVM bytecode: `60425F525F3560AB145F515500`.
+Se está ejecutando una transacción que opera sobre el contrato A y se tiene el siguiente bytecode de la EVM: `60425F525F3560AB145F515500`.
 
-You also have an initial calldata:
+También se tiene un calldata inicial:
 
 ```
 00000000000000000000000000000000000000000000000000000000000000ab
 ```
 
-Let's represent the EVM bytecode in a human-readable format:
+Representemos el bytecode de la EVM en un formato legible para las personas:
 
 ```
 [00]            PUSH1            42
@@ -406,117 +406,117 @@ Let's represent the EVM bytecode in a human-readable format:
 [0c]            STOP
 ```
 
-> **Note**  
+> **Nota**  
 >
-> Each EVM opcode is identified by a unique 1-byte value (ranging from 0x00 to 0xFF). For example, 0x60 is the PUSH1 opcode, 0x5F the PUSH0, and so on. For a comprehensive list of all opcodes and their hexadecimal representations, refer to [EVM codes](https://www.evm.codes).
+> Cada opcode de la EVM se identifica mediante un valor único de 1 byte (de 0x00 a 0xFF). Por ejemplo, 0x60 es el opcode PUSH1, 0x5F es PUSH0 y así sucesivamente. Para obtener una lista completa de todos los opcodes y sus representaciones hexadecimales, consulte [EVM codes](https://www.evm.codes).
 
-Let's see how the EVM executes these opcodes and how the stack, the memory, and the storage are manipulated. Figure 14-9 shows the initial state of the EVM.
+Veamos cómo la EVM ejecuta estos opcodes y cómo se manipulan la pila, la memoria y el almacenamiento persistente. La figura 14-9 muestra el estado inicial de la EVM.
 
-![EVM initial state](images/ch14/maet_1409.png)
+![Estado inicial de la EVM](images/ch14/maet_1409.png)
 
-Figure 14-9. Initial EVM state
+Figura 14-9. Estado inicial de la EVM
 
-The first opcode pushes 0x42 onto the stack (Figure 14-10). Note that all push opcodes take their data (to be pushed) from the next available bytes in the bytecode itself.
+El primer opcode inserta 0x42 en la pila (figura 14-10). Nótese que todos los opcodes push toman sus datos (que se insertarán) de los siguientes bytes disponibles en el propio bytecode.
 
-![EVM after PUSH1 0x42](images/ch14/maet_1410.png)
+![EVM después de PUSH1 0x42](images/ch14/maet_1410.png)
 
-Figure 14-10. EVM after PUSH1 0x42
+Figura 14-10. EVM después de PUSH1 0x42
 
-Next, PUSH0 pushes 0x00 onto the stack (Figure 14-11).
+A continuación, PUSH0 inserta 0x00 en la pila (figura 14-11).
 
-![EVM after PUSH0](images/ch14/maet_1411.png)
+![EVM después de PUSH0](images/ch14/maet_1411.png)
 
-Figure 14-11. EVM after PUSH0
+Figura 14-11. EVM después de PUSH0
 
-MSTORE pops two items from the stack, interpreting the first one as the offset (in bytes) and the second one as the value to write in the memory, starting at that offset. Note that there are lots of leading zeros in the memory (31 bytes, equal to zero) before the byte 0x42. This is correct because every value in the stack is a 32-byte value. Most of the time, we can ignore leading zeros while writing (in Figure 14-12, you can see the item 0x42), but you should always remember that they are 32-byte values.
+MSTORE extrae dos elementos de la pila e interpreta el primero como el desplazamiento (en bytes) y el segundo como el valor que se escribirá en la memoria a partir de ese desplazamiento. Nótese que hay muchos ceros iniciales en la memoria (31 bytes iguales a cero) antes del byte 0x42. Esto es correcto porque cada valor de la pila es un valor de 32 bytes. La mayoría de las veces, podemos ignorar los ceros iniciales al escribir (en la figura 14-12 puede verse el elemento 0x42), pero siempre debe recordarse que son valores de 32 bytes.
 
-![EVM after MSTORE](images/ch14/maet_1412.png)
+![EVM después de MSTORE](images/ch14/maet_1412.png)
 
-Figure 14-12. EVM after MSTORE
+Figura 14-12. EVM después de MSTORE
 
-Then, we again have a PUSH0 that pushes 0x00 onto the stack (Figure 14-13).
+Luego, tenemos de nuevo un PUSH0 que inserta 0x00 en la pila (figura 14-13).
 
-![EVM after PUSH0](images/ch14/maet_1413.png)
+![EVM después de PUSH0](images/ch14/maet_1413.png)
 
-Figure 14-13. EVM after PUSH0
+Figura 14-13. EVM después de PUSH0
 
-CALLDATALOAD takes one element from the stack, interpreted as an offset, and returns the 32-byte value in the calldata starting at that offset, then pushes it onto the stack. Here, it's returning 0xab (note that we can ignore all the leading zeros as they are not significant), as shown in Figure 14-14.
+CALLDATALOAD toma un elemento de la pila, interpretado como un desplazamiento, y devuelve el valor de 32 bytes de calldata que comienza en ese desplazamiento; luego lo inserta en la pila. Aquí devuelve 0xab (nótese que podemos ignorar todos los ceros iniciales porque no son significativos), como se muestra en la figura 14-14.
 
-![EVM after CALLDATALOAD](images/ch14/maet_1414.png)
+![EVM después de CALLDATALOAD](images/ch14/maet_1414.png)
 
-Figure 14-14. EVM after CALLDATALOAD
+Figura 14-14. EVM después de CALLDATALOAD
 
-PUSH1 pushes 0xab onto the stack (Figure 14-15).
+PUSH1 inserta 0xab en la pila (figura 14-15).
 
-![EVM after PUSH1 0xab](images/ch14/maet_1415.png)
+![EVM después de PUSH1 0xab](images/ch14/maet_1415.png)
 
-Figure 14-15. EVM after PUSH1 0xab
+Figura 14-15. EVM después de PUSH1 0xab
 
-EQ pops two items from the stack, compares them, and returns 1 if they are equal, 0 otherwise. In this example, it returns 0x01 since the two values are equal, as shown in Figure 14-16.
+EQ extrae dos elementos de la pila, los compara y devuelve 1 si son iguales o 0 en caso contrario. En este ejemplo, devuelve 0x01 porque los dos valores son iguales, como se muestra en la figura 14-16.
 
-![EVM after EQ](images/ch14/maet_1416.png)
+![EVM después de EQ](images/ch14/maet_1416.png)
 
-Figure 14-16. EVM after EQ
+Figura 14-16. EVM después de EQ
 
-Again, a PUSH0 pushes 0x00 onto the stack (Figure 14-17).
+De nuevo, un PUSH0 inserta 0x00 en la pila (figura 14-17).
 
-![EVM after PUSH0](images/ch14/maet_1417.png)
+![EVM después de PUSH0](images/ch14/maet_1417.png)
 
-Figure 14-17. EVM after PUSH0
+Figura 14-17. EVM después de PUSH0
 
-MLOAD takes one element from the stack, interpreting it as the offset, and reads 32 bytes in the memory, starting at that offset, then pushes the result onto the stack (Figure 14-18).
+MLOAD toma un elemento de la pila, lo interpreta como el desplazamiento y lee 32 bytes de la memoria a partir de ese desplazamiento; luego inserta el resultado en la pila (figura 14-18).
 
-![EVM after MLOAD](images/ch14/maet_1418.png)
+![EVM después de MLOAD](images/ch14/maet_1418.png)
 
-Figure 14-18. EVM after MLOAD
+Figura 14-18. EVM después de MLOAD
 
-Now, the SSTORE pops two items from the stack, interpreting the first one as the slot and the second one as the value to be saved in the contract's storage at that slot number, as shown in Figure 14-19.
+Ahora, SSTORE extrae dos elementos de la pila e interpreta el primero como el slot y el segundo como el valor que se guardará en el almacenamiento persistente del contrato en ese número de slot, como se muestra en la figura 14-19.
 
-![EVM after SSTORE](images/ch14/maet_1419.png)
+![EVM después de SSTORE](images/ch14/maet_1419.png)
 
-Figure 14-19. EVM after SSTORE
+Figura 14-19. EVM después de SSTORE
 
-Finally, we have the STOP opcode that halts the execution, and the EVM returns successfully, as you can see in Figure 14-20.
+Finalmente, tenemos el opcode STOP, que detiene la ejecución, y la EVM retorna correctamente, como puede verse en la figura 14-20.
 
-![EVM after STOP](images/ch14/maet_1420.png)
+![EVM después de STOP](images/ch14/maet_1420.png)
 
-Figure 14-20. EVM after STOP
+Figura 14-20. EVM después de STOP
 
-> **Tip**  
+> **Consejo**  
 >
-> In the previous example, we used the opcode PUSH0. It's important to say that not all EVM-compatible blockchains have integrated this opcode, so be aware of that when deploying a cross-chain contract. [EVM Diff](https://www.evmdiff.com) is a very cool website that shows all these subtle differences for EVM-compatible chains.
+> En el ejemplo anterior usamos el opcode PUSH0. Es importante señalar que no todas las blockchains compatibles con la EVM han integrado este opcode, por lo que debe tenerse en cuenta al desplegar un contrato entre cadenas. [EVM Diff](https://www.evmdiff.com) es un sitio web muy interesante que muestra todas estas diferencias sutiles entre cadenas compatibles con la EVM.
 
-## Compiling Solidity to EVM Bytecode
+## Compilación de Solidity a bytecode de la EVM
 
-We've already explored Solidity in Chapter 7. Now, we're going to see how it's compiled down into EVM bytecode that can be interpreted by the EVM.
+Ya exploramos Solidity en el capítulo 7. Ahora veremos cómo se compila a bytecode de la EVM que esta puede interpretar.
 
-Compiling a Solidity source file to EVM bytecode can be accomplished via several methods. In Chapter 2, we used the online Remix compiler. In this chapter, we will use the `solc` executable at the command line. To install Solidity on your computer, [follow the steps](https://oreil.ly/JW--z).
+La compilación de un archivo fuente de Solidity a bytecode de la EVM puede realizarse de varias maneras. En el capítulo 2 usamos el compilador en línea Remix. En este capítulo usaremos el ejecutable `solc` desde la línea de comandos. Para instalar Solidity en una computadora, [siga los pasos](https://oreil.ly/JW--z).
 
-For a list of options, run the following command:
+Para obtener una lista de opciones, ejecute el siguiente comando:
 
 ```bash
 $ solc --help
 ```
 
-Generating the raw opcode stream of a Solidity source file is easily achieved with the `--opcodes` command-line option. This opcode stream leaves out some information (the `--asm` option produces the full information), but it is sufficient for this discussion. For example, compiling an example Solidity file, `Example.sol`, and sending the opcode output into a directory named `BytecodeDir` is accomplished with the following command:
+Es fácil generar la secuencia de opcodes sin procesar de un archivo fuente de Solidity con la opción de línea de comandos `--opcodes`. Esta secuencia de opcodes omite cierta información (la opción `--asm` produce la información completa), pero es suficiente para esta explicación. Por ejemplo, para compilar un archivo de ejemplo de Solidity, `Example.sol`, y enviar la salida de opcodes a un directorio llamado `BytecodeDir`, se usa el siguiente comando:
 
 ```bash
 $ solc -o BytecodeDir --opcodes Example.sol
 ```
 
-You can also use `--asm` to produce a more human-readable output:
+También se puede usar `--asm` para producir una salida más legible para las personas:
 
 ```bash
 $ solc -o BytecodeDir --asm Example.sol
 ```
 
-The following command will produce the bytecode binary for our example program:
+El siguiente comando producirá el bytecode binario de nuestro programa de ejemplo:
 
 ```bash
 $ solc -o BytecodeDir --bin Example.sol
 ```
 
-The output opcode files generated will depend on the specific contracts contained within the Solidity source file. Our simple Solidity file `Example.sol` has only one contract, named Example:
+Los archivos de opcodes de salida generados dependerán de los contratos específicos contenidos en el archivo fuente de Solidity. Nuestro sencillo archivo de Solidity `Example.sol` tiene un solo contrato, llamado Example:
 
 ```solidity
 // SPDX-License-Identifier: GPL-3.0
@@ -531,15 +531,15 @@ contract Example {
 }
 ```
 
-As you can see, all this contract does is hold one persistent state variable, which is set as the address of the last account to run this contract.
+Como puede verse, lo único que hace este contrato es mantener una variable de estado persistente, que se establece en la dirección de la última cuenta que ejecutó este contrato.
 
-If you look in the `BytecodeDir` directory, you will see the opcode file `Example.opcode`, which contains the EVM opcode instructions of the example contract. Opening the `Example.opcode` file in a text editor will show the following:
+Al consultar el directorio `BytecodeDir`, se verá el archivo de opcodes `Example.opcode`, que contiene las instrucciones de opcodes de la EVM del contrato de ejemplo. Al abrir el archivo `Example.opcode` en un editor de texto, se verá lo siguiente:
 
 ```
 PUSH1 0x80 PUSH1 0x40 MSTORE CALLVALUE DUP1 ISZERO PUSH1 0xE JUMPI PUSH0 PUSH0 REVERT JUMPDEST POP PUSH1 0xA9 DUP1 PUSH1 0x1A PUSH0 CODECOPY PUSH0 RETURN INVALID PUSH1 0x80 PUSH1 0x40 MSTORE CALLVALUE DUP1 ISZERO PUSH1 0xE JUMPI PUSH0 PUSH0 REVERT JUMPDEST POP PUSH1 0x4 CALLDATASIZE LT PUSH1 0x26 JUMPI PUSH0 CALLDATALOAD PUSH1 0xE0 SHR DUP1 PUSH4 0xF8A8FD6D EQ PUSH1 0x2A JUMPI JUMPDEST PUSH0 PUSH0 REVERT JUMPDEST PUSH1 0x30 PUSH1 0x32 JUMP JUMPDEST STOP JUMPDEST CALLER PUSH0 PUSH0 PUSH2 0x100 EXP DUP2 SLOAD DUP2 PUSH20 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF MUL NOT AND SWAP1 DUP4 PUSH200xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF AND MUL OR SWAP1 SSTORE POP JUMP INVALID LOG2 PUSH5 0x6970667358 0x22 SLT KECCAK256 JUMPI 0xBB RETURNDATACOPY SWAP15 CALLVALUE 0xB3 0xB1 SMOD BLOBHASH STATICCALL MCOPY PUSH10 0x856E7132D8FEED4D83B6 0xB2 0xBE PUSH30 0x8B43532C818BFD64736F6C634300081B0033000000000000000000000000
 ```
 
-Compiling the example with the `--asm` option produces a file named `Example.evm` in our `BytecodeDir` directory. This contains a slightly higher-level description of the EVM bytecode instructions, together with some helpful annotations:
+Compilar el ejemplo con la opción `--asm` produce un archivo llamado `Example.evm` en nuestro directorio `BytecodeDir`. Este contiene una descripción de un nivel ligeramente superior de las instrucciones de bytecode de la EVM, junto con algunas anotaciones útiles:
 
 ```
 /* "Example.sol":61:171  contract Example {... */
@@ -619,172 +619,172 @@ sub_0: assembly {
 }
 ```
 
-The `--bin` option produces the machine-readable hexadecimal bytecode:
+La opción `--bin` produce el bytecode hexadecimal legible por máquina:
 
 ```
 6080604052348015600e575f5ffd5b5060a980601a5f395ff3fe6080604052348015600e575f5ffd5b50600436106026575f3560e01c8063f8a8fd6d14602a575b5f5ffd5b60306032565b005b335f5f6101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff16021790555056fea264697066735822122057bb3e9e34b3b10749fa5e69856e7132d8feed4d83b6b2be7d8b43532c818bfd64736f6c634300081b0033
 ```
 
-You can investigate what's going on here in detail using the opcode list given in "The EVM Instruction Set (Bytecode Operations)". However, that's quite a task, so let's start by just examining the first four instructions:
+Se puede investigar en detalle lo que ocurre aquí mediante la lista de opcodes presentada en "El conjunto de instrucciones de la EVM (operaciones de bytecode)". Sin embargo, es una tarea considerable, así que comencemos examinando únicamente las primeras cuatro instrucciones:
 
 ```
 PUSH1 0x80 PUSH1 0x40 MSTORE CALLVALUE
 ```
 
-Here, we have `PUSH1` followed by a raw byte of value `0x80`. This EVM instruction takes the single byte following the opcode in the program code (as a literal value) and pushes it onto the stack. It is possible to push values of size up to 32 bytes onto the stack, as in:
+Aquí tenemos `PUSH1` seguido de un byte sin procesar con valor `0x80`. Esta instrucción de la EVM toma el único byte que sigue al opcode en el código del programa (como valor literal) y lo inserta en la pila. Es posible insertar en la pila valores de hasta 32 bytes de tamaño, como en:
 
 ```
 PUSH32 0x436f6e67726174756c6174696f6e732120536f6f6e20746f206d617374657221
 ```
 
-The second `PUSH1` opcode from `example.opcode` stores `0x40` onto the top of the stack (pushing the `0x80` already present there down one slot).
+El segundo opcode `PUSH1` de `example.opcode` guarda `0x40` en la cima de la pila (desplazando el `0x80` que ya estaba allí una posición hacia abajo).
 
-Next is `MSTORE`, which is a memory store operation that saves a value to the EVM's memory. It takes two arguments and, like most EVM operations, obtains them from the stack. For each argument, the stack is "popped"—that is, the top value on the stack is taken off, and all the other values on the stack are shifted up one position. The first argument for `MSTORE` is the address of the word in memory where the value to be saved will be put. For this program, we have `0x40` at the top of the stack, so that is removed from the stack and used as the memory address. The second argument is the value to be saved, which is `0x80` here. After the `MSTORE` operation is executed, our stack is empty again, but we have the value `0x80` (128 in decimal) at the memory location `0x40`.
+A continuación está `MSTORE`, una operación de escritura en memoria que guarda un valor en la memoria de la EVM. Toma dos argumentos y, como la mayoría de las operaciones de la EVM, los obtiene de la pila. Para cada argumento se realiza una extracción de la pila, es decir, se retira el valor superior y todos los demás valores se desplazan una posición hacia arriba. El primer argumento de `MSTORE` es la dirección de la palabra en memoria donde se colocará el valor que se desea guardar. En este programa tenemos `0x40` en la cima de la pila, por lo que se retira y se usa como dirección de memoria. El segundo argumento es el valor que se guardará, que aquí es `0x80`. Después de ejecutar la operación `MSTORE`, nuestra pila vuelve a estar vacía, pero tenemos el valor `0x80` (128 en decimal) en la posición de memoria `0x40`.
 
-The next opcode is `CALLVALUE`, which is an environmental opcode that pushes onto the top of the stack the amount of ether (measured in wei) sent with the message call that initiated this execution.
+El siguiente opcode es `CALLVALUE`, un opcode de entorno que inserta en la cima de la pila la cantidad de ether (medida en wei) enviada con la llamada de mensaje que inició esta ejecución.
 
-We could continue to step through this program in this way until we had a full understanding of the low-level state changes that this code effects, but it wouldn't help us at this stage. We'll come back to it later in the chapter.
+Podríamos seguir recorriendo este programa paso a paso de esta manera hasta comprender por completo los cambios de estado de bajo nivel que produce este código, pero en este momento no nos sería útil. Volveremos a ello más adelante en el capítulo.
 
-## Contract Deployment Code
+## Código de despliegue de contratos
 
-There is an important but subtle difference between the code used when creating and deploying a new contract on the Ethereum platform and the code of the contract itself. To create a new contract, a special transaction is needed that has an empty `to` field (null) and its `data` field set to the contract's *initiation code*. When such a contract-creation transaction is processed, the code for the new contract account is not the code in the `data` field of the transaction. Instead, an EVM is instantiated with the code in the `data` field of the transaction loaded into its program code ROM, and then the output of the execution of that deployment code is taken as the code for the new contract account. This is so that new contracts can be programmatically initialized using the Ethereum world state at the time of deployment, setting values in the contract's storage and even sending ether or creating further new contracts.
+Existe una diferencia importante pero sutil entre el código usado al crear y desplegar un contrato nuevo en la plataforma Ethereum y el código del propio contrato. Para crear un contrato nuevo se necesita una transacción especial con el campo `to` vacío (null) y el campo `data` establecido en el *código de inicialización* del contrato. Cuando se procesa una transacción de creación de contrato de este tipo, el código de la nueva cuenta de contrato no es el código del campo `data` de la transacción. En su lugar, se crea una instancia de la EVM con el código del campo `data` de la transacción cargado en su ROM de código de programa, y luego se toma la salida de la ejecución de ese código de despliegue como código de la nueva cuenta de contrato. Esto permite inicializar los nuevos contratos de manera programática usando el estado global de Ethereum en el momento del despliegue, estableciendo valores en el almacenamiento persistente del contrato e incluso enviando ether o creando más contratos nuevos.
 
-When compiling a contract offline—for example, using `solc` on the command line—you can get either the *deployment bytecode* or the *runtime bytecode*. The deployment bytecode is used for every aspect of the initialization of a new contract account, including the bytecode that will actually end up being executed when transactions call this new contract (i.e., the runtime bytecode) and the code to initialize everything based on the contract's constructor. The runtime bytecode, on the other hand, is exactly the bytecode that ends up being executed when the new contract is called and nothing more; it does not include the bytecode needed to initialize the contract during deployment.
+Al compilar un contrato sin conexión, por ejemplo, usando `solc` desde la línea de comandos, se puede obtener el *bytecode de despliegue* o el *bytecode de ejecución*. El bytecode de despliegue se usa para todos los aspectos de la inicialización de una nueva cuenta de contrato, incluido el bytecode que realmente terminará ejecutándose cuando las transacciones llamen a este nuevo contrato (es decir, el bytecode de ejecución) y el código para inicializar todo a partir del constructor del contrato. El bytecode de ejecución, en cambio, es exactamente el bytecode que termina ejecutándose cuando se llama al nuevo contrato y nada más; no incluye el bytecode necesario para inicializar el contrato durante el despliegue.
 
-Let's take the simple `Faucet.sol` contract we created in previous chapters as an example:
+Tomemos como ejemplo el sencillo contrato `Faucet.sol` que creamos en capítulos anteriores:
 
 ```solidity
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity 0.8.27;
 
 contract Faucet {
-  // Give out ether to anyone who asks
+  // Entregar ether a cualquiera que lo solicite
   function withdraw(uint256 _withdrawAmount, address payable _to) public {
-    // Limit withdrawal amount
+    // Limitar la cantidad del retiro
     require(_withdrawAmount <= 1000000000000);
-    // Send the amount to the address that requested it
+    // Enviar la cantidad a la dirección que la solicitó
     _to.transfer(_withdrawAmount);
   }
   
-  // Function to receive Ether. msg.data must be empty
+  // Función para recibir Ether. msg.data debe estar vacío
   receive() external payable {}
   
-  // Fallback function is called when msg.data is not empty
+  // La función fallback se llama cuando msg.data no está vacío
   fallback() external payable {}
 }
 ```
 
-To get the deployment bytecode, we would run `solc --bin Faucet.sol`. If we instead wanted just the runtime bytecode, we would run `solc --bin-runtime Faucet.sol`. If you compare the output of these commands, you will see that the runtime bytecode is a subset of the deployment bytecode. In other words, the runtime bytecode is entirely contained within the deployment bytecode.
+Para obtener el bytecode de despliegue, ejecutaríamos `solc --bin Faucet.sol`. Si quisiéramos únicamente el bytecode de ejecución, ejecutaríamos `solc --bin-runtime Faucet.sol`. Al comparar las salidas de estos comandos, se verá que el bytecode de ejecución es un subconjunto del bytecode de despliegue. En otras palabras, el bytecode de ejecución está contenido por completo dentro del bytecode de despliegue.
 
-### CREATE Versus CREATE2 to Deploy Contracts on Chain
+### CREATE frente a CREATE2 para desplegar contratos en la cadena
 
-`CREATE` and `CREATE2` are the only two opcodes that let you deploy a new contract on chain. The main difference between them is related to the resulting address of the newly created contract. With `CREATE` the destination address is calculated as follows:
+`CREATE` y `CREATE2` son los únicos dos opcodes que permiten desplegar un contrato nuevo en la cadena. La principal diferencia entre ellos está relacionada con la dirección resultante del contrato recién creado. Con `CREATE`, la dirección de destino se calcula de la siguiente manera:
 
 ```
 address = keccak256[rlp(sender_address ++ sender_nonce)][12:]
 ```
 
-It's the rightmost 20 bytes of the Keccak-256 hash of the RLP encoding of the sender address followed by its nonce.
+Son los 20 bytes del extremo derecho del hash Keccak-256 de la codificación RLP de la dirección del remitente seguida de su nonce.
 
-`CREATE2` was added during the Constantinople hard fork in 2019 to let developers create new contracts where the resulting address isn't dependent on the state (i.e., the nonce) of the sender. In fact, it behaves in the exact same way as the `CREATE` opcode, but the destination address is calculated like this:
+`CREATE2` se agregó durante el hard fork Constantinople en 2019 para permitir que los desarrolladores creen contratos nuevos cuya dirección resultante no dependa del estado (es decir, del nonce) del remitente. De hecho, se comporta exactamente igual que el opcode `CREATE`, pero la dirección de destino se calcula así:
 
 ```
 address = keccak256(0xff ++ sender_address ++ salt ++ keccak256(init_code))[12:]
 ```
 
-where:
+donde:
 
-- `init_code` is the deployment bytecode of the new contract.
-- `salt` is a 32-byte value (taken from the stack)
+- `init_code` es el bytecode de despliegue del nuevo contrato.
+- `salt` es un valor de 32 bytes (tomado de la pila)
 
-## Disassembling the Bytecode
+## Desensamblado del bytecode
 
-Disassembling EVM bytecode is a great way to understand how high-level Solidity acts in the EVM. There are a few disassemblers you can use to do this:
+Desensamblar el bytecode de la EVM es una excelente manera de entender cómo actúa Solidity de alto nivel en la EVM. Hay algunos desensambladores que pueden usarse para hacerlo:
 
-- [**Ethersplay**](https://oreil.ly/xW6fH) is an EVM plug-in for Binary Ninja, a disassembler. By the way, to use plug-ins, you need to buy the complete app of Binary Ninja.
-- [**Heimdall**](https://oreil.ly/klTJ3) is an advanced EVM smart contract toolkit specializing in bytecode analysis and extracting information from unverified contracts.
+- [**Ethersplay**](https://oreil.ly/xW6fH) es un complemento de la EVM para Binary Ninja, un desensamblador. Por cierto, para usar complementos es necesario comprar la aplicación completa de Binary Ninja.
+- [**Heimdall**](https://oreil.ly/klTJ3) es un conjunto avanzado de herramientas para contratos inteligentes de la EVM, especializado en analizar bytecode y extraer información de contratos no verificados.
 
-In this section, we will be using Heimdall to produce Figure 14-21. After getting the runtime bytecode of `Faucet.sol`, we can feed it to Heimdall to see what the EVM instructions look like.
+En esta sección usaremos Heimdall para producir la figura 14-21. Después de obtener el bytecode de ejecución de `Faucet.sol`, podemos proporcionárselo a Heimdall para ver cómo son las instrucciones de la EVM.
 
-![Disassembling the Faucet runtime bytecode](images/ch14/maet_1421.png)
+![Desensamblado del bytecode de ejecución de Faucet](images/ch14/maet_1421.png)
 
-Figure 14-21. Disassembling the Faucet runtime bytecode
+Figura 14-21. Desensamblado del bytecode de ejecución de Faucet
 
-### Installing Heimdall
+### Instalación de Heimdall
 
-First, you need to ensure that Rust is installed on your computer. If it's not, run the following command:
+Primero, hay que asegurarse de que Rust esté instalado en la computadora. Si no lo está, ejecute el siguiente comando:
 
 ```bash
 $ curl https://sh.rustup.rs -sSf | sh
 ```
 
-Then, run these two commands, one after the other:
+Luego, ejecute estos dos comandos, uno después del otro:
 
 ```bash
 $ curl -L http://get.heimdall.rs | bash
 $ bifrost
 ```
 
-Now, you should have Heimdall correctly installed. You can verify that by running:
+Ahora Heimdall debería estar instalado correctamente. Puede comprobarse ejecutando:
 
 ```bash
 $ heimdall --version
 ```
 
-You should see something like this:
+Debería verse algo como esto:
 
 ```bash
 $ heimdall --version
 heimdall 0.8.4
 ```
 
-> **Note**  
+> **Nota**  
 >
-> For the latest information on how to install Heimdall, please refer to the official documentation you can find on the [GitHub repository](https://oreil.ly/klTJ3).
+> Para obtener la información más reciente sobre cómo instalar Heimdall, consulte la documentación oficial que se encuentra en el [repositorio de GitHub](https://oreil.ly/klTJ3).
 
-### Disassembling the bytecode with Heimdall
+### Desensamblado del bytecode con Heimdall
 
-Now that we have correctly installed Heimdall, we are ready to generate the same graph you saw in Figure 14-21. Starting with the runtime bytecode of our `Faucet.sol` contract, you can run the following command:
+Ahora que hemos instalado Heimdall correctamente, estamos listos para generar el mismo grafo que se vio en la figura 14-21. A partir del bytecode de ejecución de nuestro contrato `Faucet.sol`, se puede ejecutar el siguiente comando:
 
 ```bash
 $ heimdall cfg <insert the runtime bytecode here>
 ```
 
-Here is an example of what this command should look like:
+Este es un ejemplo de cómo debería verse el comando:
 
 ```bash
 $ heimdall cfg 608060405260043610610…
 ```
 
-Now, you should see a new folder called `output`. Enter it and again enter the generated folder called `local`. Here, you should find the file `cfg.dot`:
+Ahora debería verse una carpeta nueva llamada `output`. Entre en ella y luego en la carpeta generada llamada `local`. Allí debería encontrarse el archivo `cfg.dot`:
 
 ```bash
 $ cd output
 $ cd local
-$ ls # now you should see the file
+$ ls # ahora debería verse el archivo
 ```
 
-Since it's a `.dot` file, we need a special program to open it correctly. In this example, we're going to use a website that lets us paste the contents of the `.dot` file and then generates the graph for us.
+Como es un archivo `.dot`, necesitamos un programa especial para abrirlo correctamente. En este ejemplo usaremos un sitio web que permite pegar el contenido del archivo `.dot` y luego genera el grafo por nosotros.
 
-First, you need to copy the contents of the `.dot` file:
+Primero, hay que copiar el contenido del archivo `.dot`:
 
 ```bash
 $ cat cfg.dot
 ```
 
-This command prints to screen the entire contents of the file; copy it, open a [*control flow graph* (CFG) online generator](https://oreil.ly/swOsK), and paste it on the left side of the web page, as shown in Figure 14-22.
+Este comando imprime en pantalla todo el contenido del archivo; cópielo, abra un [generador en línea de *grafos de flujo de control* (CFG)](https://oreil.ly/swOsK) y péguelo en el lado izquierdo de la página web, como se muestra en la figura 14-22.
 
-![The control flow graph (CFG) of the Faucet.sol contract](images/ch14/maet_1422.png)
+![El grafo de flujo de control (CFG) del contrato Faucet.sol](images/ch14/maet_1422.png)
 
-Figure 14-22. The control flow graph (CFG) of the Faucet.sol contract
+Figura 14-22. El grafo de flujo de control (CFG) del contrato Faucet.sol
 
-Figure 14-23 shows the initial bytecode of the `Faucet.sol` contract. As you can see, it starts with the same pattern as the previous `Example.sol` contract: `PUSH1 0x80 PUSH1 0x40 MSTORE`.
+La figura 14-23 muestra el bytecode inicial del contrato `Faucet.sol`. Como puede verse, comienza con el mismo patrón que el contrato `Example.sol` anterior: `PUSH1 0x80 PUSH1 0x40 MSTORE`.
 
-![A zoom-in into the first part of the CFG graph](images/ch14/maet_1423.png)
+![Acercamiento a la primera parte del grafo CFG](images/ch14/maet_1423.png)
 
-Figure 14-23. A zoom-in into the first part of the CFG graph
+Figura 14-23. Acercamiento a la primera parte del grafo CFG
 
-When you send a transaction to an ABI-compatible smart contract (which you can assume all contracts are), the transaction first interacts with that smart contract's *dispatcher*. The dispatcher reads in the `data` field of the transaction and sends the relevant part to the appropriate function. We can see an example of a dispatcher at the beginning of our disassembled `Faucet.sol` runtime bytecode. After the familiar `MSTORE` instruction, we see the following instructions:
+Cuando se envía una transacción a un contrato inteligente compatible con la ABI (puede suponerse que todos los contratos lo son), la transacción interactúa primero con el *despachador* de ese contrato inteligente. El despachador lee el campo `data` de la transacción y envía la parte pertinente a la función adecuada. Podemos ver un ejemplo de despachador al principio del bytecode de ejecución desensamblado de nuestro `Faucet.sol`. Después de la conocida instrucción `MSTORE`, vemos las siguientes instrucciones:
 
 ```
 PUSH1 0x04
@@ -794,53 +794,53 @@ PUSH2 0x0020
 JUMPI
 ```
 
-As we have seen, `PUSH1 0x04` places `0x04` onto the top of the stack, which is otherwise empty. `CALLDATASIZE` gets the size in bytes of the data sent with the transaction (known as the calldata) and pushes that number onto the stack. After these operations have been executed, the stack looks like this:
+Como hemos visto, `PUSH1 0x04` coloca `0x04` en la cima de la pila, que por lo demás está vacía. `CALLDATASIZE` obtiene el tamaño en bytes de los datos enviados con la transacción (conocidos como calldata) e inserta ese número en la pila. Después de ejecutar estas operaciones, la pila se ve así:
 
 ```
-Stack
-<length of calldata from tx>
+Pila
+<longitud de calldata de la tx>
 0x4
 ```
 
-This next instruction is `LT`, short for "less than." The `LT` instruction checks whether the top item on the stack is less than the next item on the stack. In our case, it checks to see if the result of `CALLDATASIZE` is less than 4 bytes.
+La siguiente instrucción es `LT`, abreviatura de "less than" (menor que). La instrucción `LT` comprueba si el elemento superior de la pila es menor que el siguiente elemento. En nuestro caso, comprueba si el resultado de `CALLDATASIZE` es menor que 4 bytes.
 
-Why does the EVM check to see that the calldata of the transaction is at least 4 bytes? Because of how *function identifiers* work. Each Solidity function is identified by the first 4 bytes of its Keccak-256 hash. By placing the function's name and all the arguments it takes into a `keccak256` hash function, we can deduce its function identifier. In our case, we have:
+¿Por qué la EVM comprueba que el calldata de la transacción tenga al menos 4 bytes? Por cómo funcionan los *identificadores de función*. Cada función de Solidity se identifica por los primeros 4 bytes de su hash Keccak-256. Al introducir el nombre de la función y todos los argumentos que recibe en una función hash `keccak256`, podemos deducir su identificador de función. En nuestro caso, tenemos:
 
 ```
 keccak256("withdraw(uint256,address)") = 0x00f714ce...
 ```
 
-Thus, the function identifier for the `withdraw(uint256,address)` function is `0x00f714ce`, since these are the first 4 bytes of the resulting hash. A function identifier is always 4 bytes long, so if the entire data field of the transaction sent to the contract is less than 4 bytes, then there's no function with which the transaction could possibly be communicating, unless a fallback function is defined. Because we implemented such a fallback function in `Faucet.sol`, the EVM jumps to this function when the calldata's length is less than 4 bytes.
+Por lo tanto, el identificador de la función `withdraw(uint256,address)` es `0x00f714ce`, ya que estos son los primeros 4 bytes del hash resultante. Un identificador de función siempre tiene una longitud de 4 bytes, por lo que, si todo el campo de datos de la transacción enviada al contrato tiene menos de 4 bytes, no hay ninguna función con la que la transacción pudiera estar comunicándose, salvo que se haya definido una función fallback. Como implementamos una función fallback de este tipo en `Faucet.sol`, la EVM salta a esta función cuando la longitud de calldata es menor que 4 bytes.
 
-`LT` pops the top two values off the stack and, if the transaction's data field is less than 4 bytes, pushes 1 onto it. Otherwise, it pushes 0. In our example, let's assume the data field of the transaction sent to our contract was less than 4 bytes.
+`LT` extrae los dos valores superiores de la pila y, si el campo de datos de la transacción tiene menos de 4 bytes, inserta 1 en ella. En caso contrario, inserta 0. En nuestro ejemplo, supongamos que el campo de datos de la transacción enviada a nuestro contrato tenía menos de 4 bytes.
 
-The `PUSH2 0x0020` instruction pushes the bytes `0x0020` onto the stack. After this instruction, the stack looks like this:
+La instrucción `PUSH2 0x0020` inserta los bytes `0x0020` en la pila. Después de esta instrucción, la pila se ve así:
 
 ```
-Stack
+Pila
 0x0020
 0x1
 ```
 
-The next instruction is `JUMPI`, which stands for "jump if." It works like so:
+La siguiente instrucción es `JUMPI`, que significa "jump if" (saltar si). Funciona de la siguiente manera:
 
 ```
-jumpi(label, cond) // Jump to "label" if "cond" is true
+jumpi(label, cond) // Saltar a "label" si "cond" es verdadero
 ```
 
-In our case, `label` is `0x0020`, which is where our fallback function lives in our smart contract. The `cond` argument is 1, which was the result of the `LT` instruction earlier. To put this entire sequence into words, the contract jumps to the fallback function if the transaction data is less than 4 bytes.
+En nuestro caso, `label` es `0x0020`, que es donde se encuentra nuestra función fallback en el contrato inteligente. El argumento `cond` es 1, que fue el resultado de la instrucción `LT` anterior. Para expresar toda esta secuencia con palabras, el contrato salta a la función fallback si los datos de la transacción tienen menos de 4 bytes.
 
-At `0x20`, after two `JUMPDEST` instructions, only a `STOP` instruction follows because, although we declared a fallback function, we kept it empty. As you can see in Figure 14-24, had we not implemented a fallback function, the contract would throw an exception instead.
+En `0x20`, después de dos instrucciones `JUMPDEST`, solo sigue una instrucción `STOP` porque, aunque declaramos una función fallback, la dejamos vacía. Como puede verse en la figura 14-24, si no hubiéramos implementado una función fallback, el contrato generaría una excepción.
 
-![JUMPI instruction leading to fallback function](images/ch14/maet_1424.png)
+![Instrucción JUMPI que conduce a la función fallback](images/ch14/maet_1424.png)
 
-Figure 14-24. JUMPI instruction leading to fallback function
+Figura 14-24. Instrucción JUMPI que conduce a la función fallback
 
-> **Note**  
+> **Nota**  
 >
-> Heimdall represents the bytecode starting with offset equal to 0x01, even though the EVM actually interprets it as starting with offset 0x00. In the previous example, the JUMPI instruction tells the EVM to go to offset 0x20 if the condition is true, but in the graph, offset 0x20 is here represented as 0x21. As a rule of thumb, you just need to add one to every offset of the EVM to find it on the graph.
+> Heimdall representa el bytecode comenzando con un desplazamiento igual a 0x01, aunque la EVM en realidad lo interpreta como si comenzara con un desplazamiento de 0x00. En el ejemplo anterior, la instrucción JUMPI le indica a la EVM que vaya al desplazamiento 0x20 si la condición es verdadera, pero en el grafo el desplazamiento 0x20 se representa aquí como 0x21. Como regla práctica, basta con sumar uno a cada desplazamiento de la EVM para encontrarlo en el grafo.
 
-Let's examine the central block of the dispatcher. Assuming we received calldata that was greater than 4 bytes in length, the `JUMPI` instruction would not jump to the fallback function. Instead, code execution would proceed to the following instructions:
+Examinemos el bloque central del despachador. Suponiendo que recibimos un calldata de más de 4 bytes de longitud, la instrucción `JUMPI` no saltaría a la función fallback. En su lugar, la ejecución del código continuaría con las siguientes instrucciones:
 
 ```
 PUSH0 0x0
@@ -854,274 +854,274 @@ PUSH2 0X23
 JUMPI
 ```
 
-`PUSH0` pushes 0 onto the stack, which is now otherwise empty again. `CALLDATALOAD` accepts as an argument an index within the calldata sent to the smart contract and reads 32 bytes from that index, like so:
+`PUSH0` inserta 0 en la pila, que por lo demás vuelve a estar vacía. `CALLDATALOAD` acepta como argumento un índice dentro del calldata enviado al contrato inteligente y lee 32 bytes a partir de ese índice, de esta manera:
 
 ```
-calldataload(p) //load 32 bytes of calldata starting from byte position p
+calldataload(p) //cargar 32 bytes de calldata a partir de la posición de byte p
 ```
 
-Since 0 was the index passed to it from the `PUSH0` command, `CALLDATALOAD` reads 32 bytes of calldata starting at byte 0 and then pushes it to the top of the stack (after popping the original `0x0`). After the `PUSH1 0xe0` instruction, the stack is then:
+Como 0 fue el índice que le pasó el comando `PUSH0`, `CALLDATALOAD` lee 32 bytes de calldata a partir del byte 0 y luego los inserta en la cima de la pila (después de extraer el `0x0` original). Después de la instrucción `PUSH1 0xe0`, la pila queda así:
 
 ```
-Stack
+Pila
 0xe0
-<32 bytes of calldata starting at byte 0>
+<32 bytes de calldata a partir del byte 0>
 ```
 
-`SHR` performs a logical right shift of `0xe0` bits (224 bits, 28 bytes) to the 32-byte value element on the stack. By shifting the calldata to the right by 28 bytes, it isolates the first 4 bytes of the calldata. In fact, when shifting to the right, all the bits move before the first one are discarded, while the new bits are set to 0. Remember that the first 4 bytes of the calldata represent the function identifier of the function we want to trigger.
+`SHR` realiza un desplazamiento lógico a la derecha de `0xe0` bits (224 bits, 28 bytes) sobre el elemento de valor de 32 bytes de la pila. Al desplazar calldata 28 bytes a la derecha, aísla sus primeros 4 bytes. De hecho, al desplazar a la derecha, se descartan todos los bits desplazados más allá del primero, mientras que los nuevos bits se establecen en 0. Recuerde que los primeros 4 bytes de calldata representan el identificador de la función que queremos activar.
 
-### Logical Bit Shift Example
+### Ejemplo de desplazamiento lógico de bits
 
-You can better understand this with an example. Let's say the stack is:
-
-```
-Stack
-0x1234567890 // a 5 bytes element
-```
-
-We want to get only the first two bytes (i.e., `0x1234`). To achieve this using only EVM opcodes, we can do:
+Esto puede entenderse mejor con un ejemplo. Supongamos que la pila es:
 
 ```
-PUSH1 0x18 // this represents the number 24 in hex, 24 bits = 3 bytes
+Pila
+0x1234567890 // un elemento de 5 bytes
+```
+
+Queremos obtener únicamente los primeros dos bytes (es decir, `0x1234`). Para lograrlo usando solo opcodes de la EVM, podemos hacer lo siguiente:
+
+```
+PUSH1 0x18 // esto representa el número 24 en hexadecimal, 24 bits = 3 bytes
 SHR
 ```
 
-In fact, by shifting the stack of items 3 bytes to the right (remember that each byte is represented here as 2 hex digits), we obtain the following item:
+De hecho, al desplazar la pila de elementos 3 bytes a la derecha (recuerde que aquí cada byte se representa con 2 dígitos hexadecimales), obtenemos el siguiente elemento:
 
 ```
 0x0000001234 | 4567890
 ```
 
-The `4567890` part is discarded, and all that remains is:
+La parte `4567890` se descarta y lo único que queda es:
 
 ```
-Stack
+Pila
 0x1234
 ```
 
-All the leading zeros can be ignored as they are not significant.
+Pueden ignorarse todos los ceros iniciales porque no son significativos.
 
 ---
 
-The new stack is:
+La nueva pila es:
 
 ```
-Stack
-<function identifier sent in data>
+Pila
+<identificador de función enviado en data>
 ```
 
-The next instruction is `DUP1`, which duplicates the first item in the stack. The stack is now:
+La siguiente instrucción es `DUP1`, que duplica el primer elemento de la pila. La pila ahora es:
 
 ```
-Stack
-<function identifier sent in data>
-<function identifier sent in data>
+Pila
+<identificador de función enviado en data>
+<identificador de función enviado en data>
 ```
 
-Now there is a `PUSH3` instruction, followed by the push data `0xf714ce`. This opcode simply pushes the (push) data onto the stack. After this opcode, the stack looks like this:
+Ahora hay una instrucción `PUSH3`, seguida de los datos push `0xf714ce`. Este opcode simplemente inserta los datos (push) en la pila. Después de este opcode, la pila se ve así:
 
 ```
-Stack
+Pila
 0xf714ce
-<function identifier sent in data>
-<function identifier sent in data>
+<identificador de función enviado en data>
+<identificador de función enviado en data>
 ```
 
-Now, does the `0xf714ce` look familiar to you? Do you remember what the function identifier of our `withdraw(uint256,address)` function is? It's `0x00f714ce`… Note that they are the same number as leading zeros can be ignored.
+Ahora, ¿resulta familiar `0xf714ce`? ¿Recuerda cuál es el identificador de nuestra función `withdraw(uint256,address)`? Es `0x00f714ce`… Nótese que son el mismo número, ya que los ceros iniciales pueden ignorarse.
 
-The next instruction, `EQ`, pops off the top two items of the stack and compares them. This is where the dispatcher does its main job: it compares whether the function identifier sent in the `msg.data` field of the transaction matches that of `withdraw(uint256,address)`. If they're equal, `EQ` pushes 1 onto the stack, which will ultimately be used to jump to the withdraw function. Otherwise, `EQ` pushes 0 onto the stack.
+La siguiente instrucción, `EQ`, extrae los dos elementos superiores de la pila y los compara. Aquí es donde el despachador realiza su tarea principal: compara si el identificador de función enviado en el campo `msg.data` de la transacción coincide con el de `withdraw(uint256,address)`. Si son iguales, `EQ` inserta 1 en la pila, que finalmente se usará para saltar a la función withdraw. En caso contrario, `EQ` inserta 0 en la pila.
 
-Assuming the transaction sent to our contract indeed began with the function identifier for `withdraw(uint256,address)`, our stack has become:
+Suponiendo que la transacción enviada a nuestro contrato efectivamente comenzaba con el identificador de la función `withdraw(uint256,address)`, nuestra pila se ha convertido en:
 
 ```
-Stack
+Pila
 1
-<function identifier sent in data> (now known to be 0x00f714ce)
+<identificador de función enviado en data> (ahora sabemos que es 0x00f714ce)
 ```
 
-Next, we have `PUSH2 0x23`, which is the address at which the `withdraw(uint256,address)` function lives in the contract. After this instruction, the stack looks like this:
+A continuación tenemos `PUSH2 0x23`, que es la dirección en la que se encuentra la función `withdraw(uint256,address)` dentro del contrato. Después de esta instrucción, la pila se ve así:
 
 ```
-Stack
+Pila
 0x23
 1
-<function identifier sent in msg.data>
+<identificador de función enviado en msg.data>
 ```
 
-The `JUMPI` instruction is next, and it once again accepts the top two elements on the stack as arguments. In this case, we have `JUMPI(0x23, 1)`, which tells the EVM to execute the jump to the location of the `withdraw(uint256,address)` function, and the execution of that function's code can proceed.
+La siguiente es la instrucción `JUMPI`, que una vez más acepta como argumentos los dos elementos superiores de la pila. En este caso tenemos `JUMPI(0x23, 1)`, que le indica a la EVM que ejecute el salto a la ubicación de la función `withdraw(uint256,address)`, y la ejecución del código de esa función puede continuar.
 
-## Turing Completeness and Gas
+## Completitud de Turing y gas
 
-As we have already touched on, in simple terms a system or programming language is *Turing complete* if it can run any program. This capability, however, comes with a very important caveat: some programs take forever to run. An important aspect of this is that we can't tell just by looking at a program whether it will take forever or not to execute. We have to actually go through with the execution of the program and wait for it to finish to find out. Of course, if it is going to take forever to execute, we will have to wait forever to find out. This is called the *halting problem* and would be a huge problem for Ethereum if it were not addressed.
+Como ya mencionamos, en términos sencillos un sistema o lenguaje de programación es *Turing completo* si puede ejecutar cualquier programa. Sin embargo, esta capacidad viene con una salvedad muy importante: algunos programas tardan una eternidad en ejecutarse. Un aspecto importante es que no podemos saber, con solo mirar un programa, si su ejecución tardará para siempre o no. Para averiguarlo, tenemos que ejecutar realmente el programa y esperar a que termine. Por supuesto, si va a tardar para siempre en ejecutarse, tendremos que esperar para siempre para saberlo. Esto se llama el *problema de la parada* y sería un enorme problema para Ethereum si no se abordara.
 
-Because of the halting problem, the Ethereum world computer is at risk of being asked to execute a program that never stops. This could be by accident or malice. We have described how Ethereum acts like a single-threaded machine, without any scheduler, and so if it became stuck in an infinite loop, that would mean that Ethereum would become unusable.
+Debido al problema de la parada, la computadora mundial de Ethereum corre el riesgo de que se le pida ejecutar un programa que nunca se detenga. Esto podría ocurrir por accidente o de manera maliciosa. Hemos descrito cómo Ethereum actúa como una máquina de un solo hilo, sin ningún planificador, por lo que, si quedara atrapado en un bucle infinito, Ethereum se volvería inutilizable.
 
-With gas, there is a solution, though: if after a prespecified maximum amount of computation has been performed, the execution hasn't ended, the execution of the program is halted by the EVM. This makes the EVM a quasi-Turing-complete machine: it can run any program you feed into it but only if the program terminates within a particular amount of computation. That limit isn't fixed in Ethereum—you can pay to increase it up to a maximum (called the *block gas limit*), and everyone can agree to increase that maximum over time. Nevertheless, at any one time, there is a limit in place, and transactions that consume too much gas while executing are halted.
+Sin embargo, con el gas hay una solución: si después de realizar una cantidad máxima de cómputo especificada de antemano la ejecución no ha terminado, la EVM detiene la ejecución del programa. Esto convierte a la EVM en una máquina cuasi-Turing completa: puede ejecutar cualquier programa que se le proporcione, pero solo si el programa termina dentro de una cantidad determinada de cómputo. Ese límite no es fijo en Ethereum: se puede pagar para aumentarlo hasta un máximo (llamado *límite de gas del bloque*), y todos pueden acordar aumentar ese máximo con el tiempo. No obstante, en cualquier momento dado existe un límite y se detienen las transacciones que consumen demasiado gas durante su ejecución.
 
-In the following sections, we will look at gas and examine how it works in detail.
+En las siguientes secciones, examinaremos el gas y veremos en detalle cómo funciona.
 
-### What Is Gas?
+### ¿Qué es el gas?
 
-Gas is Ethereum's unit for measuring the computational and storage resources required to perform actions on the Ethereum blockchain. In contrast to Bitcoin, whose transaction fees take into account only the size of a transaction in kilobytes, Ethereum must account for every computational step performed by transactions and smart contract code execution.
+El gas es la unidad de Ethereum para medir los recursos de cómputo y almacenamiento necesarios para realizar acciones en la blockchain de Ethereum. A diferencia de Bitcoin, cuyas comisiones de transacción solo tienen en cuenta el tamaño de una transacción en kilobytes, Ethereum debe contabilizar cada paso de cómputo realizado por las transacciones y la ejecución del código de contratos inteligentes.
 
-Each operation performed by a transaction or contract costs a fixed amount of gas. Some examples from the Ethereum "Yellow Paper" include:
+Cada operación realizada por una transacción o un contrato cuesta una cantidad fija de gas. Algunos ejemplos del "Yellow Paper" de Ethereum incluyen:
 
-- Adding two numbers costs 3 gas
-- Calculating a Keccak-256 hash costs 30 gas + 6 gas for each 256 bits of data being hashed
-- Sending a transaction costs 21,000 gas
+- Sumar dos números cuesta 3 gas
+- Calcular un hash Keccak-256 cuesta 30 gas + 6 gas por cada 256 bits de datos a los que se calcula el hash
+- Enviar una transacción cuesta 21,000 gas
 
-Gas is a crucial component of Ethereum and serves a dual role: as a buffer between the (volatile) price of ether and the reward to validators for the work they do and as a defense against DoS attacks. To prevent accidental or malicious infinite loops or other computational wastage in the network, the initiator of each transaction is required to set a limit to the amount of computation they are willing to pay for. The gas system thereby disincentivizes attackers from sending "spam" transactions since they must pay proportionately for the computational, bandwidth, and storage resources that they consume.
+El gas es un componente fundamental de Ethereum y cumple una doble función: amortigua la relación entre el precio (volátil) del ether y la recompensa a los validadores por el trabajo que realizan, y sirve de defensa contra los ataques DoS. Para evitar bucles infinitos accidentales o maliciosos u otros desperdicios de cómputo en la red, quien inicia cada transacción debe establecer un límite a la cantidad de cómputo por la que está dispuesto a pagar. Así, el sistema de gas desincentiva que los atacantes envíen transacciones de "spam", ya que deben pagar proporcionalmente por los recursos de cómputo, ancho de banda y almacenamiento que consumen.
 
-### Gas Accounting During Execution
+### Contabilización del gas durante la ejecución
 
-When an EVM is needed to complete a transaction, in the first instance it is given a gas supply equal to the amount specified by the gas limit in the transaction. Every opcode that is executed has a cost in gas, and so the EVM's gas supply is reduced as the EVM steps through the program. Before each operation, the EVM checks that there is enough gas to pay for the operation's execution. If there isn't enough gas, execution is halted and the transaction is reverted.
+Cuando se necesita una EVM para completar una transacción, inicialmente se le da una reserva de gas igual a la cantidad especificada por el límite de gas de la transacción. Cada opcode ejecutado tiene un costo en gas, por lo que la reserva de gas de la EVM disminuye a medida que esta recorre el programa. Antes de cada operación, la EVM comprueba que haya suficiente gas para pagar su ejecución. Si no hay suficiente gas, la ejecución se detiene y la transacción se revierte.
 
-If the EVM reaches the end of execution successfully without running out of gas, the gas cost used is paid to the validator as a transaction fee, converted to ether based on the gas price specified in the transaction:
+Si la EVM llega correctamente al final de la ejecución sin agotar el gas, el costo del gas utilizado se paga al validador como comisión de transacción, convertido a ether según el precio del gas especificado en la transacción:
 
 ```
 validator fee = gas cost × gas price
 ```
 
-The gas remaining in the gas supply is refunded to the sender, again converted to ether based on the gas price specified in the transaction:
+El gas que queda en la reserva se reembolsa al remitente, de nuevo convertido a ether según el precio del gas especificado en la transacción:
 
 ```
 remaining gas = gas limit – gas cost
 refunded ether = remaining gas × gas price
 ```
 
-If the transaction "runs out of gas" during execution, the operation is immediately terminated, raising an OOG exception. The transaction is reverted, and all changes to the state are rolled back. Although the transaction was unsuccessful, the sender will be charged a transaction fee because validators have already performed the computational work up to that point and must be compensated for doing so.
+Si la transacción "se queda sin gas" durante la ejecución, la operación termina inmediatamente y genera una excepción OOG. La transacción se revierte y se deshacen todos los cambios de estado. Aunque la transacción no haya tenido éxito, se cobrará al remitente una comisión de transacción porque los validadores ya realizaron el trabajo de cómputo hasta ese momento y deben recibir una compensación por ello.
 
-#### Gas accounting considerations
+#### Consideraciones sobre la contabilización del gas
 
-The relative gas costs of the various operations that can be performed by the EVM have been carefully chosen to best protect the Ethereum blockchain from attack. More computationally intensive operations cost more gas. For example, executing the `SHA3` function is 10 times more expensive (30 gas) than the `ADD` operation (3 gas). More important, some operations, such as `EXP`, require an additional payment based on the size of the operand. There is also a gas cost to using EVM memory and for storing data in a contract's on-chain storage.
+Los costos relativos de gas de las distintas operaciones que puede realizar la EVM se han elegido cuidadosamente para proteger de la mejor manera a la blockchain de Ethereum contra ataques. Las operaciones que requieren más cómputo cuestan más gas. Por ejemplo, ejecutar la función `SHA3` es 10 veces más costoso (30 gas) que la operación `ADD` (3 gas). Más importante aún, algunas operaciones, como `EXP`, requieren un pago adicional según el tamaño del operando. También hay un costo de gas por usar la memoria de la EVM y por guardar datos en el almacenamiento persistente en la cadena de un contrato.
 
-The importance of matching gas cost to the real-world cost of resources was demonstrated in 2016 when an attacker found and exploited a mismatch in costs. The attack generated transactions that were very computationally expensive and made the Ethereum mainnet almost grind to a halt. This mismatch was resolved by a hard fork (codenamed "Tangerine Whistle") that tweaked the relative gas costs.
+La importancia de hacer coincidir el costo de gas con el costo real de los recursos quedó demostrada en 2016, cuando un atacante encontró y explotó un desajuste en los costos. El ataque generó transacciones muy costosas en términos de cómputo y casi paralizó la red principal de Ethereum. Este desajuste se resolvió mediante un hard fork (con el nombre en clave "Tangerine Whistle") que ajustó los costos relativos de gas.
 
-#### Gas accounting in the future of Ethereum
+#### Contabilización del gas en el futuro de Ethereum
 
-Gas metering was and remains an extremely important part of how Ethereum handles the entire load of transactions in the network. It's very important to understand that gas costs are a key incentive for certain kinds of behaviors. In the future, there may be some changes in how much gas different opcodes consume.
+La medición del gas fue y sigue siendo una parte sumamente importante de cómo Ethereum maneja toda la carga de transacciones de la red. Es muy importante entender que los costos de gas son un incentivo clave para ciertos tipos de comportamiento. En el futuro, podría haber cambios en la cantidad de gas que consumen los distintos opcodes.
 
-For example, before the Cancun upgrade that introduced EIP-4844 blob transactions, all L2s were posting their data on Ethereum as part of the calldata of a transaction. That data is forever stored on all of Ethereum's nodes. Now that L2s have a better way to post their data on Ethereum through blob transactions, it's possible that in the future, calldata will become even more expensive than it is now to encourage rollups to use blob transactions and to lessen the burden for nodes of storing all that data forever.
+Por ejemplo, antes de la actualización Cancun que introdujo las transacciones de blobs de EIP-4844, todas las L2 publicaban sus datos en Ethereum como parte del calldata de una transacción. Esos datos se almacenan para siempre en todos los nodos de Ethereum. Ahora que las L2 tienen una mejor manera de publicar sus datos en Ethereum mediante transacciones de blobs, es posible que en el futuro calldata se vuelva incluso más costoso que ahora, para incentivar a los rollups a usar transacciones de blobs y reducir la carga que supone para los nodos almacenar todos esos datos para siempre.
 
-#### Gas cost versus gas price
+#### Costo del gas frente a precio del gas
 
-While the *gas cost* is a measure of computation and storage used by a transaction in the EVM, the gas itself also has a *price* measured in ether. When performing a transaction, the sender specifies the gas price they are willing to pay (in ether) for each unit of gas, allowing the market to decide the relationship between the price of ether and the cost of computing operations (as measured in gas):
+Mientras que el *costo del gas* es una medida del cómputo y el almacenamiento utilizados por una transacción en la EVM, el gas en sí también tiene un *precio* medido en ether. Al realizar una transacción, el remitente especifica el precio de gas que está dispuesto a pagar (en ether) por cada unidad de gas, lo que permite que el mercado decida la relación entre el precio del ether y el costo de las operaciones de cómputo (medido en gas):
 
 ```
 transaction fee = total gas used × gas price paid (in ether)
 ```
 
-When constructing a new block, validators on the Ethereum network can choose among pending transactions by selecting those that offer to pay a higher gas price. Offering a higher gas price will therefore incentivize validators to include your transaction and get it confirmed faster.
+Al construir un bloque nuevo, los validadores de la red Ethereum pueden elegir entre las transacciones pendientes seleccionando las que ofrecen pagar un precio de gas mayor. Por lo tanto, ofrecer un precio de gas mayor incentivará a los validadores a incluir la transacción y confirmarla más rápido.
 
-In practice, the sender of a transaction will set a gas limit that is higher than or equal to the amount of gas expected to be used. If the gas limit is set higher than the amount of gas consumed, the sender will receive a refund of the excess amount since validators are compensated only for the work they actually perform.
+En la práctica, el remitente de una transacción establecerá un límite de gas mayor o igual que la cantidad de gas que se espera utilizar. Si el límite de gas se establece por encima de la cantidad consumida, el remitente recibirá un reembolso del excedente, ya que los validadores solo reciben compensación por el trabajo que realmente realizan.
 
-It is important to be clear about the distinction between the gas cost and the gas price. To recap:
+Es importante tener clara la distinción entre el costo del gas y el precio del gas. En resumen:
 
-- *Gas cost* is the number of units of gas required to perform a particular operation.
-- *Gas price* is the amount of ether you are willing to pay per unit of gas when you send your transaction to the Ethereum network.
+- El *costo del gas* es el número de unidades de gas necesarias para realizar una operación determinada.
+- El *precio del gas* es la cantidad de ether que se está dispuesto a pagar por unidad de gas al enviar una transacción a la red Ethereum.
 
-> **Tip**  
+> **Consejo**  
 >
-> Although gas has a price, it cannot be "owned" or "spent." Gas exists only inside the EVM, as a count of how much computational work is being performed. The sender is charged a transaction fee in ether, which is converted to gas for EVM accounting and then back to ether as a transaction fee paid to the validators.
+> Aunque el gas tiene un precio, no puede "poseerse" ni "gastarse". El gas existe solo dentro de la EVM, como un conteo de cuánto trabajo de cómputo se está realizando. Al remitente se le cobra una comisión de transacción en ether, que se convierte a gas para la contabilidad de la EVM y luego de nuevo a ether como comisión de transacción pagada a los validadores.
 
-#### Negative gas costs
+#### Costos negativos de gas
 
-Ethereum encourages the deletion of used storage variables by refunding some of the gas used during contract execution. There is only operation in the EVM with negative gas costs: changing a storage address from a nonzero value to zero (`SSTORE[x] = 0`) is worth a refund. The amount of refunded gas isn't fixed and depends on the values of the storage slot before and after this operation. To avoid exploitation of the refund mechanism, the maximum refund for a transaction is set to one fifth of the total amount of gas cost (rounded down).
+Ethereum incentiva la eliminación de variables usadas del almacenamiento persistente reembolsando parte del gas utilizado durante la ejecución del contrato. Solo hay una operación en la EVM con costos negativos de gas: cambiar una dirección de almacenamiento persistente de un valor distinto de cero a cero (`SSTORE[x] = 0`) da derecho a un reembolso. La cantidad de gas reembolsada no es fija y depende de los valores del slot de almacenamiento persistente antes y después de esta operación. Para evitar que se explote el mecanismo de reembolso, el reembolso máximo de una transacción se establece en una quinta parte del costo total de gas (redondeada hacia abajo).
 
-In the past, there was another operation with a negative gas cost: `SELFDESTRUCT`. Deleting a contract (through `SELFDESTRUCT`) was worth a refund of 24,000 gas. Right now, the `SELFDESTRUCT` opcode is deprecated, and not using it anymore is recommended.
+En el pasado había otra operación con un costo negativo de gas: `SELFDESTRUCT`. Eliminar un contrato (mediante `SELFDESTRUCT`) daba derecho a un reembolso de 24,000 gas. Actualmente, el opcode `SELFDESTRUCT` está obsoleto y se recomienda dejar de usarlo.
 
-> **Tip**  
+> **Consejo**  
 >
-> Gas refunds are applied at the end of the transaction. So if a transaction doesn't have sufficient gas to reach the end of the execution, it fails, and no refunds are given.
+> Los reembolsos de gas se aplican al final de la transacción. Por lo tanto, si una transacción no tiene suficiente gas para llegar al final de la ejecución, falla y no se otorga ningún reembolso.
 
-### Block Gas Limit
+### Límite de gas del bloque
 
-The block gas limit is the maximum amount of gas that may be consumed by all the transactions in a block. It constrains how many transactions can fit into a block.
+El límite de gas del bloque es la cantidad máxima de gas que pueden consumir todas las transacciones de un bloque. Restringe cuántas transacciones caben en un bloque.
 
-For example, let's say we have five transactions whose gas limits have been set to 30,000, 30,000, 40,000, 50,000, and 50,000. If the block gas limit is 180,000, then any four of those transactions can fit in a block, while the fifth will have to wait for a future block. As previously discussed, validators decide which transactions to include into a block. Different validators are likely to select different combinations, mainly because they receive transactions from the network in a different order.
+Por ejemplo, supongamos que tenemos cinco transacciones cuyos límites de gas se han establecido en 30,000, 30,000, 40,000, 50,000 y 50,000. Si el límite de gas del bloque es 180,000, cualquier grupo de cuatro de esas transacciones cabe en un bloque, mientras que la quinta tendrá que esperar a un bloque futuro. Como se explicó antes, los validadores deciden qué transacciones incluir en un bloque. Es probable que distintos validadores seleccionen combinaciones diferentes, principalmente porque reciben las transacciones de la red en distinto orden.
 
-If a validator tries to include a transaction that requires more gas than the current block gas limit, the block will be rejected by the network. Most Ethereum clients will stop you from issuing such a transaction by giving a warning along the lines of "transaction exceeds block gas limit." According to [Etherscan](https://etherscan.io), the block gas limit on the Ethereum mainnet is 36 million gas at the time of writing (June 2025), meaning that around 1,428 basic—that is, ETH transfer—transactions (each consuming 21,000 gas) could fit into a block.
+Si un validador intenta incluir una transacción que requiere más gas que el límite de gas actual del bloque, la red rechazará el bloque. La mayoría de los clientes de Ethereum impedirán emitir una transacción de este tipo mediante una advertencia similar a "transaction exceeds block gas limit". Según [Etherscan](https://etherscan.io), el límite de gas del bloque en la red principal de Ethereum es de 36 millones de gas al momento de escribir este libro (junio de 2025), lo que significa que en un bloque cabrían alrededor de 1,428 transacciones básicas, es decir, de transferencia de ETH (cada una consume 21,000 gas).
 
-#### Who chooses the block gas limit?
+#### ¿Quién elige el límite de gas del bloque?
 
-Before the introduction of EIP-1559 on August 5, 2021, miners (Ethereum was using a PoW-based consensus algorithm at that time) had a built-in mechanism where they could vote on the block gas limit, so capacity could be increased or decreased in subsequent blocks. The miner of a block could vote to adjust the block gas limit by a factor of 1/1024 (0.0976%) in either direction. The result of this was an adjustable block size based on the needs of the network, following miners' hashpower.
+Antes de la introducción de EIP-1559 el 5 de agosto de 2021, los mineros (Ethereum usaba entonces un algoritmo de consenso basado en PoW) tenían un mecanismo integrado con el que podían votar sobre el límite de gas del bloque, de modo que la capacidad pudiera aumentar o disminuir en los bloques posteriores. El minero de un bloque podía votar para ajustar el límite de gas del bloque en un factor de 1/1024 (0.0976%) en cualquiera de las dos direcciones. El resultado era un tamaño de bloque ajustable según las necesidades de la red, siguiendo la potencia de hash de los mineros.
 
-Now, validators vote on the *gas target*—that is, how much gas a block should consume on average—and the gas limit is defined to be twice the target. The 1/1024 adjusting factor that each validator must comply with is maintained the same as before.
+Ahora los validadores votan sobre el *objetivo de gas*, es decir, cuánto gas debería consumir un bloque en promedio, y el límite de gas se define como el doble del objetivo. El factor de ajuste de 1/1024 que cada validador debe respetar se mantiene igual que antes.
 
-#### Why doesn't the block gas limit rise?
+#### ¿Por qué no aumenta el límite de gas del bloque?
 
-You may be wondering, if validators can vote on the gas target, which directly translates to the gas limit, why doesn't the block gas limit rise to one billion instead of being almost fixed at 30 million? A bigger block gas limit would mean that more transactions could fit into a block, so transactions would become cheaper for end users.
+Quizá surja la pregunta: si los validadores pueden votar sobre el objetivo de gas, que se traduce directamente en el límite de gas, ¿por qué el límite de gas del bloque no sube a mil millones en vez de permanecer casi fijo en 30 millones? Un límite de gas del bloque mayor significaría que cabrían más transacciones en un bloque, por lo que las transacciones serían más baratas para los usuarios finales.
 
-The answer is that raising the gas limit has some cons related to the decentralization of the network. In fact, while bigger blocks can include more transactions, that also means that blocks become harder to verify on time, and that could lead to the death of Ethereum nodes made with common hardware, leaving only powerful servers to validate full blocks. Not only that, but bigger blocks also mean a bigger state growth. The final outcome is the same as before: big servers would be the only ones able to fully run a node.
+La respuesta es que aumentar el límite de gas tiene algunas desventajas relacionadas con la descentralización de la red. De hecho, aunque los bloques más grandes pueden incluir más transacciones, también se vuelven más difíciles de verificar a tiempo, lo que podría llevar a la desaparición de los nodos de Ethereum construidos con hardware común y dejar solo servidores potentes para validar bloques completos. Además, los bloques más grandes también implican un mayor crecimiento del estado. El resultado final es el mismo de antes: los grandes servidores serían los únicos capaces de ejecutar un nodo por completo.
 
-Historically, the block gas limit has been raised all at once during upgrades of the protocol, as you can see in Figure 14-25. And its value is generally set to a level suggested by core developers where we are sure all clients are able to handle the load of transactions and process blocks on time.
+Históricamente, el límite de gas del bloque se ha aumentado de una sola vez durante las actualizaciones del protocolo, como puede verse en la figura 14-25. Y su valor generalmente se establece en un nivel sugerido por los desarrolladores del protocolo en el que estamos seguros de que todos los clientes pueden manejar la carga de transacciones y procesar los bloques a tiempo.
 
-![Block gas limit history](images/ch14/maet_1425.png)
+![Historial del límite de gas del bloque](images/ch14/maet_1425.png)
 
-Figure 14-25. Ethereum average gas limit chart
+Figura 14-25. Gráfico del límite de gas promedio de Ethereum
 
-#### Why Not Raise the Block Gas Limit?
+#### ¿Por qué no aumentar el límite de gas del bloque?
 
-Even though the block gas limit looks like it has been "fixed" at 30 million for more than three years, with PBS (see "Ethereum Stateless"), where actors with sophisticated hardware build the blocks—builders—and send them to proposers—validators—to publish them on the P2P network, there is an incentive to raise the block gas limit indefinitely while maintaining the actual gas used almost as a constant.
+Aunque el límite de gas del bloque parece haber estado "fijo" en 30 millones durante más de tres años, con PBS (consulte "Ethereum sin estado"), donde actores con hardware sofisticado construyen los bloques, los constructores, y los envían a los proponentes, los validadores, para publicarlos en la red P2P, existe un incentivo para aumentar indefinidamente el límite de gas del bloque manteniendo casi constante el gas realmente utilizado.
 
-In fact, following EIP-1559, if the block gas target is much higher than the actual gas used, the base fee keeps decreasing, to the point where almost all of the gas fee goes to the validators instead of being burned (the base fee is burned, removing those ETH from the supply).
+De hecho, según EIP-1559, si el objetivo de gas del bloque es mucho mayor que el gas realmente utilizado, la comisión base sigue disminuyendo hasta el punto en que casi toda la comisión de gas va a los validadores en lugar de quemarse (la comisión base se quema, eliminando esos ETH de la oferta).
 
-So the advantages for validators are twofold:
+Por lo tanto, las ventajas para los validadores son dos:
 
-- They can keep the gas fees for themselves, instead of burning them and reducing the ETH supply.
-- When necessary, they can create larger blocks that capture a lot of MEV activity, resulting in even more fees for them.
+- Pueden quedarse con las comisiones de gas, en lugar de quemarlas y reducir la oferta de ETH.
+- Cuando es necesario, pueden crear bloques más grandes que capturen mucha actividad de MEV y les generen aún más comisiones.
 
-If you are curious about this, read more in [James Prestwich's article](https://oreil.ly/EImcE).
+Si le interesa el tema, puede leer más en el [artículo de James Prestwich](https://oreil.ly/EImcE).
 
-## Concrete Implementations
+## Implementaciones concretas
 
-Every Ethereum node has a concrete implementation of the EVM described in this chapter. Here is a list of the most famous and used ones:
+Cada nodo de Ethereum tiene una implementación concreta de la EVM descrita en este capítulo. Esta es una lista de las más conocidas y utilizadas:
 
 **Go-ethereum EVM**
 
-Geth is the most adopted and oldest execution client. It contains a full implementation of the EVM written in Go.
+Geth es el cliente de ejecución más adoptado y más antiguo. Contiene una implementación completa de la EVM escrita en Go.
 
 **Execution-spec EVM**
 
-The Ethereum Foundation maintains a Python repository on GitHub containing the specification related to the Ethereum execution client. It has a full EVM implementation written in Python.
+La Ethereum Foundation mantiene un repositorio de Python en GitHub que contiene la especificación relacionada con el cliente de ejecución de Ethereum. Tiene una implementación completa de la EVM escrita en Python.
 
 **Revm**
 
-Revm is one of the most used EVM implementations outside of normal Ethereum clients, thanks to its great customizability and adaptability.
+Revm es una de las implementaciones de la EVM más utilizadas fuera de los clientes normales de Ethereum, gracias a su gran capacidad de personalización y adaptación.
 
 **Evmone**
 
-Evmone is probably the fastest EVM implementation. It is written in C++ and maintained by the Ipsilon team at the Ethereum Foundation.
+Evmone es probablemente la implementación más rápida de la EVM. Está escrita en C++ y la mantiene el equipo Ipsilon de la Ethereum Foundation.
 
 **Besu EVM**
 
-Besu is an execution client maintained by Consensys. It has a full implementation of the EVM written in Java.
+Besu es un cliente de ejecución mantenido por Consensys. Tiene una implementación completa de la EVM escrita en Java.
 
 **Nethermind EVM**
 
-Nethermind EVM is an execution client written in C# that maintains a full implementation of the EVM.
+Nethermind EVM es un cliente de ejecución escrito en C# que mantiene una implementación completa de la EVM.
 
-## The Biggest EVM Upgrade: EVM Object Format
+## La mayor actualización de la EVM: EVM Object Format
 
-*EVM Object Format* (EOF) is the biggest upgrade to the EVM since its birth in 2015. In fact, even though there have been modifications to the EVM in the past, which were mainly focused on the gas-metering aspect or on the introduction of new opcodes, the EVM is almost identical to how it was first created by Gavin Wood.
+*EVM Object Format* (EOF) es la mayor actualización de la EVM desde su nacimiento en 2015. De hecho, aunque ha habido modificaciones de la EVM en el pasado, centradas principalmente en la medición del gas o en la introducción de nuevos opcodes, la EVM es casi idéntica a como la creó originalmente Gavin Wood.
 
-The EVM is still great. All activities happening today on Ethereum (and all other EVM-compatible blockchains) are only possible thanks to it. It's not perfect either, and during recent years, smart contract developers have had to deal with different aspects of it and learn some tricks to overcome its constraints.
+La EVM sigue siendo excelente. Todas las actividades que ocurren hoy en Ethereum (y en todas las demás blockchains compatibles con la EVM) solo son posibles gracias a ella. Tampoco es perfecta y, durante los últimos años, los desarrolladores de contratos inteligentes han tenido que lidiar con distintos aspectos de ella y aprender algunos trucos para superar sus restricciones.
 
-EOF is an extensible and versioned container format for the EVM with a once-off validation at deploy time. In this section, we'll explore all the major limitations of the EVM and how EOF intends to overcome them.
+EOF es un formato de contenedor extensible y versionado para la EVM, con una validación única en el momento del despliegue. En esta sección exploraremos todas las limitaciones principales de la EVM y cómo EOF pretende superarlas.
 
-> **Note**  
+> **Nota**  
 >
-> As of the final revision of this book (June 2025), the EOF upgrade has been postponed indefinitely due to insufficient consensus within the Ethereum community. There is currently no clear timeline for its implementation, and it may ultimately never be adopted. Nevertheless, we believe this section remains valuable for understanding how EOF could affect the EVM and the broader Ethereum ecosystem.
+> Al momento de la revisión final de este libro (junio de 2025), la actualización EOF se ha pospuesto indefinidamente debido a la falta de consenso suficiente dentro de la comunidad de Ethereum. Actualmente no hay un cronograma claro para su implementación y es posible que, en última instancia, nunca se adopte. No obstante, creemos que esta sección sigue siendo valiosa para entender cómo EOF podría afectar a la EVM y al ecosistema más amplio de Ethereum.
 
-### Jumpdest Analysis
+### Análisis de jumpdest
 
-Legacy EVM doesn't validate the bytecode published on chain at creation time. On the one hand, this may look good because it lets you post whatever contract you want: you can deploy bytecode containing non-existent opcodes or add code that is never touched or truncated in the middle of a `PUSH` operation without giving the next immediate value that it must have in order to execute correctly. This actually adds lots of inefficiencies. In fact, the EVM has to check everything at runtime, which adds complexity and slows the overall performance. Here is an example of a non-existent opcode included inside an EVM bytecode:
+La EVM tradicional no valida en el momento de la creación el bytecode publicado en la cadena. Por un lado, esto puede parecer bueno porque permite publicar cualquier contrato: se puede desplegar bytecode que contenga opcodes inexistentes o agregar código que nunca se alcanza o que se trunca en medio de una operación `PUSH` sin proporcionar el siguiente valor inmediato que debe tener para ejecutarse correctamente. En realidad, esto agrega muchas ineficiencias. De hecho, la EVM debe comprobar todo durante la ejecución, lo que agrega complejidad y reduce el rendimiento general. Este es un ejemplo de un opcode inexistente incluido dentro de un bytecode de la EVM:
 
 ```
 600C600052602060000C
 ```
 
-Here is the bytecode translated into human-readable opcodes:
+Este es el bytecode traducido a opcodes legibles para las personas:
 
 ```
 [00]            PUSH1            0C
@@ -1132,21 +1132,21 @@ Here is the bytecode translated into human-readable opcodes:
 [09]            NOT-EXISTING
 ```
 
-Opcode `0C` doesn't exist, and when the EVM gets to that point, it will panic and early return. Notice how the second byte in the previous bytecode is also `0C`, but the EVM doesn't fail there. The difference is that while the last `0C` byte is interpreted as an opcode and fails because it's not valid, the other one is interpreted as push data since it's the immediate value of the first `PUSH1` opcode.
+El opcode `0C` no existe y, cuando la EVM llega a ese punto, entra en pánico y retorna de forma anticipada. Nótese que el segundo byte del bytecode anterior también es `0C`, pero la EVM no falla allí. La diferencia es que, mientras que el último byte `0C` se interpreta como un opcode y falla porque no es válido, el otro se interpreta como datos push, ya que es el valor inmediato del primer opcode `PUSH1`.
 
-One key part of this runtime check is the *jumpdest analysis*. Every client needs to do it at runtime every time a contract is executed. Let's spend some time understanding this jumpdest analysis and why it is needed in legacy EVM.
+Una parte clave de esta comprobación durante la ejecución es el *análisis de jumpdest*. Cada cliente debe realizarlo durante la ejecución cada vez que se ejecuta un contrato. Dediquemos un momento a entender este análisis de jumpdest y por qué es necesario en la EVM tradicional.
 
-> **Tip**  
+> **Consejo**  
 >
-> To not have to perform jumpdest analysis at runtime every time a contract is called, some Ethereum node implementations save a jumpdest map for every contract. This map is created at contract deployment and saved inside the node's database.
+> Para no tener que realizar el análisis de jumpdest durante la ejecución cada vez que se llama a un contrato, algunas implementaciones de nodos de Ethereum guardan un mapa de jumpdest para cada contrato. Este mapa se crea al desplegar el contrato y se guarda en la base de datos del nodo.
 
-Legacy EVM has dynamic jumps (`JUMP` and `JUMPI` opcodes) only to manage the control flow of the bytecode. This is very handy because you can change the normal flow of operations with just two opcodes. The cons are that dynamic jumps are very expensive and require a deep validation at runtime, even though most of the time, there is no need for the jump to be dynamic. In fact, very often the value to jump to is pushed to the stack immediately before the `JUMP` opcode itself. Here is a small example:
+La EVM tradicional solo tiene saltos dinámicos (los opcodes `JUMP` y `JUMPI`) para gestionar el flujo de control del bytecode. Esto resulta muy práctico porque permite cambiar el flujo normal de las operaciones con solo dos opcodes. La desventaja es que los saltos dinámicos son muy costosos y requieren una validación profunda durante la ejecución, aunque la mayoría de las veces no hay necesidad de que el salto sea dinámico. De hecho, muy a menudo el valor al que se debe saltar se inserta en la pila inmediatamente antes del propio opcode `JUMP`. Este es un pequeño ejemplo:
 
 ```
 …6009566006016101015b6001…
 ```
 
-And translated into human-readable opcodes:
+Y traducido a opcodes legibles para las personas:
 
 ```
 [00]            PUSH1            09
@@ -1158,18 +1158,18 @@ And translated into human-readable opcodes:
 [0a]            PUSH1            01
 ```
 
-As you can see, the jump destination—that is, the offset `0x09` to jump to—is just pushed onto the stack through a `PUSH1` opcode immediately before the `JUMP` opcode. The EVM pushes `0x09` onto the stack, then executes the `JUMP` opcode that takes as input the previously pushed `0x09` and moves the execution to the instruction at that offset. At `0x09`, a `JUMPDEST` opcode is found, so it's considered a valid jump destination, and the execution can go on correctly.
+Como puede verse, el destino del salto, es decir, el desplazamiento `0x09` al que se debe saltar, se inserta en la pila mediante un opcode `PUSH1` inmediatamente antes del opcode `JUMP`. La EVM inserta `0x09` en la pila y luego ejecuta el opcode `JUMP`, que toma como entrada el `0x09` insertado previamente y mueve la ejecución a la instrucción en ese desplazamiento. En `0x09` se encuentra un opcode `JUMPDEST`, por lo que se considera un destino de salto válido y la ejecución puede continuar correctamente.
 
-Runtime validation is required in order to not jump to invalid destinations. Valid destinations are only `JUMPDEST` instructions that are not part of push data. This is very important to understand: legacy EVM doesn't have a proper separation between code and data. So whenever you meet the byte `0x5b`—the `JUMPDEST` opcode—in some bytecode, you cannot be completely sure if that's a real `JUMPDEST` opcode or it's part of push data without analyzing the contract as a whole.
+La validación durante la ejecución es necesaria para no saltar a destinos inválidos. Los únicos destinos válidos son las instrucciones `JUMPDEST` que no forman parte de los datos push. Es muy importante entender esto: la EVM tradicional no tiene una separación adecuada entre código y datos. Por lo tanto, cada vez que se encuentra el byte `0x5b`, el opcode `JUMPDEST`, en algún bytecode, no se puede tener plena certeza de si es un opcode `JUMPDEST` real o si forma parte de los datos push sin analizar el contrato completo.
 
-Take a look at the following example showing this subtle difference:
+Observe el siguiente ejemplo, que muestra esta sutil diferencia:
 
 ```
 …6009566006016101015b6001…
 …6009566006016201015b6001…
 ```
 
-These two bytecodes look almost identical; in fact, they differ only by one bit. But that's enough to make a huge difference in the outcome. The first bytecode is the same as the one shown in the previous example. The second looks like this in human-readable format:
+Estos dos bytecodes parecen casi idénticos; de hecho, solo difieren en un bit. Pero eso basta para producir una enorme diferencia en el resultado. El primer bytecode es el mismo que se mostró en el ejemplo anterior. El segundo se ve así en formato legible para las personas:
 
 ```
 [00]            PUSH1            09
@@ -1180,17 +1180,17 @@ These two bytecodes look almost identical; in fact, they differ only by one bit.
 [0a]            PUSH1            01
 ```
 
-If you try to execute this second code, it will fail due to an invalid jump destination. It may look a bit weird because at offset `0x09`, there's still the `0x5b` byte, which represents the `JUMPDEST` opcode. The problem here relies on the fact that, in this case, the `0x5b` byte is part of the push data, so it could not be considered a valid jump destination. This is why the execution fails at that point.
+Si se intenta ejecutar este segundo código, fallará por un destino de salto inválido. Puede parecer un poco extraño porque en el desplazamiento `0x09` sigue estando el byte `0x5b`, que representa el opcode `JUMPDEST`. El problema radica en que, en este caso, el byte `0x5b` forma parte de los datos push, por lo que no puede considerarse un destino de salto válido. Por eso la ejecución falla en ese punto.
 
-Jumpdest analysis is the process of analyzing a contract in order to know which jump destinations are valid and which are not so that when the EVM is executing the contract, it is able to detect an invalid jump destination and panic.
+El análisis de jumpdest es el proceso de analizar un contrato para saber qué destinos de salto son válidos y cuáles no, de modo que, cuando la EVM ejecuta el contrato, pueda detectar un destino de salto inválido y entrar en pánico.
 
-Let's say you're sending a transaction that interacts with Contract A. When the EVM loads it, it immediately performs jumpdest analysis to save the map of valid jump destinations and then starts with the real execution of the transaction:
+Supongamos que se envía una transacción que interactúa con el contrato A. Cuando la EVM lo carga, realiza inmediatamente el análisis de jumpdest para guardar el mapa de destinos de salto válidos y luego comienza la ejecución real de la transacción:
 
 ```
 …6009566006016101015b60016015566006016201015b6001…
 ```
 
-Here it is in human-readable format:
+Aquí está en formato legible para las personas:
 
 ```
 [00]            PUSH1            09
@@ -1208,23 +1208,23 @@ Here it is in human-readable format:
 [16]            PUSH1            01
 ```
 
-The EVM skims through all the bytecode and creates a map where each `0x5b` byte is marked as a valid or invalid jump destination, as you can see in Figure 14-26.
+La EVM recorre todo el bytecode y crea un mapa en el que cada byte `0x5b` se marca como destino de salto válido o inválido, como puede verse en la figura 14-26.
 
-![Jumpdest analysis map](images/ch14/maet_1426.png)
+![Mapa del análisis de jumpdest](images/ch14/maet_1426.png)
 
-Figure 14-26.  The client creates a jumpdest map to separate valid from invalid jump destinations
+Figura 14-26.  El cliente crea un mapa de jumpdest para separar los destinos de salto válidos de los inválidos
 
-### Adding and Deprecating Features
+### Incorporación y declaración de obsolescencia de funciones
 
-Adding or deprecating an opcode or a specific feature is not as easy as it may seem. While it is true that different opcodes have been added, such as `BLOBHASH`, `BLOBBASEFEE`, `BASEFEE`, and so on, this is always complicated because of the unstructured and not validated EVM's bytecode.
+Agregar o declarar obsoleto un opcode o una función específica no es tan fácil como podría parecer. Si bien es cierto que se han agregado distintos opcodes, como `BLOBHASH`, `BLOBBASEFEE`, `BASEFEE` y otros, esto siempre resulta complicado debido al bytecode no estructurado y no validado de la EVM.
 
-Have a look at the following example, which contains an invalid opcode, specifically `0x0C`. Suppose this is a real contract deployed on Ethereum mainnet:
+Observe el siguiente ejemplo, que contiene un opcode inválido, específicamente `0x0C`. Supongamos que es un contrato real desplegado en la red principal de Ethereum:
 
 ```
 600C600052602060000C
 ```
 
-Here it is in human-readable format:
+Aquí está en formato legible para las personas:
 
 ```
 [00]            PUSH1            0C
@@ -1235,9 +1235,9 @@ Here it is in human-readable format:
 [09]            NOT-EXISTING
 ```
 
-If you try to execute this small bytecode inside an EVM, you will see that when the execution gets to the not-existing opcode, it fails.
+Si se intenta ejecutar este pequeño bytecode dentro de una EVM, se verá que, cuando la ejecución llega al opcode inexistente, falla.
 
-Let's say a future upgrade adds a new opcode, the `MAX` opcode, that takes two items from the stack and returns the one containing the bigger value. The byte assigned to it is `0x0C`. Consider again the previous bytecode (remember, we're assuming it's a real contract deployed on mainnet):
+Supongamos que una actualización futura agrega un opcode nuevo, el opcode `MAX`, que toma dos elementos de la pila y devuelve el que contiene el valor mayor. El byte que se le asigna es `0x0C`. Considere de nuevo el bytecode anterior (recuerde que suponemos que es un contrato real desplegado en la red principal):
 
 ```
 [00]            PUSH1            0C
@@ -1248,25 +1248,25 @@ Let's say a future upgrade adds a new opcode, the `MAX` opcode, that takes two i
 [09]            MAX
 ```
 
-Now this bytecode has a completely different outcome. In fact, it doesn't fail anymore and returns successfully. This could create problems if there were contracts relying on the assumption that this contract always failed due to a (previously) not-existing opcode.
+Ahora este bytecode tiene un resultado completamente distinto. De hecho, ya no falla y retorna correctamente. Esto podría crear problemas si hubiera contratos que dependieran del supuesto de que este contrato siempre fallaba por un opcode (anteriormente) inexistente.
 
-Deprecating a feature is even harder since you cannot rely on a versioning system of the EVM. So if you remove an opcode or change how it works, old contracts that were using it could break, and there is nothing apart from manual intervention (by creating a new contract) that can fix it.
+Declarar obsoleta una función es aún más difícil, ya que no se puede recurrir a un sistema de versiones de la EVM. Por lo tanto, si se elimina un opcode o se cambia su funcionamiento, los contratos antiguos que lo usaban podrían dejar de funcionar, y nada salvo una intervención manual (creando un contrato nuevo) puede solucionarlo.
 
-When [EIP-2929](https://oreil.ly/_9kTv) was introduced to change the gas metering of state-access opcodes, some contracts broke because they were hard-coding the amount of gas to use or to expect. The solution to make them work again was to introduce *access lists*, where you can preload some accounts and storage slots that you know will be touched by the transaction and lower gas costs.
+Cuando se introdujo [EIP-2929](https://oreil.ly/_9kTv) para cambiar la medición del gas de los opcodes de acceso al estado, algunos contratos dejaron de funcionar porque tenían fijada en el código la cantidad de gas que debían usar o esperar. La solución para que volvieran a funcionar fue introducir *listas de acceso*, en las que se pueden precargar algunas cuentas y slots de almacenamiento persistente que se sabe que la transacción tocará, y reducir los costos de gas.
 
-Other important aspects of legacy EVM that make upgrades harder are *code introspection* and *gas observability*. Gas observability is possible thanks to opcodes such as `GAS` or even all the `*CALL` opcodes that take gas as input, while code introspection is achievable because of opcodes such as `CODESIZE`, `CODECOPY`, `EXTCODESIZE`, `EXTCODECOPY`, and `EXTCODEHASH`.
+Otros aspectos importantes de la EVM tradicional que dificultan las actualizaciones son la *introspección del código* y la *observabilidad del gas*. La observabilidad del gas es posible gracias a opcodes como `GAS` o incluso todos los opcodes `*CALL` que reciben gas como entrada, mientras que la introspección del código se logra mediante opcodes como `CODESIZE`, `CODECOPY`, `EXTCODESIZE`, `EXTCODECOPY` y `EXTCODEHASH`.
 
-The problem lies in the fact that if the EVM is able to access the remaining gas at a certain point of the execution, the logic of a smart contract can be made dependent on that. And if in the future, there is a change regarding gas metering of some opcodes (which is something not so rare to observe), there could be problems for all smart contracts that were relying on the old gas metering. The same applies for code introspection.
+El problema radica en que, si la EVM puede acceder al gas restante en un punto determinado de la ejecución, se puede hacer que la lógica de un contrato inteligente dependa de ello. Y si en el futuro hay un cambio en la medición del gas de algunos opcodes (algo que no es tan raro), podrían surgir problemas para todos los contratos inteligentes que dependían de la medición de gas anterior. Lo mismo se aplica a la introspección del código.
 
-> **Note**  
+> **Nota**  
 >
-> Without code introspection, it's possible for future versions of EOF to completely change the underlying virtual machine to something like Cairo VM or Wasm or any other by automatically transforming all contracts' code into the new VM's code with the same functionality.
+> Sin introspección del código, es posible que las versiones futuras de EOF cambien por completo la máquina virtual subyacente por algo como Cairo VM, Wasm o cualquier otra, transformando automáticamente el código de todos los contratos al código de la nueva VM con la misma funcionalidad.
 
-### Code and Data Separation
+### Separación de código y datos
 
-Legacy EVM doesn't impose a structure on bytecode that is published on chain. There's no distinction between real code and data that is used within that code. Everything is just bytes, and it's interpreted step-by-step by the EVM during execution.
+La EVM tradicional no impone una estructura al bytecode que se publica en la cadena. No hay distinción entre el código real y los datos que se usan dentro de ese código. Todo son simplemente bytes, y la EVM los interpreta paso a paso durante la ejecución.
 
-It's impossible to say that a certain part of the bytecode is code or data without looking at the whole contract. Take a look at the following example:
+Es imposible decir si una parte determinada del bytecode es código o datos sin examinar el contrato completo. Observe el siguiente ejemplo:
 
 ```
 …730102030405060708090a0b0c0d0e0f101112131431…
@@ -1274,11 +1274,11 @@ It's impossible to say that a certain part of the bytecode is code or data witho
 [15]            BALANCE
 ```
 
-Without diving into the code, you cannot immediately tell that `0102030405060708090a0b0c0d0e0f1011121314` is not to be interpreted as a series of opcodes—`0x01`: `ADD`, `0x02`: `MUL`, and so on— but rather that it's push data representing a fixed address we want to query the balance of. This is bad for static analysis tools and formal verification, and it makes it more difficult for smart contracts to be able to correctly process executable code directly on chain.
+Sin profundizar en el código, no se puede saber de inmediato que `0102030405060708090a0b0c0d0e0f1011121314` no debe interpretarse como una serie de opcodes, `0x01`: `ADD`, `0x02`: `MUL` y así sucesivamente, sino que son datos push que representan una dirección fija cuyo saldo queremos consultar. Esto es perjudicial para las herramientas de análisis estático y la verificación formal, y dificulta que los contratos inteligentes puedan procesar correctamente código ejecutable directamente en la cadena.
 
-### Stack Too Deep
+### Pila demasiado profunda
 
-We're now going to take a look at one of the most hated limitations of the EVM: the "stack too deep" error. If you try to compile the following smart contract, you'll immediately get it:
+Ahora examinaremos una de las limitaciones más odiadas de la EVM: el error "stack too deep". Si se intenta compilar el siguiente contrato inteligente, se obtendrá inmediatamente:
 
 ```solidity
 // SPDX-License-Identifier: MIT
@@ -1293,7 +1293,7 @@ contract StackTooDeep {
 }
 ```
 
-Here is the output when trying to compile the contract:
+Esta es la salida al intentar compilar el contrato:
 
 ```
 solc StackTooDeep.sol --bin
@@ -1304,165 +1304,165 @@ Error: Stack too deep. Try compiling with `--via-ir` (cli) or the equivalent `vi
   |                                ^
 ```
 
-This error is very subtle because it's a direct consequence of how the EVM works. In fact, even though the maximum number of items you can push onto the stack is 1,024, the EVM is only capable of easy access to the top 16 elements of that, through opcodes such as `DUP1..16` and `SWAP1..16`.
+Este error es muy sutil porque es una consecuencia directa de cómo funciona la EVM. De hecho, aunque el número máximo de elementos que se pueden insertar en la pila es 1,024, la EVM solo puede acceder fácilmente a sus 16 elementos superiores mediante opcodes como `DUP1..16` y `SWAP1..16`.
 
-In our `StackTooDeep` example, the `add` function takes nine different parameters, each required to be put onto the stack. Then, it performs eight additions to get the final result. The problem lies in these details. While the final operation can look like a big single addition, in reality, the compiler has to segment each one and create a temporary variable that holds the intermediate result that needs to be saved into the stack. So we end up with nine parameters plus eight intermediate results, with a total of 17 stack items needed. When the compiler tries to reference a variable that is at position 17 or more in the stack, it fails because it doesn't have any opcodes that are able to easily access it.
+En nuestro ejemplo `StackTooDeep`, la función `add` recibe nueve parámetros diferentes, cada uno de los cuales debe colocarse en la pila. Luego realiza ocho sumas para obtener el resultado final. El problema radica en estos detalles. Aunque la operación final puede parecer una sola suma grande, en realidad el compilador debe dividir cada una y crear una variable temporal que contenga el resultado intermedio que debe guardarse en la pila. Por lo tanto, terminamos con nueve parámetros más ocho resultados intermedios, con un total de 17 elementos necesarios en la pila. Cuando el compilador intenta hacer referencia a una variable que está en la posición 17 o superior de la pila, falla porque no tiene ningún opcode que pueda acceder fácilmente a ella.
 
-To even better visualize the problem, you can look at Figure 14-27, which shows the stack composition in detail for every step. You can easily see that variable `i` is at depth 17 at the end of execution. The compiler doesn't let a local variable or parameter to not be easily accessible in the function's scope, so it throws the "stack too deep" error.
+Para visualizar aún mejor el problema, puede observarse la figura 14-27, que muestra en detalle la composición de la pila en cada paso. Es fácil ver que la variable `i` está a una profundidad de 17 al final de la ejecución. El compilador no permite que una variable local o un parámetro no sean fácilmente accesibles dentro del ámbito de la función, por lo que genera el error "stack too deep".
 
-![Stack too deep visualization](images/ch14/maet_1427.png)
+![Visualización de una pila demasiado profunda](images/ch14/maet_1427.png)
 
-Figure 14-27. Stack composition for every step
+Figura 14-27. Composición de la pila en cada paso
 
-This is just a very simple example that shows one of the problems smart contract developers have to overcome during their daily jobs. Even though compilers have become better and better at analyzing and managing these kinds of situations automatically, the EVM imposes some hard limitations based on how it currently works.
+Este es solo un ejemplo muy sencillo que muestra uno de los problemas que los desarrolladores de contratos inteligentes deben superar en su trabajo diario. Aunque los compiladores han mejorado cada vez más en el análisis y manejo automático de este tipo de situaciones, la EVM impone algunas limitaciones estrictas basadas en su funcionamiento actual.
 
 ### EOF
 
-EOF addresses all of these issues by introducing a container format for EVM bytecode with validation at deploy time, a versioning system, and a full separation between code and data. Here is an example of EOF-valid bytecode:
+EOF aborda todos estos problemas al introducir un formato de contenedor para el bytecode de la EVM con validación en el momento del despliegue, un sistema de versiones y una separación completa entre código y datos. Este es un ejemplo de bytecode válido para EOF:
 
 ```
 EF00010100040200010008030001003004002000008000045F5FD1005FEC0000EF00010100040200010004030001001404000000008000025F5FEE00EF00010100040200010001040000000080000000000102030405060708090a0b0c0d0e0f10111213141516171819101a1b1c1d1e
 ```
 
-Here it is translated into human-readable format:
+Aquí está traducido a un formato legible para las personas:
 
 ```
-Magic bytes                      EF00
-EOF version                      01
-Stack validation data            01 0004
-Code sections                    02 0001 0008
-Subcontainer section size        03 0001 0030
-Data section size                04 0020
-Header terminator                00
-Stack: #ins, #outs, max stack    00 80 0004
-Code                             5F5FD1005FEC0000
-Subcontainers                    EF00010100040200010004030001001404000000008000025F5FEE00
+Bytes mágicos                    EF00
+Versión de EOF                   01
+Datos de validación de pila      01 0004
+Secciones de código              02 0001 0008
+Tamaño de subcontenedores        03 0001 0030
+Tamaño de sección de datos       04 0020
+Terminador del encabezado        00
+Pila: #ent., #sal., altura máx.  00 80 0004
+Código                           5F5FD1005FEC0000
+Subcontenedores                  EF00010100040200010004030001001404000000008000025F5FEE00
                                  EF00010100040200010001040000000080000000
-Data                             000102030405060708090a0b0c0d0e0f10111213141516171819101
+Datos                            000102030405060708090a0b0c0d0e0f10111213141516171819101
                                  a1b1c1d1e
 ```
 
-Just hold on for a moment—we'll explain everything in the following sections.
+Un momento: explicaremos todo en las siguientes secciones.
 
-#### Improvements
+#### Mejoras
 
-Jumpdest analysis and all gas and code introspection opcodes are completely removed and are now considered undefined. All opcodes in the code section must be valid, immediate values (such as push data) must be present in the code, and there must not be unreachable instructions. Stack validation is performed at creation time, too. This makes stack underflow and overflow impossible during execution, removing the necessity of doing all those checks at runtime because the EVM can assume contracts already respect all the rules since they have been validated at deployment.
+El análisis de jumpdest y todos los opcodes de introspección del gas y del código se eliminan por completo y ahora se consideran no definidos. Todos los opcodes de la sección de código deben ser válidos, los valores inmediatos (como los datos push) deben estar presentes en el código y no debe haber instrucciones inalcanzables. La validación de la pila también se realiza en el momento de la creación. Esto hace imposibles el subdesbordamiento y el desbordamiento de la pila durante la ejecución, y elimina la necesidad de realizar todas esas comprobaciones durante la ejecución, porque la EVM puede suponer que los contratos ya respetan todas las reglas, ya que se validaron al desplegarse.
 
-> **Tip**  
+> **Consejo**  
 >
-> These validation guarantees improve the feasibility of AOT or JIT compilation of EVM bytecode into machine-native code.
+> Estas garantías de validación mejoran la viabilidad de compilar el bytecode de la EVM a código máquina nativo mediante AOT o JIT.
 
-Dynamic jumps are removed, too, and static relative jumps are introduced with three new opcodes: `RJUMP`, `RJUMPI`, and `RJUMPV`, which take immediate values, similar to `PUSH` opcodes. Notice how it's possible with EOF to add new instructions that take immediates because there is no jumpdest analysis anymore and everything is checked at creation time instead of at runtime.
+También se eliminan los saltos dinámicos y se introducen saltos relativos estáticos con tres opcodes nuevos: `RJUMP`, `RJUMPI` y `RJUMPV`, que reciben valores inmediatos, de manera similar a los opcodes `PUSH`. Nótese que con EOF es posible agregar instrucciones nuevas que reciban valores inmediatos porque ya no hay análisis de jumpdest y todo se comprueba en el momento de la creación en lugar de durante la ejecución.
 
-As you can see from the EOF container in the previous section, EOF introduces the concept of *functions* (i.e., code sections), isolating the stack for each of them. Legacy EVM can only mimic this behavior by relying on dynamic jumps: Solidity or Vyper functions are only an internal representation.
+Como puede verse en el contenedor EOF de la sección anterior, EOF introduce el concepto de *funciones* (es decir, secciones de código), aislando la pila de cada una. La EVM tradicional solo puede imitar este comportamiento mediante saltos dinámicos: las funciones de Solidity o Vyper son solo una representación interna.
 
-Three opcodes—`CALLF`, `RETF`, and `JUMPF`—and a *return stack* (completely separated from the EVM's usual operand stack) are added for that reason. In particular, the return stack is needed in order to save execution information before jumping into a function so that it's possible to return to the caller without losing data. Figure 14-28 can help you better visualize how this works.
+Por ese motivo se agregan tres opcodes, `CALLF`, `RETF` y `JUMPF`, y una *pila de retorno* (completamente separada de la pila de operandos habitual de la EVM). En particular, la pila de retorno es necesaria para guardar información de ejecución antes de saltar a una función, de modo que sea posible regresar al llamador sin perder datos. La figura 14-28 puede ayudar a visualizar mejor cómo funciona esto.
 
-![EOF function calls with return stack](images/ch14/maet_1428.png)
+![Llamadas a funciones de EOF con pila de retorno](images/ch14/maet_1428.png)
 
-Figure 14-28. EOF introduces the concept of functions or code sections
+Figura 14-28. EOF introduce el concepto de funciones o secciones de código
 
-The "stack too deep" problem is solved through the addition of three new opcodes: `DUPN`, `SWAPN`, and `EXCHANGE`. The first two instructions are analogous to the old `DUP1..16` and `SWAP1..16` with the only difference being that they take one immediate value representing the index of the item to duplicate or swap. That index can go up to 256, much more than the previous hard limit of 16.
+El problema "stack too deep" se resuelve agregando tres opcodes nuevos: `DUPN`, `SWAPN` y `EXCHANGE`. Las primeras dos instrucciones son análogas a las antiguas `DUP1..16` y `SWAP1..16`, con la única diferencia de que reciben un valor inmediato que representa el índice del elemento que se debe duplicar o intercambiar. Ese índice puede llegar hasta 256, mucho más que el límite estricto anterior de 16.
 
-The `EXCHANGE` opcode is a new opcode that lets you swap two different items in the stack (note that `SWAPN` always swaps the n item with the first one, while `EXCHANGE` can swap arbitrary items with one another). This is particularly useful for compilers implementing *stack-scheduling algorithms*, which try to minimize stack traffic given a set of variables and usage analysis.
+El opcode `EXCHANGE` es un opcode nuevo que permite intercambiar dos elementos diferentes de la pila (nótese que `SWAPN` siempre intercambia el elemento n con el primero, mientras que `EXCHANGE` puede intercambiar elementos arbitrarios entre sí). Esto resulta particularmente útil para los compiladores que implementan *algoritmos de planificación de la pila*, que intentan minimizar el tráfico de la pila a partir de un conjunto de variables y un análisis de uso.
 
-`CREATE` and `CREATE2` are made obsolete in EOF contracts. Instead, `EOFCREATE` and `RETURNCONTRACT` are introduced to provide a way to create new EOF contracts.
+`CREATE` y `CREATE2` quedan obsoletos en los contratos EOF. En su lugar se introducen `EOFCREATE` y `RETURNCONTRACT` para proporcionar una manera de crear nuevos contratos EOF.
 
-In the end, new `CALL` instructions are added to replace the old, removed ones: `EXTCALL`, `EXTDELEGATECALL`, `EXTSTATICCALL`, and `RETURNDATALOAD`. They don't allow specifying a gas limit (no gas observability) and don't require an output buffer where the EVM would save the return data of the subcall. `RETURNDATALOAD` is introduced for the specific reason to get the return data of the last executed subcall onto the stack of the caller.
+Por último, se agregan nuevas instrucciones `CALL` para reemplazar las antiguas, que se eliminan: `EXTCALL`, `EXTDELEGATECALL`, `EXTSTATICCALL` y `RETURNDATALOAD`. No permiten especificar un límite de gas (no hay observabilidad del gas) ni requieren un búfer de salida donde la EVM guardaría los datos de retorno de la subllamada. `RETURNDATALOAD` se introduce específicamente para colocar los datos de retorno de la última subllamada ejecutada en la pila del llamador.
 
-#### EOF in action
+#### EOF en acción
 
-Let's analyze the EOF contract shown at the beginning of this section:
+Analicemos el contrato EOF mostrado al principio de esta sección:
 
 ```
 EF00010100040200010008030001003004002000008000045F5FD1005FEC0000EF00010100040200010004030001001404000000008000025F5FEE00EF00010100040200010001040000000080000000000102030405060708090a0b0c0d0e0f10111213141516171819101a1b1c1d1e
 ```
 
-First, we have the EOF header, made by:
+Primero tenemos el encabezado de EOF, compuesto por:
 
 ```
-Magic bytes                    EF00
+Bytes mágicos                  EF00
 ```
 
-Magic bytes are needed to distinguish EOF contracts from legacy ones (no other contract starts with `EF00` in Ethereum mainnet thanks to EIP-3541).
+Los bytes mágicos son necesarios para distinguir los contratos EOF de los tradicionales (ningún otro contrato comienza con `EF00` en la red principal de Ethereum gracias a EIP-3541).
 
-Then, there is the EOF version, which can lead to future upgrades to the EOF format in a graceful way:
-
-```
-EOF version                    01
-```
-
-Stack validation data always starts with the identifier `01`, and it's followed by the size of the "Stack" part. In this example, we have a 4-byte-long "Stack" section:
+Luego está la versión de EOF, que puede permitir futuras actualizaciones del formato EOF de manera ordenada:
 
 ```
-Stack validation data            01 0004
+Versión de EOF                 01
 ```
 
-Code sections start with the identifier `02`, followed by the number of code sections (aka functions) and their related size. Here we have one code section, 8 bytes long:
+Los datos de validación de la pila siempre comienzan con el identificador `01`, seguido del tamaño de la parte "Pila". En este ejemplo tenemos una sección "Pila" de 4 bytes de longitud:
 
 ```
-Code sections                02 0001 0008
+Datos de validación de pila      01 0004
 ```
 
-Subcontainer section size starts with the identifier `03`, followed by the number of subcontainers and their related sizes. Here we have one subcontainer, 48 bytes long (remember, it's always hex format):
+Las secciones de código comienzan con el identificador `02`, seguido del número de secciones de código (también llamadas funciones) y su tamaño correspondiente. Aquí tenemos una sección de código de 8 bytes de longitud:
 
 ```
-Subcontainer section size        03 0001 0030
+Secciones de código          02 0001 0008
 ```
 
-Data section size starts with the identifier `04`, followed by the size of the data section. Here we have 32 bytes in the data section:
+El tamaño de la sección de subcontenedores comienza con el identificador `03`, seguido del número de subcontenedores y sus tamaños correspondientes. Aquí tenemos un subcontenedor de 48 bytes de longitud (recuerde que siempre se usa el formato hexadecimal):
 
 ```
-Data section size                04 0020
+Tamaño de subcontenedores        03 0001 0030
 ```
 
-Finally, there is the header terminator `00`, which always marks the end of the EOF header:
+El tamaño de la sección de datos comienza con el identificador `04`, seguido del tamaño de la sección de datos. Aquí tenemos 32 bytes en la sección de datos:
 
 ```
-Header terminator                00
+Tamaño de sección de datos       04 0020
 ```
 
-The Stack section shows the number of inputs and outputs and the max stack height for each code section (only one in this example). We have zero inputs and a nonreturning function (`80` is a special byte representing a nonreturning function), and the max height of the stack equals 4:
+Por último, está el terminador del encabezado `00`, que siempre marca el final del encabezado de EOF:
 
 ```
-Stack: #ins, #outs, max stack        00 80 0004
+Terminador del encabezado        00
 ```
 
-Here are all the code sections containing EVM bytecode that is executed by the EVM:
+La sección Pila muestra el número de entradas y salidas y la altura máxima de la pila para cada sección de código (solo una en este ejemplo). Tenemos cero entradas y una función que no retorna (`80` es un byte especial que representa una función que no retorna), y la altura máxima de la pila es igual a 4:
 
 ```
-Code                        5F5FD1005FEC0000
+Pila: #ent., #sal., altura máx.      00 80 0004
 ```
 
-We have only one function (code section), containing the following opcodes:
+Aquí están todas las secciones de código que contienen bytecode de la EVM ejecutado por esta:
+
+```
+Código                      5F5FD1005FEC0000
+```
+
+Tenemos una sola función (sección de código), que contiene los siguientes opcodes:
 
 ```
 PUSH0 PUSH0 DATALOADN 0 PUSH0 EOFCREATE 0 STOP
 ```
 
-This code first pushes `0-0` onto the stack thanks to the first two `PUSH0` opcodes. Then, it reads 32 bytes of the data section, starting at offset zero (the next immediate value in the code) and pushes them onto the stack. Then, another `0` is pushed through the last `PUSH0`. Finally, `EOFCREATE` is called with `0` as the immediate argument, which calls the first code section of the first subcontainer:
+Este código primero inserta `0-0` en la pila gracias a los primeros dos opcodes `PUSH0`. Luego lee 32 bytes de la sección de datos, a partir del desplazamiento cero (el siguiente valor inmediato en el código), y los inserta en la pila. Después se inserta otro `0` mediante el último `PUSH0`. Por último, se llama a `EOFCREATE` con `0` como argumento inmediato, lo que llama a la primera sección de código del primer subcontenedor:
 
 ```
-Subcontainers                EF00010100040200010004030001001404000000008000025F5FEE00EF0001
+Subcontenedores              EF00010100040200010004030001001404000000008000025F5FEE00EF0001
                              0100040200010001040000000080000000
 ```
 
-The subcontainers section includes all of the EOF subcontainers included in the EOF bytecode. In this example, we have one subcontainer. Subcontainers are EOF-formatted bytecode: the idea is that you can nest EOF containers inside other EOF containers. This is useful for factory contracts.
+La sección de subcontenedores incluye todos los subcontenedores EOF incluidos en el bytecode EOF. En este ejemplo tenemos un subcontenedor. Los subcontenedores son bytecode con formato EOF: la idea es que se pueden anidar contenedores EOF dentro de otros contenedores EOF. Esto es útil para los contratos fábrica.
 
-In the end, there is the data section containing all the data the contract needs for execution. Here we have 32 bytes of data:
+Al final está la sección de datos, que contiene todos los datos que el contrato necesita para ejecutarse. Aquí tenemos 32 bytes de datos:
 
 ```
-Data                        000102030405060708090a0b0c0d0e0f10111213141516171819101a1b1c1d1e
+Datos                       000102030405060708090a0b0c0d0e0f10111213141516171819101a1b1c1d1e
 ```
 
-This analysis could be recursively applied to the subcontainer of this EOF bytecode in order to completely understand what it's doing, but we leave that to the reader if you are interested in diving deeper into the rabbit hole of the EVM.
+Este análisis podría aplicarse recursivamente al subcontenedor de este bytecode EOF para comprender por completo lo que hace, pero lo dejamos al lector si le interesa adentrarse aún más en las profundidades de la EVM.
 
-## The Future of the EVM
+## El futuro de la EVM
 
-The future of the EVM, besides EOF, is uncertain and will depend on how the EVM will be used by developers and different projects. There are some interesting areas where the EVM could expand, though, such as the *zk-EVM* that would provide zero-knowledge proofs attached to each block to prove its correct execution. Also, [*EVMMAX*](https://oreil.ly/ioqSx) and [*SIMD*](https://oreil.ly/7q0Dq) would bring more power to the EVM, making it much faster to do lots of cryptographic processing, which would be particularly beneficial for cryptographic-dependent applications such as privacy protocols or L2s.
+El futuro de la EVM, además de EOF, es incierto y dependerá de cómo los desarrolladores y los distintos proyectos la utilicen. Sin embargo, hay algunas áreas interesantes a las que la EVM podría expandirse, como la *zk-EVM*, que proporcionaría pruebas de conocimiento cero adjuntas a cada bloque para demostrar su correcta ejecución. Además, [*EVMMAX*](https://oreil.ly/ioqSx) y [*SIMD*](https://oreil.ly/7q0Dq) aportarían más potencia a la EVM y harían mucho más rápido realizar grandes cantidades de procesamiento criptográfico, lo que sería particularmente beneficioso para aplicaciones que dependen de la criptografía, como los protocolos de privacidad o las L2.
 
-## Conclusion
+## Conclusión
 
-In this chapter, we explored the EVM, tracing the execution of various smart contracts and looking at how the EVM executes bytecode. We also looked at gas, the EVM's accounting mechanism, and saw how it solves the halting problem and protects Ethereum from DoS attacks. Furthermore, we analyzed EOF, looking at how it tries to fix different flows of legacy EVM.
+En este capítulo exploramos la EVM, seguimos la ejecución de varios contratos inteligentes y examinamos cómo ejecuta el bytecode. También examinamos el gas, el mecanismo de contabilidad de la EVM, y vimos cómo resuelve el problema de la parada y protege a Ethereum de ataques DoS. Además, analizamos EOF y cómo intenta corregir distintos aspectos del funcionamiento de la EVM tradicional.
 
-Next, in Chapter 15, we will explore the mechanism used by Ethereum to achieve decentralized consensus.
+A continuación, en el capítulo 15, exploraremos el mecanismo que usa Ethereum para lograr un consenso descentralizado.
