@@ -35,13 +35,13 @@ export default defineConfig({
   baseUrl: process.env.VOCS_BASE_URL || undefined,
   sidebar,
   banner: {
-    content: 'Borrador es-419. Prefacio y 17 capítulos traducidos; revisión humana y derechos de figuras pendientes.',
+    content: 'Traducción completa al español latinoamericano, en revisión editorial. Algunas figuras conservan texto en inglés.',
     dismissable: false,
   },
   topNav: [
     { text: 'Guía editorial', link: '/TRANSLATION' },
     { text: 'Glosario', link: '/GLOSSARY' },
-    { text: 'Repositorio', link: 'https://github.com/theredguild/mastering-ethereum' },
+    { text: 'Repositorio', link: 'https://github.com/theredguild/ethereumbook-es' },
   ],
   head: { meta: { robots: 'noindex, nofollow', ogImage: false, twitterImage: false } },
   markdown: {

@@ -26,4 +26,4 @@ La traducción textual se distribuye bajo [Creative Commons Atribución-Comparti
 
 El original describe un período inicial de doce meses bajo [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/) y una transición posterior a CC BY-SA 4.0. La autorización de traducción excluye la portada y los elementos de diseño de O'Reilly; las figuras heredadas requieren revisión individual antes de publicar la edición traducida.
 
-La traducción no implica un aval de los autores originales ni de O'Reilly. Las reglas, el glosario, el estado por capítulo y las observaciones técnicas están disponibles en el [repositorio de la traducción](https://github.com/theredguild/mastering-ethereum).
+La traducción no implica un aval de los autores originales ni de O'Reilly. Las reglas, el glosario, el estado por capítulo y las observaciones técnicas están disponibles en el [repositorio de la traducción](https://github.com/theredguild/ethereumbook-es).

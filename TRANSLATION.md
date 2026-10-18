@@ -5,7 +5,7 @@
 Traducción al español latinoamericano de la segunda edición de *Mastering Ethereum*, realizada por el proyecto de The Red Guild. El trabajo comenzó con un piloto del capítulo 1, la guía editorial y el glosario. Por instrucción posterior del usuario se continuó con el prefacio y los capítulos 2 a 17; la autorización para continuar no equivale a aprobación humana del texto ni de las convenciones propuestas.
 
 - Fuente: <https://github.com/ethereumbook/ethereumbook>.
-- Fork de trabajo: <https://github.com/theredguild/mastering-ethereum>.
+- Fork de trabajo: <https://github.com/theredguild/ethereumbook-es>.
 - Rama base del piloto: `develop`.
 - Commit original fijado: `5907a8c137135588a7d5dacd1c3bd6ff6c9c5151`.
 - Fecha de inicio del piloto: 2026-10-15.

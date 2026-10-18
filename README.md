@@ -54,11 +54,11 @@ El flujo `translation-check.yml` instala con `npm ci` y compila los PR hacia `de
 Para reproducir una instalación bajo la subruta habitual de GitHub Pages:
 
 ```sh
-VOCS_BASE_PATH=/mastering-ethereum npm run build
-VOCS_BASE_PATH=/mastering-ethereum npm run preview
+VOCS_BASE_PATH=/ethereumbook-es npm run build
+VOCS_BASE_PATH=/ethereumbook-es npm run preview
 ```
 
-Abrir `http://localhost:4173/mastering-ethereum/`. El workflow obtiene `VOCS_BASE_PATH` y `VOCS_BASE_URL` de `actions/configure-pages`; no se fija un dominio de publicación sin aprobarlo.
+Abrir `http://localhost:4173/ethereumbook-es/`. El workflow obtiene `VOCS_BASE_PATH` y `VOCS_BASE_URL` de `actions/configure-pages`; no se fija un dominio de publicación sin aprobarlo.
 
 ## Revisión desde el host de una VM
 
