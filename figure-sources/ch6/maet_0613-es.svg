@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="1050" viewBox="0 0 1440 1050">
+<title>Figura 6-13. Versión editada en español</title>
+<desc>Superposición editorial transparente sobre la captura histórica original, sin cambiar su escala. Traducción educativa; no es una captura nativa.</desc>
+<rect id="mask-1" x="315" y="2" width="119" height="35" fill="#ffffff"/>
+<text x="316" y="30.5" font-family="DejaVu Sans" font-size="29" font-weight="normal" fill="#b32b35">de</text>
+<rect id="mask-2" x="725" y="2" width="118" height="35" fill="#ffffff"/>
+<text x="726" y="30.5" font-family="DejaVu Sans" font-size="29" font-weight="normal" fill="#b32b35">de</text>
+<rect id="mask-3" x="1293" y="27" width="35" height="14" fill="#dbdfe3"/>
+<text x="1294" y="38" font-family="DejaVu Sans" font-size="10" font-weight="normal" fill="#333333">Comp.</text>
+<rect id="mask-4" x="1350" y="27" width="28" height="14" fill="#f3f3f3"/>
+<text x="1351" y="38" font-family="DejaVu Sans" font-size="9" font-weight="normal" fill="#333333">Acuñ.</text>
+<rect id="mask-5" x="1400" y="27" width="26" height="14" fill="#070541"/>
+<text x="1401" y="38" font-family="DejaVu Sans" font-size="9" font-weight="normal" fill="#ffffff">Ejec.</text>
+<rect id="mask-6" x="95" y="94" width="42" height="12" fill="#ffffff"/>
+<text x="96" y="103.5" font-family="DejaVu Sans" font-size="8" font-weight="normal" fill="#111111">valor de</text>
+<rect id="mask-7" x="515" y="94" width="43" height="12" fill="#ffffff"/>
+<text x="516" y="103.5" font-family="DejaVu Sans" font-size="8" font-weight="normal" fill="#111111">valor de</text>
+<rect id="mask-8" x="620" y="94" width="178" height="12" fill="#ffffff"/>
+<text x="621" y="103.5" font-family="DejaVu Sans" font-size="8" font-weight="normal" fill="#111111">tokens en todos los contratos Safe</text>
+<rect id="mask-9" x="177" y="242" width="48" height="14" fill="#ffffff"/>
+<text x="178" y="253" font-family="DejaVu Sans" font-size="10" font-weight="normal" fill="#25224e">de</text>
+<rect id="mask-10" x="892" y="242" width="44" height="14" fill="#ffffff"/>
+<text x="893" y="253" font-family="DejaVu Sans" font-size="10" font-weight="normal" fill="#25224e">de</text>
+<rect id="mask-11" x="444" y="392" width="41" height="13" fill="#ffffff"/>
+<text x="445" y="402" font-family="DejaVu Sans" font-size="8" font-weight="normal" fill="#111111">saldo</text>
+<rect id="mask-12" x="522" y="392" width="353" height="13" fill="#ffffff"/>
+<text x="523" y="401" font-family="DejaVu Sans" font-size="8" font-weight="normal" fill="#111111">de contratos Gnosis Safe combinados, acumulado diario en el tiempo</text>
+<rect id="mask-13" x="1382" y="505" width="32" height="13" fill="#ffffff"/>
+<text x="1383" y="514" font-family="DejaVu Sans" font-size="7" font-weight="normal" fill="#333333">nativo</text>
+<rect id="mask-14" x="1372" y="522" width="42" height="13" fill="#ffffff"/>
+<text x="1373" y="531" font-family="DejaVu Sans" font-size="6.7" font-weight="normal" fill="#333333">variantes</text>
+<rect id="mask-15" x="12" y="691" width="134" height="13" fill="#ffffff"/>
+<text x="13" y="701" font-family="DejaVu Sans" font-size="8" font-weight="normal" fill="#111111">Cantidad de Safes creadas</text>
+<rect id="mask-16" x="152" y="691" width="142" height="13" fill="#ffffff"/>
+<text x="153" y="701" font-family="DejaVu Sans" font-size="8" font-weight="normal" fill="#111111">Cantidad de Safes creadas</text>
+<rect id="mask-17" x="418" y="691" width="206" height="13" fill="#ffffff"/>
+<text x="419" y="700" font-family="DejaVu Sans" font-size="8" font-weight="normal" fill="#111111">Total de Safes creadas por semana</text>
+<rect id="mask-18" x="629" y="691" width="218" height="13" fill="#ffffff"/>
+<text x="630" y="700" font-family="DejaVu Sans" font-size="8" font-weight="normal" fill="#111111">Total de Safes creadas por semana</text>
+<rect id="mask-19" x="420" y="788" width="14" height="69" fill="#ffffff"/>
+<g transform="translate(420 857) rotate(-90)">
+<text x="1" y="10.5" font-family="DejaVu Sans" font-size="8" font-weight="normal" fill="#333333">Safes creadas</text>
+</g>
+<rect id="mask-20" x="200" y="94" width="100" height="12" fill="#ffffff"/>
+<text x="201" y="104" font-family="DejaVu Sans" font-size="9" font-weight="normal" fill="#111111">tokens en todo contr.</text>
+<rect id="mask-21" x="327" y="94" width="50" height="12" fill="#ffffff"/>
+<rect id="mask-22" x="118" y="392" width="165" height="13" fill="#ffffff"/>
+<text x="119" y="402.5" font-family="DejaVu Sans" font-size="9" font-weight="normal" fill="#111111">en contratos Gnosis Safe</text>
+<rect id="mask-23" x="986" y="392" width="200" height="13" fill="#ffffff"/>
+<text x="987" y="401" font-family="DejaVu Sans" font-size="8" font-weight="normal" fill="#111111">en cuentas inteligentes Safe, semanal</text>
+<rect x="0" y="976" width="1440" height="74" fill="#ffffff"/>
+<text x="16" y="1005" font-family="DejaVu Sans" font-size="20" font-weight="bold" fill="#17243a">Versión editada en español</text>
+<text x="16" y="1030" font-family="DejaVu Sans" font-size="14" fill="#334155">Traducción educativa; no es una captura nativa.</text>
+</svg>

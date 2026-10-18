@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1626" height="1344" viewBox="0 0 1626 1344" role="img" aria-labelledby="title desc">
+<title id="title">Figura 2-26. Versión editada en español</title>
+<desc id="desc">Traducción educativa de los controles de la captura histórica. Datos e identificadores conservados. No es una captura nativa.</desc>
+<rect id="mask-26-1" x="1159" y="21" width="467" height="39" fill="#f4f5f6"/>
+<text x="1161" y="45.5" font-family="DejaVu Sans" font-size="18" font-weight="400" fill="#42484b">Buscar por dirección / hash de transacción / blo…</text>
+<rect id="mask-26-2" x="30" y="239" width="338" height="42" fill="#f7f8fb"/>
+<text x="32" y="270" font-family="DejaVu Sans" font-size="25" font-weight="700" fill="#000000">Detalles de transacción</text>
+<rect id="mask-26-3" x="49" y="365" width="109" height="35" fill="#16539c"/>
+<text x="51" y="390" font-family="DejaVu Sans" font-size="20" font-weight="700" fill="#ffffff">Resumen</text>
+<rect id="mask-26-4" x="207" y="365" width="162" height="35" fill="#dde0e5"/>
+<text x="209" y="387.5" font-family="DejaVu Sans" font-size="12" font-weight="700" fill="#000000">Transacciones internas</text>
+<rect id="mask-26-5" x="406" y="365" width="64" height="35" fill="#dde0e5"/>
+<text x="408" y="388" font-family="DejaVu Sans" font-size="15" font-weight="700" fill="#000000">Estado</text>
+<rect id="mask-26-6" x="72" y="479" width="123" height="37" fill="#ffffff"/>
+<text x="74" y="502.5" font-family="DejaVu Sans" font-size="14" font-weight="400" fill="#b82229">[ Transacción en</text>
+<rect id="mask-26-7" x="407" y="479" width="223" height="37" fill="#ffffff"/>
+<text x="409" y="506.5" font-family="DejaVu Sans" font-size="28" font-weight="400" fill="#b82229">únicamente ]</text>
+<rect id="mask-26-8" x="109" y="588" width="248" height="38" fill="#ffffff"/>
+<text x="111" y="616" font-family="DejaVu Sans" font-size="23" font-weight="400" fill="#42484b">Hash de transacción:</text>
+<rect id="mask-26-9" x="109" y="667" width="94" height="38" fill="#ffffff"/>
+<text x="111" y="695" font-family="DejaVu Sans" font-size="24" font-weight="400" fill="#42484b">Estado:</text>
+<rect id="mask-26-10" x="109" y="747" width="83" height="38" fill="#ffffff"/>
+<text x="111" y="771.5" font-family="DejaVu Sans" font-size="20" font-weight="400" fill="#42484b">Bloque:</text>
+<rect id="mask-26-11" x="109" y="827" width="163" height="38" fill="#ffffff"/>
+<text x="111" y="851" font-family="DejaVu Sans" font-size="18" font-weight="400" fill="#42484b">Marca de tiempo:</text>
+<rect id="mask-26-12" x="113" y="949" width="253" height="38" fill="#ffffff"/>
+<text x="115" y="977" font-family="DejaVu Sans" font-size="22" font-weight="400" fill="#42484b">Acción de transacción:</text>
+<rect id="mask-26-13" x="109" y="1070" width="78" height="38" fill="#ffffff"/>
+<text x="111" y="1099.5" font-family="DejaVu Sans" font-size="29" font-weight="400" fill="#42484b">De:</text>
+<rect id="mask-26-14" x="109" y="1146" width="43" height="42" fill="#ffffff"/>
+<text x="111" y="1177.5" font-family="DejaVu Sans" font-size="29" font-weight="400" fill="#42484b">A:</text>
+<rect id="mask-26-15" x="492" y="669" width="84" height="28" fill="#e0efeb"/>
+<text x="494" y="690" font-family="DejaVu Sans" font-size="19" font-weight="700" fill="#14765d">Exitosa</text>
+<rect id="mask-26-16" x="638" y="752" width="200" height="29" fill="#f3f3f3"/>
+<text x="640" y="770" font-family="DejaVu Sans" font-size="13" font-weight="700" fill="#000000">confirmaciones de bloque</text>
+<rect id="mask-26-17" x="557" y="827" width="51" height="38" fill="#ffffff"/>
+<text x="559" y="851.5" font-family="DejaVu Sans" font-size="16" font-weight="400" fill="#000000">antes</text>
+<rect id="mask-26-18" x="465" y="949" width="49" height="38" fill="#ffffff"/>
+<text x="467" y="973.5" font-family="DejaVu Sans" font-size="13" font-weight="400" fill="#000000">Llamar</text>
+<rect id="mask-26-19" x="659" y="949" width="150" height="38" fill="#ffffff"/>
+<text x="661" y="975.5" font-family="DejaVu Sans" font-size="25" font-weight="400" fill="#000000">función por</text>
+<rect id="mask-26-20" x="1136" y="949" width="34" height="38" fill="#ffffff"/>
+<text x="1138" y="974.5" font-family="DejaVu Sans" font-size="24" font-weight="400" fill="#000000">en</text>
+<rect id="mask-26-21" x="469" y="1212" width="94" height="31" fill="#ffffff"/>
+<text x="471" y="1234.5" font-family="DejaVu Sans" font-size="19" font-weight="400" fill="#42484b">Transferir</text>
+<rect id="mask-26-22" x="739" y="1212" width="61" height="31" fill="#ffffff"/>
+<text x="741" y="1236.5" font-family="DejaVu Sans" font-size="25" font-weight="400" fill="#42484b">De</text>
+<rect id="mask-26-23" x="1108" y="1212" width="33" height="31" fill="#ffffff"/>
+<text x="1110" y="1235.5" font-family="DejaVu Sans" font-size="22" font-weight="400" fill="#42484b">A</text>
+<rect x="0" y="1270" width="1626" height="74" fill="#eef2f7"/>
+<text x="16" y="1299" font-family="DejaVu Sans" font-size="20" font-weight="700" fill="#172338">Versión editada en español</text>
+<text x="16" y="1324" font-family="DejaVu Sans" font-size="14" fill="#26344b">Traducción educativa; no es una captura nativa.</text>
+</svg>

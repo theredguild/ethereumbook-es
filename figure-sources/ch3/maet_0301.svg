@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="590" viewBox="0 0 1200 590" role="img" aria-labelledby="title desc">
+  <title id="title">Arquitectura de un nodo de Ethereum</title>
+  <desc id="desc">La biblioteca Web3 recibe la rama web3.beacon y alimenta la rama web3.eth. Ambas ramas apuntan a sus clientes respectivos. Dentro del nodo, Engine API conecta consenso y ejecución mediante una flecha descendente continua y otra ascendente discontinua. Cada cliente conserva su módulo P2P y sus flechas de intercambio con pares externos.</desc>
+  <style>
+    svg { color: #17212b; font-family: 'DejaVu Sans', sans-serif; }
+    text { fill: currentColor; font-size: 29px; text-anchor: middle; }
+    .heading { font-size: 35px; font-weight: 600; }
+    rect { stroke: currentColor; stroke-width: 4; }
+    .wire { stroke: currentColor; stroke-width: 5; fill: none; marker-end: url(#arrow); }
+    .dashed { stroke-dasharray: 5 12; stroke-linecap: round; }
+  </style>
+  <defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 10 5 0 10Z" fill="currentColor"/></marker></defs>
+  <rect x="495" y="5" width="490" height="578" rx="12" fill="none" stroke-dasharray="5 12"/>
+  <text class="heading" x="740" y="63">Nodo de Ethereum</text>
+  <path class="wire" d="M220 175H94V225"/>
+  <path class="wire" d="M94 435V373"/>
+  <path d="M94 435H220" fill="none" stroke="currentColor" stroke-width="5"/>
+  <path class="wire" d="M480 175H570"/>
+  <path class="wire" d="M480 435H570"/>
+  <rect x="7" y="232" width="175" height="133" rx="18" fill="#e2f0f8"/>
+  <text x="94" y="282">Biblioteca</text><text x="94" y="324">Web3</text>
+  <rect x="220" y="128" width="260" height="94" rx="18" fill="#e2f0f8"/>
+  <text x="350" y="185">web3.beacon</text>
+  <rect x="220" y="388" width="260" height="94" rx="18" fill="#e2f0f8"/>
+  <text x="350" y="445">web3.eth</text>
+  <path class="wire" d="M630 241V365"/>
+  <path class="wire dashed" d="M820 365V241"/>
+  <text x="724" y="311" font-style="italic">Engine API</text>
+  <rect x="577" y="110" width="475" height="130" rx="18" fill="#fde4bd"/>
+  <text x="748" y="187">Cliente de consenso</text>
+  <rect x="904" y="110" width="148" height="130" rx="18" fill="#fff1df"/>
+  <text x="978" y="187">P2P</text>
+  <rect x="577" y="370" width="475" height="130" rx="18" fill="#fde4bd"/>
+  <text x="748" y="447">Cliente de ejecución</text>
+  <rect x="904" y="370" width="148" height="130" rx="18" fill="#fff1df"/>
+  <text x="978" y="447">P2P</text>
+  <path class="wire dashed" d="M1170 70V135H1060"/>
+  <path class="wire dashed" d="M1060 175H1190"/>
+  <path class="wire dashed" d="M1190 175H1060"/>
+  <path class="wire dashed" d="M1170 280V215H1060"/>
+  <path class="wire dashed" d="M1170 135V70"/>
+  <path class="wire dashed" d="M1170 215V280"/>
+  <path class="wire dashed" d="M1170 330V395H1060"/>
+  <path class="wire dashed" d="M1060 435H1190"/>
+  <path class="wire dashed" d="M1190 435H1060"/>
+  <path class="wire dashed" d="M1170 540V475H1060"/>
+  <path class="wire dashed" d="M1170 395V330"/>
+  <path class="wire dashed" d="M1170 475V540"/>
+</svg>

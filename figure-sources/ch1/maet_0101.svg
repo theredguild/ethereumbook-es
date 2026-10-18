@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="1040" viewBox="0 0 1000 1040" role="img" aria-labelledby="title desc">
+  <title id="title">Componentes de una blockchain</title>
+  <desc id="desc">Recreación traducida de la figura 1-1. El cliente de ejecución contiene bloques, una red P2P y tres transacciones superpuestas. El cliente de consenso contiene reglas de consenso y un esquema de incentivos agrupados, con una flecha hacia la agrupación de máquina de estados y algoritmo de consenso, y una red P2P. Se conserva la distribución del original, sin corregir su arquitectura.</desc>
+  <style>
+    svg { color: #17212b; font-family: 'DejaVu Sans', sans-serif; }
+    rect { fill: none; stroke: currentColor; stroke-width: 4; }
+    .component { fill: #e2f0f8; }
+    text { fill: currentColor; text-anchor: middle; font-size: 29px; }
+    .heading { font-size: 35px; font-weight: 600; }
+    .transaction { font-size: 25px; }
+  </style>
+  <defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto"><path d="M0 0 10 5 0 10Z" fill="currentColor"/></marker></defs>
+  <rect x="4" y="4" width="992" height="468" rx="18"/>
+  <text class="heading" x="500" y="58">Cliente de ejecución</text>
+  <rect class="component" x="290" y="86" width="680" height="130" rx="17"/>
+  <text x="365" y="163">Bloques</text>
+  <rect class="component" x="30" y="238" width="425" height="126" rx="17"/>
+  <text x="225" y="313">Red P2P</text>
+  <rect class="component" x="425" y="115" width="177" height="326" rx="17"/>
+  <rect class="component" x="610" y="115" width="177" height="326" rx="17"/>
+  <rect class="component" x="795" y="115" width="175" height="326" rx="17"/>
+  <text class="transaction" x="513" y="410">Transacción</text>
+  <text class="transaction" x="698" y="410">Transacción</text>
+  <text class="transaction" x="882" y="410">Transacción</text>
+  <rect x="4" y="491" width="992" height="545" rx="18"/>
+  <text class="heading" x="500" y="546">Cliente de consenso</text>
+  <rect x="30" y="572" width="400" height="285" rx="17"/>
+  <rect class="component" x="53" y="596" width="355" height="111" rx="17"/>
+  <text x="230" y="663">Reglas de consenso</text>
+  <rect class="component" x="53" y="718" width="355" height="113" rx="17"/>
+  <text x="230" y="786">Esquema de incentivos</text>
+  <path d="M430 715H528" stroke="currentColor" stroke-width="4" fill="none" marker-end="url(#arrow)"/>
+  <rect class="component" x="548" y="574" width="422" height="130" rx="17"/>
+  <text x="759" y="652">Máquina de estados</text>
+  <rect class="component" x="548" y="724" width="422" height="133" rx="17"/>
+  <text x="759" y="805">Algoritmo de consenso</text>
+  <rect class="component" x="30" y="894" width="940" height="113" rx="17"/>
+  <text x="500" y="963">Red P2P</text>
+</svg>

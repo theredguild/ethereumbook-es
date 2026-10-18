@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="830" viewBox="0 0 1200 830" lang="es-419"><title>Billetera HD: árbol de claves</title><desc>Una semilla deriva una clave maestra; cuatro claves hijas derivan cuatro grupos de claves nietas dentro de una billetera.</desc><defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#151515"/></marker></defs><g font-family="DejaVu Sans" fill="#151515" stroke-linejoin="round" stroke-linecap="round">
+<rect x="8" y="8" width="1140" height="814" rx="120" fill="#f3f3f3" stroke="#151515" stroke-width="5"/>
+<rect x="940" y="320" width="250" height="175" rx="30" fill="#e8e8e8" stroke="#151515" stroke-width="5"/>
+<circle cx="1000" cy="407" r="29" fill="white" stroke="#151515" stroke-width="3"/>
+<path d="M85 418L160 365L235 418L205 507L115 507Z" fill="#b3d5e8" stroke="#151515" stroke-width="5"/>
+<text x="160" y="460" text-anchor="middle" font-size="29" font-weight="normal" fill="#151515"><tspan x="160" dy="0">Semilla</tspan></text>
+<path d="M255 438L294 438" fill="none" stroke="#151515" stroke-width="5" marker-end="url(#arrow)"/>
+<path d="M385 365L458 438L385 511L312 438Z" fill="#b3d5e8" stroke="#151515" stroke-width="4"/>
+<text x="385" y="275" text-anchor="middle" font-size="29" font-weight="normal" fill="#151515"><tspan x="385" dy="0">Clave</tspan><tspan x="385" dy="35.38">maestra</tspan></text>
+<text x="385" y="449" text-anchor="middle" font-size="35" font-weight="normal" fill="#151515"><tspan x="385" dy="0">kₘ</tspan></text>
+<text x="598" y="58" text-anchor="middle" font-size="29" font-weight="normal" fill="#151515"><tspan x="598" dy="0">Claves</tspan><tspan x="598" dy="35.38">hijas</tspan></text>
+<text x="792" y="58" text-anchor="middle" font-size="29" font-weight="normal" fill="#151515"><tspan x="792" dy="0">Claves</tspan><tspan x="792" dy="35.38">nietas</tspan></text>
+<path d="M425 365L548 241" fill="none" stroke="#151515" stroke-width="6" marker-end="url(#arrow)"/>
+<path d="M600 133L672 205L600 277L528 205Z" fill="#b3d5e8" stroke="#151515" stroke-width="4"/>
+<text x="600" y="202" text-anchor="middle" font-size="30" font-weight="normal" fill="#151515"><tspan x="600" dy="0">kₘ/0</tspan></text>
+<path d="M682 205L724 205" fill="none" stroke="#151515" stroke-width="5" marker-end="url(#arrow)"/>
+<path d="M780 121L820 157L780 193L740 157Z" fill="#b3d5e8" stroke="#151515" stroke-width="4"/>
+<text x="780" y="167" text-anchor="middle" font-size="27" font-weight="normal" fill="#151515"><tspan x="780" dy="0">k</tspan></text>
+<path d="M795 150L835 186L795 222L755 186Z" fill="#b3d5e8" stroke="#151515" stroke-width="4"/>
+<text x="795" y="196" text-anchor="middle" font-size="27" font-weight="normal" fill="#151515"><tspan x="795" dy="0">k</tspan></text>
+<path d="M810 179L850 215L810 251L770 215Z" fill="#b3d5e8" stroke="#151515" stroke-width="4"/>
+<text x="810" y="225" text-anchor="middle" font-size="27" font-weight="normal" fill="#151515"><tspan x="810" dy="0">k</tspan></text>
+<path d="M825 208L865 244L825 280L785 244Z" fill="#b3d5e8" stroke="#151515" stroke-width="4"/>
+<text x="825" y="254" text-anchor="middle" font-size="27" font-weight="normal" fill="#151515"><tspan x="825" dy="0">k</tspan></text>
+<path d="M455 410L520 368" fill="none" stroke="#151515" stroke-width="6" marker-end="url(#arrow)"/>
+<path d="M600 288L672 360L600 432L528 360Z" fill="#b3d5e8" stroke="#151515" stroke-width="4"/>
+<text x="600" y="357" text-anchor="middle" font-size="30" font-weight="normal" fill="#151515"><tspan x="600" dy="0">kₘ/1</tspan></text>
+<path d="M682 360L724 360" fill="none" stroke="#151515" stroke-width="5" marker-end="url(#arrow)"/>
+<path d="M780 276L820 312L780 348L740 312Z" fill="#b3d5e8" stroke="#151515" stroke-width="4"/>
+<text x="780" y="322" text-anchor="middle" font-size="27" font-weight="normal" fill="#151515"><tspan x="780" dy="0">k</tspan></text>
+<path d="M795 305L835 341L795 377L755 341Z" fill="#b3d5e8" stroke="#151515" stroke-width="4"/>
+<text x="795" y="351" text-anchor="middle" font-size="27" font-weight="normal" fill="#151515"><tspan x="795" dy="0">k</tspan></text>
+<path d="M810 334L850 370L810 406L770 370Z" fill="#b3d5e8" stroke="#151515" stroke-width="4"/>
+<text x="810" y="380" text-anchor="middle" font-size="27" font-weight="normal" fill="#151515"><tspan x="810" dy="0">k</tspan></text>
+<path d="M825 363L865 399L825 435L785 399Z" fill="#b3d5e8" stroke="#151515" stroke-width="4"/>
+<text x="825" y="409" text-anchor="middle" font-size="27" font-weight="normal" fill="#151515"><tspan x="825" dy="0">k</tspan></text>
+<path d="M455 473L520 503" fill="none" stroke="#151515" stroke-width="6" marker-end="url(#arrow)"/>
+<path d="M600 448L672 520L600 592L528 520Z" fill="#b3d5e8" stroke="#151515" stroke-width="4"/>
+<text x="600" y="517" text-anchor="middle" font-size="30" font-weight="normal" fill="#151515"><tspan x="600" dy="0">kₘ/2</tspan></text>
+<path d="M682 520L724 520" fill="none" stroke="#151515" stroke-width="5" marker-end="url(#arrow)"/>
+<path d="M780 436L820 472L780 508L740 472Z" fill="#b3d5e8" stroke="#151515" stroke-width="4"/>
+<text x="780" y="482" text-anchor="middle" font-size="27" font-weight="normal" fill="#151515"><tspan x="780" dy="0">k</tspan></text>
+<path d="M795 465L835 501L795 537L755 501Z" fill="#b3d5e8" stroke="#151515" stroke-width="4"/>
+<text x="795" y="511" text-anchor="middle" font-size="27" font-weight="normal" fill="#151515"><tspan x="795" dy="0">k</tspan></text>
+<path d="M810 494L850 530L810 566L770 530Z" fill="#b3d5e8" stroke="#151515" stroke-width="4"/>
+<text x="810" y="540" text-anchor="middle" font-size="27" font-weight="normal" fill="#151515"><tspan x="810" dy="0">k</tspan></text>
+<path d="M825 523L865 559L825 595L785 559Z" fill="#b3d5e8" stroke="#151515" stroke-width="4"/>
+<text x="825" y="569" text-anchor="middle" font-size="27" font-weight="normal" fill="#151515"><tspan x="825" dy="0">k</tspan></text>
+<path d="M425 512L548 635" fill="none" stroke="#151515" stroke-width="6" marker-end="url(#arrow)"/>
+<path d="M600 608L672 680L600 752L528 680Z" fill="#b3d5e8" stroke="#151515" stroke-width="4"/>
+<text x="600" y="677" text-anchor="middle" font-size="30" font-weight="normal" fill="#151515"><tspan x="600" dy="0">kₘ/3</tspan></text>
+<path d="M682 680L724 680" fill="none" stroke="#151515" stroke-width="5" marker-end="url(#arrow)"/>
+<path d="M780 596L820 632L780 668L740 632Z" fill="#b3d5e8" stroke="#151515" stroke-width="4"/>
+<text x="780" y="642" text-anchor="middle" font-size="27" font-weight="normal" fill="#151515"><tspan x="780" dy="0">k</tspan></text>
+<path d="M795 625L835 661L795 697L755 661Z" fill="#b3d5e8" stroke="#151515" stroke-width="4"/>
+<text x="795" y="671" text-anchor="middle" font-size="27" font-weight="normal" fill="#151515"><tspan x="795" dy="0">k</tspan></text>
+<path d="M810 654L850 690L810 726L770 690Z" fill="#b3d5e8" stroke="#151515" stroke-width="4"/>
+<text x="810" y="700" text-anchor="middle" font-size="27" font-weight="normal" fill="#151515"><tspan x="810" dy="0">k</tspan></text>
+<path d="M825 683L865 719L825 755L785 719Z" fill="#b3d5e8" stroke="#151515" stroke-width="4"/>
+<text x="825" y="729" text-anchor="middle" font-size="27" font-weight="normal" fill="#151515"><tspan x="825" dy="0">k</tspan></text>
+</g></svg>

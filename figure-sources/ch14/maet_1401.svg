@@ -1,0 +1,294 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1700" height="2470" viewBox="0 0 1700 2470" xml:lang="es-419" role="img" aria-labelledby="title desc">
+<title id="title">Arquitectura y contexto de ejecución de la EVM</title>
+<desc id="desc">La blockchain contiene el estado de cuenta y el encabezado del bloque. La EVM recibe la transacción del emisor; sus componentes y el ciclo de ejecución conservan las conexiones, decisiones y rutas de reversión del original.</desc>
+<defs>
+<marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+<path d="M0 0 L10 5 L0 10 Z" fill="#111" />
+</marker>
+</defs>
+<g font-family="DejaVu Sans, sans-serif">
+<rect x="400" y="10" width="1180" height="520" fill="none" stroke="#111" stroke-width="3" stroke-dasharray="3 12" />
+<rect x="465" y="26" width="1090" height="486" fill="none" stroke="#999" stroke-width="3" stroke-dasharray="9 10" />
+<rect x="535" y="45" width="400" height="420" fill="none" stroke="#999" stroke-width="3" stroke-dasharray="9 10" />
+<rect x="955" y="45" width="575" height="420" fill="none" stroke="#999" stroke-width="3" stroke-dasharray="9 10" />
+<text x="735" y="83" font-size="26" text-anchor="middle" fill="#111" font-weight="bold">
+<tspan x="735" dy="0">Estado de cuenta</tspan>
+</text>
+<text x="1242" y="83" font-size="26" text-anchor="middle" fill="#111" font-weight="bold">
+<tspan x="1242" dy="0">Encabezado de bloque</tspan>
+</text>
+<g transform="translate(442 270) rotate(-90)">
+<text x="0" y="0" font-size="25" text-anchor="middle" fill="#111" font-weight="bold">
+<tspan x="0" dy="0">Blockchain</tspan>
+</text>
+</g>
+<g transform="translate(505 270) rotate(-90)">
+<text x="0" y="0" font-size="25" text-anchor="middle" fill="#111" font-weight="bold">
+<tspan x="0" dy="0">Bloque n.º N</tspan>
+</text>
+</g>
+<path d="M725 110 H590 C543 120 543 240 590 250 H725 C695 242 695 118 725 110 Z" stroke="#111" stroke-width="4" fill="#0076b9" stroke-linejoin="round" stroke-linecap="round" />
+<text x="630.0" y="188.0" font-size="20" text-anchor="middle" fill="white" font-weight="normal">
+<tspan x="630.0" dy="0">Codehash</tspan>
+</text>
+<path d="M915 110 H780 C733 120 733 240 780 250 H915 C885 242 885 118 915 110 Z" stroke="#111" stroke-width="4" fill="#0076b9" stroke-linejoin="round" stroke-linecap="round" />
+<text x="820.0" y="188.0" font-size="20" text-anchor="middle" fill="white" font-weight="normal">
+<tspan x="820.0" dy="0">Nonce</tspan>
+</text>
+<path d="M725 285 H590 C543 295 543 415 590 425 H725 C695 417 695 293 725 285 Z" stroke="#111" stroke-width="4" fill="#0076b9" stroke-linejoin="round" stroke-linecap="round" />
+<text x="630.0" y="345.0" font-size="20" text-anchor="middle" fill="white" font-weight="normal">
+<tspan x="630.0" dy="0">Hash raíz</tspan>
+<tspan x="630.0" dy="24.4">del almacén</tspan>
+</text>
+<path d="M915 285 H780 C733 295 733 415 780 425 H915 C885 417 885 293 915 285 Z" stroke="#111" stroke-width="4" fill="#0076b9" stroke-linejoin="round" stroke-linecap="round" />
+<text x="820.0" y="363.0" font-size="20" text-anchor="middle" fill="white" font-weight="normal">
+<tspan x="820.0" dy="0">Saldo</tspan>
+</text>
+<path d="M1140 285 H1010 C963 295 963 415 1010 425 H1140 C1110 417 1110 293 1140 285 Z" stroke="#111" stroke-width="4" fill="#0076b9" stroke-linejoin="round" stroke-linecap="round" />
+<text x="1047.5" y="345.0" font-size="20" text-anchor="middle" fill="white" font-weight="normal">
+<tspan x="1047.5" dy="0">Hash raíz</tspan>
+<tspan x="1047.5" dy="24.4">de TX</tspan>
+</text>
+<path d="M1330 285 H1200 C1153 295 1153 415 1200 425 H1330 C1300 417 1300 293 1330 285 Z" stroke="#111" stroke-width="4" fill="#0076b9" stroke-linejoin="round" stroke-linecap="round" />
+<text x="1237.5" y="345.0" font-size="20" text-anchor="middle" fill="white" font-weight="normal">
+<tspan x="1237.5" dy="0">Raíz de</tspan>
+<tspan x="1237.5" dy="24.4">recibos</tspan>
+</text>
+<path d="M1520 285 H1390 C1343 295 1343 415 1390 425 H1520 C1490 417 1490 293 1520 285 Z" stroke="#111" stroke-width="4" fill="#0076b9" stroke-linejoin="round" stroke-linecap="round" />
+<text x="1427.5" y="345.0" font-size="20" text-anchor="middle" fill="white" font-weight="normal">
+<tspan x="1427.5" dy="0">Árbol raíz</tspan>
+<tspan x="1427.5" dy="24.4">del estado</tspan>
+</text>
+<text x="980" y="133" font-size="21" text-anchor="start" fill="#111" font-weight="normal">
+<tspan x="980" dy="0">- N.º de bloque</tspan>
+<tspan x="980" dy="25.62">- Filtro Bloom de registros</tspan>
+<tspan x="980" dy="25.62">  (almacena registros)</tspan>
+<tspan x="980" dy="25.62">- Hash padre</tspan>
+</text>
+<text x="1280" y="133" font-size="21" text-anchor="start" fill="#111" font-weight="normal">
+<tspan x="1280" dy="0">- Límite de gas</tspan>
+<tspan x="1280" dy="25.62">- Dificultad, Mixhash,</tspan>
+<tspan x="1280" dy="25.62">  Nonce</tspan>
+</text>
+<path d="M1330 355 H1355" stroke="#111" stroke-width="3" fill="none" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)" />
+<path d="M640 465 V620" stroke="#111" stroke-width="3" fill="none" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)" />
+<path d="M1247 425 V620" stroke="#111" stroke-width="3" fill="none" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)" />
+<path d="M1437 425 V620" stroke="#111" stroke-width="3" fill="none" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)" />
+<path d="M1247 490 H735 V465" stroke="#111" stroke-width="3" fill="none" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)" />
+<rect x="335" y="575" width="1350" height="1890" rx="0" fill="none" stroke="#666" stroke-width="3" />
+<rect x="465" y="620" width="535" height="200" fill="none" stroke="#999" stroke-width="3" stroke-dasharray="3 12" />
+<rect x="1020" y="620" width="535" height="200" fill="none" stroke="#999" stroke-width="3" stroke-dasharray="3 12" />
+<text x="730" y="662" font-size="26" text-anchor="middle" fill="#111" font-weight="bold">
+<tspan x="730" dy="0">Estado global de la EVM</tspan>
+</text>
+<text x="730" y="740" font-size="23" text-anchor="middle" fill="#111" font-weight="normal">
+<tspan x="730" dy="0">&lt;ADDR&gt;:ESTADO DE CUENTA</tspan>
+</text>
+<text x="1288" y="660" font-size="22" text-anchor="middle" fill="#111" font-weight="bold">
+<tspan x="1288" dy="0">EVM global</tspan>
+<tspan x="1288" dy="26.84">Espacio de nombres de</tspan>
+<tspan x="1288" dy="26.84">variables y unidades</tspan>
+</text>
+<text x="1288" y="750" font-size="22" text-anchor="middle" fill="#111" font-weight="normal">
+<tspan x="1288" dy="0">- MSG.SENDER</tspan>
+<tspan x="1288" dy="26.84">- MSG.VALUE</tspan>
+</text>
+<rect x="355" y="845" width="1310" height="1615" fill="none" stroke="#999" stroke-width="3" stroke-dasharray="3 12" />
+<rect x="420" y="865" width="1215" height="850" fill="none" stroke="#999" stroke-width="3" stroke-dasharray="9 10" />
+<rect x="375" y="1845" width="1275" height="610" fill="none" stroke="#999" stroke-width="3" stroke-dasharray="9 10" />
+<g transform="translate(395 1235) rotate(-90)">
+<text x="0" y="0" font-size="23" text-anchor="middle" fill="#111" font-weight="bold">
+<tspan x="0" dy="0">Modelo de ejecución de la EVM (intérprete)</tspan>
+</text>
+</g>
+<g transform="translate(454 1150) rotate(-90)">
+<text x="0" y="0" font-size="23" text-anchor="middle" fill="#111" font-weight="bold">
+<tspan x="0" dy="0">Estado de la EVM</tspan>
+</text>
+</g>
+<path d="M560 925 L740 885 V1080 H560 Z" stroke="#111" stroke-width="4" fill="#b5d5e7" stroke-linejoin="round" stroke-linecap="round" />
+<text x="650" y="942" font-size="22" text-anchor="middle" fill="#111">
+<tspan x="650" dy="0">Recibir TX</tspan>
+<tspan x="650" dy="26.84">de entrada</tspan>
+<tspan x="650" dy="26.84">para ejecutar</tspan>
+<tspan x="650" dy="26.84">en EVM</tspan>
+</text>
+<text x="790" y="928" font-size="21" text-anchor="start" fill="#111" font-weight="normal">
+<tspan x="790" dy="0">- Estado existente</tspan>
+<tspan x="790" dy="25.62">- Gas restante (STARTGAS)</tspan>
+<tspan x="790" dy="25.62">- Encabezado de bloque</tspan>
+<tspan x="790" dy="25.62">- Remitente de TX (MSG.SENDER)</tspan>
+</text>
+<text x="1220" y="928" font-size="19" text-anchor="start" fill="#111" font-weight="normal">
+<tspan x="1220" dy="0">- Datos de TX</tspan>
+<tspan x="1220" dy="23.18">- Valor de TX en WEI (MSG.VALUE)</tspan>
+<tspan x="1220" dy="23.18">- Dueño del código por ejecutar</tspan>
+<tspan x="1220" dy="23.18">- Bytecode del contrato por ejecutar</tspan>
+</text>
+<path d="M1400 1060 V1105 H875 V1185" stroke="#111" stroke-width="3" fill="none" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)" />
+<path d="M650 1080 V1190" stroke="#111" stroke-width="3" fill="none" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)" />
+<path d="M650 1130 H1115 V1220" stroke="#111" stroke-width="3" fill="none" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)" />
+<path d="M560 1195 H740 V1355 C700 1315 615 1387 560 1355 Z" stroke="#111" stroke-width="4" fill="#b5d5e7" stroke-linejoin="round" stroke-linecap="round" />
+<text x="650" y="1235" font-size="23" text-anchor="middle" fill="#111" font-weight="normal">
+<tspan x="650" dy="0">Bytecode</tspan>
+<tspan x="650" dy="28.06">del contrato</tspan>
+<tspan x="650" dy="28.06">inteligente</tspan>
+</text>
+<g transform="translate(548 1275) rotate(-90)">
+<text x="0" y="0" font-size="21" text-anchor="middle" fill="#111" font-weight="normal">
+<tspan x="0" dy="0">- MSG.SENDER</tspan>
+</text>
+</g>
+<path d="M800 1210 C800 1177 950 1177 950 1210 V1330 C950 1363 800 1363 800 1330 Z" stroke="#111" stroke-width="4" fill="#0076b9" stroke-linejoin="round" stroke-linecap="round" />
+<ellipse cx="875.0" cy="1210" rx="75.0" ry="25" fill="#53a1ce" />
+<text x="875.0" y="1324" font-size="22" text-anchor="middle" fill="white" font-weight="normal">
+<tspan x="875.0" dy="0">Almacén</tspan>
+</text>
+<path d="M1060 1220 H1230 L1185 1355 H1015 Z" stroke="#111" stroke-width="4" fill="#b5d5e7" stroke-linejoin="round" stroke-linecap="round" />
+<text x="1120" y="1274" font-size="22" text-anchor="middle" fill="#111" font-weight="normal">
+<tspan x="1120" dy="0">ARGS</tspan>
+<tspan x="1120" dy="26.84">(datos de TX)</tspan>
+</text>
+<rect x="1380" y="1220" width="180" height="135" rx="0" fill="#b5d5e7" stroke="#111" stroke-width="4" />
+<text x="1470" y="1275" font-size="23" text-anchor="middle" fill="#111" font-weight="normal">
+<tspan x="1470" dy="0">Contador</tspan>
+<tspan x="1470" dy="28.06">de programa</tspan>
+</text>
+<path d="M1120 1355 V1440" stroke="#111" stroke-width="3" fill="none" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)" />
+<path d="M1470 1355 V1390 H1120" stroke="#111" stroke-width="3" fill="none" stroke-linejoin="round" stroke-linecap="round" />
+<path d="M1045 1465 C1045 1432 1195 1432 1195 1465 V1545 C1195 1578 1045 1578 1045 1545 Z" stroke="#111" stroke-width="4" fill="#0076b9" stroke-linejoin="round" stroke-linecap="round" />
+<ellipse cx="1120.0" cy="1465" rx="75.0" ry="25" fill="#53a1ce" />
+<text x="1120.0" y="1539" font-size="22" text-anchor="middle" fill="white" font-weight="normal">
+<tspan x="1120.0" dy="0">Pila</tspan>
+</text>
+<text x="1210" y="1485" font-size="21" text-anchor="start" fill="#111" font-weight="normal">
+<tspan x="1210" dy="0">LIFO</tspan>
+<tspan x="1210" dy="25.62">- OPCODES</tspan>
+</text>
+<path d="M1430 1465 C1430 1432 1580 1432 1580 1465 V1545 C1580 1578 1430 1578 1430 1545 Z" stroke="#111" stroke-width="4" fill="#0076b9" stroke-linejoin="round" stroke-linecap="round" />
+<ellipse cx="1505.0" cy="1465" rx="75.0" ry="25" fill="#53a1ce" />
+<text x="1505.0" y="1539" font-size="22" text-anchor="middle" fill="white" font-weight="normal">
+<tspan x="1505.0" dy="0">Memoria</tspan>
+</text>
+<path d="M650 1355 V1510 H550 V1935" stroke="#111" stroke-width="3" fill="none" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)" />
+<path d="M550 1510 H1045" stroke="#111" stroke-width="3" fill="none" stroke-linejoin="round" stroke-linecap="round" />
+<text x="815" y="1548" font-size="21" text-anchor="middle" fill="#111" font-weight="normal">
+<tspan x="815" dy="0">CALLER, PUSH1 0X01, PUSH 0XA0,</tspan>
+<tspan x="815" dy="25.62">PUSH1 0.02, EXP, SUB ADD</tspan>
+</text>
+<path d="M665 1970 H640 V1620 H1505 V1570" stroke="#111" stroke-width="3" fill="none" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)" />
+<text x="1030" y="1654" font-size="23" text-anchor="middle" fill="#111" font-weight="normal">
+<tspan x="1030" dy="0">Actualizar estado y registros</tspan>
+</text>
+<rect x="10" y="1510" width="290" height="475" fill="none" stroke="#999" stroke-width="3" stroke-dasharray="9 10" />
+<text x="155" y="1550" font-size="25" text-anchor="middle" fill="#111" font-weight="bold">
+<tspan x="155" dy="0">EMISOR DE TX</tspan>
+</text>
+<text x="26" y="1595" font-size="20" text-anchor="start" fill="#111" font-weight="normal">
+<tspan x="26" dy="0">- Nonce</tspan>
+<tspan x="26" dy="24.4">- Límite de gas (STARTGAS)</tspan>
+<tspan x="26" dy="24.4">- Precio del gas</tspan>
+<tspan x="26" dy="24.4">- A (MSG.SENDER),</tspan>
+<tspan x="26" dy="24.4">  VALUE (MSG.VALUE)</tspan>
+<tspan x="26" dy="24.4">- V, R, S (TX firmada</tspan>
+<tspan x="26" dy="24.4">  con SENDER)</tspan>
+<tspan x="26" dy="24.4">- Bytecode de datos</tspan>
+<tspan x="26" dy="24.4">- INIT</tspan>
+</text>
+<path d="M155 1510 V980 H560" stroke="#111" stroke-width="3" fill="none" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)" />
+<rect x="1465" y="1735" width="160" height="80" rx="0" fill="#b5d5e7" stroke="#111" stroke-width="4" />
+<text x="1545" y="1766" font-size="23" text-anchor="middle" fill="#111" font-weight="normal">
+<tspan x="1545" dy="0">Revertir</tspan>
+<tspan x="1545" dy="28.06">TX</tspan>
+</text>
+<path d="M1465 1752 H300" stroke="#111" stroke-width="3" fill="none" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)" />
+<text x="387" y="1785" font-size="23" text-anchor="middle" fill="#111" font-weight="normal">
+<tspan x="387" dy="0">Excepción</tspan>
+</text>
+<path d="M750 1900 V1830 H1545 V1815" stroke="#111" stroke-width="3" fill="none" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)" />
+<path d="M1005 1900 V1830" stroke="#111" stroke-width="3" fill="none" stroke-linejoin="round" stroke-linecap="round" />
+<path d="M1260 1900 V1830" stroke="#111" stroke-width="3" fill="none" stroke-linejoin="round" stroke-linecap="round" />
+<text x="760" y="1875" font-size="22" text-anchor="start" fill="#111" font-weight="normal">
+<tspan x="760" dy="0">No</tspan>
+</text>
+<text x="1015" y="1875" font-size="22" text-anchor="start" fill="#111" font-weight="normal">
+<tspan x="1015" dy="0">No</tspan>
+</text>
+<text x="1270" y="1875" font-size="22" text-anchor="start" fill="#111" font-weight="normal">
+<tspan x="1270" dy="0">No</tspan>
+</text>
+<path d="M1060 2140 H1495 V2075" stroke="#111" stroke-width="3" fill="none" stroke-linejoin="round" stroke-linecap="round" />
+<path d="M1495 2140 V2075" stroke="#111" stroke-width="3" fill="none" stroke-linejoin="round" stroke-linecap="round" />
+<path d="M1495 2315 V2075" stroke="#111" stroke-width="3" fill="none" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)" />
+<path d="M1125 2315 H1495" stroke="#111" stroke-width="3" fill="none" stroke-linejoin="round" stroke-linecap="round" />
+<path d="M560 2200 V2315 H790" stroke="#111" stroke-width="3" fill="none" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)" />
+<path d="M650 2140 H850" stroke="#111" stroke-width="3" fill="none" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)" />
+<path d="M560 2010 V2080" stroke="#111" stroke-width="3" fill="none" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)" />
+<path d="M1430 1970 H1360" stroke="#111" stroke-width="3" fill="none" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)" />
+<path d="M1160 1970 H1105" stroke="#111" stroke-width="3" fill="none" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)" />
+<path d="M905 1970 H850" stroke="#111" stroke-width="3" fill="none" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)" />
+<path d="M650 1970 H615" stroke="#111" stroke-width="3" fill="none" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)" />
+<path d="M460 1935 H615 L580 2010 H425 Z" stroke="#111" stroke-width="4" fill="#b5d5e7" stroke-linejoin="round" stroke-linecap="round" />
+<text x="520" y="1983" font-size="22" text-anchor="middle" fill="#111" font-weight="normal">
+<tspan x="520" dy="0">OPCODE</tspan>
+</text>
+<path d="M750 1900.0 L847.5 1970 L750 2040.0 L652.5 1970 Z" stroke="#111" stroke-width="4" fill="#b5d5e7" stroke-linejoin="round" stroke-linecap="round" />
+<text x="750" y="1960" font-size="22" text-anchor="middle" fill="#111" font-weight="normal">
+<tspan x="750" dy="0">¿Gas</tspan>
+<tspan x="750" dy="26.84">restante?</tspan>
+</text>
+<path d="M1005 1900.0 L1102.5 1970 L1005 2040.0 L907.5 1970 Z" stroke="#111" stroke-width="4" fill="#b5d5e7" stroke-linejoin="round" stroke-linecap="round" />
+<text x="1005" y="1960" font-size="22" text-anchor="middle" fill="#111" font-weight="normal">
+<tspan x="1005" dy="0">¿OPCODES</tspan>
+<tspan x="1005" dy="26.84">restantes?</tspan>
+</text>
+<path d="M1260 1900.0 L1357.5 1970 L1260 2040.0 L1162.5 1970 Z" stroke="#111" stroke-width="4" fill="#b5d5e7" stroke-linejoin="round" stroke-linecap="round" />
+<text x="1260" y="1960" font-size="22" text-anchor="middle" fill="#111" font-weight="normal">
+<tspan x="1260" dy="0">¿OPCODE</tspan>
+<tspan x="1260" dy="26.84">ejecutado?</tspan>
+</text>
+<rect x="1430" y="1905" width="180" height="170" rx="0" fill="#b5d5e7" stroke="#111" stroke-width="4" />
+<text x="1520" y="1955" font-size="22" text-anchor="middle" fill="#111" font-weight="normal">
+<tspan x="1520" dy="0">Ejecutar</tspan>
+<tspan x="1520" dy="26.84">operación</tspan>
+<tspan x="1520" dy="26.84">del OPCODE</tspan>
+</text>
+<text x="635" y="2016" font-size="21" text-anchor="middle" fill="#111" font-weight="normal">
+<tspan x="635" dy="0">Sí</tspan>
+</text>
+<text x="890" y="2016" font-size="21" text-anchor="middle" fill="#111" font-weight="normal">
+<tspan x="890" dy="0">Sí</tspan>
+</text>
+<text x="1135" y="2016" font-size="21" text-anchor="middle" fill="#111" font-weight="normal">
+<tspan x="1135" dy="0">Éxito</tspan>
+</text>
+<text x="438" y="2053" font-size="20" text-anchor="middle" fill="#111" font-weight="normal">
+<tspan x="438" dy="0">Borrar</tspan>
+<tspan x="438" dy="24.4">almacén</tspan>
+</text>
+<path d="M560 2080.0 L650.0 2140 L560 2200.0 L470.0 2140 Z" stroke="#111" stroke-width="4" fill="#b5d5e7" stroke-linejoin="round" stroke-linecap="round" />
+<text x="560" y="2130" font-size="22" text-anchor="middle" fill="#111" font-weight="normal">
+<tspan x="560" dy="0">Tipo de</tspan>
+<tspan x="560" dy="26.84">comisión</tspan>
+</text>
+<rect x="850" y="2110" width="210" height="60" rx="0" fill="#b5d5e7" stroke="#111" stroke-width="4" />
+<text x="955" y="2149" font-size="23" text-anchor="middle" fill="#111" font-weight="normal">
+<tspan x="955" dy="0">Reembolso</tspan>
+</text>
+<rect x="790" y="2285" width="335" height="60" rx="0" fill="#b5d5e7" stroke="#111" stroke-width="4" />
+<text x="957" y="2324" font-size="21" text-anchor="middle" fill="#111" font-weight="normal">
+<tspan x="957" dy="0">Deducir comisión del OPCODE</tspan>
+</text>
+<text x="1485" y="2260" font-size="21" text-anchor="end" fill="#111" font-weight="normal">
+<tspan x="1485" dy="0">Consumir gas</tspan>
+</text>
+<text x="560" y="2350" font-size="18" text-anchor="start" fill="#111" font-weight="normal">
+<tspan x="560" dy="0">- Cómputo de operación</tspan>
+<tspan x="560" dy="21.96">- Llamada de mensaje (ETH CALL) o creación de contrato (ETH SENDTRANSACTION)</tspan>
+<tspan x="560" dy="21.96">- Uso de memoria</tspan>
+</text>
+<text x="1120" y="2440" font-size="23" text-anchor="middle" fill="#111" font-weight="bold">
+<tspan x="1120" dy="0">Ciclo de la máquina de estados para opcodes de bytecode</tspan>
+</text>
+</g>
+</svg>

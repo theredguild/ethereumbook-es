@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1480" height="850" viewBox="0 0 1480 850" lang="es-419"><title>De la frase mnemónica a la semilla</title><desc>Los pasos siete y ocho muestran palabras mnemónicas y sal. El paso nueve usa PBKDF2 con HMAC-SHA512 y 2048 rondas para obtener la semilla de 512 bits.</desc><defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#151515"/></marker></defs><g font-family="DejaVu Sans" fill="#151515" stroke-linejoin="round" stroke-linecap="round">
+<rect x="5" y="5" width="1470" height="840" rx="18" fill="none" stroke="#151515" stroke-width="3"/>
+<text x="740" y="64" text-anchor="middle" font-size="38" font-weight="bold" fill="#151515"><tspan x="740" dy="0">De la frase mnemónica a la semilla</tspan></text>
+<circle cx="75" cy="111" r="28" fill="white" stroke="#151515" stroke-width="3"/>
+<text x="75" y="120" text-anchor="middle" font-size="28" font-weight="normal" fill="#151515"><tspan x="75" dy="0">7</tspan></text>
+<circle cx="1400" cy="111" r="28" fill="white" stroke="#151515" stroke-width="3"/>
+<text x="1400" y="120" text-anchor="middle" font-size="28" font-weight="normal" fill="#151515"><tspan x="1400" dy="0">8</tspan></text>
+<rect x="38" y="150" width="700" height="150" rx="14" fill="#b3d5e8" stroke="#151515" stroke-width="3"/>
+<text x="388" y="193" text-anchor="middle" font-size="29" font-weight="bold" fill="#151515"><tspan x="388" dy="0">Palabras del código mnemónico</tspan></text>
+<text x="388" y="238" text-anchor="middle" font-size="24" font-weight="normal" fill="#151515" font-family="DejaVu Sans Mono"><tspan x="388" dy="0">“army van defense carry jealous true</tspan><tspan x="388" dy="29.28">garbage claim echo media make crunch”</tspan></text>
+<rect x="752" y="150" width="690" height="150" rx="14" fill="#b3d5e8" stroke="#151515" stroke-width="3"/>
+<text x="1097" y="200" text-anchor="middle" font-size="31" font-weight="bold" fill="#151515"><tspan x="1097" dy="0">Sal</tspan></text>
+<text x="1097" y="246" text-anchor="middle" font-size="25" font-weight="normal" fill="#151515"><tspan x="1097" dy="0">“mnemonic” + frase de contraseña opcional</tspan></text>
+<path d="M510 360H970Q985 360 985 375V480Q985 495 970 495H795V535H845Q858 535 849 549L740 656L631 549Q622 535 635 535H685V495H510Q495 495 495 480V375Q495 360 510 360Z" fill="#009447" stroke="#151515" stroke-width="4"/>
+<text x="740" y="392" text-anchor="middle" font-size="24" font-weight="bold" fill="white"><tspan x="740" dy="0">Función de estiramiento</tspan><tspan x="740" dy="29">de claves</tspan></text>
+<text x="740" y="451" text-anchor="middle" font-size="27" font-weight="normal" fill="white"><tspan x="740" dy="0">PBKDF2 con HMAC-SHA512</tspan></text>
+<text x="740" y="554" text-anchor="middle" font-size="28" font-weight="normal" fill="white"><tspan x="740" dy="0">2048</tspan><tspan x="740" dy="34.16">rondas</tspan></text>
+<circle cx="620" cy="600" r="28" fill="white" stroke="#151515" stroke-width="3"/>
+<text x="620" y="609" text-anchor="middle" font-size="28" font-weight="normal" fill="#151515"><tspan x="620" dy="0">9</tspan></text>
+<rect x="100" y="667" width="1280" height="145" rx="14" fill="#b3d5e8" stroke="#151515" stroke-width="3"/>
+<text x="740" y="711" text-anchor="middle" font-size="31" font-weight="bold" fill="#151515"><tspan x="740" dy="0">Semilla de 512 bits</tspan></text>
+<text x="740" y="757" text-anchor="middle" font-size="25" font-weight="normal" fill="#151515" font-family="DejaVu Sans Mono"><tspan x="740" dy="0">5b56c417303faa3fcba7e57400e120a0ca83ec5a4fc9ffba757fbe63fbd77a89</tspan><tspan x="740" dy="30.5">a1a3be4c67196f57c39a88b76373733891bfaba16ed27a813ceed498804c0570</tspan></text>
+</g></svg>

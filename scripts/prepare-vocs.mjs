@@ -29,6 +29,7 @@ for (const [source, destination] of pages) {
 }
 await cp(new URL('site/', root), new URL('pages/', generated), { recursive: true })
 await cp(new URL('src/images/', root), new URL('public/images/', generated), { recursive: true })
+await cp(new URL('src/favicon.svg', root), new URL('public/favicon.svg', generated))
 
 const sidebar = [
   ...chapters.map(([, text, name]) => ({ text, link: name === 'intro' ? '/' : `/${name}` })),

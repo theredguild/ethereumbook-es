@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="698" height="1340" viewBox="0 0 698 1340">
+<title>Figura 2-16. Versión editada en español</title>
+<desc>Superposición editorial sobre la captura histórica original, sin redimensionar sus datos. Traducción educativa; no es una captura nativa.</desc>
+<rect id="mask-1" x="125" y="11" width="306" height="66" fill="#f3f7fd"/>
+<text x="126" y="38.50" font-family="DejaVu Sans" font-size="21" font-weight="400" fill="#171b26">DESPLEGAR Y EJECUTAR</text>
+<text x="126" y="60.50" font-family="DejaVu Sans" font-size="21" font-weight="400" fill="#171b26">TRANSACCIONES</text>
+<rect id="mask-2" x="142" y="114" width="164" height="26" fill="#f3f7fd"/>
+<text x="143" y="135.00" font-family="DejaVu Sans" font-size="22" font-weight="400" fill="#4e5665">ENTORNO</text>
+<rect id="mask-3" x="338" y="246" width="85" height="22" fill="#5f6c78"/>
+<text x="339" y="264.00" font-family="DejaVu Sans" font-size="19" font-weight="400" fill="#ffffff">red</text>
+<rect id="mask-4" x="142" y="295" width="113" height="26" fill="#f3f7fd"/>
+<text x="143" y="316.00" font-family="DejaVu Sans" font-size="22" font-weight="400" fill="#4e5665">CUENTA</text>
+<rect id="mask-5" x="293" y="436" width="238" height="28" fill="#5f6c78"/>
+<text x="294" y="455.00" font-family="DejaVu Sans" font-size="19" font-weight="400" fill="#ffffff">Crear cuenta inteligente</text>
+<rect id="mask-6" x="142" y="501" width="112" height="26" fill="#f3f7fd"/>
+<text x="143" y="521.00" font-family="DejaVu Sans" font-size="14" font-weight="400" fill="#4e5665">LÍMITE DE GAS</text>
+<rect id="mask-7" x="191" y="543" width="181" height="30" fill="#f3f7fd"/>
+<text x="192" y="567.00" font-family="DejaVu Sans" font-size="24" font-weight="400" fill="#4e5665">Gas estimado</text>
+<rect id="mask-8" x="191" y="614" width="104" height="30" fill="#f3f7fd"/>
+<text x="192" y="637.00" font-family="DejaVu Sans" font-size="21" font-weight="400" fill="#4e5665">A medida</text>
+<rect id="mask-9" x="142" y="694" width="75" height="26" fill="#f3f7fd"/>
+<text x="143" y="714.50" font-family="DejaVu Sans" font-size="21" font-weight="400" fill="#4e5665">VALOR</text>
+<rect id="mask-10" x="142" y="846" width="126" height="27" fill="#f3f7fd"/>
+<text x="143" y="867.00" font-family="DejaVu Sans" font-size="21" font-weight="400" fill="#4e5665">CONTRATO</text>
+<rect id="mask-11" x="151" y="983" width="126" height="21" fill="#e0cdc1"/>
+<text x="152" y="1000.50" font-family="DejaVu Sans" font-size="17" font-weight="400" fill="#a53b0a">versión EVM:</text>
+<rect id="mask-12" x="186" y="1044" width="79" height="27" fill="#9c4a1d"/>
+<text x="187" y="1061.50" font-family="DejaVu Sans" font-size="15" font-weight="400" fill="#ffffff">Desplegar</text>
+<rect id="mask-13" x="191" y="1104" width="122" height="31" fill="#f3f7fd"/>
+<text x="192" y="1127.00" font-family="DejaVu Sans" font-size="20" font-weight="400" fill="#4e5665">Publicar en</text>
+<rect id="mask-14" x="185" y="1197" width="119" height="27" fill="#3f749b"/>
+<text x="186" y="1217.50" font-family="DejaVu Sans" font-size="18" font-weight="400" fill="#ffffff">En dirección</text>
+<rect id="mask-15" x="353" y="1197" width="273" height="28" fill="#ffffff"/>
+<text x="354" y="1216.00" font-family="DejaVu Sans" font-size="17" font-weight="400" fill="#4e5665">Cargar contrato por dirección</text>
+<rect x="0" y="1266" width="698" height="74" fill="#f3f5f7"/>
+<text x="16" y="1295" font-family="DejaVu Sans" font-size="20" font-weight="700" fill="#111827">Versión editada en español</text>
+<text x="16" y="1320" font-family="DejaVu Sans" font-size="14" fill="#374151">Traducción educativa; no es una captura nativa.</text>
+</svg>

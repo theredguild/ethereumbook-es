@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1050" height="730" viewBox="0 0 1050 730" lang="es-419">
+<title>Comparación de zk-EVM y zk-VM</title>
+<desc>Geth alimenta cada máquina y ambas producen una prueba. Circuitos personalizados en naranja; circuitos listos para usar en azul. Se conservan las dos líneas de los circuitos EVM y Tx que convergen en circuitos zk-EVM.</desc>
+<defs>
+<marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="userSpaceOnUse">
+<path d="M0 0 L10 5 L0 10 Z" fill="#000"/>
+</marker>
+</defs>
+<g font-family="DejaVu Sans" font-size="28" fill="#000" stroke-linejoin="round">
+<rect x="8" y="8" width="42" height="42" rx="15" fill="#0079b7" stroke="#000" stroke-width="4"/>
+<text x="29.0" y="29.0" text-anchor="middle" dominant-baseline="central" font-size="28" fill="#000">
+</text>
+<text x="62" y="38" text-anchor="start" font-size="24" font-style="italic">Caja negra lista para usar</text>
+<rect x="510" y="8" width="42" height="42" rx="15" fill="#facb90" stroke="#000" stroke-width="4"/>
+<text x="531.0" y="29.0" text-anchor="middle" dominant-baseline="central" font-size="28" fill="#000">
+</text>
+<text x="565" y="28" text-anchor="start" font-size="23" font-style="italic">Debe escribirla y mantenerla</text>
+<text x="565" y="58" text-anchor="start" font-size="23" font-style="italic">manualmente</text>
+<path d="M465 182 V232" fill="none" stroke="#000" stroke-width="5" marker-end="url(#arrow)"/>
+<path d="M880 182 V232" fill="none" stroke="#000" stroke-width="5" marker-end="url(#arrow)"/>
+<path d="M465 585 V637" fill="none" stroke="#000" stroke-width="5" marker-end="url(#arrow)"/>
+<path d="M880 585 V637" fill="none" stroke="#000" stroke-width="5" marker-end="url(#arrow)"/>
+<rect x="325" y="98" width="280" height="84" rx="15" fill="#fff" stroke="#000" stroke-width="4"/>
+<text x="465.0" y="140.0" text-anchor="middle" dominant-baseline="central" font-size="30" fill="#000">Geth</text>
+<rect x="740" y="98" width="280" height="84" rx="15" fill="#fff" stroke="#000" stroke-width="4"/>
+<text x="880.0" y="140.0" text-anchor="middle" dominant-baseline="central" font-size="30" fill="#000">Geth</text>
+<rect x="305" y="235" width="320" height="350" rx="15" fill="#fff" stroke="#000" stroke-width="4"/>
+<text x="465.0" y="410.0" text-anchor="middle" dominant-baseline="central" font-size="28" fill="#000">
+</text>
+<rect x="720" y="235" width="320" height="350" rx="15" fill="#fff" stroke="#000" stroke-width="4"/>
+<text x="880.0" y="410.0" text-anchor="middle" dominant-baseline="central" font-size="28" fill="#000">
+</text>
+<text x="465" y="287" text-anchor="middle" font-size="33">zk-EVM</text>
+<text x="880" y="287" text-anchor="middle" font-size="33">zk-VM</text>
+<path d="M242 269 L330 410 M242 555 L330 410" fill="none" stroke="#000" stroke-width="5"/>
+<rect x="5" y="227" width="237" height="82" rx="15" fill="#facb90" stroke="#000" stroke-width="4"/>
+<text x="123.5" y="268.0" text-anchor="middle" dominant-baseline="central" font-size="27" fill="#000">Circuito EVM</text>
+<rect x="5" y="323" width="237" height="82" rx="15" fill="#facb90" stroke="#000" stroke-width="4"/>
+<text x="123.5" y="364.0" text-anchor="middle" dominant-baseline="central" font-size="27" fill="#000">Circuito RLP</text>
+<rect x="5" y="419" width="237" height="82" rx="15" fill="#facb90" stroke="#000" stroke-width="4"/>
+<text x="123.5" y="460.0" text-anchor="middle" dominant-baseline="central" font-size="27" fill="#000">Circuito MPT</text>
+<rect x="5" y="515" width="237" height="82" rx="15" fill="#facb90" stroke="#000" stroke-width="4"/>
+<text x="123.5" y="556.0" text-anchor="middle" dominant-baseline="central" font-size="27" fill="#000">Circuito Tx</text>
+<rect x="330" y="372" width="270" height="82" rx="15" fill="#facb90" stroke="#000" stroke-width="4"/>
+<text x="465.0" y="413.0" text-anchor="middle" dominant-baseline="central" font-size="27" fill="#000">Circuitos zk-EVM</text>
+<rect x="745" y="372" width="270" height="82" rx="15" fill="#0079b7" stroke="#000" stroke-width="4"/>
+<text x="880.0" y="413.0" text-anchor="middle" dominant-baseline="central" font-size="27" fill="#fff">Circuitos zk-VM</text>
+<rect x="325" y="640" width="280" height="82" rx="15" fill="#fff" stroke="#000" stroke-width="4"/>
+<text x="465.0" y="681.0" text-anchor="middle" dominant-baseline="central" font-size="30" fill="#000">Prueba</text>
+<rect x="740" y="640" width="280" height="82" rx="15" fill="#fff" stroke="#000" stroke-width="4"/>
+<text x="880.0" y="681.0" text-anchor="middle" dominant-baseline="central" font-size="30" fill="#000">Prueba</text>
+</g>
+</svg>

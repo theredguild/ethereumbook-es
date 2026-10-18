@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="852" height="599" viewBox="0 0 852 599">
+<title>Figura 6-1. Versión editada en español</title>
+<desc>Superposición editorial transparente sobre la captura histórica original, sin cambiar su escala. Traducción educativa; no es una captura nativa.</desc>
+<rect id="mask-1" x="23" y="0" width="450" height="20" fill="#ffffff"/>
+<text x="24" y="15" font-family="DejaVu Sans" font-size="18" font-weight="normal" fill="#111111">Gráfico del límite promedio de gas de Ethereum</text>
+<rect id="mask-2" x="23" y="25" width="46" height="14" fill="#ffffff"/>
+<text x="24" y="36.5" font-family="DejaVu Sans" font-size="11.5" font-weight="normal" fill="#111111">Fuente:</text>
+<rect id="mask-3" x="23" y="40" width="310" height="14" fill="#ffffff"/>
+<text x="24" y="50.5" font-family="DejaVu Sans" font-size="11.25" font-weight="normal" fill="#111111">Haga clic y arrastre en el gráfico para ampliar</text>
+<rect id="mask-4" x="18" y="72" width="35" height="15" fill="#ffffff"/>
+<text x="19" y="83.5" font-family="DejaVu Sans" font-size="11.25" font-weight="normal" fill="#111111">Zoom</text>
+<rect id="mask-5" x="170" y="72" width="28" height="14" fill="#d1daeb"/>
+<text x="171" y="83" font-family="DejaVu Sans" font-size="9.75" font-weight="bold" fill="#111111">Todo</text>
+<rect id="mask-6" x="0" y="247" width="12" height="112" fill="#ffffff"/>
+<g transform="translate(0 359) rotate(-90)">
+<text x="1" y="9" font-family="DejaVu Sans" font-size="9.25" font-weight="normal" fill="#111111">Límite promedio de gas</text>
+</g>
+<rect x="0" y="525" width="852" height="74" fill="#ffffff"/>
+<text x="16" y="554" font-family="DejaVu Sans" font-size="20" font-weight="bold" fill="#17243a">Versión editada en español</text>
+<text x="16" y="579" font-family="DejaVu Sans" font-size="14" fill="#334155">Traducción educativa; no es una captura nativa.</text>
+</svg>

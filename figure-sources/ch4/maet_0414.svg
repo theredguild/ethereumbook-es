@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="650" height="760" viewBox="0 0 650 760">
+<title>Evaluaciones que afirma conocer el probador</title><desc>El probador señala dos posiciones del polinomio. Las guías rojas muestran x1, y1 y x2, y2, junto a las afirmaciones p(x1) = y1 y p(x2) = y2.</desc>
+<defs><marker id="a" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0 0L6 3L0 6Z" fill="#111"/></marker><marker id="r" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0 0L6 3L0 6Z" fill="#c5222b"/></marker></defs>
+<g font-family="DejaVu Sans" font-size="30" fill="#111"><rect x="5" y="5" width="180" height="220" rx="18" fill="none" stroke="#111" stroke-width="4"/><circle cx="95" cy="60" r="27" fill="#ddd" stroke="#111" stroke-width="3"/><path d="M45 146V114Q45 92 95 92Q145 92 145 114V146Z" fill="#ececec" stroke="#111" stroke-width="3"/><text x="95" y="198" text-anchor="middle">Probador</text>
+<g fill="none" stroke="#111" stroke-width="6" stroke-linecap="round" marker-end="url(#a)"><path d="M30 450H635"/><path d="M335 750V158"/></g>
+<path d="M85 610C145 593 158 453 202 405S266 389 307 397S397 412 429 368S482 293 525 293S546 260 570 250" fill="none" stroke="#0075b9" stroke-width="12" stroke-linecap="round"/>
+<g fill="none" stroke="#c5222b" stroke-width="6" stroke-linecap="round"><path d="M219 450V401H335M335 295H498V450" stroke-dasharray="4 13"/><path d="M185 109L215 384M185 109L489 290" marker-end="url(#r)"/></g>
+<g fill="#c5222b" font-style="italic"><text x="377" y="67">p(x1) = y1</text><text x="373" y="110">p(x2) = y2</text><text x="219" y="488" text-anchor="middle">x1</text><text x="498" y="488" text-anchor="middle">x2</text><text x="326" y="434" text-anchor="end">y1</text><text x="326" y="306" text-anchor="end">y2</text></g>
+</g></svg>

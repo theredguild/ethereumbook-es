@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1050" height="1280" viewBox="0 0 1050 1280" lang="es-419"><title>Generación de palabras mnemónicas</title><desc>Seis pasos: entropía, SHA256, suma de verificación, doce segmentos de once bits, lista BIP39 y código de doce palabras.</desc><defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#151515"/></marker></defs><g font-family="DejaVu Sans" fill="#151515" stroke-linejoin="round" stroke-linecap="round">
+<rect x="5" y="5" width="1040" height="1270" rx="18" fill="none" stroke="#151515" stroke-width="3"/>
+<text x="525" y="50" text-anchor="middle" font-size="29" font-weight="bold" fill="#151515"><tspan x="525" dy="0">Palabras mnemónicas</tspan><tspan x="525" dy="35.38">128 bits de entropía / ejemplo de doce palabras</tspan></text>
+<rect x="35" y="133" width="650" height="110" rx="14" fill="#b3d5e8" stroke="#151515" stroke-width="3"/>
+<text x="360.0" y="196.16" text-anchor="middle" font-size="24" font-weight="normal" fill="#151515"><tspan x="360.0" dy="0">Generar entropía (128 bits)</tspan></text>
+<circle cx="83" cy="189" r="28" fill="white" stroke="#151515" stroke-width="3"/>
+<text x="83" y="198" text-anchor="middle" font-size="28" font-weight="normal" fill="#151515"><tspan x="83" dy="0">1</tspan></text>
+<path d="M686 168H715V145L775 188L715 231V208H686Z" fill="#009447" stroke="#151515" stroke-width="4"/>
+<rect x="775" y="151" width="158" height="75" rx="14" fill="#009447" stroke="#151515" stroke-width="3"/>
+<text x="854.0" y="197.68" text-anchor="middle" font-size="27" font-weight="normal" fill="white"><tspan x="854.0" dy="0">SHA256</tspan></text>
+<circle cx="983" cy="188" r="28" fill="white" stroke="#151515" stroke-width="3"/>
+<text x="983" y="197" text-anchor="middle" font-size="28" font-weight="normal" fill="#151515"><tspan x="983" dy="0">2</tspan></text>
+<path d="M830 227V254H803L854 300L905 254H877V227Z" fill="#009447" stroke="#151515" stroke-width="4"/>
+<text x="970" y="270" text-anchor="middle" font-size="19" font-weight="normal" fill="#151515" font-style="italic"><tspan x="970" dy="0">Primeros</tspan><tspan x="970" dy="24">4 bits</tspan></text>
+<path d="M50 243L195 300M675 243L555 300" fill="none" stroke="#151515" stroke-width="3"/>
+<rect x="35" y="300" width="905" height="112" rx="14" fill="#b3d5e8" stroke="#151515" stroke-width="3"/>
+<text x="360" y="364.16" text-anchor="middle" font-size="24" font-weight="normal" fill="#151515"><tspan x="360" dy="0">Entropía (128 bits)</tspan></text>
+<rect x="684" y="300" width="256" height="112" rx="14" fill="white" stroke="#151515" stroke-width="3"/>
+<text x="812.0" y="335.76" text-anchor="middle" font-size="23" font-weight="normal" fill="#151515"><tspan x="812.0" dy="0">Suma de</tspan><tspan x="812.0" dy="28.06">verificación</tspan><tspan x="812.0" dy="28.06">(4 bits)</tspan></text>
+<circle cx="987" cy="357" r="28" fill="white" stroke="#151515" stroke-width="3"/>
+<text x="987" y="366" text-anchor="middle" font-size="28" font-weight="normal" fill="#151515"><tspan x="987" dy="0">3</tspan></text>
+<text x="350" y="475" text-anchor="middle" font-size="28" font-weight="normal" fill="#151515"><tspan x="350" dy="0">4</tspan></text>
+<circle cx="350" cy="465" r="29" fill="white" stroke="#151515" stroke-width="3"/>
+<text x="350" y="475" text-anchor="middle" font-size="28" font-weight="normal" fill="#151515"><tspan x="350" dy="0">4</tspan></text>
+<path d="M427 420H475V450H498L450 505L402 450H427Z" fill="#009447" stroke="#151515" stroke-width="4"/>
+<text x="735" y="451" text-anchor="middle" font-size="23" font-weight="normal" fill="#151515" font-style="italic"><tspan x="735" dy="0">Dividir 132 bits en 12</tspan><tspan x="735" dy="28.06">segmentos de 11 bits cada uno</tspan></text>
+<rect x="35" y="525" width="905" height="115" rx="14" fill="#b3d5e8" stroke="#151515" stroke-width="3"/>
+<path d="M110.41666666666667 529V637" fill="none" stroke="#151515" stroke-width="3" stroke-dasharray="4 9"/>
+<path d="M185.83333333333334 529V637" fill="none" stroke="#151515" stroke-width="3" stroke-dasharray="4 9"/>
+<path d="M261.25 529V637" fill="none" stroke="#151515" stroke-width="3" stroke-dasharray="4 9"/>
+<path d="M336.6666666666667 529V637" fill="none" stroke="#151515" stroke-width="3" stroke-dasharray="4 9"/>
+<path d="M412.0833333333333 529V637" fill="none" stroke="#151515" stroke-width="3" stroke-dasharray="4 9"/>
+<path d="M487.5 529V637" fill="none" stroke="#151515" stroke-width="3" stroke-dasharray="4 9"/>
+<path d="M562.9166666666666 529V637" fill="none" stroke="#151515" stroke-width="3" stroke-dasharray="4 9"/>
+<path d="M638.3333333333334 529V637" fill="none" stroke="#151515" stroke-width="3" stroke-dasharray="4 9"/>
+<path d="M713.75 529V637" fill="none" stroke="#151515" stroke-width="3" stroke-dasharray="4 9"/>
+<path d="M789.1666666666666 529V637" fill="none" stroke="#151515" stroke-width="3" stroke-dasharray="4 9"/>
+<path d="M864.5833333333334 529V637" fill="none" stroke="#151515" stroke-width="3" stroke-dasharray="4 9"/>
+<path d="M66 652V717Q66 799 153 799H167V771L230 818L167 865V837H153Q27 837 27 717V652Z" fill="#009447" stroke="#151515" stroke-width="4"/>
+<circle cx="102" cy="876" r="30" fill="white" stroke="#151515" stroke-width="3"/>
+<text x="102" y="885" text-anchor="middle" font-size="28" font-weight="normal" fill="#151515"><tspan x="102" dy="0">5</tspan></text>
+<rect x="235" y="663" width="510" height="355" rx="14" fill="white" stroke="#151515" stroke-width="3"/>
+<text x="490" y="702" text-anchor="middle" font-size="24" font-weight="normal" fill="#151515"><tspan x="490" dy="0">Lista de palabras en inglés BIP39</tspan><tspan x="490" dy="29.28">(2,048 palabras)</tspan></text>
+<path d="M490 771V1000" fill="none" stroke="#151515" stroke-width="2"/>
+<text x="465" y="806" text-anchor="end" font-size="23" font-weight="normal" fill="#151515" font-family="DejaVu Sans Mono"><tspan x="465" dy="0">00000000000</tspan></text>
+<text x="517" y="806" text-anchor="start" font-size="23" font-weight="normal" fill="#151515" font-family="DejaVu Sans Mono"><tspan x="517" dy="0">abandon</tspan></text>
+<text x="465" y="842" text-anchor="end" font-size="23" font-weight="normal" fill="#151515" font-family="DejaVu Sans Mono"><tspan x="465" dy="0">00000000001</tspan></text>
+<text x="517" y="842" text-anchor="start" font-size="23" font-weight="normal" fill="#151515" font-family="DejaVu Sans Mono"><tspan x="517" dy="0">ability</tspan></text>
+<text x="465" y="878" text-anchor="end" font-size="23" font-weight="normal" fill="#151515" font-family="DejaVu Sans Mono"><tspan x="465" dy="0">...</tspan></text>
+<text x="517" y="878" text-anchor="start" font-size="23" font-weight="normal" fill="#151515" font-family="DejaVu Sans Mono"><tspan x="517" dy="0">...</tspan></text>
+<text x="465" y="914" text-anchor="end" font-size="23" font-weight="bold" fill="#151515" font-family="DejaVu Sans Mono"><tspan x="465" dy="0">00001100000</tspan></text>
+<text x="517" y="914" text-anchor="start" font-size="23" font-weight="bold" fill="#151515" font-family="DejaVu Sans Mono"><tspan x="517" dy="0">army</tspan></text>
+<text x="465" y="950" text-anchor="end" font-size="23" font-weight="normal" fill="#151515" font-family="DejaVu Sans Mono"><tspan x="465" dy="0">...</tspan></text>
+<text x="517" y="950" text-anchor="start" font-size="23" font-weight="normal" fill="#151515" font-family="DejaVu Sans Mono"><tspan x="517" dy="0">...</tspan></text>
+<text x="465" y="986" text-anchor="end" font-size="23" font-weight="normal" fill="#151515" font-family="DejaVu Sans Mono"><tspan x="465" dy="0">11111111111</tspan></text>
+<text x="517" y="986" text-anchor="start" font-size="23" font-weight="normal" fill="#151515" font-family="DejaVu Sans Mono"><tspan x="517" dy="0">zoo</tspan></text>
+<path d="M760 886H817Q900 886 900 967V979H927L880 1030L833 979H861V967Q861 924 817 924H760Z" fill="#009447" stroke="#151515" stroke-width="4"/>
+<circle cx="971" cy="922" r="29" fill="white" stroke="#151515" stroke-width="3"/>
+<text x="971" y="931" text-anchor="middle" font-size="28" font-weight="normal" fill="#151515"><tspan x="971" dy="0">6</tspan></text>
+<rect x="35" y="1050" width="940" height="180" rx="14" fill="#b3d5e8" stroke="#151515" stroke-width="3"/>
+<text x="505" y="1097" text-anchor="middle" font-size="27" font-weight="bold" fill="#151515"><tspan x="505" dy="0">Código mnemónico de doce palabras</tspan></text>
+<text x="505" y="1150" text-anchor="middle" font-size="27" font-weight="normal" fill="#151515" font-family="DejaVu Sans Mono"><tspan x="505" dy="0">army van defense carry jealous true garbage</tspan><tspan x="505" dy="32.94">claim echo media make crunch</tspan></text>
+</g></svg>

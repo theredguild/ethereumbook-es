@@ -266,9 +266,34 @@ También existe un generador BIP-39 implementado en una página web independient
 >
 > Esto se enfatizará repetidamente a lo largo del capítulo porque es la regla más importante para la seguridad de la semilla: nunca, bajo ninguna circunstancia, guarde su frase semilla en formato digital.
 
-![La página web del generador BIP-39](images/ch5/maet_0504.png)
+![Suplemento editado en español del convertidor BIP39 con campos de frase mnemónica, contraseña opcional, semilla y clave raíz BIP32.](images/ch5/maet_0504-es.png)
 
 Figura 5-4. La página web del generador BIP-39
+
+**Nota de la traducción:** Imagen traducida al español mediante inteligencia artificial (IA). Revisión humana pendiente. No es una captura nativa ni una actualización de la aplicación. La captura original en inglés se conserva en el desplegable.
+
+La ayuda explica la estructura y la suma de comprobación de una frase mnemónica. El selector conserva 12 palabras y la moneda Bitcoin. Los campos públicos de ejemplo permanecen en la imagen sin repetir sus palabras ni claves en el texto accesible; no se generó ninguna billetera.
+
+Texto seleccionable de la versión editada:
+
+- Frase mnemónica
+- Ingrese una frase mnemónica BIP39 existente o genere otra al azar. Escribir sus propias doce palabras probablemente no funcione como espera: requieren una estructura específica; la última es una suma de comprobación.
+- Más información en la norma BIP39.
+- Generar al azar una frase de 12 palabras, o ingresar una frase propia.
+- BIP39: frase mnemónica; frase de contraseña opcional; semilla.
+- Moneda: Bitcoin.
+- BIP32: clave raíz.
+
+- La frase mnemónica y los valores derivados son ejemplos públicos e inseguros para fondos reales. Se conservan únicamente en los campos originales; no se generan secretos ni se vuelven a copiar al texto accesible.
+
+<details>
+<summary>Figura 5-4: ver captura original en inglés</summary>
+
+![La página web del generador BIP-39](images/ch5/maet_0504.png)
+
+> **Nota de la traducción:** se conserva la interfaz de la herramienta tal como aparece en el original. "Generate" significa "Generar"; "BIP39 Mnemonic", "frase mnemónica BIP39"; "BIP39 Passphrase (optional)", "frase de contraseña BIP39 opcional"; "BIP39 Seed", "semilla BIP39"; "Coin", "moneda"; y "BIP32 Root Key", "clave raíz BIP32". Las palabras de recuperación y los valores derivados se mantienen como datos literales.
+
+</details>
 
 ### Creación de una billetera HD a partir de la semilla
 

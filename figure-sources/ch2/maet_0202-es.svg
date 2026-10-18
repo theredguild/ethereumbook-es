@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="971" height="1185" viewBox="0 0 971 1185" xml:lang="es-419">
+  <title>Figura 2-2: versión editada en español, piloto</title>
+  <desc>Superposición de traducción educativa sobre la captura original. No es una captura nativa de MetaMask en español. Los pasos, el dígito 8, las contraseñas ocultas y los controles conservan sus píxeles originales.</desc>
+  <g fill="white">
+    <rect id="mask-step-1" x="174" y="88" width="183" height="34"/>
+    <rect id="mask-step-2" x="410" y="88" width="185" height="34"/>
+    <rect id="mask-step-3" x="590" y="88" width="250" height="65"/>
+    <rect id="mask-title" x="231" y="194" width="512" height="73"/>
+    <rect id="mask-description" x="0" y="293" width="971" height="95"/>
+    <rect id="mask-password-heading" x="164" y="388" width="360" height="32"/>
+    <rect id="mask-minimum-left" x="164" y="421" width="213" height="39"/>
+    <rect id="mask-minimum-right" x="394" y="421" width="211" height="39"/>
+    <rect id="mask-show" x="686" y="421" width="122" height="40"/>
+    <rect id="mask-strength" x="164" y="580" width="500" height="39"/>
+    <rect id="mask-confirm-password" x="164" y="642" width="420" height="40"/>
+    <rect id="mask-acknowledgment" x="235" y="830" width="570" height="137"/>
+  </g>
+  <rect id="mask-create-wallet" x="270" y="1036" width="432" height="47" fill="#1f2bf0"/>
+  <g font-family="DejaVu Sans, sans-serif" fill="#000000">
+    <g text-anchor="middle" font-size="20">
+      <text x="264" y="114" fill="#2c23ff">Crear contraseña</text>
+      <text x="486" y="114" font-size="17" fill="#374151">Proteger billetera</text>
+      <text x="708" y="108" font-size="18" fill="#374151">Confirmar la frase</text>
+      <text x="708" y="140" font-size="18" fill="#374151">secreta de recuperación</text>
+    </g>
+    <text x="486" y="247" text-anchor="middle" font-size="50" font-weight="700">Crear contraseña</text>
+    <g text-anchor="middle" font-size="27">
+      <text x="486" y="327">Esta contraseña solo desbloqueará su billetera MetaMask</text>
+      <text x="486" y="374">en este dispositivo. MetaMask no puede recuperar esta contraseña.</text>
+    </g>
+    <text x="166" y="414" font-size="26" font-weight="700">Nueva contraseña</text>
+    <text x="368" y="451" text-anchor="end" font-size="26">Mínimo</text>
+    <text x="400" y="451" font-size="26">caracteres</text>
+    <text x="790" y="452" text-anchor="end" font-size="24" fill="#2c23ff">Mostrar</text>
+    <text x="166" y="607" font-size="25">Seguridad de la contraseña: <tspan fill="#005600">Fuerte</tspan></text>
+    <text x="166" y="671" font-size="28" font-weight="700">Confirmar contraseña</text>
+    <g font-size="30">
+      <text x="238" y="861">Entiendo que MetaMask no puede</text>
+      <text x="238" y="909">recuperar esta contraseña por mí.</text>
+      <text x="238" y="955" fill="#2c23ff">Más información</text>
+    </g>
+    <text x="486" y="1068" text-anchor="middle" font-size="28" font-weight="700" fill="white">Crear una billetera nueva</text>
+  </g>
+  <rect x="0" y="1111" width="971" height="74" fill="#f5f5f5"/>
+  <g font-family="DejaVu Sans, sans-serif" text-anchor="middle" fill="#1f2937">
+    <text x="486" y="1140" font-size="20" font-weight="700">Versión editada en español · Piloto</text>
+    <text x="486" y="1168" font-size="17">Traducción educativa; no es una captura nativa.</text>
+  </g>
+</svg>

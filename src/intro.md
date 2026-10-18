@@ -2,7 +2,7 @@
 
 Traducción al español latinoamericano de *Mastering Ethereum*, desarrollada por The Red Guild.
 
-**Borrador completo en español latinoamericano.** El prefacio y los capítulos 1 a 17 están traducidos y cuentan con una primera revisión con asistencia de IA. La revisión y aprobación humana siguen pendientes. El capítulo 1 conserva el texto del piloto; las figuras heredadas requieren tratamiento gráfico y revisión de derechos.
+**Borrador completo en español latinoamericano.** El prefacio y los capítulos 1 a 17 están traducidos y cuentan con una primera revisión con asistencia de IA. La revisión y aprobación humana siguen pendientes. El capítulo 1 conserva el texto del piloto. Los diagramas con etiquetas editoriales se recrearon en español; las capturas auténticas se conservan con explicaciones separadas. La fidelidad gráfica, la procedencia y los derechos de cada figura siguen sujetos a revisión humana.
 
 ## Autores del original
 

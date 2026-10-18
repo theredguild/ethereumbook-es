@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="920" height="1268" viewBox="0 0 920 1268" xml:lang="es-419">
+  <title>Figura 15-45: versión editada en español</title>
+  <desc>Traducción educativa de etiquetas visibles mediante superposición a escala nativa. Datos técnicos, curvas, literales y estados originales se conservan. No es una captura nativa en español.</desc>
+  <rect id="mask-title" x="225" y="0" width="500" height="51" fill="#ffffff"/>
+  <text x="475" y="39.1" text-anchor="middle" font-family="DejaVu Sans, sans-serif" font-size="40" fill="#111111" font-weight="700">Clientes de consenso</text>
+  <rect id="mask-improved" x="96" y="141" width="740" height="39" fill="#beebf8"/>
+  <text x="97" y="171.04" text-anchor="start" font-family="DejaVu Sans, sans-serif" font-size="31" fill="#07313f">¡La diversidad de clientes ha mejorado!</text>
+  <rect id="mask-other" x="0" y="838" width="85" height="34" fill="#ffffff"/>
+  <text x="1" y="865.2" text-anchor="start" font-family="DejaVu Sans, sans-serif" font-size="30" fill="#111111">Otros</text>
+  <rect id="mask-data-source" x="257" y="1083" width="435" height="37" fill="#beebf8"/>
+  <text x="474.5" y="1110.34" text-anchor="middle" font-family="DejaVu Sans, sans-serif" font-size="26" fill="#07313f" font-weight="700">Fuente de datos <tspan text-decoration="underline">(leer más)</tspan>:</text>
+  <rect id="mask-provided" x="168" y="929" width="223" height="32" fill="#ffffff"/>
+  <text x="169" y="950.44" text-anchor="start" font-family="DejaVu Sans, sans-serif" font-size="16" fill="#111111">Datos proporcionados por</text>
+  <rect id="mask-updated" x="536" y="929" width="220" height="32" fill="#ffffff"/>
+  <text x="537" y="951.8" text-anchor="start" font-family="DejaVu Sans, sans-serif" font-size="20" fill="#111111">· actualización diaria.</text>
+  <rect id="mask-accuracy-before" x="165" y="973" width="215" height="32" fill="#ffffff"/>
+  <text x="166" y="995.8" text-anchor="start" font-family="DejaVu Sans, sans-serif" font-size="20" fill="#111111">Datos quizá no sean</text>
+  <rect id="mask-accuracy-after" x="464" y="973" width="124" height="32" fill="#ffffff"/>
+  <text x="465" y="997.84" text-anchor="start" font-family="DejaVu Sans, sans-serif" font-size="26" fill="#111111">precisos.</text>
+  <rect id="mask-read-more" x="601" y="973" width="144" height="32" fill="#ffffff"/>
+  <text x="602" y="997.84" text-anchor="start" font-family="DejaVu Sans, sans-serif" font-size="26" fill="#153cff" text-decoration="underline">Leer más</text>
+  <rect x="0" y="1194" width="920" height="74" fill="#f5f5f5"/>
+  <text x="460" y="1223" text-anchor="middle" font-family="DejaVu Sans, sans-serif" font-size="20" font-weight="700" fill="#1f2937">Versión editada en español</text>
+  <text x="460" y="1250" text-anchor="middle" font-family="DejaVu Sans, sans-serif" font-size="17" fill="#1f2937">Traducción educativa; no es una captura nativa.</text>
+</svg>

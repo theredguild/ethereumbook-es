@@ -1,0 +1,118 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1055" height="1445" viewBox="0 0 1055 1445" xml:lang="es-419" role="img" aria-labelledby="title desc">
+<title id="title">Operaciones LIFO de la pila</title>
+<desc id="desc">PUSH inserta el elemento 3; POP lo extrae; SWAP1 intercambia elementos 3 y 2 sin mover el elemento 1. Flechas de transformación de izquierda a derecha.</desc>
+<defs>
+<marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+<path d="M0 0 L10 5 L0 10 Z" fill="#111" />
+</marker>
+</defs>
+<g font-family="DejaVu Sans, sans-serif">
+<path d="M10 80 V435 Q10 450 25 450 H245 Q260 450 260 435 V80" stroke="#111" stroke-width="4" fill="none" stroke-linejoin="round" stroke-linecap="round" />
+<text x="135" y="430" font-size="32" text-anchor="middle" fill="#111" font-weight="bold">
+<tspan x="135" dy="0">Pila</tspan>
+</text>
+<rect x="32" y="332" width="206" height="58" rx="14" fill="#b5d5e7" stroke="#111" stroke-width="4" />
+<text x="135" y="372" font-size="28" text-anchor="middle" fill="#111" font-weight="normal">
+<tspan x="135" dy="0">Elemento 1</tspan>
+</text>
+<rect x="32" y="264" width="206" height="58" rx="14" fill="#b5d5e7" stroke="#111" stroke-width="4" />
+<text x="135" y="304" font-size="28" text-anchor="middle" fill="#111" font-weight="normal">
+<tspan x="135" dy="0">Elemento 2</tspan>
+</text>
+<path d="M790 80 V435 Q790 450 805 450 H1025 Q1040 450 1040 435 V80" stroke="#111" stroke-width="4" fill="none" stroke-linejoin="round" stroke-linecap="round" />
+<text x="915" y="430" font-size="32" text-anchor="middle" fill="#111" font-weight="bold">
+<tspan x="915" dy="0">Pila</tspan>
+</text>
+<rect x="812" y="332" width="206" height="58" rx="14" fill="#b5d5e7" stroke="#111" stroke-width="4" />
+<text x="915" y="372" font-size="28" text-anchor="middle" fill="#111" font-weight="normal">
+<tspan x="915" dy="0">Elemento 1</tspan>
+</text>
+<rect x="812" y="264" width="206" height="58" rx="14" fill="#b5d5e7" stroke="#111" stroke-width="4" />
+<text x="915" y="304" font-size="28" text-anchor="middle" fill="#111" font-weight="normal">
+<tspan x="915" dy="0">Elemento 2</tspan>
+</text>
+<rect x="812" y="196" width="206" height="58" rx="14" fill="#b5d5e7" stroke="#111" stroke-width="4" />
+<text x="915" y="236" font-size="28" text-anchor="middle" fill="#111" font-weight="normal">
+<tspan x="915" dy="0">Elemento 3</tspan>
+</text>
+<path d="M260 260 H790" stroke="#111" stroke-width="5" fill="none" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)" />
+<path d="M10 570 V925 Q10 940 25 940 H245 Q260 940 260 925 V570" stroke="#111" stroke-width="4" fill="none" stroke-linejoin="round" stroke-linecap="round" />
+<text x="135" y="920" font-size="32" text-anchor="middle" fill="#111" font-weight="bold">
+<tspan x="135" dy="0">Pila</tspan>
+</text>
+<rect x="32" y="822" width="206" height="58" rx="14" fill="#b5d5e7" stroke="#111" stroke-width="4" />
+<text x="135" y="862" font-size="28" text-anchor="middle" fill="#111" font-weight="normal">
+<tspan x="135" dy="0">Elemento 1</tspan>
+</text>
+<rect x="32" y="754" width="206" height="58" rx="14" fill="#b5d5e7" stroke="#111" stroke-width="4" />
+<text x="135" y="794" font-size="28" text-anchor="middle" fill="#111" font-weight="normal">
+<tspan x="135" dy="0">Elemento 2</tspan>
+</text>
+<rect x="32" y="686" width="206" height="58" rx="14" fill="#b5d5e7" stroke="#111" stroke-width="4" />
+<text x="135" y="726" font-size="28" text-anchor="middle" fill="#111" font-weight="normal">
+<tspan x="135" dy="0">Elemento 3</tspan>
+</text>
+<path d="M790 570 V925 Q790 940 805 940 H1025 Q1040 940 1040 925 V570" stroke="#111" stroke-width="4" fill="none" stroke-linejoin="round" stroke-linecap="round" />
+<text x="915" y="920" font-size="32" text-anchor="middle" fill="#111" font-weight="bold">
+<tspan x="915" dy="0">Pila</tspan>
+</text>
+<rect x="812" y="822" width="206" height="58" rx="14" fill="#b5d5e7" stroke="#111" stroke-width="4" />
+<text x="915" y="862" font-size="28" text-anchor="middle" fill="#111" font-weight="normal">
+<tspan x="915" dy="0">Elemento 1</tspan>
+</text>
+<rect x="812" y="754" width="206" height="58" rx="14" fill="#b5d5e7" stroke="#111" stroke-width="4" />
+<text x="915" y="794" font-size="28" text-anchor="middle" fill="#111" font-weight="normal">
+<tspan x="915" dy="0">Elemento 2</tspan>
+</text>
+<path d="M260 750 H790" stroke="#111" stroke-width="5" fill="none" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)" />
+<path d="M10 1060 V1415 Q10 1430 25 1430 H245 Q260 1430 260 1415 V1060" stroke="#111" stroke-width="4" fill="none" stroke-linejoin="round" stroke-linecap="round" />
+<text x="135" y="1410" font-size="32" text-anchor="middle" fill="#111" font-weight="bold">
+<tspan x="135" dy="0">Pila</tspan>
+</text>
+<rect x="32" y="1312" width="206" height="58" rx="14" fill="#b5d5e7" stroke="#111" stroke-width="4" />
+<text x="135" y="1352" font-size="28" text-anchor="middle" fill="#111" font-weight="normal">
+<tspan x="135" dy="0">Elemento 1</tspan>
+</text>
+<rect x="32" y="1244" width="206" height="58" rx="14" fill="#b5d5e7" stroke="#111" stroke-width="4" />
+<text x="135" y="1284" font-size="28" text-anchor="middle" fill="#111" font-weight="normal">
+<tspan x="135" dy="0">Elemento 2</tspan>
+</text>
+<rect x="32" y="1176" width="206" height="58" rx="14" fill="#b5d5e7" stroke="#111" stroke-width="4" />
+<text x="135" y="1216" font-size="28" text-anchor="middle" fill="#111" font-weight="normal">
+<tspan x="135" dy="0">Elemento 3</tspan>
+</text>
+<path d="M790 1060 V1415 Q790 1430 805 1430 H1025 Q1040 1430 1040 1415 V1060" stroke="#111" stroke-width="4" fill="none" stroke-linejoin="round" stroke-linecap="round" />
+<text x="915" y="1410" font-size="32" text-anchor="middle" fill="#111" font-weight="bold">
+<tspan x="915" dy="0">Pila</tspan>
+</text>
+<rect x="812" y="1312" width="206" height="58" rx="14" fill="#b5d5e7" stroke="#111" stroke-width="4" />
+<text x="915" y="1352" font-size="28" text-anchor="middle" fill="#111" font-weight="normal">
+<tspan x="915" dy="0">Elemento 1</tspan>
+</text>
+<rect x="812" y="1244" width="206" height="58" rx="14" fill="#b5d5e7" stroke="#111" stroke-width="4" />
+<text x="915" y="1284" font-size="28" text-anchor="middle" fill="#111" font-weight="normal">
+<tspan x="915" dy="0">Elemento 3</tspan>
+</text>
+<rect x="812" y="1176" width="206" height="58" rx="14" fill="#b5d5e7" stroke="#111" stroke-width="4" />
+<text x="915" y="1216" font-size="28" text-anchor="middle" fill="#111" font-weight="normal">
+<tspan x="915" dy="0">Elemento 2</tspan>
+</text>
+<path d="M260 1240 H790" stroke="#111" stroke-width="5" fill="none" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)" />
+<rect x="205" y="4" width="210" height="57" rx="14" fill="white" stroke="#111" stroke-width="4" />
+<text x="310" y="43" font-size="28" text-anchor="middle" fill="#111" font-weight="normal">
+<tspan x="310" dy="0">Elemento 3</tspan>
+</text>
+<text x="80" y="87" font-size="27" text-anchor="middle" fill="#111" font-weight="normal" font-style="italic">
+<tspan x="80" dy="0">PUSH</tspan>
+</text>
+<path d="M195 33 H135 V258" stroke="#111" stroke-width="5" fill="none" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)" stroke-dasharray="4 11" />
+<text x="88" y="578" font-size="27" text-anchor="middle" fill="#111" font-weight="normal" font-style="italic">
+<tspan x="88" dy="0">POP</tspan>
+</text>
+<path d="M135 686 V525 H300" stroke="#111" stroke-width="5" fill="none" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)" stroke-dasharray="4 11" />
+<text x="132" y="1098" font-size="27" text-anchor="middle" fill="#111" font-weight="normal" font-style="italic">
+<tspan x="132" dy="0">SWAP1</tspan>
+</text>
+<path d="M173 1174 V1118 H105 V1174" stroke="#111" stroke-width="5" fill="none" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)" stroke-dasharray="4 11" />
+</g>
+</svg>

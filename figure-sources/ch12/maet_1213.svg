@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1560" height="1140" viewBox="0 0 1560 1140" role="img" aria-labelledby="title desc" xml:lang="es-419">
+  <title id="title">Pila de ingeniería de una DApp</title>
+  <desc id="desc">Scaffold-ETH apunta al área roja escalonada que abarca contratos y frontends alternativos dentro de la DApp. Los contratos incluyen lógica y base de datos, con flecha a un indexador conectado al frontend oficial AWS. El frontend oficial tiene dos alternativas de respaldo en Vercel e IPFS. Fuera de la DApp, ETH.LIMO y mydapp.eth.limo apuntan a ENS, que resuelve mydapp.eth al contenthash de IPFS y se conecta mediante una flecha ascendente al área roja junto al frontend IPFS.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="22" markerHeight="22" refX="20" refY="11" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0L22 11L0 22Z" fill="#17212b"/></marker>
+    <marker id="red-arrow" markerWidth="22" markerHeight="22" refX="20" refY="11" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0L22 11L0 22Z" fill="#c52d34"/></marker>
+    <g id="logic" stroke="#17212b" stroke-width="5" fill="#087db4"><path d="M-18-62H18L21-48L35-41L48-47L65-18L53-8V8L65 18L48 47L35 41L21 48L18 62H-18L-21 48L-35 41L-48 47L-65 18L-53 8V-8L-65-18L-48-47L-35-41L-21-48Z"/><circle r="34" fill="white"/></g>
+    <g id="database" stroke="#17212b" stroke-width="5"><path d="M-65-45V45C-65 67 65 67 65 45V-45Z" fill="#087db4"/><path d="M-65-22.5C-65-.5 65-.5 65-22.5M-65 0C-65 22 65 22 65 0M-65 22.5C-65 44.5 65 44.5 65 22.5" fill="none"/><ellipse cy="-45" rx="65" ry="18" fill="#58a7d0"/></g>
+  </defs>
+  <g stroke="#17212b" stroke-width="4">
+    <rect x="4" y="120" width="1176" height="1016" rx="20" fill="none"/>
+    <path d="M50 215H600Q620 215 620 235V500Q620 520 640 520H1130Q1150 520 1150 540V900Q1150 920 1130 920H50Q30 920 30 900V235Q30 215 50 215Z" fill="#ce686c"/>
+    <rect x="60" y="245" width="530" height="375" rx="20" fill="#b7d6e8"/>
+    <rect x="95" y="360" width="220" height="225" rx="18" fill="white"/>
+    <rect x="340" y="360" width="220" height="225" rx="18" fill="white"/>
+    <rect x="790" y="205" width="240" height="245" rx="18" fill="white"/>
+    <rect x="810" y="225" width="200" height="100" rx="18" fill="#b7d6e8"/>
+    <rect x="670" y="590" width="220" height="240" rx="18" fill="white"/>
+    <rect x="915" y="590" width="220" height="240" rx="18" fill="white"/>
+    <rect x="690" y="610" width="180" height="100" rx="18" fill="#b7d6e8"/>
+    <rect x="935" y="610" width="180" height="100" rx="18" fill="#b7d6e8"/>
+    <rect x="200" y="965" width="255" height="135" rx="18" fill="white"/>
+    <rect x="160" y="5" width="340" height="90" rx="18" fill="#ce686c"/>
+    <rect x="1240" y="470" width="290" height="95" rx="18" fill="#087db4"/>
+    <rect x="1265" y="710" width="240" height="150" rx="18" fill="white"/>
+    <g fill="none" stroke-width="6" marker-end="url(#arrow)">
+      <path d="M328 620V961"/>
+      <path d="M455 1030H645V330H786"/>
+      <path d="M850 450V586"/><path d="M960 450V586"/>
+      <path d="M1385 630V706"/><path d="M1385 860V938"/>
+      <path d="M1210 1000H1080V859"/>
+    </g>
+    <path d="M330 95V211" fill="none" stroke="#c52d34" stroke-width="6" marker-end="url(#red-arrow)"/>
+  </g>
+  <g font-family="DejaVu Sans, sans-serif" text-anchor="middle" fill="#17212b">
+    <text x="330" y="64" font-size="34" fill="white">SCAFFOLD-ETH</text>
+    <text x="590" y="180" font-size="40">DApp</text>
+    <text x="325" y="294" font-size="29">Contratos inteligentes</text><text x="325" y="332" font-size="29">de Ethereum</text>
+    <use href="#logic" transform="translate(205 445) scale(.85)"/><use href="#database" transform="translate(450 445) scale(.85)"/>
+    <g font-size="28">
+      <text x="205" y="553">Lógica</text><text x="450" y="535">Base de</text><text x="450" y="571">datos</text>
+      <text x="910" y="380">Frontend</text><text x="910" y="418">oficial</text>
+      <text x="780" y="760">Frontend</text><text x="780" y="800">alternativo 1</text>
+      <text x="1025" y="760">Frontend</text><text x="1025" y="800">alternativo 2</text>
+      <text x="328" y="1018">Indexador de</text><text x="328" y="1058">blockchain</text>
+    </g>
+    <g font-size="36"><text x="910" y="288">AWS</text><text x="780" y="674">Vercel</text><text x="1025" y="674">IPFS</text><text x="1385" y="805">ENS</text></g>
+    <text x="1070" y="888" text-anchor="end" font-size="32" fill="white">mydapp.eth</text>
+    <text x="985" y="481" text-anchor="start" font-size="24" font-style="italic">Opciones de</text><text x="985" y="510" text-anchor="start" font-size="24" font-style="italic">respaldo</text>
+    <text x="1385" y="533" font-size="36" fill="white">ETH.LIMO</text>
+    <text x="1385" y="605" font-size="28" font-style="italic">mydapp.eth.limo</text>
+    <text x="1380" y="985" font-size="24" font-style="italic">Resuelve mydapp.eth</text><text x="1380" y="1019" font-size="24" font-style="italic">al contenthash de IPFS</text>
+  </g>
+</svg>

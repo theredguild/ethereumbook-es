@@ -706,9 +706,29 @@ Desensamblar el bytecode de la EVM es una excelente manera de entender cómo act
 
 En esta sección usaremos Heimdall para producir la figura 14-21. Después de obtener el bytecode de ejecución de `Faucet.sol`, podemos proporcionárselo a Heimdall para ver cómo son las instrucciones de la EVM.
 
-![Desensamblado del bytecode de ejecución de Faucet](images/ch14/maet_1421.png)
+![Suplemento editado en español del desensamblado de Faucet, con vista Grafo EVM y panel de referencias.](images/ch14/maet_1421-es.png)
 
 Figura 14-21. Desensamblado del bytecode de ejecución de Faucet
+
+**Nota de la traducción:** Imagen traducida al español mediante inteligencia artificial (IA). Revisión humana pendiente. No es una captura nativa ni una actualización de la aplicación. La captura original en inglés se conserva en el desplegable.
+
+La pestaña conserva el archivo `Faucet.bytecode`; su vista se identifica como Grafo EVM. El panel Refs. abrevia referencias cruzadas. La selección `_dispatcher`, `withdraw(uint256)`, los bloques de instrucciones y las flechas pertenecen a la salida original y no se traducen.
+
+Texto seleccionable de la versión editada:
+
+- (Grafo EVM)
+- Refs.
+
+- El capítulo atribuye esta captura a Heimdall; la interfaz visible parece un desensamblador gráfico. Se conserva el original sin corregir esa atribución.
+
+<details>
+<summary>Figura 14-21: ver captura original en inglés</summary>
+
+![Desensamblado del bytecode de ejecución de Faucet](images/ch14/maet_1421.png)
+
+> **Nota de la traducción:** la interfaz del desensamblador muestra el despachador y la función withdraw(uint256), con direcciones, instrucciones y saltos del bytecode de Faucet. Las etiquetas originales de la herramienta se conservan.
+
+</details>
 
 ### Instalación de Heimdall
 
@@ -774,9 +794,33 @@ $ cat cfg.dot
 
 Este comando imprime en pantalla todo el contenido del archivo; cópielo, abra un [generador en línea de *grafos de flujo de control* (CFG)](https://oreil.ly/swOsK) y péguelo en el lado izquierdo de la página web, como se muestra en la figura 14-22.
 
-![El grafo de flujo de control (CFG) del contrato Faucet.sol](images/ch14/maet_1422.png)
+![Suplemento editado en español de la interfaz de generación de grafos, con código DOT a la izquierda y grafo de Faucet a la derecha.](images/ch14/maet_1422-es.png)
 
 Figura 14-22. El grafo de flujo de control (CFG) del contrato Faucet.sol
+
+**Nota de la traducción:** Imagen traducida al español mediante inteligencia artificial (IA). Revisión humana pendiente. No es una captura nativa ni una actualización de la aplicación. La captura original en inglés se conserva en el desplegable.
+
+Motor y Formato mantienen las selecciones `dot` y `svg`. Ver salida sin procesar conserva la casilla sin marcar; Descargar, Compartir y Reiniciar explican los controles originales. Código DOT, bytecode, grafo y controles de zoom permanecen en su posición. El texto diminuto de algunos nodos no permite una transcripción exhaustiva fiable.
+
+Texto seleccionable de la versión editada:
+
+- Motor:
+- Formato:
+- Ver salida sin procesar
+- Descargar
+- Compartir
+- REINICIAR
+
+Algunos textos pequeños, recortados u ocultos por la interfaz original se conservaron sin reconstruirlos; su ubicación y limitaciones se registran en el manifiesto.
+
+<details>
+<summary>Figura 14-22: ver captura original en inglés</summary>
+
+![El grafo de flujo de control (CFG) del contrato Faucet.sol](images/ch14/maet_1422.png)
+
+> **Nota de la traducción:** el panel izquierdo contiene el código DOT del grafo de flujo de control de Faucet.sol; el derecho muestra el grafo generado. Engine selecciona el motor, Format el formato de salida y Download permite descargar el resultado. La interfaz original se conserva.
+
+</details>
 
 La figura 14-23 muestra el bytecode inicial del contrato `Faucet.sol`. Como puede verse, comienza con el mismo patrón que el contrato `Example.sol` anterior: `PUSH1 0x80 PUSH1 0x40 MSTORE`.
 
@@ -1056,9 +1100,31 @@ La respuesta es que aumentar el límite de gas tiene algunas desventajas relacio
 
 Históricamente, el límite de gas del bloque se ha aumentado de una sola vez durante las actualizaciones del protocolo, como puede verse en la figura 14-25. Y su valor generalmente se establece en un nivel sugerido por los desarrolladores del protocolo en el que estamos seguros de que todos los clientes pueden manejar la carga de transacciones y procesar los bloques a tiempo.
 
-![Historial del límite de gas del bloque](images/ch14/maet_1425.png)
+![Suplemento editado en español del gráfico histórico del límite de gas promedio de Ethereum.](images/ch14/maet_1425-es.png)
 
 Figura 14-25. Gráfico del límite de gas promedio de Ethereum
+
+**Nota de la traducción:** Imagen traducida al español mediante inteligencia artificial (IA). Revisión humana pendiente. No es una captura nativa ni una actualización de la aplicación. La captura original en inglés se conserva en el desplegable.
+
+El gráfico azul de Etherscan conserva el intervalo Jul 30, 2015 a Sep 16, 2024, las marcas anuales y la escala de 0 a 35 M. Todo sigue seleccionado; los períodos `1m`, `6m` y `1y` se conservan como abreviaturas técnicas. La instrucción indica hacer clic y arrastrar para ampliar.
+
+Texto seleccionable de la versión editada:
+
+- Límite de gas promedio de Ethereum
+- Fuente:
+- Haga clic y arrastre en el gráfico para ampliar
+- Zoom
+- Todo
+- Límite de gas promedio
+
+<details>
+<summary>Figura 14-25: ver captura original en inglés</summary>
+
+![Historial del límite de gas del bloque](images/ch14/maet_1425.png)
+
+> **Nota de la traducción:** el gráfico de Etherscan muestra el límite de gas promedio de Ethereum entre Jul 30, 2015 y Sep 16, 2024. El eje vertical expresa millones de gas; el horizontal indica los años. Los controles de zoom, las fechas y el gráfico original se conservan.
+
+</details>
 
 #### ¿Por qué no aumentar el límite de gas del bloque?
 

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="450" viewBox="0 0 680 450" lang="es-419"><title>Formato del mensaje AUTH</title><desc>Cinco campos: byte de tipo, ID de cadena y nonce arriba; dirección del invocador y compromiso abajo. El compromiso ocupa dos columnas y se destaca en verde.</desc><defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#151515"/></marker></defs><g font-family="DejaVu Sans" fill="#151515" stroke-linejoin="round" stroke-linecap="round">
+<rect x="8" y="8" width="664" height="434" rx="18" fill="none" stroke="#151515" stroke-width="4"/>
+<text x="340.0" y="60" text-anchor="middle" font-size="30" font-weight="bold" fill="#151515"><tspan x="340.0" dy="0">Formato del mensaje AUTH</tspan></text>
+<rect x="28.0" y="95" width="204.0" height="134" rx="14" fill="#b3d5e8" stroke="#151515" stroke-width="3"/>
+<text x="130.0" y="170.5" text-anchor="middle" font-size="25" font-weight="normal" fill="#151515"><tspan x="130.0" dy="0">Byte de tipo</tspan></text>
+<rect x="238.0" y="95" width="204.0" height="134" rx="14" fill="#b3d5e8" stroke="#151515" stroke-width="3"/>
+<text x="340.0" y="170.5" text-anchor="middle" font-size="25" font-weight="normal" fill="#151515"><tspan x="340.0" dy="0">ID de cadena</tspan></text>
+<rect x="448.0" y="95" width="204.0" height="134" rx="14" fill="#b3d5e8" stroke="#151515" stroke-width="3"/>
+<text x="550.0" y="170.5" text-anchor="middle" font-size="25" font-weight="normal" fill="#151515"><tspan x="550.0" dy="0">nonce</tspan></text>
+<rect x="28" y="245" width="204.0" height="134" rx="14" fill="#b3d5e8" stroke="#151515" stroke-width="3"/>
+<text x="130.0" y="305.25" text-anchor="middle" font-size="25" font-weight="normal" fill="#151515"><tspan x="130.0" dy="0">Dirección del</tspan><tspan x="130.0" dy="30.5">invocador</tspan></text>
+<rect x="238.0" y="245" width="414.0" height="134" rx="14" fill="#009447" stroke="#151515" stroke-width="3"/>
+<text x="445.0" y="321.52" text-anchor="middle" font-size="28" font-weight="normal" fill="white"><tspan x="445.0" dy="0">Compromiso</tspan></text>
+</g></svg>

@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="600" viewBox="0 0 1200 600" role="img" aria-labelledby="title desc" xml:lang="es-419">
+  <title id="title">Arquitectura general de una DApp</title>
+  <desc id="desc">La aplicación contiene contratos inteligentes de Ethereum, con lógica y base de datos. A la derecha, dos flechas bajan del frontend oficial a los frontends alternativos 1 y 2 como opciones de respaldo.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="20" markerHeight="20" refX="18" refY="10" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0L20 10L0 20Z" fill="#17212b"/></marker>
+    <g id="logic" stroke="#17212b" stroke-width="5" fill="#087db4"><path d="M-18-62H18L21-48L35-41L48-47L65-18L53-8V8L65 18L48 47L35 41L21 48L18 62H-18L-21 48L-35 41L-48 47L-65 18L-53 8V-8L-65-18L-48-47L-35-41L-21-48Z"/><circle r="34" fill="white"/></g>
+    <g id="database" stroke="#17212b" stroke-width="5"><path d="M-65-45V45C-65 67 65 67 65 45V-45Z" fill="#087db4"/><path d="M-65-22.5C-65-.5 65-.5 65-22.5M-65 0C-65 22 65 22 65 0M-65 22.5C-65 44.5 65 44.5 65 22.5" fill="none"/><ellipse cy="-45" rx="65" ry="18" fill="#58a7d0"/></g>
+  </defs>
+  <g stroke="#17212b" stroke-width="4">
+    <rect x="4" y="4" width="1192" height="592" rx="20" fill="none"/>
+    <rect x="35" y="125" width="585" height="440" rx="20" fill="#b7d6e8"/>
+    <rect x="70" y="250" width="245" height="280" rx="18" fill="white"/>
+    <rect x="340" y="250" width="245" height="280" rx="18" fill="white"/>
+    <rect x="785" y="125" width="260" height="180" rx="18" fill="white"/>
+    <rect x="650" y="420" width="250" height="145" rx="18" fill="white"/>
+    <rect x="925" y="420" width="250" height="145" rx="18" fill="white"/>
+    <path d="M865 305V416" fill="none" stroke-width="6" marker-end="url(#arrow)"/>
+    <path d="M965 305V416" fill="none" stroke-width="6" marker-end="url(#arrow)"/>
+  </g>
+  <g font-family="DejaVu Sans, sans-serif" fill="#17212b" text-anchor="middle">
+    <text x="600" y="78" font-size="42">Aplicación descentralizada</text>
+    <text x="328" y="182" font-size="32">Contratos inteligentes</text><text x="328" y="222" font-size="32">de Ethereum</text>
+    <use href="#logic" transform="translate(192 350)"/><use href="#database" transform="translate(462 350)"/>
+    <g font-size="30"><text x="192" y="490">Lógica</text><text x="462" y="472">Base de</text><text x="462" y="511">datos</text>
+      <text x="915" y="203">Frontend</text><text x="915" y="245">oficial</text>
+      <text x="775" y="475">Frontend</text><text x="775" y="518">alternativo 1</text>
+      <text x="1050" y="475">Frontend</text><text x="1050" y="518">alternativo 2</text>
+    </g>
+    <text x="1010" y="352" text-anchor="start" font-size="24" font-style="italic">Opciones de</text><text x="1010" y="384" text-anchor="start" font-size="24" font-style="italic">respaldo</text>
+  </g>
+</svg>

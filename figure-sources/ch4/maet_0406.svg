@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760">
+<title>Agregación de firmas BLS</title><desc>Tres votos separados se guardan en el bloque A a la izquierda. A la derecha, los mismos tres votos se agregan en una sola firma antes de guardarse en el bloque A.</desc>
+<defs><marker id="arrow" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0 0L6 3L0 6Z" fill="#111"/></marker><marker id="red" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0 0L6 3L0 6Z" fill="#c5222b"/></marker><g id="person" stroke="#111" stroke-width="3"><circle cy="-35" r="22" fill="#ddd"/><path d="M-43 30V4Q-40 -14 0 -14Q40 -14 43 4V30Z" fill="currentColor"/></g></defs>
+<g font-family="DejaVu Sans" font-size="28" fill="#111" stroke-linejoin="round">
+<use href="#person" x="220" y="90" color="#ececec"/><use href="#person" x="350" y="90" color="#f2c36d"/><use href="#person" x="480" y="90" color="#a6b4c8"/><use href="#person" x="760" y="90" color="#ececec"/><use href="#person" x="890" y="90" color="#f2c36d"/><use href="#person" x="1020" y="90" color="#a6b4c8"/>
+<g fill="none" stroke="#111" stroke-width="6" marker-end="url(#arrow)"><path d="M220 222L260 480"/><path d="M350 222V480"/><path d="M480 222L435 480"/><path d="M890 280V336"/><path d="M890 402V480"/></g><path d="M760 222V280H1020V222M890 222V280" fill="none" stroke="#111" stroke-width="6"/>
+<g fill="#63bc8f" stroke="#111" stroke-width="4"><circle cx="220" cy="188" r="33"/><circle cx="350" cy="188" r="33"/><circle cx="480" cy="188" r="33"/><circle cx="760" cy="188" r="33"/><circle cx="890" cy="188" r="33"/><circle cx="1020" cy="188" r="33"/><circle cx="890" cy="369" r="33"/></g>
+<path d="M890 260L910 280L890 300L870 280Z" fill="#c5222b" stroke="#111" stroke-width="4"/>
+<g fill="none" stroke="#111" stroke-width="4"><rect x="185" y="490" width="330" height="255" rx="18"/><rect x="725" y="490" width="330" height="255" rx="18"/></g>
+<g fill="#63bc8f" stroke="#111" stroke-width="4"><circle cx="255" cy="565" r="33"/><circle cx="350" cy="565" r="33"/><circle cx="445" cy="565" r="33"/><circle cx="890" cy="565" r="33"/></g>
+<text x="350" y="715" text-anchor="middle">Bloque A</text><text x="890" y="715" text-anchor="middle">Bloque A</text>
+<g stroke="#c5222b" stroke-width="4" marker-end="url(#red)"><path d="M130 280L185 226"/><path d="M968 342L920 298"/></g>
+<g fill="#c5222b" font-size="25" font-style="italic"><text x="8" y="315">Voto por el</text><text x="8" y="347">bloque A</text><text x="945" y="377">Agregación</text><text x="945" y="409">de firmas</text></g>
+</g></svg>

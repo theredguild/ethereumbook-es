@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="780" viewBox="0 0 1000 780">
+<title>Detección de doble firma con BLS</title><desc>Un validador firma votos para los bloques A y B. Ambos votos se reúnen como evidencia de doble firma y una flecha de slashing regresa al validador.</desc>
+<defs><marker id="a" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0 0L6 3L0 6Z" fill="#111"/></marker></defs>
+<g font-family="DejaVu Sans" font-size="30" fill="#111" stroke-linejoin="round"><g stroke="#111" stroke-width="4"><circle cx="270" cy="44" r="27" fill="#ddd"/><path d="M215 135V99Q215 77 270 77Q325 77 325 99V135Z" fill="#ececec"/></g>
+<g fill="none" stroke="#111" stroke-width="7" marker-end="url(#a)"><path d="M200 238L143 414"/><path d="M340 238L399 414"/><path d="M140 689V762H861V633"/><path d="M861 420V112H380"/></g><path d="M400 689V762" fill="none" stroke="#111" stroke-width="7"/>
+<g fill="#63bc8f" stroke="#111" stroke-width="4"><circle cx="200" cy="202" r="37"/><circle cx="140" cy="525" r="37"/></g><g fill="#b2d5e8" stroke="#111" stroke-width="4"><circle cx="340" cy="202" r="37"/><circle cx="400" cy="525" r="37"/></g>
+<g fill="none" stroke="#111" stroke-width="4"><rect x="8" y="425" width="260" height="265" rx="18"/><rect x="270" y="425" width="260" height="265" rx="18"/><rect x="730" y="425" width="260" height="210" rx="18"/></g>
+<circle cx="806" cy="506" r="37" fill="#63bc8f" stroke="#111" stroke-width="4"/><circle cx="912" cy="506" r="37" fill="#b2d5e8" stroke="#111" stroke-width="4"/>
+<text x="140" y="655" text-anchor="middle">Bloque A</text><text x="400" y="655" text-anchor="middle">Bloque B</text><text x="860" y="607" text-anchor="middle">Doble firma</text><text x="620" y="89" text-anchor="middle" font-style="italic">Slashing</text>
+<path d="M886 377Q890 370 895 377L925 426Q928 434 919 434H860Q850 434 855 425Z" fill="#c5222b" stroke="#111" stroke-width="4"/><text x="890" y="425" text-anchor="middle" fill="white" font-size="39" font-weight="bold">!</text>
+</g></svg>

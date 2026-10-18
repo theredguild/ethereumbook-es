@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1438" height="1009" viewBox="0 0 1438 1009">
+<title>Figura 6-8. Versión editada en español</title>
+<desc>Superposición editorial transparente sobre la captura histórica original, sin cambiar su escala. Traducción educativa; no es una captura nativa.</desc>
+<rect id="mask-1" x="43" y="51" width="493" height="31" fill="#ffffff"/>
+<text x="44" y="71" font-family="DejaVu Sans" font-size="15.25" font-weight="bold" fill="#bb2632">[ Esta transacción es solo de la red de pruebas Sepolia ]</text>
+<rect id="mask-2" x="77" y="146" width="225" height="30" fill="#ffffff"/>
+<text x="78" y="169.5" font-family="DejaVu Sans" font-size="21" font-weight="normal" fill="#34434a">Hash de transacción:</text>
+<rect id="mask-3" x="77" y="214" width="130" height="30" fill="#ffffff"/>
+<text x="78" y="238" font-family="DejaVu Sans" font-size="24" font-weight="normal" fill="#34434a">Estado:</text>
+<rect id="mask-4" x="77" y="283" width="130" height="30" fill="#ffffff"/>
+<text x="78" y="304.5" font-family="DejaVu Sans" font-size="24" font-weight="normal" fill="#34434a">Bloque:</text>
+<rect id="mask-5" x="77" y="352" width="200" height="30" fill="#ffffff"/>
+<text x="78" y="373.5" font-family="DejaVu Sans" font-size="24" font-weight="normal" fill="#34434a">Fecha y hora:</text>
+<rect id="mask-6" x="77" y="454" width="220" height="30" fill="#ffffff"/>
+<text x="78" y="478.5" font-family="DejaVu Sans" font-size="24" font-weight="normal" fill="#34434a">Acción:</text>
+<rect id="mask-7" x="77" y="557" width="140" height="30" fill="#ffffff"/>
+<text x="78" y="581" font-family="DejaVu Sans" font-size="24" font-weight="normal" fill="#34434a">De:</text>
+<rect id="mask-8" x="77" y="625" width="130" height="30" fill="#ffffff"/>
+<text x="78" y="649" font-family="DejaVu Sans" font-size="24" font-weight="normal" fill="#34434a">Para:</text>
+<rect id="mask-9" x="77" y="724" width="130" height="30" fill="#ffffff"/>
+<text x="78" y="748" font-family="DejaVu Sans" font-size="24" font-weight="normal" fill="#34434a">Valor:</text>
+<rect id="mask-10" x="77" y="790" width="220" height="30" fill="#ffffff"/>
+<text x="78" y="814.5" font-family="DejaVu Sans" font-size="24" font-weight="normal" fill="#34434a">Comisión:</text>
+<rect id="mask-11" x="77" y="854" width="220" height="30" fill="#ffffff"/>
+<text x="78" y="875.5" font-family="DejaVu Sans" font-size="24" font-weight="normal" fill="#34434a">Precio del gas:</text>
+<rect id="mask-12" x="347" y="215" width="73" height="23" fill="#d2ebea"/>
+<text x="348" y="233" font-family="DejaVu Sans" font-size="17.25" font-weight="bold" fill="#08795f">Exitosa</text>
+<rect id="mask-13" x="472" y="287" width="169" height="24" fill="#f3f3f3"/>
+<text x="473" y="305.5" font-family="DejaVu Sans" font-size="17" font-weight="bold" fill="#111111">confirmaciones</text>
+<rect id="mask-14" x="323" y="453" width="44" height="30" fill="#ffffff"/>
+<text x="324" y="473" font-family="DejaVu Sans" font-size="12" font-weight="normal" fill="#111111">Llamar</text>
+<rect id="mask-15" x="513" y="453" width="121" height="30" fill="#ffffff"/>
+<text x="514" y="474.5" font-family="DejaVu Sans" font-size="20.75" font-weight="normal" fill="#111111">Método por</text>
+<rect id="mask-16" x="904" y="625" width="85" height="28" fill="#ffffff"/>
+<text x="905" y="647.5" font-family="DejaVu Sans" font-size="23" font-weight="normal" fill="#111111">Creado</text>
+<rect x="0" y="935" width="1438" height="74" fill="#ffffff"/>
+<text x="16" y="964" font-family="DejaVu Sans" font-size="20" font-weight="bold" fill="#17243a">Versión editada en español</text>
+<text x="16" y="989" font-family="DejaVu Sans" font-size="14" fill="#334155">Traducción educativa; no es una captura nativa.</text>
+</svg>

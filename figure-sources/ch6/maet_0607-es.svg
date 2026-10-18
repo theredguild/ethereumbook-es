@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1444" height="1532" viewBox="0 0 1444 1532">
+<title>Figura 6-7. Versión editada en español</title>
+<desc>Superposición editorial transparente sobre la captura histórica original, sin cambiar su escala. Traducción educativa; no es una captura nativa.</desc>
+<rect id="mask-1" x="43" y="51" width="505" height="31" fill="#ffffff"/>
+<text x="44" y="71.5" font-family="DejaVu Sans" font-size="15.75" font-weight="bold" fill="#bb2632">[ Esta transacción es solo de la red de pruebas Sepolia ]</text>
+<rect id="mask-2" x="76" y="146" width="240" height="30" fill="#ffffff"/>
+<text x="77" y="170" font-family="DejaVu Sans" font-size="22.5" font-weight="normal" fill="#34434a">Hash de transacción:</text>
+<rect id="mask-3" x="76" y="214" width="120" height="30" fill="#ffffff"/>
+<text x="77" y="238.5" font-family="DejaVu Sans" font-size="25" font-weight="normal" fill="#34434a">Estado:</text>
+<rect id="mask-4" x="76" y="287" width="110" height="30" fill="#ffffff"/>
+<text x="77" y="309" font-family="DejaVu Sans" font-size="25" font-weight="normal" fill="#34434a">Bloque:</text>
+<rect id="mask-5" x="76" y="355" width="202" height="30" fill="#ffffff"/>
+<text x="77" y="377" font-family="DejaVu Sans" font-size="25" font-weight="normal" fill="#34434a">Fecha y hora:</text>
+<rect id="mask-6" x="76" y="455" width="100" height="32" fill="#ffffff"/>
+<text x="77" y="480" font-family="DejaVu Sans" font-size="25" font-weight="normal" fill="#34434a">De:</text>
+<rect id="mask-7" x="76" y="524" width="100" height="32" fill="#ffffff"/>
+<text x="77" y="549" font-family="DejaVu Sans" font-size="25" font-weight="normal" fill="#34434a">Para:</text>
+<rect id="mask-8" x="76" y="631" width="100" height="30" fill="#ffffff"/>
+<text x="77" y="655.5" font-family="DejaVu Sans" font-size="25" font-weight="normal" fill="#34434a">Valor:</text>
+<rect id="mask-9" x="76" y="696" width="220" height="30" fill="#ffffff"/>
+<text x="77" y="721" font-family="DejaVu Sans" font-size="25" font-weight="normal" fill="#34434a">Comisión:</text>
+<rect id="mask-10" x="76" y="760" width="245" height="30" fill="#ffffff"/>
+<text x="77" y="782" font-family="DejaVu Sans" font-size="25" font-weight="normal" fill="#34434a">Precio del gas:</text>
+<rect id="mask-11" x="76" y="890" width="300" height="30" fill="#ffffff"/>
+<text x="77" y="912.5" font-family="DejaVu Sans" font-size="25" font-weight="normal" fill="#34434a">Límite y uso de gas:</text>
+<rect id="mask-12" x="76" y="955" width="255" height="30" fill="#ffffff"/>
+<text x="77" y="977" font-family="DejaVu Sans" font-size="25" font-weight="normal" fill="#34434a">Comisiones de gas:</text>
+<rect id="mask-13" x="76" y="1023" width="300" height="30" fill="#ffffff"/>
+<text x="77" y="1044" font-family="DejaVu Sans" font-size="20" font-weight="normal" fill="#34434a">Quema y ahorro de comisión:</text>
+<rect id="mask-14" x="76" y="1135" width="250" height="32" fill="#ffffff"/>
+<text x="77" y="1160.5" font-family="DejaVu Sans" font-size="25" font-weight="normal" fill="#34434a">Otros atributos:</text>
+<rect id="mask-15" x="76" y="1203" width="250" height="30" fill="#ffffff"/>
+<text x="77" y="1227.5" font-family="DejaVu Sans" font-size="25" font-weight="normal" fill="#34434a">Datos de entrada:</text>
+<rect id="mask-16" x="435" y="215" width="75" height="25" fill="#cce9e5"/>
+<text x="436" y="234.5" font-family="DejaVu Sans" font-size="17.5" font-weight="bold" fill="#08795f">Exitosa</text>
+<rect id="mask-17" x="557" y="289" width="177" height="28" fill="#ecefef"/>
+<text x="558" y="310" font-family="DejaVu Sans" font-size="18" font-weight="bold" fill="#111111"> confirmaciones</text>
+<rect id="mask-18" x="711" y="955" width="54" height="29" fill="#ffffff"/>
+<text x="712" y="978.5" font-family="DejaVu Sans" font-size="21.5" font-weight="normal" fill="#34434a">Máx:</text>
+<rect id="mask-19" x="1018" y="955" width="143" height="29" fill="#ffffff"/>
+<text x="1019" y="977" font-family="DejaVu Sans" font-size="18.5" font-weight="normal" fill="#34434a">Prioridad máx.:</text>
+<rect id="mask-20" x="438" y="1027" width="49" height="24" fill="#ecefef"/>
+<text x="439" y="1044" font-family="DejaVu Sans" font-size="11.5" font-weight="normal" fill="#111111">Quema:</text>
+<rect id="mask-21" x="849" y="1027" width="106" height="24" fill="#ecefef"/>
+<text x="850" y="1046" font-family="DejaVu Sans" font-size="19" font-weight="bold" fill="#111111">Ahorro:</text>
+<rect id="mask-22" x="409" y="1141" width="81" height="25" fill="#ecefef"/>
+<text x="410" y="1158.5" font-family="DejaVu Sans" font-size="18" font-weight="bold" fill="#111111">Tipo:</text>
+<rect id="mask-23" x="773" y="1141" width="147" height="25" fill="#ecefef"/>
+<text x="774" y="1158" font-family="DejaVu Sans" font-size="16.5" font-weight="bold" fill="#111111">Pos. en bloque:</text>
+<rect id="mask-24" x="43" y="1370" width="180" height="32" fill="#ffffff"/>
+<text x="44" y="1396" font-family="DejaVu Sans" font-size="25" font-weight="normal" fill="#34434a">Más detalles:</text>
+<rect id="mask-25" x="420" y="1370" width="220" height="32" fill="#ffffff"/>
+<text x="421" y="1395" font-family="DejaVu Sans" font-size="25" font-weight="normal" fill="#0871aa">Mostrar menos</text>
+<rect x="0" y="1458" width="1444" height="74" fill="#ffffff"/>
+<text x="16" y="1487" font-family="DejaVu Sans" font-size="20" font-weight="bold" fill="#17243a">Versión editada en español</text>
+<text x="16" y="1512" font-family="DejaVu Sans" font-size="14" fill="#334155">Traducción educativa; no es una captura nativa.</text>
+</svg>

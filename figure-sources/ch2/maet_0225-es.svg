@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2184" height="1384" viewBox="0 0 2184 1384" role="img" aria-labelledby="title desc">
+<title id="title">Figura 2-25. Versión editada en español</title>
+<desc id="desc">Traducción educativa de los controles de la captura histórica. Datos e identificadores conservados. No es una captura nativa.</desc>
+<rect id="mask-25-1" x="1450" y="24" width="610" height="39" fill="#f4f5f6"/>
+<text x="1452" y="49.5" font-family="DejaVu Sans" font-size="20" font-weight="400" fill="#42484b">Buscar por dirección / hash de transacción / bloque / token</text>
+<rect id="mask-25-2" x="1901" y="134" width="82" height="33" fill="#ffffff"/>
+<text x="1903" y="161" font-family="DejaVu Sans" font-size="28" font-weight="400" fill="#000000">Inicio</text>
+<rect id="mask-25-3" x="94" y="254" width="146" height="40" fill="#f7f8fb"/>
+<text x="96" y="284" font-family="DejaVu Sans" font-size="28" font-weight="700" fill="#000000">Contrato</text>
+<rect id="mask-25-4" x="66" y="476" width="121" height="35" fill="#ffffff"/>
+<text x="68" y="501.5" font-family="DejaVu Sans" font-size="22" font-weight="700" fill="#000000">Resumen</text>
+<rect id="mask-25-5" x="120" y="552" width="116" height="29" fill="#ffffff"/>
+<text x="122" y="575.5" font-family="DejaVu Sans" font-size="24" font-weight="400" fill="#42484b">SALDO</text>
+<rect id="mask-25-6" x="968" y="476" width="130" height="35" fill="#ffffff"/>
+<text x="970" y="502" font-family="DejaVu Sans" font-size="21" font-weight="700" fill="#000000">Más datos</text>
+<rect id="mask-25-7" x="968" y="558" width="254" height="29" fill="#ffffff"/>
+<text x="970" y="581.5" font-family="DejaVu Sans" font-size="24" font-weight="400" fill="#42484b">Creador del contrato</text>
+<rect id="mask-25-8" x="1328" y="601" width="72" height="33" fill="#ffffff"/>
+<text x="1330" y="626.5" font-family="DejaVu Sans" font-size="25" font-weight="400" fill="#42484b">en tx</text>
+<rect id="mask-25-9" x="1870" y="476" width="201" height="35" fill="#ffffff"/>
+<text x="1872" y="500.5" font-family="DejaVu Sans" font-size="18" font-weight="700" fill="#000000">Datos multicadena</text>
+<rect id="mask-25-10" x="50" y="754" width="150" height="34" fill="#16539c"/>
+<text x="52" y="778" font-family="DejaVu Sans" font-size="18" font-weight="700" fill="#ffffff">Transacciones</text>
+<rect id="mask-25-11" x="251" y="754" width="239" height="34" fill="#dde0e5"/>
+<text x="253" y="778" font-family="DejaVu Sans" font-size="18" font-weight="700" fill="#000000">Transacciones internas</text>
+<rect id="mask-25-12" x="543" y="754" width="181" height="34" fill="#dde0e5"/>
+<text x="545" y="778" font-family="DejaVu Sans" font-size="18" font-weight="700" fill="#000000">Transf. de tokens</text>
+<rect id="mask-25-13" x="885" y="754" width="98" height="34" fill="#dde0e5"/>
+<text x="887" y="778" font-family="DejaVu Sans" font-size="19" font-weight="700" fill="#000000">Contrato</text>
+<rect id="mask-25-14" x="1036" y="754" width="77" height="34" fill="#dde0e5"/>
+<text x="1038" y="777" font-family="DejaVu Sans" font-size="16" font-weight="700" fill="#000000">Eventos</text>
+<rect id="mask-25-15" x="104" y="868" width="84" height="35" fill="#ffffff"/>
+<text x="106" y="895.5" font-family="DejaVu Sans" font-size="21" font-weight="400" fill="#000000">Últimas</text>
+<rect id="mask-25-16" x="211" y="868" width="191" height="35" fill="#ffffff"/>
+<text x="213" y="895.5" font-family="DejaVu Sans" font-size="26" font-weight="400" fill="#000000">de un total de</text>
+<rect id="mask-25-17" x="429" y="868" width="166" height="35" fill="#ffffff"/>
+<text x="431" y="894" font-family="DejaVu Sans" font-size="23" font-weight="400" fill="#000000">transacciones</text>
+<rect id="mask-25-18" x="154" y="966" width="206" height="31" fill="#ffffff"/>
+<text x="156" y="988.5" font-family="DejaVu Sans" font-size="17" font-weight="700" fill="#000000">Hash de transacción</text>
+<rect id="mask-25-19" x="548" y="966" width="86" height="31" fill="#ffffff"/>
+<text x="550" y="989" font-family="DejaVu Sans" font-size="19" font-weight="700" fill="#000000">Método</text>
+<rect id="mask-25-20" x="795" y="966" width="70" height="31" fill="#ffffff"/>
+<text x="797" y="986" font-family="DejaVu Sans" font-size="16" font-weight="700" fill="#000000">Bloque</text>
+<rect id="mask-25-21" x="987" y="966" width="52" height="31" fill="#ffffff"/>
+<text x="989" y="988" font-family="DejaVu Sans" font-size="17" font-weight="700" fill="#195796">Edad</text>
+<rect id="mask-25-22" x="1234" y="966" width="70" height="31" fill="#ffffff"/>
+<text x="1236" y="990.5" font-family="DejaVu Sans" font-size="24" font-weight="700" fill="#000000">De</text>
+<rect id="mask-25-23" x="1717" y="966" width="40" height="31" fill="#ffffff"/>
+<text x="1719" y="990.5" font-family="DejaVu Sans" font-size="24" font-weight="700" fill="#000000">A</text>
+<rect id="mask-25-24" x="1647" y="1055" width="24" height="24" fill="#e1f0eb"/>
+<text x="1649" y="1074.5" font-family="DejaVu Sans" font-size="20" font-weight="700" fill="#14765d">E</text>
+<rect id="mask-25-25" x="1647" y="1152" width="24" height="24" fill="#e1f0eb"/>
+<text x="1649" y="1171.5" font-family="DejaVu Sans" font-size="20" font-weight="700" fill="#14765d">E</text>
+<rect id="mask-25-26" x="1647" y="1249" width="24" height="24" fill="#e1f0eb"/>
+<text x="1649" y="1268.5" font-family="DejaVu Sans" font-size="20" font-weight="700" fill="#14765d">E</text>
+<rect id="mask-25-27" x="1756" y="1248" width="228" height="35" fill="#ffffff"/>
+<text x="1758" y="1274" font-family="DejaVu Sans" font-size="21" font-weight="400" fill="#000000">Creación de contrato</text>
+<rect id="mask-25-28" x="1092" y="1054" width="53" height="35" fill="#ffffff"/>
+<text x="1094" y="1077.5" font-family="DejaVu Sans" font-size="17" font-weight="400" fill="#000000">antes</text>
+<rect id="mask-25-29" x="1081" y="1151" width="50" height="35" fill="#ffffff"/>
+<text x="1083" y="1174" font-family="DejaVu Sans" font-size="16" font-weight="400" fill="#000000">antes</text>
+<rect id="mask-25-30" x="1081" y="1248" width="50" height="35" fill="#ffffff"/>
+<text x="1083" y="1271" font-family="DejaVu Sans" font-size="16" font-weight="400" fill="#000000">antes</text>
+<rect x="0" y="1310" width="2184" height="74" fill="#eef2f7"/>
+<text x="16" y="1339" font-family="DejaVu Sans" font-size="20" font-weight="700" fill="#172338">Versión editada en español</text>
+<text x="16" y="1364" font-family="DejaVu Sans" font-size="14" fill="#26344b">Traducción educativa; no es una captura nativa.</text>
+</svg>

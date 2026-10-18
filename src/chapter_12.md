@@ -319,9 +319,41 @@ yarn start
 
 Ahora copiemos la URL de localhost, abramos el navegador y peguemos el enlace. Debería aparecer el frontend, como se muestra en la Figura 12-4.
 
-![Frontend de Scaffold-ETH](images/ch12/maet_1204.png)
+![Suplemento gráfico editado en español del inicio de Scaffold-ETH 2, con billetera conectada y enlaces de desarrollo.](images/ch12/maet_1204-es.png)
 
 Figura 12-4. Frontend de Scaffold-ETH
+
+**Nota de la traducción:** Imagen traducida al español mediante inteligencia artificial (IA). Revisión humana pendiente. No es una captura nativa ni una actualización de la aplicación. La captura original en inglés se conserva en el desplegable.
+
+La cabecera muestra Inicio, Depurar contratos, saldo 0.0000 ETH y red Hardhat. El centro mantiene la dirección conectada y las rutas del frontend y del contrato. Dos tarjetas llevan a la depuración y al explorador de bloques. El pie conserva 4335.18, el faucet, BuidlGuidl y los controles de tema.
+
+Texto seleccionable de la versión editada:
+
+- pila de desarrollo
+- Inicio
+- Depurar contratos
+- Obtener fondos del faucet
+- Bienvenido a
+- Dirección conectada:
+- Para comenzar, edite
+- Edite su contrato inteligente
+- en
+- Experimente con su contrato en la pestaña Depurar contratos.
+- Explore sus transacciones locales en la pestaña Explorador de bloques.
+- Explorador de bloques
+- Haga un fork
+- Hecho con
+- en
+- Ayuda
+
+<details>
+<summary>Figura 12-4: ver captura original en inglés</summary>
+
+![Frontend de Scaffold-ETH](images/ch12/maet_1204.png)
+
+> **Nota de la traducción:** en la interfaz original, Home significa inicio; Connected Address, dirección conectada; Debug Contracts, depuración de contratos; y Block Explorer, explorador de bloques. Grab funds from faucet indica obtener fondos del faucet. El texto central señala los archivos del frontend y del contrato que forman parte del ejemplo; sus rutas se conservan literalmente.
+
+</details>
 
 ### Interacción con el contrato
 
@@ -334,23 +366,118 @@ Como se puede ver en la Figura 12-4, en la esquina superior derecha ya estamos c
 
 Las billeteras desechables son una función extraordinaria para el flujo de trabajo de desarrollo, porque no es necesario abrir la billetera Web3 y conectarla al sitio web cada vez. Aun así, se puede hacerlo cuando se esté listo; solo hay que hacer clic en el menú desplegable y seleccionar Disconnect; luego, se puede hacer clic en Connect Wallet y elegir la billetera preferida de la lista, como se muestra en las Figuras 12-5, 12-6 y 12-7.
 
-![Desconectar la billetera desechable](images/ch12/maet_1205.png)
+![Suplemento gráfico editado en español del menú de la billetera desechable, con opciones de dirección, clave privada y desconexión.](images/ch12/maet_1205-es.png)
 
 Figura 12-5. Desconectar la billetera desechable
 
-![Botón Connect Wallet](images/ch12/maet_1206.png)
+**Nota de la traducción:** Imagen traducida al español mediante inteligencia artificial (IA). Revisión humana pendiente. No es una captura nativa ni una actualización de la aplicación. La captura original en inglés se conserva en el desplegable.
+
+El menú abierto permite copiar la dirección, ver su código QR, abrir el explorador de bloques, revelar la clave privada o desconectar. Las dos últimas opciones conservan su color naranja. No aparece una clave privada y no se activó ninguna opción.
+
+Texto seleccionable de la versión editada:
+
+- Copiar dirección
+- Ver código QR
+- Ver en explorador de bloques
+- Revelar clave privada
+- Desconectar
+
+- El tooltip posterior está parcialmente oculto por el menú: solo se ve «ucet», fragmento de faucet. Se conserva como término técnico y no se reconstruye texto tapado. No se reveló ni usó una clave privada.
+
+<details>
+<summary>Figura 12-5: ver captura original en inglés</summary>
+
+![Desconectar la billetera desechable](images/ch12/maet_1205.png)
+
+> **Nota de la traducción:** Copy address significa copiar dirección; View QR Code, ver código QR; View on Block Explorer, ver en el explorador de bloques; Reveal Private Key, revelar clave privada; y Disconnect, desconectar. Se conservan las etiquetas literales del menú de la billetera desechable.
+
+</details>
+
+![Suplemento gráfico editado en español del botón Conectar billetera.](images/ch12/maet_1206-es.png)
 
 Figura 12-6. Botón Connect Wallet
 
-![Elegir una billetera](images/ch12/maet_1207.png)
+**Nota de la traducción:** Imagen traducida al español mediante inteligencia artificial (IA). Revisión humana pendiente. No es una captura nativa ni una actualización de la aplicación. La captura original en inglés se conserva en el desplegable.
+
+La interfaz desconectada presenta un único botón azul para conectar una billetera. Se conserva el espacio blanco superior y el fondo claro de la página.
+
+Texto seleccionable de la versión editada:
+
+- Conectar billetera
+
+<details>
+<summary>Figura 12-6: ver captura original en inglés</summary>
+
+![Botón Connect Wallet](images/ch12/maet_1206.png)
+
+> **Nota de la traducción:** Connect Wallet significa conectar billetera. La etiqueta del botón se conserva como aparece en la interfaz original.
+
+</details>
+
+![Suplemento gráfico editado en español del selector de billeteras y su explicación sobre activos digitales e inicio de sesión.](images/ch12/maet_1207-es.png)
 
 Figura 12-7. Elegir una billetera
 
+**Nota de la traducción:** Imagen traducida al español mediante inteligencia artificial (IA). Revisión humana pendiente. No es una captura nativa ni una actualización de la aplicación. La captura original en inglés se conserva en el desplegable.
+
+Phantom aparece como billetera instalada. La lista de billeteras compatibles conserva MetaMask, WalletConnect, Ledger, Coinbase Wallet, Rainbow y Burner Wallet. El texto seleccionable explica este último nombre como billetera desechable. El panel derecho explica el envío y almacenamiento de activos y la conexión a sitios, con botones para obtener una billetera o consultar más información.
+
+Texto seleccionable de la versión editada:
+
+- Conectar billetera
+- Instalada
+- Billeteras compatibles
+- Burner Wallet, billetera desechable
+- ¿Qué es una billetera?
+- Un lugar para sus activos digitales
+- Las billeteras permiten enviar, recibir, almacenar y mostrar activos digitales como
+- Una nueva forma de iniciar sesión
+- En vez de crear cuentas y contraseñas en cada sitio web, conecte su billetera.
+- Obtener billetera
+- Más información
+- y
+
+- Burner Wallet se conserva como nombre del conector; el texto seleccionable explica su significado.
+
+<details>
+<summary>Figura 12-7: ver captura original en inglés</summary>
+
+![Elegir una billetera](images/ch12/maet_1207.png)
+
+> **Nota de la traducción:** Connect a Wallet significa conectar una billetera; Installed identifica la billetera instalada y Supported Wallets enumera las compatibles. Burner Wallet es la opción de billetera desechable. El panel What is a Wallet? explica que las billeteras permiten enviar, recibir, almacenar y mostrar activos digitales, y conectarse a sitios sin crear una cuenta y contraseña en cada uno. Get a Wallet significa obtener una billetera y Learn More, más información. Los nombres de productos se conservan.
+
+</details>
+
 La segunda función extraordinaria es la sección Debug Contracts. Para abrirla, basta con hacer clic en el enlace Debug Contracts en el centro de la página. Con el ejemplo predeterminado, ahora debería aparecer algo similar a la Figura 12-8.
+
+![Suplemento gráfico editado en español del panel de YourContract, con estado inicial y formularios de lectura y escritura vacíos.](images/ch12/maet_1208-es.png)
+
+Figura 12-8. Sección Debug Contracts
+
+**Nota de la traducción:** Imagen traducida al español mediante inteligencia artificial (IA). Revisión humana pendiente. No es una captura nativa ni una actualización de la aplicación. La captura original en inglés se conserva en el desplegable.
+
+La tarjeta de YourContract muestra 0.0000 ETH en Hardhat. El estado conserva `totalCounter` 0, `premium` false, `owner` y `greeting` con "Building Unstoppable Apps!!!". A la derecha, Leer consulta `userGreetingCounter` mediante `address`; Escribir permite `withdraw` y `setGreeting`. Los campos están vacíos y el importe pagadero conserva la unidad wei.
+
+Texto seleccionable de la versión editada:
+
+- Saldo:
+- Red:
+- Leer
+- Leer
+- Escribir
+- Enviar
+- Enviar
+- Importe pagadero
+- valor
+
+<details>
+<summary>Figura 12-8: ver captura original en inglés</summary>
 
 ![Sección Debug Contracts](images/ch12/maet_1208.png)
 
-Figura 12-8. Sección Debug Contracts
+> **Nota de la traducción:** Balance significa saldo y Network, red. Read corresponde a la lectura de datos y Write, a las operaciones de escritura; Send significa enviar. payable value indica el importe que acompaña a la llamada, expresado en wei. YourContract, los nombres de funciones y variables, las direcciones y el saludo son valores literales del ejemplo y no se traducen.
+
+</details>
 
 Aquí se puede interactuar fácilmente con todos los contratos sin tener que construir ningún tipo de frontend sobre ellos. Esto es muy útil durante el desarrollo para comprobar constantemente que los contratos funcionen como se espera.
 
@@ -360,19 +487,70 @@ Hagamos una pequeña demostración. Primero, necesitamos depositar fondos en nue
 
 Figura 12-9. Botón Grab funds
 
+> **Nota de la traducción:** la flecha roja señala el botón del faucet de la red local Hardhat, identificado en el texto como Grab funds, obtener fondos. La captura conserva el saldo visible de 1.0000 ETH.
+
 Ahora vayamos a la sección `setGreeting` y escribamos `hello world` en el campo "_newGreeting" y `0.1` en el campo "payable value". Luego, hagamos clic en el asterisco a la derecha del campo "payable value": transformará el valor en ETH en la misma cantidad representada en wei (1 ETH = 10<sup>18</sup> wei). Por último, podemos hacer clic en Send para enviar la transacción y ver cómo cambia el estado del contrato.
 
 La Figura 12-10 muestra el estado del contrato antes de presionar el botón Send. Podemos ver que el contrato tiene 0 ETH, el saludo es "Building Unstoppable Apps!!!", premium es false y totalCounter es igual a 0.
 
-![Estado del contrato antes de la transacción](images/ch12/maet_1210.png)
+![Suplemento gráfico editado en español de YourContract antes del envío, con hello world y el importe en wei preparados.](images/ch12/maet_1210-es.png)
 
 Figura 12-10. Estado del contrato antes de la transacción
 
+**Nota de la traducción:** Imagen traducida al español mediante inteligencia artificial (IA). Revisión humana pendiente. No es una captura nativa ni una actualización de la aplicación. La captura original en inglés se conserva en el desplegable.
+
+El estado previo conserva 0.0000 ETH, `totalCounter` 0, `premium` false y `greeting` "Building Unstoppable Apps!!!". El formulario `setGreeting` contiene `hello world` y 100000000000000000 wei, pero esos datos aún no son el estado del contrato. Permanecen las acciones Leer, Escribir y Enviar.
+
+Texto seleccionable de la versión editada:
+
+- Saldo:
+- Red:
+- Leer
+- Leer
+- Escribir
+- Enviar
+- Enviar
+- Importe pagadero
+
+<details>
+<summary>Figura 12-10: ver captura original en inglés</summary>
+
+![Estado del contrato antes de la transacción](images/ch12/maet_1210.png)
+
+> **Nota de la traducción:** Read y Write identifican lectura y escritura; Send significa enviar. El formulario setGreeting contiene hello world y un payable value de 100000000000000000 wei, equivalente a 0.1 ETH. Son entradas de la transacción, no el estado ya actualizado del contrato; los identificadores y valores se conservan literalmente.
+
+</details>
+
 La Figura 12-11 muestra el estado del contrato después de enviar la transacción. Podemos ver de inmediato que el contrato ahora tiene 0.1 ETH, el saludo es "hello world", premium es true y totalCounter es igual a 1.
+
+![Suplemento gráfico editado en español de YourContract después del envío, con saludo hello world, saldo 0.1000 ETH y recibo de transacción.](images/ch12/maet_1211-es.png)
+
+Figura 12-11. Estado del contrato después de la transacción
+
+**Nota de la traducción:** Imagen traducida al español mediante inteligencia artificial (IA). Revisión humana pendiente. No es una captura nativa ni una actualización de la aplicación. La captura original en inglés se conserva en el desplegable.
+
+Después del envío, el estado muestra 0.1000 ETH, `totalCounter` 1, `premium` true y `greeting` "hello world". El formulario mantiene hello world y 100000000000000000 wei. Junto a Enviar aparece el control Recibo de transacción, con su icono y flecha originales.
+
+Texto seleccionable de la versión editada:
+
+- Saldo:
+- Red:
+- Leer
+- Leer
+- Escribir
+- Enviar
+- Enviar
+- Importe pagadero
+- Recibo de transacción
+
+<details>
+<summary>Figura 12-11: ver captura original en inglés</summary>
 
 ![Estado del contrato después de la transacción](images/ch12/maet_1211.png)
 
-Figura 12-11. Estado del contrato después de la transacción
+> **Nota de la traducción:** Transaction Receipt significa recibo de transacción. Balance es el saldo, y Read, Write y Send conservan sus etiquetas de lectura, escritura y envío. Los campos totalCounter, premium y greeting mantienen sus nombres originales; los valores visibles son 1, true y hello world, respectivamente.
+
+</details>
 
 Podemos experimentar con esto y ver cómo se comporta el contrato según las entradas y acciones que realicemos.
 
@@ -450,9 +628,59 @@ Será necesario vincular la cuenta de Vercel (o crear una si no se tiene) y eleg
 
 Si vamos a nuestro perfil de Vercel, ahora podremos ver el proyecto recién creado. Como se muestra en la Figura 12-12, hay un campo Domains donde se puede encontrar el dominio del sitio web que Vercel generó automáticamente.
 
-![Página del proyecto en Vercel](images/ch12/maet_1212.png)
+![Suplemento gráfico editado en español del despliegue de producción en Vercel, listo y con dominio señalado por el panel.](images/ch12/maet_1212-es.png)
 
 Figura 12-12. Página del proyecto en Vercel
+
+**Nota de la traducción:** Imagen traducida al español mediante inteligencia artificial (IA). Revisión humana pendiente. No es una captura nativa ni una actualización de la aplicación. La captura original en inglés se conserva en el desplegable.
+
+Vercel presenta el despliegue de producción en estado Listo, sus dominios, fecha 12/22/24, autor y origen `vercel deploy`. Los controles superiores abren registros de compilación, registros de ejecución y reversión inmediata. La miniatura conserva las rutas y marcas de Scaffold-ETH 2. La configuración mantiene Fluid Compute desactivado, protección del despliegue activada y las otras dos funciones desactivadas.
+
+Texto seleccionable de la versión editada:
+
+- Despliegue de producción
+- Registros de compilación
+- Registros de ejecución
+- Reversión inmediata
+- Despliegue
+- Dominios
+- Estado
+- Creado
+- Listo
+- por
+- Origen
+- Ver código
+- Configuración del despliegue
+- Protección del despliegue
+- Protección de desfase
+- Evitar arranques en frío
+- pila de desarrollo
+- Inicio
+- Depurar contratos
+- Conectar billetera
+- Bienvenido a
+- Dirección conectada:
+- Para comenzar, edite
+- Edite su contrato inteligente
+- en
+- Experimente con su contrato en Depurar contratos.
+- Explore sus transacciones locales en Explorador de bloques.
+- Explorar bloques
+- Haga un fork
+- Hecho con
+- en
+- Ayuda
+
+- La miniatura conserva su escala original; el descriptor se dispone en dos líneas para mantener legibilidad sin tocar Ethereum ni controles. Fluid Compute se conserva como nombre de producto de Vercel.
+
+<details>
+<summary>Figura 12-12: ver captura original en inglés</summary>
+
+![Página del proyecto en Vercel](images/ch12/maet_1212.png)
+
+> **Nota de la traducción:** Production Deployment significa despliegue de producción; Domains muestra los dominios del proyecto; Status y Ready indican el estado listo; Created señala la fecha de creación; y Source, el origen del despliegue. Build Logs y Runtime Logs son los registros de compilación y ejecución; Instant Rollback permite volver a un despliegue anterior. Se conserva la interfaz de Vercel de la época del original, junto con sus dominios y fecha.
+
+</details>
 
 ## Mayor descentralización de la DApp
 

@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="955" height="463" viewBox="0 0 955 463" xml:lang="es-419">
+  <title>Figura 16-2: versión editada en español</title>
+  <desc>Traducción educativa de etiquetas visibles mediante superposición a escala nativa. Datos técnicos, curvas, literales y estados originales se conservan. No es una captura nativa en español.</desc>
+  <rect id="mask-chain-axis" x="0" y="136" width="13" height="102" fill="#ffffff"/>
+  <text x="6.5" y="190.06" text-anchor="middle" transform="rotate(-90 6.5 187)" font-family="DejaVu Sans, sans-serif" font-size="9" fill="#111111">Tamaño de cadena en</text>
+  <rect id="mask-timeline" x="481" y="378" width="100" height="11" fill="#ffffff"/>
+  <text x="482" y="386.56" text-anchor="start" font-family="DejaVu Sans, sans-serif" font-size="9" fill="#111111">Línea de tiempo</text>
+  <rect id="mask-first" x="89" y="257" width="112" height="15" fill="#ffffff"/>
+  <text x="90" y="267.9" text-anchor="start" font-family="DejaVu Sans, sans-serif" font-size="10" fill="#111111">versión actualizada</text>
+  <rect id="mask-second" x="89" y="304" width="112" height="15" fill="#ffffff"/>
+  <text x="90" y="314.9" text-anchor="start" font-family="DejaVu Sans, sans-serif" font-size="10" fill="#111111">versión actualizada</text>
+  <rect id="mask-last" x="633" y="127" width="112" height="14" fill="#ffffff"/>
+  <text x="634" y="137.4" text-anchor="start" font-family="DejaVu Sans, sans-serif" font-size="10" fill="#111111">versión actualizada</text>
+  <rect id="mask-deprecated" x="459" y="201" width="58" height="14" fill="#ffffff"/>
+  <text x="460" y="211.4" text-anchor="start" font-family="DejaVu Sans, sans-serif" font-size="10" fill="#111111">obsoleto</text>
+  <rect x="0" y="389" width="955" height="74" fill="#f5f5f5"/>
+  <text x="477.5" y="418" text-anchor="middle" font-family="DejaVu Sans, sans-serif" font-size="20" font-weight="700" fill="#1f2937">Versión editada en español</text>
+  <text x="477.5" y="445" text-anchor="middle" font-family="DejaVu Sans, sans-serif" font-size="17" fill="#1f2937">Traducción educativa; no es una captura nativa.</text>
+</svg>

@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="2130" viewBox="0 0 1500 2130" lang="es-419"><title>Flujo de transacciones de RIP-7560</title><desc>Cinco carriles conservan validación de nonce, despliegue condicional, validación de cuenta y patrocinador, ejecución y paso final del patrocinador. Los fallos terminan con cruces rojas.</desc><defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#151515"/></marker></defs><g font-family="DejaVu Sans" fill="#151515" stroke-linejoin="round" stroke-linecap="round">
+<rect x="5" y="5" width="270" height="2120" rx="16" fill="none" stroke="#151515" stroke-width="3"/>
+<text x="140.0" y="43" text-anchor="middle" font-size="23" font-weight="bold" fill="#151515"><tspan x="140.0" dy="0">Capa de ejecución</tspan><tspan x="140.0" dy="30.5">de Ethereum</tspan></text>
+<rect x="275" y="5" width="315" height="2120" rx="16" fill="none" stroke="#151515" stroke-width="3"/>
+<text x="432.5" y="37" text-anchor="middle" font-size="23" font-weight="bold" fill="#151515"><tspan x="432.5" dy="0">Contrato</tspan><tspan x="432.5" dy="28">administrador de</tspan><tspan x="432.5" dy="28">nonces</tspan></text>
+<rect x="590" y="5" width="265" height="2120" rx="16" fill="none" stroke="#151515" stroke-width="3"/>
+<text x="722.5" y="43" text-anchor="middle" font-size="25" font-weight="bold" fill="#151515"><tspan x="722.5" dy="0">Contrato de</tspan><tspan x="722.5" dy="30.5">despliegue</tspan></text>
+<rect x="855" y="5" width="320" height="2120" rx="16" fill="none" stroke="#151515" stroke-width="3"/>
+<text x="1015.0" y="43" text-anchor="middle" font-size="25" font-weight="bold" fill="#151515"><tspan x="1015.0" dy="0">Contrato</tspan><tspan x="1015.0" dy="30.5">de cuenta</tspan></text>
+<rect x="1175" y="5" width="320" height="2120" rx="16" fill="none" stroke="#151515" stroke-width="3"/>
+<text x="1335.0" y="43" text-anchor="middle" font-size="25" font-weight="bold" fill="#151515"><tspan x="1335.0" dy="0">Contrato</tspan><tspan x="1335.0" dy="30.5">patrocinador</tspan></text>
+<rect x="40.0" y="185.0" width="200" height="70" rx="14" fill="#bd242b" stroke="#151515" stroke-width="3"/>
+<text x="140.0" y="228.5" text-anchor="middle" font-size="25" font-weight="normal" fill="white"><tspan x="140.0" dy="0">Inicio</tspan></text>
+<path d="M435 107.5L547.5 220L435 332.5L322.5 220Z" fill="#3292c4" stroke="#151515" stroke-width="4"/>
+<text x="435" y="213.25" text-anchor="middle" font-size="25" font-weight="normal" fill="white"><tspan x="435" dy="0">Validar</tspan><tspan x="435" dy="30.5">nonce</tspan></text>
+<path d="M240 220H320" fill="none" stroke="#151515" stroke-width="5" marker-end="url(#arrow)"/>
+<path d="M548 220H565" fill="none" stroke="#151515" stroke-width="5" marker-end="url(#arrow)"/>
+<path d="M550 202L578 238M578 202L550 238" fill="none" stroke="#151515" stroke-width="13"/>
+<path d="M550 202L578 238M578 202L550 238" fill="none" stroke="#c62b34" stroke-width="7"/>
+<text x="582" y="273" text-anchor="end" font-size="22" font-weight="normal" fill="#151515" font-style="italic"><tspan x="582" dy="0">Fallo</tspan></text>
+<path d="M435 333V375H140V410" fill="none" stroke="#151515" stroke-width="5" marker-end="url(#arrow)"/>
+<text x="364" y="361" text-anchor="middle" font-size="24" font-weight="normal" fill="#151515" font-style="italic"><tspan x="364" dy="0">Éxito</tspan></text>
+<path d="M140 417.5L252.5 530L140 642.5L27.5 530Z" fill="#61bd96" stroke="#151515" stroke-width="4"/>
+<text x="140" y="508.88000000000005" text-anchor="middle" font-size="24" font-weight="normal" fill="#151515"><tspan x="140" dy="0">¿Contrato de</tspan><tspan x="140" dy="29.28">cuenta</tspan><tspan x="140" dy="29.28">desplegado?</tspan></text>
+<rect x="627.5" y="452.5" width="185" height="155" rx="14" fill="#61bd96" stroke="#151515" stroke-width="3"/>
+<text x="720.0" y="508.88000000000005" text-anchor="middle" font-size="24" font-weight="normal" fill="#151515"><tspan x="720.0" dy="0">Desplegar</tspan><tspan x="720.0" dy="29.28">contrato</tspan><tspan x="720.0" dy="29.28">de cuenta</tspan></text>
+<path d="M253 530H625" fill="none" stroke="#151515" stroke-width="5" marker-end="url(#arrow)"/>
+<text x="286" y="519" text-anchor="middle" font-size="23" font-weight="normal" fill="#151515" font-style="italic"><tspan x="286" dy="0">No</tspan></text>
+<text x="459" y="483" text-anchor="middle" font-size="21" font-weight="normal" fill="#151515" font-style="italic"><tspan x="459" dy="0">Remitente del mensaje:</tspan><tspan x="459" dy="28.06">AA SENDER CREATOR</tspan></text>
+<path d="M140 643V720" fill="none" stroke="#151515" stroke-width="5" marker-end="url(#arrow)"/>
+<text x="171" y="669" text-anchor="middle" font-size="24" font-weight="normal" fill="#151515" font-style="italic"><tspan x="171" dy="0">Sí</tspan></text>
+<path d="M720 608V680H140" fill="none" stroke="#151515" stroke-width="5"/>
+<rect x="25.0" y="722.0" width="230" height="160" rx="14" fill="#e6a9ad" stroke="#151515" stroke-width="3"/>
+<text x="140.0" y="780.0" text-anchor="middle" font-size="25" font-weight="normal" fill="#151515"><tspan x="140.0" dy="0">Validación</tspan><tspan x="140.0" dy="30.5">del contrato</tspan><tspan x="140.0" dy="30.5">de cuenta</tspan></text>
+<path d="M980 689.5L1092.5 802L980 914.5L867.5 802Z" fill="#e6a9ad" stroke="#151515" stroke-width="4"/>
+<text x="980" y="795.25" text-anchor="middle" font-size="25" font-weight="normal" fill="#151515"><tspan x="980" dy="0">Validar</tspan><tspan x="980" dy="30.5">transacción</tspan></text>
+<path d="M255 802H865" fill="none" stroke="#151515" stroke-width="5" marker-end="url(#arrow)"/>
+<path d="M1093 802H1118" fill="none" stroke="#151515" stroke-width="5" marker-end="url(#arrow)"/>
+<path d="M1120 782L1156 822M1156 782L1120 822" fill="none" stroke="#151515" stroke-width="13"/>
+<path d="M1120 782L1156 822M1156 782L1120 822" fill="none" stroke="#c62b34" stroke-width="7"/>
+<text x="1138" y="855" text-anchor="middle" font-size="22" font-weight="normal" fill="#151515" font-style="italic"><tspan x="1138" dy="0">Fallo</tspan></text>
+<path d="M980 915V951H140V987" fill="none" stroke="#151515" stroke-width="5" marker-end="url(#arrow)"/>
+<text x="920" y="939" text-anchor="middle" font-size="24" font-weight="normal" fill="#151515" font-style="italic"><tspan x="920" dy="0">Éxito</tspan></text>
+<path d="M140 997.5L252.5 1110L140 1222.5L27.5 1110Z" fill="#fce9d0" stroke="#151515" stroke-width="4"/>
+<text x="140" y="1103.79" text-anchor="middle" font-size="23" font-weight="normal" fill="#151515"><tspan x="140" dy="0">¿Patrocinador</tspan><tspan x="140" dy="28.06">especificado?</tspan></text>
+<path d="M1300 997.5L1412.5 1110L1300 1222.5L1187.5 1110Z" fill="#fce9d0" stroke="#151515" stroke-width="4"/>
+<text x="1300" y="1089.76" text-anchor="middle" font-size="23" font-weight="normal" fill="#151515"><tspan x="1300" dy="0">Validar</tspan><tspan x="1300" dy="28.06">transacción del</tspan><tspan x="1300" dy="28.06">patrocinador</tspan></text>
+<path d="M253 1110H1186" fill="none" stroke="#151515" stroke-width="5" marker-end="url(#arrow)"/>
+<text x="302" y="1092" text-anchor="middle" font-size="24" font-weight="normal" fill="#151515" font-style="italic"><tspan x="302" dy="0">Sí</tspan></text>
+<path d="M1413 1110H1448" fill="none" stroke="#151515" stroke-width="5" marker-end="url(#arrow)"/>
+<path d="M1449 1090L1485 1130M1485 1090L1449 1130" fill="none" stroke="#151515" stroke-width="13"/>
+<path d="M1449 1090L1485 1130M1485 1090L1449 1130" fill="none" stroke="#c62b34" stroke-width="7"/>
+<text x="1467" y="1163" text-anchor="middle" font-size="22" font-weight="normal" fill="#151515" font-style="italic"><tspan x="1467" dy="0">Fallo</tspan></text>
+<path d="M140 1223V1260H1300V1223" fill="none" stroke="#151515" stroke-width="5"/>
+<text x="174" y="1249" text-anchor="middle" font-size="23" font-weight="normal" fill="#151515" font-style="italic"><tspan x="174" dy="0">No</tspan></text>
+<text x="1245" y="1249" text-anchor="middle" font-size="23" font-weight="normal" fill="#151515" font-style="italic"><tspan x="1245" dy="0">Éxito</tspan></text>
+<path d="M740 1260V1294" fill="none" stroke="#151515" stroke-width="5" marker-end="url(#arrow)"/>
+<rect x="5" y="1300" width="1490" height="85" rx="14" fill="white" stroke="#151515" stroke-width="3"/>
+<text x="750" y="1334" text-anchor="middle" font-size="25" font-weight="normal" fill="#151515"><tspan x="750" dy="0">Aquí se ejecutan pasos de validación equivalentes para otras transacciones</tspan><tspan x="750" dy="30.5">de abstracción de cuentas posteriores.</tspan></text>
+<path d="M740 1385V1415H140V1453" fill="none" stroke="#151515" stroke-width="5" marker-end="url(#arrow)"/>
+<rect x="25.0" y="1455.0" width="230" height="160" rx="14" fill="#e6a9ad" stroke="#151515" stroke-width="3"/>
+<text x="140.0" y="1528.25" text-anchor="middle" font-size="25" font-weight="normal" fill="#151515"><tspan x="140.0" dy="0">Iniciar</tspan><tspan x="140.0" dy="30.5">ejecución</tspan></text>
+<rect x="865.0" y="1455.0" width="230" height="160" rx="14" fill="#e6a9ad" stroke="#151515" stroke-width="3"/>
+<text x="980.0" y="1528.25" text-anchor="middle" font-size="25" font-weight="normal" fill="#151515"><tspan x="980.0" dy="0">Marco de</tspan><tspan x="980.0" dy="30.5">ejecución</tspan></text>
+<path d="M255 1535H864" fill="none" stroke="#151515" stroke-width="5" marker-end="url(#arrow)"/>
+<path d="M980 1615V1645H140V1680" fill="none" stroke="#151515" stroke-width="5" marker-end="url(#arrow)"/>
+<path d="M140 1687.5L252.5 1800L140 1912.5L27.5 1800Z" fill="#fce9d0" stroke="#151515" stroke-width="4"/>
+<text x="140" y="1793.79" text-anchor="middle" font-size="23" font-weight="normal" fill="#151515"><tspan x="140" dy="0">¿Patrocinador</tspan><tspan x="140" dy="28.06">especificado?</tspan></text>
+<rect x="1220.0" y="1720.0" width="230" height="160" rx="14" fill="#fce9d0" stroke="#151515" stroke-width="3"/>
+<text x="1335.0" y="1778.88" text-anchor="middle" font-size="24" font-weight="normal" fill="#151515"><tspan x="1335.0" dy="0">Transacción</tspan><tspan x="1335.0" dy="29.28">pasada del</tspan><tspan x="1335.0" dy="29.28">patrocinador</tspan></text>
+<path d="M253 1800H1218" fill="none" stroke="#151515" stroke-width="5" marker-end="url(#arrow)"/>
+<text x="300" y="1781" text-anchor="middle" font-size="24" font-weight="normal" fill="#151515" font-style="italic"><tspan x="300" dy="0">Sí</tspan></text>
+<path d="M1335 1880V1950H140" fill="none" stroke="#151515" stroke-width="5"/>
+<path d="M140 1913V1992" fill="none" stroke="#151515" stroke-width="5" marker-end="url(#arrow)"/>
+<text x="174" y="1941" text-anchor="middle" font-size="24" font-weight="normal" fill="#151515" font-style="italic"><tspan x="174" dy="0">No</tspan></text>
+<rect x="40.0" y="1997.0" width="200" height="70" rx="14" fill="#bd242b" stroke="#151515" stroke-width="3"/>
+<text x="140.0" y="2040.5" text-anchor="middle" font-size="25" font-weight="normal" fill="white"><tspan x="140.0" dy="0">Fin</tspan></text>
+</g></svg>

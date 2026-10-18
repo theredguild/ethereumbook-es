@@ -1004,9 +1004,29 @@ npm i ethers
 
 A continuación, necesitamos la ABI del contrato USDT. Se puede obtener de [Etherscan](https://oreil.ly/LoWH4), justo debajo del código fuente del contrato (véase la figura 7-1), y guardarla en la carpeta del proyecto.
 
-![Sección de la ABI de USDT en Etherscan](images/ch7/maet_0701.png)
+![Suplemento editado en español de la sección ABI de un contrato en Etherscan, con acción de exportación y JSON original intacto.](images/ch7/maet_0701-es.png)
 
 **Figura 7-1.** Sección de la ABI de USDT en Etherscan
+
+**Nota de la traducción:** Imagen traducida al español mediante inteligencia artificial (IA). Revisión humana pendiente. No es una captura nativa ni una actualización de la aplicación. La captura original en inglés se conserva en el desplegable.
+
+El encabezado identifica la ABI del contrato y el botón permite exportarla. Todo el JSON visible, incluidos nombres de funciones, parámetros, tipos, campos y fragmentos cortados por el borde de la captura, permanece como dato técnico original; no se ejecutó el contrato.
+
+Texto seleccionable de la versión editada:
+
+- ABI del contrato
+- Exportar ABI
+
+- El JSON está cortado por el borde inferior de la captura original. No se reconstruyen líneas ni caracteres fuera de la imagen.
+
+<details>
+<summary>Figura 7-1: ver captura original en inglés</summary>
+
+![Sección de la ABI de USDT en Etherscan](images/ch7/maet_0701.png)
+
+> **Nota de la traducción:** en esta captura de Etherscan, `Contract ABI` identifica la ABI del contrato y `Export ABI` permite exportarla. Se conservan las etiquetas de la interfaz y el JSON del ejemplo original.
+
+</details>
 
 Ahora, hablemos de cómo nos conectaremos a la red Ethereum. Necesitamos un proveedor WebSocket porque vamos a escuchar eventos, lo que requiere una conexión continua. Se puede elegir entre proveedores de pago (más confiables y rápidos) o proveedores públicos gratuitos que se encuentran en sitios como [ChainList](https://chainlist.org). Para nuestro ejemplo, uno público será suficiente, aunque podría limitar la frecuencia de las solicitudes.
 

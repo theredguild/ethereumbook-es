@@ -775,9 +775,33 @@ Las configuraciones modernas suelen utilizar la configuración [*Powers-of-Tau*]
 
 La ceremonia de configuración de confianza KZG de Ethereum involucró a más de 140,000 participantes diferentes, como puede verse en la figura 4-10.
 
-![Ceremonia de configuración de confianza KZG](images/ch4/maet_0410.png)
+![Suplemento editado en español de la ceremonia KZG finalizada, con hash del registro, 141,416 contribuciones y botón de verificación.](images/ch4/maet_0410-es.png)
 
 Figura 4-10. Participantes de la ceremonia de configuración de confianza KZG de Ethereum
+
+**Nota de la traducción:** Imagen traducida al español mediante inteligencia artificial (IA). Revisión humana pendiente. No es una captura nativa ni una actualización de la aplicación. La captura original en inglés se conserva en el desplegable.
+
+La pantalla anuncia que la ceremonia terminó y muestra el hash del registro y el total de contribuciones. El texto sobre Dankshard se repite dos veces como en la captura original; el control inferior permite verificar el registro.
+
+Texto seleccionable de la versión editada:
+
+- GUÍAS DE INVOCACIÓN
+- La ceremonia terminó
+- Registro
+- Total de contribuciones:
+- Los susurros de las sombras hablan de un poderoso espíritu Dankshard, que abrirá el próximo capítulo de la escalabilidad de Ethereum. Los contribuyentes se han reunido para invocar su poder.Los susurros de las sombras hablan de un poderoso espíritu Dankshard, que abrirá el próximo capítulo de la escalabilidad de Ethereum. Los contribuyentes se han reunido para invocar su poder.
+- Verificar registro
+
+- El párrafo promocional aparece repetido sin espacio entre ambas copias en la captura original; se conserva esa repetición.
+
+<details>
+<summary>Figura 4-10: ver captura original en inglés</summary>
+
+![Ceremonia de configuración de confianza KZG](images/ch4/maet_0410.png)
+
+> **Nota de la traducción:** Se conserva la interfaz histórica de la ceremonia. «SUMMONING GUIDES» significa «Guías de invocación» y «The ceremony is over» indica que la ceremonia terminó. «Transcript sha256 hash» identifica el hash sha256 del registro; «Total contributions» muestra 141,416 contribuciones y «Verify transcript» significa «Verificar el registro». El párrafo, repetido en la captura, presenta a Dankshard como un espíritu poderoso que abrirá el próximo capítulo de la escalabilidad de Ethereum y a los contribuyentes como quienes se reunieron para invocar su poder.
+
+</details>
 
 Más específicamente, la configuración de confianza genera los elementos `[s^i]₁` y `[s^i]₂` para `i = 0, 1, … , n – 1`, donde:
 

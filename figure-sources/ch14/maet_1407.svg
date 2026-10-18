@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1330" height="1070" viewBox="0 0 1330 1070" xml:lang="es-419" role="img" aria-labelledby="title desc">
+<title id="title">Lectura de memoria de la EVM</title>
+<desc id="desc">Dos lecturas sobre los bytes 0xa1, 0x29, 0x00 en desplazamientos 00...00, 00...01, 00...02. Primera devuelve 0xa1. Segunda devuelve 0x29 seguido de 31 bytes cero.</desc>
+<defs>
+<marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+<path d="M0 0 L10 5 L0 10 Z" fill="#111" />
+</marker>
+</defs>
+<g font-family="DejaVu Sans, sans-serif">
+<rect x="10" y="110" width="430" height="390" rx="16" fill="white" stroke="#111" stroke-width="4" />
+<rect x="30" y="135" width="390" height="285" rx="12" fill="#b5d5e7" stroke="#111" stroke-width="4" />
+<path d="M190 135 V420 M30 201 H420" stroke="#111" stroke-width="4" fill="none" stroke-linejoin="round" stroke-linecap="round" />
+<text x="110" y="179" font-size="26" text-anchor="middle" fill="#111" font-weight="normal">
+<tspan x="110" dy="0">Despl.</tspan>
+</text>
+<text x="305" y="179" font-size="28" text-anchor="middle" fill="#111" font-weight="normal">
+<tspan x="305" dy="0">Valor</tspan>
+</text>
+<text x="225" y="475" font-size="32" text-anchor="middle" fill="#111" font-weight="bold">
+<tspan x="225" dy="0">Memoria</tspan>
+</text>
+<text x="300" y="38" font-size="25" text-anchor="middle" fill="#111" font-weight="normal" font-style="italic">
+<tspan x="300" dy="0">Leer 1 byte desde</tspan>
+<tspan x="300" dy="30.5">el desplazamiento 0x00</tspan>
+</text>
+<text x="110" y="264" font-size="29" text-anchor="middle" fill="#111" font-weight="normal">
+<tspan x="110" dy="0">00...00</tspan>
+</text>
+<text x="305" y="264" font-size="29" text-anchor="middle" fill="#111" font-weight="normal">
+<tspan x="305" dy="0">0xa1</tspan>
+</text>
+<text x="110" y="307" font-size="29" text-anchor="middle" fill="#111" font-weight="normal">
+<tspan x="110" dy="0">00...01</tspan>
+</text>
+<text x="305" y="307" font-size="29" text-anchor="middle" fill="#111" font-weight="normal">
+<tspan x="305" dy="0">0x29</tspan>
+</text>
+<text x="110" y="350" font-size="29" text-anchor="middle" fill="#111" font-weight="normal">
+<tspan x="110" dy="0">00...02</tspan>
+</text>
+<text x="305" y="350" font-size="29" text-anchor="middle" fill="#111" font-weight="normal">
+<tspan x="305" dy="0">0x00</tspan>
+</text>
+<text x="110" y="393" font-size="29" text-anchor="middle" fill="#111" font-weight="normal">
+<tspan x="110" dy="0">...</tspan>
+</text>
+<text x="305" y="393" font-size="29" text-anchor="middle" fill="#111" font-weight="normal">
+<tspan x="305" dy="0">...</tspan>
+</text>
+<path d="M470 88 H155 V230" stroke="#111" stroke-width="5" fill="none" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)" stroke-dasharray="4 11" />
+<path d="M440 300 H570" stroke="#111" stroke-width="5" fill="none" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)" />
+<text x="585" y="310" font-size="30" text-anchor="start" fill="#111" font-weight="normal">
+<tspan x="585" dy="0">0xa1</tspan>
+</text>
+<rect x="10" y="665" width="430" height="390" rx="16" fill="white" stroke="#111" stroke-width="4" />
+<rect x="30" y="690" width="390" height="285" rx="12" fill="#b5d5e7" stroke="#111" stroke-width="4" />
+<path d="M190 690 V975 M30 756 H420" stroke="#111" stroke-width="4" fill="none" stroke-linejoin="round" stroke-linecap="round" />
+<text x="110" y="734" font-size="26" text-anchor="middle" fill="#111" font-weight="normal">
+<tspan x="110" dy="0">Despl.</tspan>
+</text>
+<text x="305" y="734" font-size="28" text-anchor="middle" fill="#111" font-weight="normal">
+<tspan x="305" dy="0">Valor</tspan>
+</text>
+<text x="225" y="1030" font-size="32" text-anchor="middle" fill="#111" font-weight="bold">
+<tspan x="225" dy="0">Memoria</tspan>
+</text>
+<text x="300" y="593" font-size="25" text-anchor="middle" fill="#111" font-weight="normal" font-style="italic">
+<tspan x="300" dy="0">Leer 32 bytes desde</tspan>
+<tspan x="300" dy="30.5">el desplazamiento 0x01</tspan>
+</text>
+<text x="110" y="819" font-size="29" text-anchor="middle" fill="#111" font-weight="normal">
+<tspan x="110" dy="0">00...00</tspan>
+</text>
+<text x="305" y="819" font-size="29" text-anchor="middle" fill="#111" font-weight="normal">
+<tspan x="305" dy="0">0xa1</tspan>
+</text>
+<text x="110" y="862" font-size="29" text-anchor="middle" fill="#111" font-weight="normal">
+<tspan x="110" dy="0">00...01</tspan>
+</text>
+<text x="305" y="862" font-size="29" text-anchor="middle" fill="#111" font-weight="normal">
+<tspan x="305" dy="0">0x29</tspan>
+</text>
+<text x="110" y="905" font-size="29" text-anchor="middle" fill="#111" font-weight="normal">
+<tspan x="110" dy="0">00...02</tspan>
+</text>
+<text x="305" y="905" font-size="29" text-anchor="middle" fill="#111" font-weight="normal">
+<tspan x="305" dy="0">0x00</tspan>
+</text>
+<text x="110" y="948" font-size="29" text-anchor="middle" fill="#111" font-weight="normal">
+<tspan x="110" dy="0">...</tspan>
+</text>
+<text x="305" y="948" font-size="29" text-anchor="middle" fill="#111" font-weight="normal">
+<tspan x="305" dy="0">...</tspan>
+</text>
+<path d="M470 643 H155 V825" stroke="#111" stroke-width="5" fill="none" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)" stroke-dasharray="4 11" />
+<path d="M440 855 H570" stroke="#111" stroke-width="5" fill="none" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)" />
+<text x="585" y="852" font-size="27" text-anchor="start" fill="#111" font-weight="normal">
+<tspan x="585" dy="0">0x2900000000000000000000000000000</tspan>
+<tspan x="585" dy="32.94">000000000000000000000000000000000</tspan>
+</text>
+</g>
+</svg>

@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1300" viewBox="0 0 1600 1300" lang="es-419"><title>Implementación de ERC-4337</title><desc>Diagrama de secuencia con usuario, agrupador y contratos EntryPoint, fábrica, cuenta y patrocinador. Se conservan once interacciones, retornos discontinuos y activaciones coloreadas.</desc><defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#151515"/></marker></defs><g font-family="DejaVu Sans" fill="#151515" stroke-linejoin="round" stroke-linecap="round">
+<rect x="7" y="7" width="216" height="117" rx="14" fill="#009447" stroke="#151515" stroke-width="3"/>
+<text x="115" y="79" text-anchor="middle" font-size="27" font-weight="normal" fill="white"><tspan x="115" dy="0">Usuario</tspan></text>
+<path d="M115 126V1288" fill="none" stroke="#151515" stroke-width="3" stroke-dasharray="4 12"/>
+<rect x="257" y="7" width="216" height="117" rx="14" fill="#009447" stroke="#151515" stroke-width="3"/>
+<text x="365" y="79" text-anchor="middle" font-size="27" font-weight="normal" fill="white"><tspan x="365" dy="0">Agrupador</tspan></text>
+<path d="M365 126V1288" fill="none" stroke="#151515" stroke-width="3" stroke-dasharray="4 12"/>
+<rect x="567" y="7" width="216" height="117" rx="14" fill="#e5f1f7" stroke="#151515" stroke-width="3"/>
+<text x="675" y="58" text-anchor="middle" font-size="27" font-weight="normal" fill="#151515"><tspan x="675" dy="0">Contrato</tspan><tspan x="675" dy="32.94">EntryPoint</tspan></text>
+<path d="M675 126V1288" fill="none" stroke="#151515" stroke-width="3" stroke-dasharray="4 12"/>
+<rect x="877" y="7" width="216" height="117" rx="14" fill="#e5f1f7" stroke="#151515" stroke-width="3"/>
+<text x="985" y="58" text-anchor="middle" font-size="27" font-weight="normal" fill="#151515"><tspan x="985" dy="0">Contrato</tspan><tspan x="985" dy="32.94">fábrica</tspan></text>
+<path d="M985 126V1288" fill="none" stroke="#151515" stroke-width="3" stroke-dasharray="4 12"/>
+<rect x="1122" y="7" width="216" height="117" rx="14" fill="#e5f1f7" stroke="#151515" stroke-width="3"/>
+<text x="1230" y="58" text-anchor="middle" font-size="27" font-weight="normal" fill="#151515"><tspan x="1230" dy="0">Contrato</tspan><tspan x="1230" dy="32.94">de cuenta</tspan></text>
+<path d="M1230 126V1288" fill="none" stroke="#151515" stroke-width="3" stroke-dasharray="4 12"/>
+<rect x="1372" y="7" width="216" height="117" rx="14" fill="#e5f1f7" stroke="#151515" stroke-width="3"/>
+<text x="1480" y="58" text-anchor="middle" font-size="27" font-weight="normal" fill="#151515"><tspan x="1480" dy="0">Contrato</tspan><tspan x="1480" dy="32.94">patrocinador</tspan></text>
+<path d="M1480 126V1288" fill="none" stroke="#151515" stroke-width="3" stroke-dasharray="4 12"/>
+<rect x="351" y="355" width="28" height="895" rx="0" fill="#009447" stroke="#151515" stroke-width="3"/>
+<rect x="661" y="451" width="28" height="561" rx="0" fill="#ffe600" stroke="#151515" stroke-width="3"/>
+<rect x="971" y="546" width="28" height="150" rx="0" fill="white" stroke="#151515" stroke-width="3"/>
+<rect x="1216" y="778" width="28" height="82" rx="0" fill="#4ba1d0" stroke="#151515" stroke-width="3"/>
+<rect x="1466" y="929" width="28" height="84" rx="0" fill="white" stroke="#151515" stroke-width="3"/>
+<path d="M115 225H160V274H115" fill="none" stroke="#151515" stroke-width="5" marker-end="url(#arrow)"/>
+<text x="180" y="229" text-anchor="start" font-size="23" font-weight="normal" fill="#151515" font-style="italic"><tspan x="180" dy="0">1. Crear y</tspan><tspan x="180" dy="29">firmar UserOps</tspan></text>
+<path d="M115 355H351" fill="none" stroke="#151515" stroke-width="5" marker-end="url(#arrow)"/>
+<text x="233" y="333" text-anchor="middle" font-size="25" font-weight="normal" fill="#151515" font-style="italic"><tspan x="233" dy="0">2. eth_sendUserOp</tspan></text>
+<path d="M379 451H661" fill="none" stroke="#151515" stroke-width="5" marker-end="url(#arrow)"/>
+<text x="520" y="401" text-anchor="middle" font-size="24" font-weight="normal" fill="#151515" font-style="italic"><tspan x="520" dy="0">3. traceCall:</tspan><tspan x="520" dy="29.28">simulateValidation</tspan></text>
+<path d="M689 546H971" fill="none" stroke="#151515" stroke-width="5" marker-end="url(#arrow)"/>
+<text x="829" y="520" text-anchor="middle" font-size="25" font-weight="normal" fill="#151515" font-style="italic"><tspan x="829" dy="0">4. create (initCode)</tspan></text>
+<path d="M999 622H1216" fill="none" stroke="#151515" stroke-width="5" marker-end="url(#arrow)"/>
+<text x="1108" y="599" text-anchor="middle" font-size="25" font-weight="normal" fill="#151515" font-style="italic"><tspan x="1108" dy="0">5. create</tspan></text>
+<circle cx="1230" cy="622" r="11" fill="white" stroke="#151515" stroke-width="3"/>
+<path d="M971 696H689" fill="none" stroke="#151515" stroke-width="5" stroke-dasharray="5 12" marker-end="url(#arrow)"/>
+<text x="831" y="674" text-anchor="middle" font-size="25" font-weight="normal" fill="#151515" font-style="italic"><tspan x="831" dy="0">6. account</tspan></text>
+<path d="M689 778H1216" fill="none" stroke="#151515" stroke-width="5" marker-end="url(#arrow)"/>
+<text x="953" y="753" text-anchor="middle" font-size="25" font-weight="normal" fill="#151515" font-style="italic"><tspan x="953" dy="0">7. validateUserOp</tspan></text>
+<path d="M1216 860H689" fill="none" stroke="#151515" stroke-width="5" stroke-dasharray="5 12" marker-end="url(#arrow)"/>
+<text x="950" y="836" text-anchor="middle" font-size="23" font-weight="normal" fill="#151515" font-style="italic"><tspan x="950" dy="0">8. Enviar comisión (si no hay patrocinador)</tspan></text>
+<path d="M689 929H1466" fill="none" stroke="#151515" stroke-width="5" marker-end="url(#arrow)"/>
+<text x="1083" y="904" text-anchor="middle" font-size="25" font-weight="normal" fill="#151515" font-style="italic"><tspan x="1083" dy="0">9. validatePaymasterUserOp</tspan></text>
+<path d="M379 1070H430V1120H379" fill="none" stroke="#151515" stroke-width="5" marker-end="url(#arrow)"/>
+<text x="454" y="1070" text-anchor="start" font-size="24" font-weight="normal" fill="#151515" font-style="italic"><tspan x="454" dy="0">10. Validar el acceso</tspan><tspan x="454" dy="29.28">al almacenamiento persistente</tspan></text>
+<path d="M379 1225H1540" fill="none" stroke="#151515" stroke-width="5" stroke-dasharray="5 12" marker-end="url(#arrow)"/>
+<text x="402" y="1200" text-anchor="start" font-size="25" font-weight="normal" fill="#151515" font-style="italic"><tspan x="402" dy="0">11. Agregar a la mempool</tspan></text>
+</g></svg>

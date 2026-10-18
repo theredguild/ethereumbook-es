@@ -1,0 +1,1930 @@
+{
+  "source_commit": "5907a8c137135588a7d5dacd1c3bd6ff6c9c5151",
+  "reviewed_recreated_figures": 107,
+  "reviewed_screenshot_notes": 57,
+  "review_status": "Cotejo asistido por IA, no aprobación humana ni de derechos.",
+  "reviews": {
+    "A": {
+      "reviewer": "FigurePeerA",
+      "baseline_commit": "5907a8c137135588a7d5dacd1c3bd6ff6c9c5151",
+      "complete": true,
+      "coverage": {
+        "recreated_reviewed": 14,
+        "preserved_screenshots_reviewed": 3,
+        "chapters": [
+          1,
+          3,
+          9,
+          11,
+          16
+        ],
+        "method": "Each baseline PNG extracted through git show to /tmp/figure-peer-A-originals and visually inspected individually against current PNG at readable scale. Chapter context and chapter audit reports consulted. Two suspected rendering defects inspected again through enlarged crops and SVG geometry. No project builds, tests, linters or formatters run. No repository edits.",
+        "defect_count": 2
+      },
+      "figures": [
+        {
+          "id": "1-1",
+          "image": "src/images/ch1/maet_0101.png",
+          "status": "no_defect_found",
+          "visual_evidence": "Execution and consensus parent containers retained. Three transaction columns overlap both Blocks and P2P bars in original order. Consensus rules and incentives share outlined group; rightward arrow points toward separate state-machine/consensus-algorithm boxes; lower P2P bar remains inside consensus client. All nine distinct editorial labels translated accurately and legibly. Original component allocation retained rather than technically corrected.",
+          "defects": []
+        },
+        {
+          "id": "3-1",
+          "image": "src/images/ch3/maet_0301.png",
+          "status": "no_defect_found",
+          "visual_evidence": "Dotted Ethereum node boundary and protruding P2P modules retained. web3.beacon connects to consensus client and downward to library; web3.eth connects to execution client and upward to library. Engine API solid downward and dotted upward arrows preserved. Both P2P modules retain upper/central/lower external branches with inward and outward arrowheads. Identifiers unchanged; Spanish labels fit.",
+          "defects": []
+        },
+        {
+          "id": "9-1",
+          "image": "src/images/ch9/maet_0901.png",
+          "status": "no_defect_found",
+          "visual_evidence": "Attacker/B/A order retained. Visually traced all four heads: 1 attacker to A, 2 A to attacker, 3 attacker to B, 4 B to A. Graphviz moved step 1 below boxes, but numbered order and endpoints unchanged. Curved step 1/2 labels remain distinct and readable; translation preserves callback versus call versus data read.",
+          "defects": []
+        },
+        {
+          "id": "11-1",
+          "image": "src/images/ch11/maet_1101.png",
+          "status": "no_defect_found",
+          "visual_evidence": "Single rightward read arrow from blue smart-contract node to blue oracle node retained. Lee, Contrato inteligente and Oráculo translated correctly; no clipping.",
+          "defects": []
+        },
+        {
+          "id": "11-2",
+          "image": "src/images/ch11/maet_1102.png",
+          "status": "no_defect_found",
+          "visual_evidence": "All four numbered actions visually checked: external update down into oracle, daemon reads leftward into oracle, daemon notifies contract through lower leftward route, contract reads upward into oracle. Upper-left oracle/lower-left contract/right daemon arrangement and blue nodes preserved. Long Spanish daemon and notification labels do not collide with edges.",
+          "defects": []
+        },
+        {
+          "id": "11-3",
+          "image": "src/images/ch11/maet_1103.png",
+          "status": "no_defect_found",
+          "visual_evidence": "Top sequence user, contract, oracle, fetcher retained, daemon below oracle. Seven heads individually traced: user to contract, contract to oracle request, oracle to fetcher, fetcher return to oracle, daemon read to oracle, daemon notify to contract, contract read to oracle. All numbered Spanish labels accurately preserve original actions; top loops and lower loop remain readable.",
+          "defects": []
+        },
+        {
+          "id": "11-4",
+          "image": "src/images/ch11/maet_1104.png",
+          "status": "no_defect_found",
+          "visual_evidence": "Pink Chain A/B parent headers and application/endpoint containment retained. Independent upper Relayer and lower Oracle routes both go from A endpoint to B endpoint, entering B above and below respectively. Generic person/cloud symbols replace decorative art without removing roles. Oracle and Relayer preserved consistently with named roles in nearby chapter prose. Spanish endpoint, application, independence and off-chain labels legible.",
+          "defects": []
+        },
+        {
+          "id": "11-5",
+          "image": "src/images/ch11/maet_1105.png",
+          "status": "no_defect_found",
+          "visual_evidence": "Source-chain/source-contract, off-chain process, target-chain/target-contract ordering retained. Two rightward arrows, two blue network globes and both groups of five nested rings retained. White process remains distinct from blue contracts. Spanish text fits.",
+          "defects": []
+        },
+        {
+          "id": "16-4",
+          "image": "src/images/ch16/maet_1604.png",
+          "status": "defect_found",
+          "visual_evidence": "Rollup proof and availability arrows both reach Ethereum; Validium proof reaches Ethereum while availability reaches off-chain box. Blue grouping and all labels otherwise match original. Enlarged crop confirms localized left proof label intersects its vertical arrow shaft, unlike original Proofs label.",
+          "defects": [
+            {
+              "severity": "minor",
+              "type": "label_edge_overlap",
+              "source_file": "figure-sources/ch16/maet_1604.svg",
+              "location": "Left Pruebas label beside Rollup proof arrow, SVG text center (52,246), font-size 20; vertical shaft x=90.",
+              "problem": "Final s in Pruebas is crossed/partly hidden by black proof-arrow shaft. Text is no longer cleanly legible at normal scale.",
+              "action": "Move label left or shift shaft right enough to leave visible gap, then regenerate PNG. Preserve both Rollup-to-Ethereum arrow endpoints.",
+              "render_evidence": "/tmp/figure-peer-A-originals/1604-label.png"
+            }
+          ]
+        },
+        {
+          "id": "16-5",
+          "image": "src/images/ch16/maet_1605.png",
+          "status": "no_defect_found",
+          "visual_evidence": "All twelve transactions checked in row-major order: regular/data/data/regular; regular/regular/data/regular; data/regular/data/data. Six blobs link respectively to first-group bottom-left, first-group top-right, second-group bottom-left, third-group top-left through top detour, third-group bottom-left, third-group bottom-right. Three dotted sampling arrows enter each blob; separate dotted branch enters chain. Spanish full-chain-download and indirect-DAS annotations retain original contrast. Generic Nodo box preserves node role.",
+          "defects": []
+        },
+        {
+          "id": "16-6",
+          "image": "src/images/ch16/maet_1606.png",
+          "status": "no_defect_found",
+          "visual_evidence": "Both eight-cell vectors retain third cell blue. Left vector goes to Compromiso; right vector goes to Hash. Compromiso + Apertura + blue element = green check; Hash + blue element = red cross. Exact operator order and semantic green/red results retained. Spanish labels legible.",
+          "defects": []
+        },
+        {
+          "id": "16-7",
+          "image": "src/images/ch16/maet_1607.png",
+          "status": "no_defect_found",
+          "visual_evidence": "Blue root and four drawn expansions inspected. Each row has sixteen children; blue child positions remain 11,7,7,9 left-to-right, with beige siblings. All arrowheads point parent-to-child. Right brace and 7x depth meaning retained as 7x de profundidad. Original four-expansions/seven-depth inconsistency not treated as translation defect.",
+          "defects": []
+        },
+        {
+          "id": "16-8",
+          "image": "src/images/ch16/maet_1608.png",
+          "status": "no_defect_found",
+          "visual_evidence": "Four blue nodes retain directed right/down, down/left and down/left path. Separate beige commitment column remains C3, C2, C1, C0 top-to-bottom with typographic subscripts. Brace retains 4x meaning. Label and connectors unobstructed.",
+          "defects": []
+        },
+        {
+          "id": "16-9",
+          "image": "src/images/ch16/maet_1609.png",
+          "status": "defect_found",
+          "visual_evidence": "Four labeled sections, stem sibling order/dashes, overlapping extension and C1/C2 nodes, four C1 suffix children, three C2 children and green value_lower/value_upper outputs retained. Pedersen and (1, stem, C1, C2) literals retained. No new arrowheads. Enlarged crop reveals stem edge endpoints stop before target boxes.",
+          "defects": [
+            {
+              "severity": "minor",
+              "type": "disconnected_edge_endpoints",
+              "source_file": "figure-sources/ch16/maet_1609.svg",
+              "location": "Six stem-tree incoming edges: first trio ends x=240 before targets x=245; second trio ends x=470 before targets x=475.",
+              "problem": "Two solid horizontal child connections and four diagonal dashed-sibling connections leave gaps before node borders. Original shows connected stem branches. Horizontal gaps especially visible in enlarged current PNG.",
+              "action": "Extend first trio endpoints to target left boundaries x=245 and second trio to x=475, preserving original y positions and undirected edges; regenerate PNG.",
+              "render_evidence": "/tmp/figure-peer-A-originals/1609-stem-gap.png"
+            }
+          ]
+        }
+      ],
+      "preserved_screenshot_checks": [
+        {
+          "id": "16-1",
+          "image": "src/images/ch16/maet_1601.png",
+          "sha256_matches_baseline": true,
+          "classification_correct": true,
+          "evidence": "Original and current individually viewed. Interactive chart controls, selected 5Y, Select area to zoom, purple historical series and 1.472 value unchanged. Spanish marked note accurately explains visible controls. Caption mismatch with single visible series predates translation and is already recorded in chapter audit.",
+          "defects": []
+        },
+        {
+          "id": "16-2",
+          "image": "src/images/ch16/maet_1602.png",
+          "sha256_matches_baseline": true,
+          "classification_correct": true,
+          "evidence": "Original and current individually viewed. Etherscan chart branding, blue size series and four dated Geth/Open Ethereum callouts unchanged. Spanish marked note correctly explains chain-size axis, Timeline, client updates/deprecation and literal state scheme = path. Client-distribution caption mismatch already exists in original.",
+          "defects": []
+        },
+        {
+          "id": "16-3",
+          "image": "src/images/ch16/maet_1603.png",
+          "sha256_matches_baseline": true,
+          "classification_correct": true,
+          "evidence": "Original and current individually viewed. Blue gas-limit staircase, 2016-2025 labels and Epoch ticks unchanged. Spanish marked note correctly explains Gas Limit [gas], Epoch and M without changing units or values.",
+          "defects": []
+        }
+      ],
+      "limitations": [
+        "Independent visual review is not human approval or individual rights clearance."
+      ]
+    },
+    "B": {
+      "complete": true,
+      "baseline": "5907a8c137135588a7d5dacd1c3bd6ff6c9c5151",
+      "coverage": {
+        "5": 9,
+        "13": 6,
+        "17": 5,
+        "total": 20
+      },
+      "summary": "No semantic/topology/amount/identifier defects found. Three minor issues across three figures: nonce-lane boundary crowding and two range-separator typography differences. No repository edits or build/test runs.",
+      "figures": [
+        {
+          "id": "5-1",
+          "image": "src/images/ch5/maet_0501.png",
+          "source_file": "figure-sources/ch5/maet_0501.svg",
+          "reviewed": "Original/current individually inspected visually; dense 5-2,5-5,5-6,5-9 additionally inspected as readable detail crops.",
+          "evidence": "/tmp/figure-peer-B/5-1-compare.png",
+          "checks": "Seed -> master; child derivations 0,1,2,3 top-to-bottom; four grandchildren each. Blue keys and wallet containment intact.",
+          "defects": [],
+          "original_issues": []
+        },
+        {
+          "id": "5-2",
+          "image": "src/images/ch5/maet_0502.png",
+          "source_file": "figure-sources/ch5/maet_0502.svg",
+          "reviewed": "Original/current individually inspected visually; dense 5-2,5-5,5-6,5-9 additionally inspected as readable detail crops.",
+          "evidence": "/tmp/figure-peer-B/5-2-compare.png",
+          "checks": "Stages 1..6; 128+4=132 bits, twelve 11-bit segments; 00000000000/abandon, 00000000001/ability, 00001100000/army, 11111111111/zoo intact. Twelve English mnemonic words exact and ordered. Green arrows and checksum compartment intact.",
+          "defects": [],
+          "original_issues": []
+        },
+        {
+          "id": "5-3",
+          "image": "src/images/ch5/maet_0503.png",
+          "source_file": "figure-sources/ch5/maet_0503.svg",
+          "reviewed": "Original/current individually inspected visually; dense 5-2,5-5,5-6,5-9 additionally inspected as readable detail crops.",
+          "evidence": "/tmp/figure-peer-B/5-3-compare.png",
+          "checks": "Steps 7..9; English mnemonic exact, quoted mnemonic salt prefix, PBKDF2/HMAC-SHA512, 2048 rounds, both full hex seed lines visually matched.",
+          "defects": [],
+          "original_issues": [
+            "Original shows no connecting arrows from mnemonic and salt boxes into PBKDF2; retained instead of inventing new edges."
+          ]
+        },
+        {
+          "id": "5-5",
+          "image": "src/images/ch5/maet_0505.png",
+          "source_file": "figure-sources/ch5/maet_0505.svg",
+          "reviewed": "Original/current individually inspected visually; dense 5-2,5-5,5-6,5-9 additionally inspected as readable detail crops.",
+          "evidence": "/tmp/figure-peer-B/5-5-compare.png",
+          "checks": "Six lifelines and eleven numbered operations checked; eth_sendUserOp, traceCall: simulateValidation, create (initCode), create, account, validateUserOp, validatePaymasterUserOp exact. Return arrows 6/8 dashed leftward; activation colors/order intact.",
+          "defects": [],
+          "original_issues": [
+            "Original abbreviated RPC label eth_sendUserOp retained; no modernization to eth_sendUserOperation."
+          ]
+        },
+        {
+          "id": "5-6",
+          "image": "src/images/ch5/maet_0506.png",
+          "source_file": "figure-sources/ch5/maet_0506.svg",
+          "reviewed": "Original/current individually inspected visually; dense 5-2,5-5,5-6,5-9 additionally inspected as readable detail crops.",
+          "evidence": "/tmp/figure-peer-B/5-6-compare.png",
+          "checks": "Five swimlanes checked. Nonce success -> deployment decision; conditional deploy rejoins validation; account/paymaster failures terminate red crosses; execution and final conditional paymaster branches rejoin End. AA SENDER CREATOR literal retained.",
+          "defects": [
+            {
+              "severity": "minor",
+              "type": "layout",
+              "description": "First nonce-validation failure cross and Fallo label run into vertical lane boundary. Original fits failure marker/label inside Nonce Manager lane. Current right edge of Fallo meets/crosses x=590 separator; red cross nearly touches same separator.",
+              "source_evidence": "figure-sources/ch5/maet_0506.svg:6,18-20; separator x=590, cross through x=584 plus stroke, Fallo centered x=566 at font-size=22.",
+              "render_evidence": "/tmp/figure-peer-B/5-6-current-0.png versus 5-6-original-0.png",
+              "fix": "Reserve additional right padding inside nonce lane by shifting failure marker/label left or widening lane, without altering flow."
+            }
+          ],
+          "original_issues": [
+            "Original says \"Past paymaster transaction\", not \"Post paymaster transaction\". Spanish retains \"Transacción pasada del patrocinador\" rather than silently correcting possible typo."
+          ]
+        },
+        {
+          "id": "5-7",
+          "image": "src/images/ch5/maet_0507.png",
+          "source_file": "figure-sources/ch5/maet_0507.svg",
+          "reviewed": "Original/current individually inspected visually; dense 5-2,5-5,5-6,5-9 additionally inspected as readable detail crops.",
+          "evidence": "/tmp/figure-peer-B/5-7-compare.png",
+          "checks": "AUTH fields retain two-row grouping, nonce, green Commit region and blue other fields. Editorial fields translated without changing meaning.",
+          "defects": [],
+          "original_issues": []
+        },
+        {
+          "id": "5-8",
+          "image": "src/images/ch5/maet_0508.png",
+          "source_file": "figure-sources/ch5/maet_0508.svg",
+          "reviewed": "Original/current individually inspected visually; dense 5-2,5-5,5-6,5-9 additionally inspected as readable detail crops.",
+          "evidence": "/tmp/figure-peer-B/5-8-compare.png",
+          "checks": "Commit connects calls 1,2,3, each with same nonce/gas/to/Calldata group and original connectivity. Blue header, green commitment, cream call fields intact.",
+          "defects": [],
+          "original_issues": [
+            "Original line geometry makes lower to and Calldata fields appear partly behind nonce and gas; geometry retained rather than interpreting them as a different hierarchy."
+          ]
+        },
+        {
+          "id": "5-9",
+          "image": "src/images/ch5/maet_0509.png",
+          "source_file": "figure-sources/ch5/maet_0509.svg",
+          "reviewed": "Original/current individually inspected visually; dense 5-2,5-5,5-6,5-9 additionally inspected as readable detail crops.",
+          "evidence": "/tmp/figure-peer-B/5-9-compare.png",
+          "checks": "All three full hex delegate addresses visually matched. Access policy retains < 1 ETH/day, one month expiry, multisig from all existing keys; commitment grouping intact.",
+          "defects": [],
+          "original_issues": []
+        },
+        {
+          "id": "5-10",
+          "image": "src/images/ch5/maet_0510.png",
+          "source_file": "figure-sources/ch5/maet_0510.svg",
+          "reviewed": "Original/current individually inspected visually; dense 5-2,5-5,5-6,5-9 additionally inspected as readable detail crops.",
+          "evidence": "/tmp/figure-peer-B/5-10-compare.png",
+          "checks": "Transaction arrow enters signing pubkey. Three-of-five guardian arrow points back to pubkey; signing-key arrow points to guardians. Five abbreviated addresses, one-to-three-day delay intact.",
+          "defects": [],
+          "original_issues": [
+            "Original describes signatures as signed by a public key. This technically questionable formulation is retained faithfully; no silent replacement with private key."
+          ]
+        },
+        {
+          "id": "13-1",
+          "image": "src/images/ch13/maet_1301.png",
+          "source_file": "figure-sources/ch13/maet_1301.svg",
+          "reviewed": "Original/current individually inspected visually; dense 5-2,5-5,5-6,5-9 additionally inspected as readable detail crops.",
+          "evidence": "/tmp/figure-peer-B/13-1-compare.png",
+          "checks": "Both TradFi/DeFi panels checked; prerequisite icons retained generically; application/collateral arrows rightward and approval/loan arrows leftward; approval dashed.",
+          "defects": [],
+          "original_issues": []
+        },
+        {
+          "id": "13-2",
+          "image": "src/images/ch13/maet_1302.png",
+          "source_file": "figure-sources/ch13/maet_1302.svg",
+          "reviewed": "Original/current individually inspected visually; dense 5-2,5-5,5-6,5-9 additionally inspected as readable detail crops.",
+          "evidence": "/tmp/figure-peer-B/13-2-compare.png",
+          "checks": "50 ETH and 1 BTC exact; provider -> pool, fees -> provider, purchase -> right user, fees -> pool. Ethereum label and pool colors retained.",
+          "defects": [],
+          "original_issues": [
+            "El original representa BTC en una DEX Ethereum; se conserva, de acuerdo con la aclaración del capítulo sobre BTC derivado, no BTC nativo."
+          ]
+        },
+        {
+          "id": "13-3",
+          "image": "src/images/ch13/maet_1303.png",
+          "source_file": "figure-sources/ch13/maet_1303.svg",
+          "reviewed": "Original/current individually inspected visually; dense 5-2,5-5,5-6,5-9 additionally inspected as readable detail crops.",
+          "evidence": "/tmp/figure-peer-B/13-3-compare.png",
+          "checks": "Lender -> Ethereum liquidity; interest -> lender. Ethereum -> borrower liquidity and borrower -> Ethereum interest. Yellow coin retained.",
+          "defects": [],
+          "original_issues": [
+            "La flecha rotulada Requires liquidity apunta de Ethereum al prestatario; se conserva esa dirección, sin corregirla."
+          ]
+        },
+        {
+          "id": "13-4",
+          "image": "src/images/ch13/maet_1304.png",
+          "source_file": "figure-sources/ch13/maet_1304.svg",
+          "reviewed": "Original/current individually inspected visually; dense 5-2,5-5,5-6,5-9 additionally inspected as readable detail crops.",
+          "evidence": "/tmp/figure-peer-B/13-4-compare.png",
+          "checks": "$150 collateral borrower -> Ethereum and $100 borrowed liquidity Ethereum -> borrower exact.",
+          "defects": [],
+          "original_issues": []
+        },
+        {
+          "id": "13-5",
+          "image": "src/images/ch13/maet_1305.png",
+          "source_file": "figure-sources/ch13/maet_1305.svg",
+          "reviewed": "Original/current individually inspected visually; dense 5-2,5-5,5-6,5-9 additionally inspected as readable detail crops.",
+          "evidence": "/tmp/figure-peer-B/13-5-compare.png",
+          "checks": "Open/closed short panels checked independently. 150 USDC and every 0.01 ETH preserved. Sell rightward, buy leftward; collateral/repay leftward, withdrawals rightward.",
+          "defects": [],
+          "original_issues": [
+            "El original omite flujos de contrapartida de USDC entre prestatario y pool, precio e intereses; no se agregan ni se infiere ganancia cuantificada."
+          ]
+        },
+        {
+          "id": "13-7",
+          "image": "src/images/ch13/maet_1307.png",
+          "source_file": "figure-sources/ch13/maet_1307.svg",
+          "reviewed": "Original/current individually inspected visually; dense 5-2,5-5,5-6,5-9 additionally inspected as readable detail crops.",
+          "evidence": "/tmp/figure-peer-B/13-7-compare.png",
+          "checks": "0xABC...123 both endpoints exact; initiated -> Ethereum, bridge/message -> BSC, finished -> right user; labels and grouping intact.",
+          "defects": [],
+          "original_issues": []
+        },
+        {
+          "id": "17-1",
+          "image": "src/images/ch17/maet_1701.png",
+          "source_file": "figure-sources/ch17/maet_1701.svg",
+          "reviewed": "Original/current individually inspected visually; dense 5-2,5-5,5-6,5-9 additionally inspected as readable detail crops.",
+          "evidence": "/tmp/figure-peer-B/17-1-compare.png",
+          "checks": "Old state upper and Block lower arrows enter EVM; new-state arrow exits right. EVM literal and blue block retained.",
+          "defects": [],
+          "original_issues": []
+        },
+        {
+          "id": "17-2",
+          "image": "src/images/ch17/maet_1702.png",
+          "source_file": "figure-sources/ch17/maet_1702.svg",
+          "reviewed": "Original/current individually inspected visually; dense 5-2,5-5,5-6,5-9 additionally inspected as readable detail crops.",
+          "evidence": "/tmp/figure-peer-B/17-2-compare.png",
+          "checks": "Leaves 8,9,10,15 ordered; individual Hash labels and pair ranges checked. Four levels, unarrowed connectors, blue fill retained.",
+          "defects": [
+            {
+              "severity": "minor",
+              "type": "literal-typography",
+              "description": "Original range separator is en dash in 8–9 and 10–15; current substitutes ASCII hyphen. Values/meaning unchanged, but exact mathematical typography differs.",
+              "source_evidence": "figure-sources/ch17/maet_1702.svg:20,22 uses 8-9 and 10-15.",
+              "render_evidence": "/tmp/figure-peer-B/17-2-compare.png",
+              "fix": "Restore original en dashes in both pair-range labels; retain Hash* on 17-3."
+            }
+          ],
+          "original_issues": []
+        },
+        {
+          "id": "17-3",
+          "image": "src/images/ch17/maet_1703.png",
+          "source_file": "figure-sources/ch17/maet_1703.svg",
+          "reviewed": "Original/current individually inspected visually; dense 5-2,5-5,5-6,5-9 additionally inspected as readable detail crops.",
+          "evidence": "/tmp/figure-peer-B/17-3-compare.png",
+          "checks": "Alternating leaves 8,\"eth\",9,\"eth\",10,\"eth\",15,\"eth\" exact. Hash* appears on all six nonroot hash nodes. Pair ranges/order and unarrowed connectors intact.",
+          "defects": [
+            {
+              "severity": "minor",
+              "type": "literal-typography",
+              "description": "Original range separator is en dash in 8–9 and 10–15; current substitutes ASCII hyphen. Values/meaning unchanged, but exact mathematical typography differs.",
+              "source_evidence": "figure-sources/ch17/maet_1703.svg:20,22 uses 8-9 and 10-15.",
+              "render_evidence": "/tmp/figure-peer-B/17-3-compare.png",
+              "fix": "Restore original en dashes in both pair-range labels; retain Hash* on 17-3."
+            }
+          ],
+          "original_issues": [
+            "Se conserva la misma cadena \"eth\" en las cuatro hojas y los rangos de hashes tal como aparecen; no se cambia el ejemplo de aleatoriedad."
+          ]
+        },
+        {
+          "id": "17-4",
+          "image": "src/images/ch17/maet_1704.png",
+          "source_file": "figure-sources/ch17/maet_1704.svg",
+          "reviewed": "Original/current individually inspected visually; dense 5-2,5-5,5-6,5-9 additionally inspected as readable detail crops.",
+          "evidence": "/tmp/figure-peer-B/17-4-compare.png",
+          "checks": "Blue prover, green verifier, W circles, S public input, two pink hash functions, yellow challenges checked; all arrow directions and challenge comparison green tick retained.",
+          "defects": [],
+          "original_issues": [
+            "El original representa puertos abiertos sin etiqueta en las funciones hash y no conecta explícitamente el W inferior con la función hash inferior. Se conserva esta simplificación, sin inventar conexiones."
+          ]
+        },
+        {
+          "id": "17-5",
+          "image": "src/images/ch17/maet_1705.png",
+          "source_file": "figure-sources/ch17/maet_1705.svg",
+          "reviewed": "Original/current individually inspected visually; dense 5-2,5-5,5-6,5-9 additionally inspected as readable detail crops.",
+          "evidence": "/tmp/figure-peer-B/17-5-compare.png",
+          "checks": "Blue ready-made versus orange manual legend retained. EVM/RLP/MPT/Tx circuit order; zk-EVM orange and zk-VM blue grouping; Geth inputs and proof outputs intact. Original only EVM/Tx diagonal connectors preserved.",
+          "defects": [],
+          "original_issues": [
+            "El original solo dibuja conexiones desde los circuitos EVM y Tx hacia los circuitos zk-EVM; RLP y MPT quedan sin conexión individual visible. Se conserva esa representación."
+          ]
+        }
+      ]
+    },
+    "C": {
+      "group": "C",
+      "chapter": 14,
+      "complete": true,
+      "original_commit": "5907a8c137135588a7d5dacd1c3bd6ff6c9c5151",
+      "method": "Individually inspected all 23 original/recreated PNG pairs at readable image-tool scale. Inspected all three original screenshots and matched their Spanish notes. Supplemented visual review with native-pixel crop of 14-26, hex glyph-run counts in originals, SVG text counts, and byte comparison of screenshots. No repository edits, renders, builds, tests, linters, or formatters.",
+      "coverage": {
+        "recreated_count": 23,
+        "recreated_ids": [
+          "14-1",
+          "14-2",
+          "14-3",
+          "14-4",
+          "14-5",
+          "14-6",
+          "14-7",
+          "14-8",
+          "14-9",
+          "14-10",
+          "14-11",
+          "14-12",
+          "14-13",
+          "14-14",
+          "14-15",
+          "14-16",
+          "14-17",
+          "14-18",
+          "14-19",
+          "14-20",
+          "14-26",
+          "14-27",
+          "14-28"
+        ],
+        "screenshot_notes_count": 3,
+        "screenshot_note_ids": [
+          "14-21",
+          "14-22",
+          "14-25"
+        ],
+        "excluded_preserved_literal_ids": [
+          "14-23",
+          "14-24"
+        ]
+      },
+      "findings": [
+        {
+          "id": "C-1426-1",
+          "figure": "14-26",
+          "severity": "medium",
+          "image": "src/images/ch14/maet_1426.png",
+          "source": "figure-sources/ch14/maet_1426.svg",
+          "location": "Lower red rounded outline around final 5b of [12] PUSH3 01015b. SVG rectangle x=478 y=532 width=39 height=40; PNG region around x=956..1034, y=1064..1144.",
+          "observed": "Red outline overlaps preceding 1 on its left and cuts across right edge of b. Native crop confirms collision. Original outline encloses 5b without crossing adjacent 1 or b. Opcode literal remains in source, but rendered highlighted byte loses clean legibility.",
+          "required_fix": "Move/resize red outline to bound only final 5b with padding on both sides. Keep arrow pointing to that byte and preserve 01015b exactly."
+        },
+        {
+          "id": "C-1404-1",
+          "figure": "14-4",
+          "severity": "low",
+          "image": "src/images/ch14/maet_1404.png",
+          "source": "figure-sources/ch14/maet_1404.svg",
+          "location": "Lower logarithmic-looking blue curve, especially x=2..8.",
+          "observed": "Curve shape shifts quantitatively. Original crosses y=2 around x=4.8 and has y roughly 2.8 at x=8; recreated curve crosses y=2 at x=4 and reaches y=3 at x=8. Original also starts below horizontal axis; recreated retains that feature. Linear upper graph, ticks, and upper endpoint match.",
+          "required_fix": "If strict source graph geometry is required, trace original lower curve instead of replacing it with exact log2-like samples. Preserve source's schematic values rather than silently regularizing curve."
+        }
+      ],
+      "figures": [
+        {
+          "id": "14-1",
+          "status": "pass",
+          "evidence": "Account-state and block-header groups, blue state symbols, receipts-to-state arrow, downward world/global-state arrows, TX caller loop, storage/ARGS/program-counter/stack/memory placement, and lower refund/deduct/execute/revert decision loop retain source topology and directions. Literals MSG.SENDER, MSG.VALUE, STARTGAS, WEI, ARGS, CALLER/PUSH sequence and ETH CALL/ETH SENDTRANSACTION remain visible. No new clipping observed.",
+          "source_ambiguities_kept": "Historical Difficulty/Mixhash fields, To (MSG.SENDER), PUSH1 0.02 and unusual receipt/state links remain. Parent Has becomes Hash padre, already recorded as interpretation of truncated source label."
+        },
+        {
+          "id": "14-2",
+          "status": "pass",
+          "evidence": "All 15 hash nodes retain binary edges, parent-child grouping and left-to-right leaves 1..8. Root hash_12345678, intermediate hash_1234/hash_5678, pair hashes and leaf hashes match. Original data 1..data 8 space syntax retained, not confused with underscored syntax in 14-3."
+        },
+        {
+          "id": "14-3",
+          "status": "pass",
+          "evidence": "Proof highlights exactly hash_2, hash_34 and hash_5678 in dark blue with white text. Target data_1 remains pink; all other nodes light blue. Prueba de Merkle/Objetivo legend swatches agree. All binary edges and eight-leaf order retained."
+        },
+        {
+          "id": "14-4",
+          "status": "finding",
+          "finding_ids": [
+            "C-1404-1"
+          ],
+          "evidence": "Both panels retain 0/2/4/6/8/10 vertical ticks and 2..20 horizontal ticks, blue curves and source upper linear endpoint at approximately (12,12). Spanish labels readable. Lower curve remains below axis initially, but source curve positions differ slightly."
+        },
+        {
+          "id": "14-5",
+          "status": "pass",
+          "evidence": "Six trie levels preserve ordered node labels and ellipses. Red dotted path remains root -> first-level 6 -> second-level 3 -> third-level 6 -> fourth-level 1 -> fifth-level 7 -> bottom 2 Schumacher. Final target remains red with white text, all other nodes blue. Source child numbering 1..16 retained."
+        },
+        {
+          "id": "14-6",
+          "status": "pass",
+          "evidence": "PUSH changes top-to-bottom [2,1] to [3,2,1]; POP changes [3,2,1] to [2,1]; SWAP1 changes [3,2,1] to [2,3,1]. Dotted action arrows and solid left-to-right transition arrows agree with source."
+        },
+        {
+          "id": "14-7",
+          "status": "pass",
+          "evidence": "Both tables retain offsets 00...00/01/02 and values 0xa1/0x29/0x00 in order. Upper output 0xa1 matches. Lower output preserves 0x29 plus 62 zero hex digits, split into lines of 33 characters each. Original glyph count independently found 33 and 33, matching SVG strings. Ambiguous lower dotted arrow near first offset deliberately retained, not corrected to second row."
+        },
+        {
+          "id": "14-8",
+          "status": "pass",
+          "evidence": "Contract A above B, separate containing groups and ordered slots 0x00...00/01/02 remain. Each zero value retains source's 60 hex zeros, split as 0x+29 zeros and 31 zeros. Independent original glyph count 31 characters per line agrees with SVG. No completion to 64 digits."
+        },
+        {
+          "id": "14-9",
+          "status": "pass",
+          "evidence": "Initial bytecode 60425F525F3560AB145F515500, empty stack, zero memory at 00...00/01/02 and zero storage slot match. Calldata original count 65 hex glyphs independently confirmed: 63 zeros then ab, also present in SVG. Storage source 60-digit zero word retained."
+        },
+        {
+          "id": "14-10",
+          "status": "pass",
+          "evidence": "Bytecode 5F525F3560AB145F515500 and stack [0x42] match. Zero memory/storage and 65-digit calldata remain unchanged."
+        },
+        {
+          "id": "14-11",
+          "status": "pass",
+          "evidence": "Bytecode 525F3560AB145F515500 and top-to-bottom stack [0x00,0x42] match. Memory offset order, zero storage and calldata unchanged."
+        },
+        {
+          "id": "14-12",
+          "status": "pass",
+          "evidence": "Bytecode 5F3560AB145F515500, popped operands shown outside stack as 0x00 Desplazamiento above 0x42 Valor, empty stack, and memory 00...1F=0x42 match. Earlier memory offsets retain zero values."
+        },
+        {
+          "id": "14-13",
+          "status": "pass",
+          "evidence": "Bytecode 3560AB145F515500, stack [0x00], memory 00...1F=0x42 and unchanged calldata/storage match."
+        },
+        {
+          "id": "14-14",
+          "status": "pass",
+          "evidence": "Bytecode 60AB145F515500, popped 0x00 offset outside stack, stack [0xab], memory 00...1F=0x42 and zero storage match. Lowercase 0xab retained despite uppercase AB in bytecode."
+        },
+        {
+          "id": "14-15",
+          "status": "pass",
+          "evidence": "Bytecode 145F515500 and two stack entries [0xab,0xab] match. Memory and zero storage unchanged."
+        },
+        {
+          "id": "14-16",
+          "status": "pass",
+          "evidence": "Bytecode 5F515500, two popped 0xab operands outside stack joined by = ? bracket and result [0x01] inside stack match. Bracket readable and no border/text collision."
+        },
+        {
+          "id": "14-17",
+          "status": "pass",
+          "evidence": "Bytecode 515500 and top-to-bottom stack [0x00,0x01] match. Memory 00...1F=0x42 retained."
+        },
+        {
+          "id": "14-18",
+          "status": "pass",
+          "evidence": "Bytecode 5500, popped 0x00 offset outside stack and top-to-bottom stack [0x42,0x01] match. No slot/value reversal."
+        },
+        {
+          "id": "14-19",
+          "status": "pass",
+          "evidence": "Bytecode 00, popped 0x42 Slot above 0x01 Valor, empty stack and new storage row 0x00...42 ending in 1 match. SVG preserves source 60-digit storage word, first line 0x+29 zeros and second line 30 zeros+1. Memory 00...1F=0x42 retained."
+        },
+        {
+          "id": "14-20",
+          "status": "pass",
+          "evidence": "Empty bytecode and stack, green success check, memory 00...1F=0x42 and storage slot 0x00...42 ending in 1 match. Calldata remains original 65-digit string."
+        },
+        {
+          "id": "14-26",
+          "status": "finding",
+          "finding_ids": [
+            "C-1426-1"
+          ],
+          "evidence": "All 13 offset/opcode/operand rows match, including [0a], [0c], [0e], [0f], [12] PUSH3 01015b and [16] PUSH1 01. Red 09 arrow targets JUMPDEST; red 15 arrow targets immediate 5b. Table 09/Sí and 15/No matches. Lower red outline overlaps glyphs as reported."
+        },
+        {
+          "id": "14-27",
+          "status": "pass",
+          "evidence": "Nine panels preserve row-major progression: five above, four below. Each retains a..i top-to-bottom beneath temporaries. temp1..temp8 accumulate in correct reverse stack order. Captions temp1 = a + b through temp8 = temp7 + i match, with 9 parámetros translated. Recreated upper panels contain more blank headroom, but no element/order loss or text clipping observed."
+        },
+        {
+          "id": "14-28",
+          "status": "pass",
+          "evidence": "CALLF solid arrow A->B, RETF solid arrow B->A, upper red dashed save-context path into return stack and lower restore-context path back into A match. Return stack keeps next-instruction position above Function A. Four EVM groups retain item 2 above item 1, ordered memory offsets and slot/value 0/1/2 pairs. No new clipping observed."
+        }
+      ],
+      "screenshot_notes": [
+        {
+          "id": "14-21",
+          "status": "pass",
+          "bytes_equal_original": true,
+          "evidence": "Original visibly shows Faucet.bytecode (EVM Graph), _dispatcher and withdraw(uint256), opcode/address blocks and jumps. Spanish note accurately identifies disassembler content without asserting tool name. Source UI's small text remains original quality, not recreation loss."
+        },
+        {
+          "id": "14-22",
+          "status": "pass",
+          "bytes_equal_original": true,
+          "evidence": "Original shows DOT digraph code left and generated control-flow graph right, with Engine: dot, Format: svg and Download. Note's explanation of those controls matches. Faucet.sol identity comes from chapter context rather than a legible filename in screenshot; no conflicting visible claim."
+        },
+        {
+          "id": "14-25",
+          "status": "pass",
+          "bytes_equal_original": true,
+          "evidence": "Title Ethereum Average Gas Limit Chart, Source: Etherscan.io, Jul 30, 2015 -> Sep 16, 2024, vertical 5 M..35 M tick labels and horizontal years agree with note. Zoom controls and original chart preserved."
+        }
+      ],
+      "remaining_uncertainties": [],
+      "rights": "Individual provenance/rights and human review pending. This review grants no rights clearance."
+    },
+    "D": {
+      "group": "D",
+      "reviewer": "FigurePeerD",
+      "complete": true,
+      "source_commit": "5907a8c137135588a7d5dacd1c3bd6ff6c9c5151",
+      "scope": "Nine recreated chapter 4 figures and four recreated chapter 6 figures. Preserved images outside assignment not reviewed.",
+      "method": "Extracted each original PNG from pinned Git commit into /tmp/figure-peer-D-originals. Opened all 13 originals and all 13 current PNGs individually at readable scale. Read every assigned authoritative SVG and nearby chapter context. Compared visible labels, literals, equations, curves, guides, arrow direction and endpoints, order, containment, semantic colors and clipping. No builds, tests, linters or render commands run. No repository files edited.",
+      "summary": {
+        "figures_reviewed": 13,
+        "chapter_4": 9,
+        "chapter_6": 4,
+        "fidelity_findings": 0,
+        "source_anomaly_records": 3
+      },
+      "figures": [
+        {
+          "id": "4-6",
+          "image": "src/images/ch4/maet_0406.png",
+          "source_file": "figure-sources/ch4/maet_0406.svg",
+          "coverage": "Original PNG, current PNG, full SVG and BLS chapter context inspected.",
+          "result": "pass",
+          "evidence": "Two panels retain same three participant positions. Left has three separate green votes and three downward arrows into block A with three green stored votes. Right joins three votes at red diamond, then points down through green aggregate into block A with one stored vote. Red explanatory arrows point to vote and aggregation diamond. All editorial labels translated and visible without clipping. Generic participant artwork does not alter relationships.",
+          "findings": [],
+          "source_anomalies": []
+        },
+        {
+          "id": "4-7",
+          "image": "src/images/ch4/maet_0407.png",
+          "source_file": "figure-sources/ch4/maet_0407.svg",
+          "coverage": "Original PNG, current PNG, full SVG and BLS chapter context inspected.",
+          "result": "pass",
+          "evidence": "Top block contains ordered green circles 1, 2, 3; rightward chain verifies 1 then 2 then 3 and ends at green check. Lower block contains one aggregate, followed by one rightward verification and check. Verify, Then and Agg translated consistently; numerals retained. Boxes, green distinction and arrowheads readable and unclipped.",
+          "findings": [],
+          "source_anomalies": []
+        },
+        {
+          "id": "4-8",
+          "image": "src/images/ch4/maet_0408.png",
+          "source_file": "figure-sources/ch4/maet_0408.svg",
+          "coverage": "Original PNG, current PNG, full SVG and slashing chapter context inspected.",
+          "result": "pass",
+          "evidence": "Green vote points into block A; light-blue vote points into block B. Both blocks connect below and arrow enters double-sign box from below. Evidence box contains both colors and red warning triangle with literal !. Upper return arrow points left toward validator, preserving slashing flow. A/B, containment and all arrow directions retained; Slashing retained as chapter technical term.",
+          "findings": [],
+          "source_anomalies": []
+        },
+        {
+          "id": "4-9",
+          "image": "src/images/ch4/maet_0409.png",
+          "source_file": "figure-sources/ch4/maet_0409.svg",
+          "coverage": "Original PNG, current PNG, full SVG and adjacent polynomial example inspected.",
+          "result": "pass",
+          "evidence": "Complete depth-three binary tree retains eight ordered coefficient/value pairs: P7=1, P6=0, P5=5, P4=-2, P3=0, P2=0, P1=0, P0=3. Each value sits directly over its coefficient identifier. Pairing and ancestors unchanged; light-blue fills and red circle/left-pointing annotation at root retained. Values match adjacent p(x)=x^7+5x^5-2x^4+3. No clipping.",
+          "findings": [],
+          "source_anomalies": []
+        },
+        {
+          "id": "4-13",
+          "image": "src/images/ch4/maet_0413.png",
+          "source_file": "figure-sources/ch4/maet_0413.svg",
+          "coverage": "Original PNG, current PNG, full SVG and KZG workflow context inspected.",
+          "result": "pass",
+          "evidence": "Light-blue data box feeds rightward red encoding arrow into blue polynomial graph; prover box stays above encoding. Black axes retain positive upward and rightward arrowheads. Curve keeps initial negative segment, rising zero crossing, local maximum left of vertical axis, positive local minimum near/right of vertical axis, and rising right-hand shoulder. Literal p retained; labels translated and clear. Original has no numeric curve formula to reproduce.",
+          "findings": [],
+          "source_anomalies": []
+        },
+        {
+          "id": "4-14",
+          "image": "src/images/ch4/maet_0414.png",
+          "source_file": "figure-sources/ch4/maet_0414.svg",
+          "coverage": "Original PNG, current PNG, full SVG and KZG evaluation context inspected.",
+          "result": "pass_with_source_anomaly",
+          "evidence": "Prover at upper left sends two red arrows toward separate blue-curve locations. Equations p(x1) = y1 and p(x2) = y2 remain literal and red. Dotted red guides retain x1<0<x2 and 0<y1<y2 with respective axis labels. Curve retains local maximum and minimum, positive-axis directions and right shoulder. Full equations and labels fit canvas.",
+          "findings": [],
+          "source_anomalies": [
+            "Original y1 horizontal guide sits below blue curve at x1 rather than intersecting it exactly. Recreated figure preserves schematic separation. Do not fix as localization defect."
+          ]
+        },
+        {
+          "id": "4-15",
+          "image": "src/images/ch4/maet_0415.png",
+          "source_file": "figure-sources/ch4/maet_0415.svg",
+          "coverage": "Original PNG, current PNG, full SVG and KZG commitment context inspected.",
+          "result": "pass",
+          "evidence": "Blue polynomial graph remains left of red rightward KZG commitment arrow into light-blue diamond C. Prover stays under red arrow; black arrow goes upward from C into verifier. Literal p, C and KZG unchanged. Curve shape, axes and endpoint order retained. Compromiso KZG and Enviado a fully visible; no cropped label.",
+          "findings": [],
+          "source_anomalies": []
+        },
+        {
+          "id": "4-16",
+          "image": "src/images/ch4/maet_0416.png",
+          "source_file": "figure-sources/ch4/maet_0416.svg",
+          "coverage": "Original PNG, current PNG, full SVG and KZG proof context inspected.",
+          "result": "pass_with_source_anomaly",
+          "evidence": "Prover remains upper left, verifier upper right. Exact p(x1) = y1, p(x2) = y2, x1/x2, y1/y2 and Unicode π survive. Dotted guides preserve negative x1, positive x2 and y2 above y1. Red proof arrow points right into π diamond; black arrow goes upward from π to verifier. Blue curve, shoulder and extrema preserved. Enviado a fits expanded right margin.",
+          "findings": [],
+          "source_anomalies": [
+            "Original y1 guide is slightly below curve at x1. Same schematic mismatch remains in redraw. Do not move guide to silently correct source geometry."
+          ]
+        },
+        {
+          "id": "4-17",
+          "image": "src/images/ch4/maet_0417.png",
+          "source_file": "figure-sources/ch4/maet_0417.svg",
+          "coverage": "Original PNG, current PNG, full SVG and KZG verification context inspected.",
+          "result": "pass",
+          "evidence": "Ordered light-blue inputs remain π diamond, C diamond, trusted-setup rectangle. Their three black connections converge at red pairing node and downward arrow terminates at green success check. Verifier stays above C. Red annotation arrow points toward red node, not an input. Literal π and C retained, Spanish labels complete and unclipped.",
+          "findings": [],
+          "source_anomalies": []
+        },
+        {
+          "id": "6-2",
+          "image": "src/images/ch6/maet_0602.png",
+          "source_file": "figure-sources/ch6/maet_0602.svg",
+          "coverage": "Original PNG, current PNG, full SVG and EIP-7702 context inspected.",
+          "result": "pass",
+          "evidence": "Upper EOA points right through black delegation-designator arrow into light-blue smart contract A. Red transaction arrow enters lower EOA from left; separate red execution line leaves lower EOA to right, turns upward and enters same A contract. Both EOA labels and literal A intact. Three arrowheads, lower/upper grouping and colors match original. Spanish labels readable without clipping.",
+          "findings": [],
+          "source_anomalies": []
+        },
+        {
+          "id": "6-10",
+          "image": "src/images/ch6/maet_0610.png",
+          "source_file": "figure-sources/ch6/maet_0610.svg",
+          "coverage": "Original PNG, current PNG, full SVG, chapter report and offline-signing context inspected.",
+          "result": "pass_with_source_anomaly",
+          "evidence": "Ethereum cloud left and online computer retain two opposing black sync arrows. Orange dashed airgap contains blue QR box above o and USB device/label below. Two diagonal arrows point left from airgap to online computer. Two horizontal arrows point right from airgap toward offline-computer and signing-keys boxes. Six original arrow directions preserved. Ethereum, QR and USB retained; labels fit, including Sincronización separated from cloud.",
+          "findings": [],
+          "source_anomalies": [
+            "Original depicts both arrows between airgap and online computer pointing toward online computer, whereas adjacent prose describes unsigned transfer out and signed transfer back. Original also draws rightward arrow toward separate signing-keys box. Redraw faithfully retains original topology; no security-flow correction authorized. Existing chapter report already records online-arrow mismatch."
+          ]
+        },
+        {
+          "id": "6-11",
+          "image": "src/images/ch6/maet_0611.png",
+          "source_file": "figure-sources/ch6/maet_0611.svg",
+          "coverage": "Original PNG, current PNG, full SVG and MEV amount context inspected.",
+          "result": "pass",
+          "evidence": "Left pink transaction remains tx1 buying exactly 1,000 xyz tokens. Right block contains pink tx1 between upper and lower ellipses. Literal tx1, 1,000 comma separator and xyz intact. Neither original nor redraw adds transaction-flow arrow. Spanish text remains inside left transaction box, with narrow but visible left/right padding; no glyph clipping.",
+          "findings": [],
+          "source_anomalies": []
+        },
+        {
+          "id": "6-12",
+          "image": "src/images/ch6/maet_0612.png",
+          "source_file": "figure-sources/ch6/maet_0612.svg",
+          "coverage": "Original PNG, current PNG, full SVG and MEV transaction-order context inspected.",
+          "result": "pass",
+          "evidence": "Left green tx0 buys exactly 10 xyz tokens; lower green tx2 sells exactly 10 xyz tokens. Right block orders upper ellipsis, green tx0, pink tx1, green tx2, lower ellipsis. White text retained on green attacker transactions, black text on pink user transaction. tx0/tx1/tx2 identifiers and 10 values unchanged. No invented arrows, no reversed buy/sell, and labels fit boxes.",
+          "findings": [],
+          "source_anomalies": []
+        }
+      ],
+      "findings": [],
+      "source_anomalies_are_not_requested_fixes": true,
+      "remaining_uncertainties": [
+        "Human editorial and individual provenance/rights review remain pending. This report assesses assigned figure fidelity, not publication clearance."
+      ],
+      "repository_edits": []
+    },
+    "E": {
+      "group": "E",
+      "chapter": 15,
+      "complete": true,
+      "coverage_count": 33,
+      "baseline_commit": "5907a8c137135588a7d5dacd1c3bd6ff6c9c5151",
+      "method": "Extracted each assigned original PNG from pinned Git commit into /tmp/figure-peer-E-originals. Opened every original and every current PNG individually through image read tool, 66 readable image views total. Compared visible data, endpoints, ordering, colors and labels. No project files edited, no builds/tests/render checks run.",
+      "scope": "All 33 recreated chapter 15 figures selected from manifest; preserved literal-only figures outside assignment.",
+      "defect_count": 2,
+      "figures": [
+        {
+          "id": "15-1",
+          "original": "/tmp/figure-peer-E-originals/maet_1501.png",
+          "current": "src/images/ch15/maet_1501.png",
+          "evidence": "Six blue blocks. C→A, B→A, D→B, E→B, F→D. C remains above B; E remains below D. All arrowheads meet correct parent. Bloque A through F readable and contained.",
+          "defects": []
+        },
+        {
+          "id": "15-2",
+          "original": "/tmp/figure-peer-E-originals/maet_1502.png",
+          "current": "src/images/ch15/maet_1502.png",
+          "evidence": "D→C→B→A and F→E→B. A/B/E/F blue, C/D white. Red validator vote ends at F, with Voto por F. Avatar simplified without changing voter identity. Labels readable.",
+          "defects": []
+        },
+        {
+          "id": "15-3",
+          "original": "/tmp/figure-peer-E-originals/maet_1503.png",
+          "current": "src/images/ch15/maet_1503.png",
+          "evidence": "Blue B at right points left into blue A. Branch becomes Rama above same edge. No missing data or clipping.",
+          "defects": []
+        },
+        {
+          "id": "15-6",
+          "original": "/tmp/figure-peer-E-originals/maet_1506.png",
+          "current": "src/images/ch15/maet_1506.png",
+          "evidence": "Same six-node fork as 15-2. Old red B vote remains crossed with blue dotted X and Tiempo: t; new red F vote has Tiempo: t + 1. Both arrows end at correct nodes. Crossout intentionally overlaps old vote text as source does.",
+          "defects": []
+        },
+        {
+          "id": "15-13",
+          "original": "/tmp/figure-peer-E-originals/maet_1513.png",
+          "current": "src/images/ch15/maet_1513.png",
+          "evidence": "Green container contains cream tx1, tx2, tx3, tx4, white ellipsis and txn in source order. Five fee lines merge vertically into blue plus; separate blue ETH input joins same sum. Output points right to red-clad proponent. Both fee labels readable, no omissions.",
+          "defects": []
+        },
+        {
+          "id": "15-14",
+          "original": "/tmp/figure-peer-E-originals/maet_1514.png",
+          "current": "src/images/ch15/maet_1514.png",
+          "evidence": "Upper stake holds four ETH, lower three with lower-right absent. Red Slashing arrow points downward. Upper proponent branches to blue A and green B; lower proponent remains isolated beside reduced stake. Stake and Slashing preserved literally.",
+          "defects": []
+        },
+        {
+          "id": "15-15",
+          "original": "/tmp/figure-peer-E-originals/maet_1515.png",
+          "current": "src/images/ch15/maet_1515.png",
+          "evidence": "Cream attestation goes right through Publicar arrow to blue A. Lower return path passes blue ETH and ends upward at atestador. Comisión pequeña stays with ETH return. All labels fit.",
+          "defects": []
+        },
+        {
+          "id": "15-16",
+          "original": "/tmp/figure-peer-E-originals/maet_1516.png",
+          "current": "src/images/ch15/maet_1516.png",
+          "evidence": "Green upper and cream lower atestación merge to single rightward Publicar arrow into blue A. Four ETH become three through red downward Slashing arrow. Both atestador panels present. No changed endpoint/color relationship.",
+          "defects": []
+        },
+        {
+          "id": "15-17",
+          "original": "/tmp/figure-peer-E-originals/maet_1517.png",
+          "current": "src/images/ch15/maet_1517.png",
+          "evidence": "Eight visible blue blocks, including pre-epoch block. Slots 32N,+1,+2,+3,ellipsis,+30,+31,+32 remain ordered. All chain arrows point left. Dashed boxes enclose checkpoint N and N+1 only; epoch double arrow spans boundaries before 32N and +32. Labels readable in individual full-image view.",
+          "defects": []
+        },
+        {
+          "id": "15-18",
+          "original": "/tmp/figure-peer-E-originals/maet_1518.png",
+          "current": "src/images/ch15/maet_1518.png",
+          "evidence": "Four incoming arrows per side, eight total, with matching ¡Me gusta X! messages. Central speaker repeats X in bubble. Ronda 1 and justificación retained. Avatar simplification adds enclosing card but does not alter relationships.",
+          "defects": [],
+          "source_observations": [
+            "Source is conceptual opinion diagram, not explicit checkpoint link. No correction requested."
+          ]
+        },
+        {
+          "id": "15-19",
+          "original": "/tmp/figure-peer-E-originals/maet_1519.png",
+          "current": "src/images/ch15/maet_1519.png",
+          "evidence": "Three checkpoints C_N, C_N+1, C_N+2 with three small blocks after each and ellipses. Chain arrows left. C_N and C_N+2 blue, middle white. Upper >2/3 link runs from N to N+2, F at N and J at N+2. All visible checkpoint data retained.",
+          "defects": [],
+          "source_observations": [
+            "Source itself skips epoch N+1 in >2/3 link. Preserve skip and F/J despite protocol/prose ambiguity."
+          ]
+        },
+        {
+          "id": "15-20",
+          "original": "/tmp/figure-peer-E-originals/maet_1520.png",
+          "current": "src/images/ch15/maet_1520.png",
+          "evidence": "Both panels preserve four epoch columns. Upper J-blue epoch 0 and 1 both vote to same white epoch-3 node; white epoch 2 remains in chain. Lower J-blue 0 forks into upper path through epoch 1 to upper 3 and lower path through epoch 2 to lower 3. Two votes from same 0 reach distinct epoch-3 nodes from top/bottom. No endpoint loss.",
+          "defects": []
+        },
+        {
+          "id": "15-21",
+          "original": "/tmp/figure-peer-E-originals/maet_1521.png",
+          "current": "src/images/ch15/maet_1521.png",
+          "evidence": "Upper outer vote 0→3 encloses inner 1→2; blue J at 0 and 1, white 2 and 3. Lower outer path connects 3 backward directly to blue 0 while branch 2→blue 1→0 remains. Vote endpoints 0→3 and 1→2 intact. Epoch order and panel gap preserved.",
+          "defects": []
+        },
+        {
+          "id": "15-22",
+          "original": "/tmp/figure-peer-E-originals/maet_1522.png",
+          "current": "src/images/ch15/maet_1522.png",
+          "evidence": "Read all IDs row-wise: 1–12,13–24,25–36,37–48,49–60,61–64. All 64 blue cells present, paired columns spaced, final row only four cells. Header translated and fits. No duplicated or swapped ID found.",
+          "defects": []
+        },
+        {
+          "id": "15-23",
+          "original": "/tmp/figure-peer-E-originals/maet_1523.png",
+          "current": "src/images/ch15/maet_1523.png",
+          "evidence": "Same 64 IDs individually readable in row order as 15-22. Five dotted dividers separate six pairs of columns through last row. Primer/Segundo/Tercer/Cuarto slot sit over first four pairs; ellipsis over fifth; sixth unlabeled as source. All cells blue.",
+          "defects": []
+        },
+        {
+          "id": "15-24",
+          "original": "/tmp/figure-peer-E-originals/maet_1524.png",
+          "current": "src/images/ch15/maet_1524.png",
+          "evidence": "Same eight-block epoch geometry as 15-17. Right endpoint literal is 32(N + 1), unlike +32 in 15-17, and retained. Leftward links, dashed checkpoint boxes, epoch double arrow, slot order and ellipsis all match.",
+          "defects": []
+        },
+        {
+          "id": "15-25",
+          "original": "/tmp/figure-peer-E-originals/maet_1525.png",
+          "current": "src/images/ch15/maet_1525.png",
+          "evidence": "Blue Nodo 1 receives three messages left and two right. All five say Me gusta el punto de control N.; bubble repeats same. Header retains Ronda 1 and local-view distinction. Expanded width and line wraps still readable; no clipping.",
+          "defects": []
+        },
+        {
+          "id": "15-26",
+          "original": "/tmp/figure-peer-E-originals/maet_1526.png",
+          "current": "src/images/ch15/maet_1526.png",
+          "evidence": "Blue Nodo 1 receives three left and two right messages. All five plus bubble translate I heard y'all like checkpoint N. Header remains Ronda 2 and global blockchain-state statement. Incoming direction retained; text readable despite wider canvas.",
+          "defects": []
+        },
+        {
+          "id": "15-27",
+          "original": "/tmp/figure-peer-E-originals/maet_1527.png",
+          "current": "src/images/ch15/maet_1527.png",
+          "evidence": "A upper and B,C,D lower views each have blue 0 marked J and white 1 pointing left to 0. Epochs 2/3 empty, all four column headers ordered 0–3. No omitted blocks.",
+          "defects": []
+        },
+        {
+          "id": "15-28",
+          "original": "/tmp/figure-peer-E-originals/maet_1528.png",
+          "current": "src/images/ch15/maet_1528.png",
+          "evidence": "A has dark-blue 0/F, light-blue 1/J, white 2 with backward links and 4/4 forward vote 0→1. B,C,D has medium-blue 0/J and white 1→0; disconnected white dotted X at epoch 2. Color states, labels and absence of lower X links match.",
+          "defects": []
+        },
+        {
+          "id": "15-29",
+          "original": "/tmp/figure-peer-E-originals/maet_1529.png",
+          "current": "src/images/ch15/maet_1529.png",
+          "evidence": "A row remains correct with 0/F,1/J,2 and 4/4 link. Lower row retains light-blue 1 without J, blue dotted X/J, white 3 and 3/4 vote from 0 to X. However lower 0 state and 3-to-X arrow differ from pinned original.",
+          "defects": [
+            {
+              "severity": "high",
+              "location": "B,C,D row, epoch 0 checkpoint",
+              "original": "Medium-blue checkpoint 0 has J above it, same blue as lower X.",
+              "current": "Checkpoint 0 changed to dark blue with F above it.",
+              "required_fix": "Restore lower checkpoint 0 to source medium-blue and J. Do not infer finalization from protocol or prose. Manifest fidelity currently repeats incorrect F claim and must also change."
+            },
+            {
+              "severity": "medium",
+              "location": "B,C,D row, link from white 3 to dotted X",
+              "original": "Horizontal line touches right edge of X without arrowhead.",
+              "current": "Black leftward arrowhead added at right edge of X.",
+              "required_fix": "Preserve source plain horizontal connection here; retain existing leftward arrowhead from X to 1."
+            }
+          ],
+          "source_observations": [
+            "Lower checkpoint 1 is light blue without J in original; retain omission.",
+            "Original lower 0 remains J even though upper 0 is F. This asymmetry is source data, not permission to correct."
+          ]
+        },
+        {
+          "id": "15-30",
+          "original": "/tmp/figure-peer-E-originals/maet_1530.png",
+          "current": "src/images/ch15/maet_1530.png",
+          "evidence": "Common blue block/checkpoint 0 at divider. Upper A 2→1→0; lower B,C,D x→1→0, plus bottom block/checkpoint 3 joins common lower vertical trunk without separate arrowhead. Empty-block label stays on lowercase x. All labels fit blue boxes.",
+          "defects": [],
+          "source_observations": [
+            "Source uses lowercase x here, uppercase X in 15-28/29. Retained."
+          ]
+        },
+        {
+          "id": "15-31",
+          "original": "/tmp/figure-peer-E-originals/maet_1531.png",
+          "current": "src/images/ch15/maet_1531.png",
+          "evidence": "Undirected complete triangle between A bottom-left, B top, C bottom-right. Black, blue and yellow shirt colors retain validator distinctions. All names translated with IDs unchanged. No arrows added.",
+          "defects": []
+        },
+        {
+          "id": "15-32",
+          "original": "/tmp/figure-peer-E-originals/maet_1532.png",
+          "current": "src/images/ch15/maet_1532.png",
+          "evidence": "Five unnumbered blue blocks. Top-right→top-left; top-left wraps down to bottom-right; bottom-right→bottom-middle→bottom-left. Lower bar labels 1 época = 3 slots. Source toy three-slot epoch retained.",
+          "defects": []
+        },
+        {
+          "id": "15-33",
+          "original": "/tmp/figure-peer-E-originals/maet_1533.png",
+          "current": "src/images/ch15/maet_1533.png",
+          "evidence": "Black validator A proposes downward to blue 1; no other blocks. Proponer label at arrow and 1 época = 3 slots under bar. No lost content; wider whitespace cosmetic.",
+          "defects": []
+        },
+        {
+          "id": "15-34",
+          "original": "/tmp/figure-peer-E-originals/maet_1534.png",
+          "current": "src/images/ch15/maet_1534.png",
+          "evidence": "Blue validator B proposes downward to block 2; block 2 points left to block 1. Both blocks blue, numeric order correct, epoch-three-slots label retained.",
+          "defects": []
+        },
+        {
+          "id": "15-35",
+          "original": "/tmp/figure-peer-E-originals/maet_1535.png",
+          "current": "src/images/ch15/maet_1535.png",
+          "evidence": "Yellow validator C proposes down to block 3. Blue chain 3→2→1 points left, all numbers preserved. Proponer fits canvas where English original was close to right edge. Epoch label correct.",
+          "defects": []
+        },
+        {
+          "id": "15-36",
+          "original": "/tmp/figure-peer-E-originals/maet_1536.png",
+          "current": "src/images/ch15/maet_1536.png",
+          "evidence": "Black validator A proposes left into blue 4 above earlier row. Block 4 wraps down-right into 3; 3→2→1 leftward below. All four blue, no supermajority link yet. Epoch label retained.",
+          "defects": []
+        },
+        {
+          "id": "15-37",
+          "original": "/tmp/figure-peer-E-originals/maet_1537.png",
+          "current": "src/images/ch15/maet_1537.png",
+          "evidence": "Blocks 4→3→2→1 preserve wrapped parent-chain directions. Separate supermajority link leaves left of 1, rises and points right into 4. Enlace de supermayoría names correct left-side edge; epoch label retained.",
+          "defects": []
+        },
+        {
+          "id": "15-38",
+          "original": "/tmp/figure-peer-E-originals/maet_1538.png",
+          "current": "src/images/ch15/maet_1538.png",
+          "evidence": "Black A proposes left to 7. Parent chain wraps 7→6→5→4→3→2→1 across three rows, all seven blue numbered blocks. No supermajority link in this stage. Epoch label under lowest row matches source.",
+          "defects": []
+        },
+        {
+          "id": "15-39",
+          "original": "/tmp/figure-peer-E-originals/maet_1539.png",
+          "current": "src/images/ch15/maet_1539.png",
+          "evidence": "A→7 proposal and parent chain 7→6→5→4→3→2→1 preserved. Two separate supermajority links point from 1 to 4 and 4 to 7 on left. Both labels present, no merged arrows, all numbers and epoch statement retained.",
+          "defects": []
+        },
+        {
+          "id": "15-42",
+          "original": "/tmp/figure-peer-E-originals/maet_1542.png",
+          "current": "src/images/ch15/maet_1542.png",
+          "evidence": "Two common blue blocks split into Chain A upper and Chain B lower, four blocks each. First A block red B; all others blue. Solid green last-common supermajority arrow connects common blocks. Two solid pink buggy-client links go second common→B→next A block. Callouts retain green/red meanings. No omitted branch or block.",
+          "defects": []
+        },
+        {
+          "id": "15-43",
+          "original": "/tmp/figure-peer-E-originals/maet_1543.png",
+          "current": "src/images/ch15/maet_1543.png",
+          "evidence": "Same two-common-block fork and four blocks per branch. Red B first in A, X third in B. Solid green common link, two dashed pink links on A, dotted green vote second common→X all preserve endpoints and styles. Green warning bubble points at dotted route and retains conflict with arrow out of B plus slashing consequence. Spanish text readable, contained.",
+          "defects": []
+        }
+      ],
+      "remaining_uncertainties": [],
+      "edits": "None. Review report only."
+    },
+    "F": {
+      "group": "F",
+      "complete": true,
+      "review_mode": "read-only; only requested local JSON report created",
+      "source_commit": "5907a8c137135588a7d5dacd1c3bd6ff6c9c5151",
+      "coverage_summary": {
+        "screenshot_originals_inspected": 57,
+        "screenshot_notes_read": 57,
+        "adjacent_clearly_marked_chapter_notes": 57,
+        "diagram_original_current_pairs_inspected": 4,
+        "diagrams_with_topology_or_data_loss_found": 0,
+        "screenshots_with_invented_numeric_values_found": 0,
+        "note_control_wording_findings": 2
+      },
+      "method": "Each of 57 pinned original screenshots opened individually at readable scale, then compared with manifest note and published chapter note. Four pinned chapter-12 diagram originals and four current PNGs each opened individually and compared visually. Chapter reports and relevant source context read. Temporary image copy/detail only; no published image/chapter/source edits. Tiny unreadable text not reconstructed.",
+      "byte_preservation": "Parent hash-check stated in assignment; not rerun. This review did not write any repository image.",
+      "findings": [
+        {
+          "finding_id": "F-01",
+          "severity": "medium",
+          "figure": "2-22",
+          "file": "src/chapter_2.md",
+          "line": 531,
+          "category": "UI action misdescription",
+          "observed": "Note says \"withdraw abre la función de retiro\". Screenshot shows callable withdraw transaction button; right-hand chevron, not withdraw button, expands parameters. Adjacent chapter line 533 explicitly says clicking withdraw generates transaction.",
+          "requested_change": "Replace opening claim with label-only description, e.g. \"withdraw identifica la función de retiro. La flecha a su derecha expande los parámetros\"; retain existing next sentence. Update manifest/report note with chapter wording.",
+          "status": "unfixed_read_only_review"
+        },
+        {
+          "finding_id": "F-02",
+          "severity": "low",
+          "figure": "2-5",
+          "file": "src/chapter_2.md",
+          "line": 185,
+          "category": "Heading described as opening control",
+          "observed": "Select a network is title inside already-open modal, not visible button opening selection. Note currently says it \"abre la selección de red\". Search/Add a custom network and selected Mainnet claims otherwise accurate.",
+          "requested_change": "Use literal heading translation, e.g. \"Select a network significa seleccionar una red\"; do not identify title as opening control. Update manifest/report note with chapter wording.",
+          "status": "unfixed_read_only_review"
+        }
+      ],
+      "additional_source_observations": [
+        {
+          "figure": "2-14",
+          "observation": "Original source comment says fallback called when msg.data is not empty, omitting selector-dispatch condition. Note reflects source comment. Preserve as source issue; do not silently modernize original. If wording retained, explicitly attribute receive/fallback summary to comments rather than universal Solidity rule."
+        },
+        {
+          "figures": [
+            "2-18",
+            "2-19",
+            "2-22"
+          ],
+          "observation": "Collapsed withdraw signature visibly exposes only uint256 _withdrawAmount, while original code figure 2-14 and expanded figure 2-23 include _to too. Inherited screenshots differ; notes do not invent second visible field in collapsed screenshots."
+        },
+        {
+          "figure": "16-3",
+          "observation": "Source epoch labels before proof of stake display Epoch 0 repeatedly. Note limits itself to visible units and translation; no source repair required."
+        }
+      ],
+      "coverage": [
+        {
+          "id": "2-1",
+          "image": "src/images/ch2/maet_0201.png",
+          "kind": "screenshot",
+          "original_individually_inspected": true,
+          "note_read": true,
+          "chapter_note_clearly_marked": true,
+          "chapter_note": "\"Add to Chrome\" agrega la extensión al navegador; \"Share\" comparte su ficha. La publicidad interna dice \"Compre, venda e intercambie miles de tokens\". Los valores y reseñas pertenecen a la captura original.",
+          "status": "pass",
+          "evidence": "Store listing visibly shows Add to Chrome, Share and Buy, sell, swap thousands of tokens. Note avoids transcribing tiny thumbnails or abbreviated advertising account.",
+          "retained_source_observations": [
+            "Texto diminuto de miniaturas e identificador abreviado de cuenta publicitaria no permiten transcripción inequívoca; no se inventan caracteres."
+          ]
+        },
+        {
+          "id": "2-2",
+          "image": "src/images/ch2/maet_0202.png",
+          "kind": "screenshot",
+          "original_individually_inspected": true,
+          "note_read": true,
+          "chapter_note_clearly_marked": true,
+          "chapter_note": "\"Create password\" crea la contraseña local; \"Confirm password\" pide repetirla. \"Strong\" indica contraseña fuerte. La casilla confirma que MetaMask no puede recuperarla; \"Create a new wallet\" continúa.",
+          "status": "pass",
+          "evidence": "Create password heading, Confirm password, Strong, checked cannot-recover-password notice and Create a new wallet all visible. Local-device scope visible.",
+          "retained_source_observations": []
+        },
+        {
+          "id": "2-3",
+          "image": "src/images/ch2/maet_0203.png",
+          "kind": "screenshot",
+          "original_individually_inspected": true,
+          "note_read": true,
+          "chapter_note_clearly_marked": true,
+          "chapter_note": "\"Write down your Secret Recovery Phrase\" pide anotar la frase de recuperación; \"Hide seed phrase\" la oculta y \"Next\" continúa. Las doce palabras son datos literales: no se traducen. Esta frase es pública y no debe usarse para guardar fondos.",
+          "status": "pass",
+          "evidence": "Twelve numbered English recovery words, Hide seed phrase and Next visible. Public-seed warning appropriate; no operational use encouraged.",
+          "retained_source_observations": []
+        },
+        {
+          "id": "2-4",
+          "image": "src/images/ch2/maet_0204.png",
+          "kind": "screenshot",
+          "original_individually_inspected": true,
+          "note_read": true,
+          "chapter_note_clearly_marked": true,
+          "chapter_note": "\"Send\" envía fondos y \"Receive\" muestra opciones para recibirlos; \"Activity\" presenta la actividad. \"Ethereum Mainnet\" identifica la red principal.",
+          "status": "pass",
+          "evidence": "Send, Receive, Activity and Ethereum Mainnet visible; note makes no account-balance claim.",
+          "retained_source_observations": []
+        },
+        {
+          "id": "2-5",
+          "image": "src/images/ch2/maet_0205.png",
+          "kind": "screenshot",
+          "original_individually_inspected": true,
+          "note_read": true,
+          "chapter_note_clearly_marked": true,
+          "chapter_note": "\"Select a network\" abre la selección de red; \"Search\" busca y \"Add a custom network\" agrega una red personalizada. La captura muestra Ethereum Mainnet seleccionada, no Sepolia.",
+          "status": "finding",
+          "evidence": "Modal title Select a network; Search input, Add a custom network button and highlighted Ethereum Mainnet visible. No Sepolia or Show test networks visible. Title is not opening control.",
+          "retained_source_observations": [
+            "Texto cercano indica activar Show test networks y elegir Sepolia, pero esos controles no aparecen en esta captura."
+          ]
+        },
+        {
+          "id": "2-6",
+          "image": "src/images/ch2/maet_0206.png",
+          "kind": "screenshot",
+          "original_individually_inspected": true,
+          "note_read": true,
+          "chapter_note_clearly_marked": true,
+          "chapter_note": "\"Wallet address\" solicita la dirección receptora; \"Receive 0.05 Sepolia ETH\" pide 0.05 ETH de prueba en Sepolia.",
+          "status": "pass",
+          "evidence": "Wallet address input and Receive 0.05 Sepolia ETH button visible. Note preserves 0.05 and testnet scope.",
+          "retained_source_observations": []
+        },
+        {
+          "id": "2-7",
+          "image": "src/images/ch2/maet_0207.png",
+          "kind": "screenshot",
+          "original_individually_inspected": true,
+          "note_read": true,
+          "chapter_note_clearly_marked": true,
+          "chapter_note": "\"Confirmed\" indica confirmación; \"View on block explorer\" abre el explorador. \"Amount\" es la cantidad recibida, mientras \"Total\" incluye gas.",
+          "status": "pass",
+          "evidence": "Receive dialog shows Confirmed, View on block explorer, Amount 0.05 SepoliaETH and Total 0.05016357 SepoliaETH, with Gas Limit 21000 and gas price. Note accurately distinguishes amount and gas-inclusive total without claiming recipient pays fee.",
+          "retained_source_observations": []
+        },
+        {
+          "id": "2-8",
+          "image": "src/images/ch2/maet_0208.png",
+          "kind": "screenshot",
+          "original_individually_inspected": true,
+          "note_read": true,
+          "chapter_note_clearly_marked": true,
+          "chapter_note": "\"Success\" indica ejecución exitosa; \"Value\" es el ether transferido y \"Transaction Fee\" la comisión. El aviso rojo aclara que es una transacción de prueba en Sepolia.",
+          "status": "pass",
+          "evidence": "Success, Value 0.05 ETH, Transaction Fee and red Sepolia Testnet transaction only notice visible.",
+          "retained_source_observations": []
+        },
+        {
+          "id": "2-9",
+          "image": "src/images/ch2/maet_0209.png",
+          "kind": "screenshot",
+          "original_individually_inspected": true,
+          "note_read": true,
+          "chapter_note_clearly_marked": true,
+          "chapter_note": "\"Insufficient funds for gas\" advierte que el saldo no cubre el envío más gas. \"Cancel\" cancela y \"Continue\" continúa.",
+          "status": "pass",
+          "evidence": "Balance 0.05 and requested 0,05 accompany Insufficient funds for gas. Cancel and Continue visible; note does not assert successful send.",
+          "retained_source_observations": []
+        },
+        {
+          "id": "2-10",
+          "image": "src/images/ch2/maet_0210.png",
+          "kind": "screenshot",
+          "original_individually_inspected": true,
+          "note_read": true,
+          "chapter_note_clearly_marked": true,
+          "chapter_note": "\"View on explorer\" abre sepolia.etherscan.io; \"Settings\" abre la configuración y \"Lock MetaMask\" bloquea la billetera.",
+          "status": "pass",
+          "evidence": "View on explorer explicitly labels sepolia.etherscan.io. Settings and Lock MetaMask visible.",
+          "retained_source_observations": [
+            "Texto cercano menciona View account on Etherscan, pero la opción visible es View on explorer."
+          ]
+        },
+        {
+          "id": "2-11",
+          "image": "src/images/ch2/maet_0211.png",
+          "kind": "screenshot",
+          "original_individually_inspected": true,
+          "note_read": true,
+          "chapter_note_clearly_marked": true,
+          "chapter_note": "\"ETH BALANCE\" muestra el saldo; \"TRANSACTIONS SENT\" resume los envíos y \"FUNDED BY\" identifica quién financió la cuenta.",
+          "status": "pass",
+          "evidence": "ETH BALANCE, TRANSACTIONS SENT and FUNDED BY visible; screenshot cuts off before history. Note does not invent history rows.",
+          "retained_source_observations": [
+            "La captura recorta la página antes de la tabla de historial mencionada en la leyenda."
+          ]
+        },
+        {
+          "id": "2-12",
+          "image": "src/images/ch2/maet_0212.png",
+          "kind": "screenshot",
+          "original_individually_inspected": true,
+          "note_read": true,
+          "chapter_note_clearly_marked": true,
+          "chapter_note": "La pestaña \"1_Storage.sol\" contiene el ejemplo predeterminado; la x a su derecha lo cierra. \"Home\" vuelve al inicio.",
+          "status": "pass",
+          "evidence": "Home tab and 1_Storage.sol tab with right-hand x visible. Default-example identification agrees nearby chapter context.",
+          "retained_source_observations": []
+        },
+        {
+          "id": "2-13",
+          "image": "src/images/ch2/maet_0213.png",
+          "kind": "screenshot",
+          "original_individually_inspected": true,
+          "note_read": true,
+          "chapter_note_clearly_marked": true,
+          "chapter_note": "\"Create new file\" crea un archivo nuevo. Los nombres de carpeta y archivos del explorador se conservan como rutas literales.",
+          "status": "pass",
+          "evidence": "Create new file tooltip visible above file icon; contracts and Solidity filenames unchanged.",
+          "retained_source_observations": []
+        },
+        {
+          "id": "2-14",
+          "image": "src/images/ch2/maet_0214.png",
+          "kind": "screenshot",
+          "original_individually_inspected": true,
+          "note_read": true,
+          "chapter_note_clearly_marked": true,
+          "chapter_note": "La captura conserva el código y sus comentarios en inglés. Estos explican que el faucet entrega ether a quien lo solicita, limita cada retiro y envía la cantidad a la dirección indicada. receive recibe llamadas sin msg.data y fallback atiende llamadas con msg.data. El ejemplo traducido figura en el texto del capítulo.",
+          "status": "pass",
+          "evidence": "Comments visibly describe faucet, withdrawal limit, _to.transfer, empty-msg.data receive and nonempty-msg.data fallback. Note reflects comments; fallback comment itself is overbroad and should remain source observation, not upgraded to technical guarantee.",
+          "retained_source_observations": []
+        },
+        {
+          "id": "2-15",
+          "image": "src/images/ch2/maet_0215.png",
+          "kind": "screenshot",
+          "original_individually_inspected": true,
+          "note_read": true,
+          "chapter_note_clearly_marked": true,
+          "chapter_note": "\"Compile Faucet.sol\" compila el archivo. \"COMPILER\" selecciona la versión; el icono con marca verde indica compilación correcta. \"Hide warnings\" oculta advertencias.",
+          "status": "pass",
+          "evidence": "COMPILER version selector, Compile Faucet.sol, Hide warnings and green check on compiler icon visible.",
+          "retained_source_observations": []
+        },
+        {
+          "id": "2-16",
+          "image": "src/images/ch2/maet_0216.png",
+          "kind": "screenshot",
+          "original_individually_inspected": true,
+          "note_read": true,
+          "chapter_note_clearly_marked": true,
+          "chapter_note": "\"ENVIRONMENT\" selecciona el proveedor; \"Injected Provider - MetaMask\" conecta con MetaMask. \"VALUE\" indica ether enviado y \"Deploy\" despliega el contrato. La red visible es Sepolia.",
+          "status": "pass",
+          "evidence": "ENVIRONMENT, Injected Provider - MetaMask, Sepolia (11155111), VALUE 0 with Wei selector and Deploy visible. Note uses ether as currency, not claimed input denomination; visible selected denomination is Wei.",
+          "retained_source_observations": [
+            "Prosa y leyenda usan Injected Web3; captura muestra Injected Provider - MetaMask."
+          ]
+        },
+        {
+          "id": "2-17",
+          "image": "src/images/ch2/maet_0217.png",
+          "kind": "screenshot",
+          "original_individually_inspected": true,
+          "note_read": true,
+          "chapter_note_clearly_marked": true,
+          "chapter_note": "\"Deploy a contract\" solicita aprobar el despliegue. \"Network fee\" muestra la comisión; \"Confirm\" confirma y \"Cancel\" cancela.",
+          "status": "pass",
+          "evidence": "Deploy a contract, Network fee 0.0002 SepoliaETH, Cancel and Confirm visible. Note does not substitute obsolete Submit label.",
+          "retained_source_observations": [
+            "Prosa indica Submit; botón visible es Confirm."
+          ]
+        },
+        {
+          "id": "2-18",
+          "image": "src/images/ch2/maet_0218.png",
+          "kind": "screenshot",
+          "original_individually_inspected": true,
+          "note_read": true,
+          "chapter_note_clearly_marked": true,
+          "chapter_note": "\"Deployed Contracts\" lista contratos desplegados y \"Balance\" muestra su saldo. \"withdraw\" es el nombre literal de la función de retiro; \"Transact\" envía una transacción de bajo nivel.",
+          "status": "pass",
+          "evidence": "Deployed Contracts, Balance 0 ETH, withdraw and Low level interactions/CALLDATA Transact visible.",
+          "retained_source_observations": []
+        },
+        {
+          "id": "2-19",
+          "image": "src/images/ch2/maet_0219.png",
+          "kind": "screenshot",
+          "original_individually_inspected": true,
+          "note_read": true,
+          "chapter_note_clearly_marked": true,
+          "chapter_note": "\"Copy Address\" copia la dirección del contrato. \"Balance\" es su saldo; \"withdraw\" conserva el identificador de la función.",
+          "status": "pass",
+          "evidence": "Copy Address tooltip visible above address-copy icon; Balance and withdraw visible.",
+          "retained_source_observations": []
+        },
+        {
+          "id": "2-20",
+          "image": "src/images/ch2/maet_0220.png",
+          "kind": "screenshot",
+          "original_individually_inspected": true,
+          "note_read": true,
+          "chapter_note_clearly_marked": true,
+          "chapter_note": "\"CONTRACT CREATOR\" identifica al creador; \"Contract Creation\" señala la transacción de creación. \"ETH BALANCE\" muestra 0 ETH antes de agregar fondos.",
+          "status": "pass",
+          "evidence": "CONTRACT CREATOR, Contract Creation and 0 ETH visible; adjacent chapter presents pre-funding state.",
+          "retained_source_observations": []
+        },
+        {
+          "id": "2-21",
+          "image": "src/images/ch2/maet_0221.png",
+          "kind": "screenshot",
+          "original_individually_inspected": true,
+          "note_read": true,
+          "chapter_note_clearly_marked": true,
+          "chapter_note": "\"To\" identifica el contrato destinatario. \"Continue\" continúa el envío de 0.01 ether mostrado como 0,01 en la interfaz.",
+          "status": "pass",
+          "evidence": "To shows same contract suffix 6EA46; entered amount 0,01 and Continue visible. Note preserves 0.01 ether meaning.",
+          "retained_source_observations": []
+        },
+        {
+          "id": "2-22",
+          "image": "src/images/ch2/maet_0222.png",
+          "kind": "screenshot",
+          "original_individually_inspected": true,
+          "note_read": true,
+          "chapter_note_clearly_marked": true,
+          "chapter_note": "\"withdraw\" abre la función de retiro. La flecha a su derecha expande los parámetros; los identificadores Solidity no se traducen.",
+          "status": "finding",
+          "evidence": "withdraw button and right-hand parameter-expansion chevron visible. Note should distinguish transaction button from expansion control. Source balance remains 0 ETH despite funding sequence.",
+          "retained_source_observations": [
+            "La captura muestra saldo 0 ETH, aunque aparece después de explicar la financiación del contrato."
+          ]
+        },
+        {
+          "id": "2-23",
+          "image": "src/images/ch2/maet_0223.png",
+          "kind": "screenshot",
+          "original_individually_inspected": true,
+          "note_read": true,
+          "chapter_note_clearly_marked": true,
+          "chapter_note": "La vista expandida de \"WITHDRAW\" permite ingresar _withdrawAmount en wei y la dirección _to. \"transact\" solicita enviar la llamada; \"Calldata\" copia sus datos y \"Parameters\" sus parámetros.",
+          "status": "pass",
+          "evidence": "Expanded WITHDRAW exposes _withdrawAmount and _to plus transact, Calldata and Parameters copy controls. Amount is interpreted in wei by adjacent Solidity context. Note does not complete truncated _to address.",
+          "retained_source_observations": [
+            "Saldo ya es 0.009999 ETH antes de la confirmación mostrada después; captura representa estado posterior. Dirección _to queda cortada por campo y no se completa."
+          ]
+        },
+        {
+          "id": "2-24",
+          "image": "src/images/ch2/maet_0224.png",
+          "kind": "screenshot",
+          "original_individually_inspected": true,
+          "note_read": true,
+          "chapter_note_clearly_marked": true,
+          "chapter_note": "\"You receive\" estima que recibirá 0.000001 ETH de Sepolia. \"Interacting with\" identifica el contrato y \"Signing with\" la cuenta firmante. \"Confirm\" aprueba la llamada; la captura también muestra una alerta.",
+          "status": "pass",
+          "evidence": "You receive +0.000001 SepoliaETH, Interacting with, Signing with, Alert and Confirm visible. Note avoids interpreting rounded Network fee 0 as free gas.",
+          "retained_source_observations": [
+            "La comisión visible está redondeada a 0 SepoliaETH; no implica ausencia de gas. Prosa indica Submit, pero captura muestra Confirm."
+          ]
+        },
+        {
+          "id": "2-25",
+          "image": "src/images/ch2/maet_0225.png",
+          "kind": "screenshot",
+          "original_individually_inspected": true,
+          "note_read": true,
+          "chapter_note_clearly_marked": true,
+          "chapter_note": "\"Transactions\" lista transacciones externas; \"Internal Transactions\" permite consultar transferencias internas. El historial muestra retiro, transferencia de fondos y creación, en ese orden. El saldo queda en 0.009999 ETH.",
+          "status": "pass",
+          "evidence": "Transactions selected; Internal Transactions tab visible; rows Withdraw, Transfer, Contract Creation in descending recency. Balance 0.009999 ETH visible.",
+          "retained_source_observations": []
+        },
+        {
+          "id": "2-26",
+          "image": "src/images/ch2/maet_0226.png",
+          "kind": "screenshot",
+          "original_individually_inspected": true,
+          "note_read": true,
+          "chapter_note_clearly_marked": true,
+          "chapter_note": "\"Transaction Action\" muestra la llamada a Withdraw. Debajo de \"To\", la línea \"Transfer 0.000001 ETH\" muestra la transferencia interna desde el contrato hacia la cuenta del usuario. \"Success\" indica ejecución exitosa.",
+          "status": "pass",
+          "evidence": "Overview selected; Transaction Action Call Withdraw and Transfer 0.000001 ETH below To visible, with Success. Note accurately describes internal transfer without asserting Internal Txns selected.",
+          "retained_source_observations": [
+            "La prosa pide abrir Internal Transactions, pero la captura muestra Overview seleccionada y transferencia interna resumida dentro de los detalles."
+          ]
+        },
+        {
+          "id": "4-10",
+          "image": "src/images/ch4/maet_0410.png",
+          "kind": "screenshot",
+          "original_individually_inspected": true,
+          "note_read": true,
+          "chapter_note_clearly_marked": true,
+          "chapter_note": "Se conserva la interfaz histórica de la ceremonia. «SUMMONING GUIDES» significa «Guías de invocación» y «The ceremony is over» indica que la ceremonia terminó. «Transcript sha256 hash» identifica el hash sha256 del registro; «Total contributions» muestra 141,416 contribuciones y «Verify transcript» significa «Verificar el registro». El párrafo, repetido en la captura, presenta a Dankshard como un espíritu poderoso que abrirá el próximo capítulo de la escalabilidad de Ethereum y a los contribuyentes como quienes se reunieron para invocar su poder.",
+          "status": "pass",
+          "evidence": "SUMMONING GUIDES, The ceremony is over, Transcript sha256 hash, Total contributions 141,416 and Verify transcript visible. Dankshard paragraph duplicated exactly as note observes.",
+          "retained_source_observations": [
+            "El mismo párrafo aparece dos veces seguidas en la captura original; duplicación conservada."
+          ]
+        },
+        {
+          "id": "5-4",
+          "image": "src/images/ch5/maet_0504.png",
+          "kind": "screenshot",
+          "original_individually_inspected": true,
+          "note_read": true,
+          "chapter_note_clearly_marked": true,
+          "chapter_note": "se conserva la interfaz de la herramienta tal como aparece en el original. \"Generate\" significa \"Generar\"; \"BIP39 Mnemonic\", \"frase mnemónica BIP39\"; \"BIP39 Passphrase (optional)\", \"frase de contraseña BIP39 opcional\"; \"BIP39 Seed\", \"semilla BIP39\"; \"Coin\", \"moneda\"; y \"BIP32 Root Key\", \"clave raíz BIP32\". Las palabras de recuperación y los valores derivados se mantienen como datos literales.",
+          "status": "pass",
+          "evidence": "Generate and BIP39 Mnemonic/Passphrase (optional)/Seed, Coin and BIP32 Root Key labels visible. Note leaves mnemonic and derived values literal and makes no safety guarantee about generator.",
+          "retained_source_observations": []
+        },
+        {
+          "id": "6-1",
+          "image": "src/images/ch6/maet_0601.png",
+          "kind": "screenshot",
+          "original_individually_inspected": true,
+          "note_read": true,
+          "chapter_note_clearly_marked": true,
+          "chapter_note": "captura original de Etherscan conservada. El gráfico muestra el límite promedio de gas de Ethereum entre el 30 de julio de 2015 y el 17 de octubre de 2024; el eje vertical expresa millones de unidades de gas. Los controles permiten seleccionar intervalos o ampliar el gráfico.",
+          "status": "pass",
+          "evidence": "Ethereum Average Gas Limit Chart shows Jul 30, 2015 to Oct 17, 2024; vertical ticks use M, zoom controls and click-and-drag instruction visible.",
+          "retained_source_observations": []
+        },
+        {
+          "id": "6-3",
+          "image": "src/images/ch6/maet_0603.png",
+          "kind": "screenshot",
+          "original_individually_inspected": true,
+          "note_read": true,
+          "chapter_note_clearly_marked": true,
+          "chapter_note": "captura original del faucet de Google Cloud Web3 conservada. Se selecciona Ethereum Sepolia y se ingresa la dirección de la billetera o el nombre ENS en el campo obligatorio. El botón solicita 0.05 Sepolia ETH. El aviso inferior indica que la dirección proporcionada se utiliza para procesar la solicitud y no en otros servicios de Google.",
+          "status": "pass",
+          "evidence": "Ethereum Sepolia selected; Wallet address or ENS name required; Receive 0.05 Sepolia ETH visible. Footer expressly says wallet-address data used processing request, not other Google services; note attributes statement to notice.",
+          "retained_source_observations": []
+        },
+        {
+          "id": "6-4",
+          "image": "src/images/ch6/maet_0604.png",
+          "kind": "screenshot",
+          "original_individually_inspected": true,
+          "note_read": true,
+          "chapter_note_clearly_marked": true,
+          "chapter_note": "captura original de Etherscan conservada. Los recuadros rojos destacan Value, el valor enviado de 0.001 ETH, e Input Data, los datos de entrada vacíos indicados como 0x. La transacción fue exitosa en Sepolia. También se muestran hash, bloque, emisor, destinatario, comisión, precio y consumo de gas, y nonce.",
+          "status": "pass",
+          "evidence": "Red outlines enclose Value 0.001 ETH and Input Data 0x; Success and Sepolia Testnet warning visible. Gas usage and nonce fields present.",
+          "retained_source_observations": [
+            "Texto próximo del capítulo dice 0x00 para datos vacíos; captura muestra 0x. No se corrigió ninguno."
+          ]
+        },
+        {
+          "id": "6-5",
+          "image": "src/images/ch6/maet_0605.png",
+          "kind": "screenshot",
+          "original_individually_inspected": true,
+          "note_read": true,
+          "chapter_note_clearly_marked": true,
+          "chapter_note": "captura original de Etherscan conservada. Los recuadros rojos muestran una transacción con valor y datos: Value es 0.001 ETH e Input Data es 0x0001. La pantalla conserva sus campos de estado, bloque, fecha, direcciones, comisiones, gas y nonce.",
+          "status": "pass",
+          "evidence": "Red outlines enclose Value 0.001 ETH and Input Data 0x0001; surrounding date/status/address/gas/nonce fields present.",
+          "retained_source_observations": []
+        },
+        {
+          "id": "6-6",
+          "image": "src/images/ch6/maet_0606.png",
+          "kind": "screenshot",
+          "original_individually_inspected": true,
+          "note_read": true,
+          "chapter_note_clearly_marked": true,
+          "chapter_note": "captura original de Etherscan conservada. Los recuadros rojos destacan una transacción con solo datos: Value es 0 ETH e Input Data es 0x0001. El resto de la pantalla muestra el resultado exitoso, bloque, direcciones, comisiones, consumo de gas y nonce.",
+          "status": "pass",
+          "evidence": "Red outlines enclose Value 0 ETH and Input Data 0x0001. Success, block, addresses, fee, gas and nonce visible.",
+          "retained_source_observations": []
+        },
+        {
+          "id": "6-7",
+          "image": "src/images/ch6/maet_0607.png",
+          "kind": "screenshot",
+          "original_individually_inspected": true,
+          "note_read": true,
+          "chapter_note_clearly_marked": true,
+          "chapter_note": "captura original de Etherscan conservada. Los recuadros rojos destacan Value igual a 0 ETH e Input Data vacío, indicado como 0x. Aunque no se envían valor ni datos, la transacción consume 21,000 unidades de gas y paga una comisión.",
+          "status": "pass",
+          "evidence": "Value 0 ETH, Input Data 0x, Gas Limit & Usage 21,000 | 21,000 (100%) and nonzero Transaction Fee visible. Note correctly avoids treating empty transfer as gas-free.",
+          "retained_source_observations": []
+        },
+        {
+          "id": "6-8",
+          "image": "src/images/ch6/maet_0608.png",
+          "kind": "screenshot",
+          "original_individually_inspected": true,
+          "note_read": true,
+          "chapter_note_clearly_marked": true,
+          "chapter_note": "captura original de Etherscan conservada. El recuadro rojo destaca el contrato creado, identificado con Created en el campo To, y el valor de 0 ETH. La transacción se ejecutó correctamente en Sepolia; los demás campos muestran hash, bloque, fecha, emisor, comisión y precio del gas.",
+          "status": "pass",
+          "evidence": "Created appears in To row, Value 0 ETH, Success and Sepolia testnet warning visible. Note describes contract creation, not ordinary transfer.",
+          "retained_source_observations": []
+        },
+        {
+          "id": "6-9",
+          "image": "src/images/ch6/maet_0609.png",
+          "kind": "screenshot",
+          "original_individually_inspected": true,
+          "note_read": true,
+          "chapter_note_clearly_marked": true,
+          "chapter_note": "captura original de Etherscan con sus anotaciones conservada. Las flechas rojas identifican, de arriba abajo, Withdraw, retiro; Transfer, transferencia; y Create Contract, creación del contrato. Las filas se presentan de la más reciente a la más antigua. El panel superior muestra saldo, creador e información del contrato.",
+          "status": "pass",
+          "evidence": "Red source annotations Withdraw, Transfer and Create Contract point to rows with ages 2, 14 and 24 mins. Upper contract/balance/creator panels preserved.",
+          "retained_source_observations": [
+            "Anotaciones editoriales sobre captura no se traducen dentro del raster por decisión de conservar capturas auténticas completas; traducción explícita en nota exterior."
+          ]
+        },
+        {
+          "id": "6-13",
+          "image": "src/images/ch6/maet_0613.png",
+          "kind": "screenshot",
+          "original_individually_inspected": true,
+          "note_read": true,
+          "chapter_note_clearly_marked": true,
+          "chapter_note": "captura original del panel de Safe con sus anotaciones conservada. Las flechas rojas señalan el valor en USD del ETH, $6,507,173,131, y de los tokens ERC-20, $74,598,101,563. Los paneles izquierdos inferiores muestran 1,299,120 ETH y 279,568 cuentas Safe. Los gráficos derechos muestran el saldo en USD acumulado a lo largo del tiempo y la cantidad semanal de cuentas Safe creadas; rojo identifica ETH nativo y verde sus variantes.",
+          "status": "pass",
+          "evidence": "Source annotations point to $6,507,173,131 ETH and $74,598,101,563 ERC20s. Left totals 1,299,120 ETH and 279,568 Safes visible. Right plots USD balance over time and weekly created Safes; legend red ETH Native, green ETH Variants.",
+          "retained_source_observations": [
+            "Anotaciones editoriales rojas sobre captura se explican en español fuera de imagen para conservar bytes originales."
+          ]
+        },
+        {
+          "id": "7-1",
+          "image": "src/images/ch7/maet_0701.png",
+          "kind": "screenshot",
+          "original_individually_inspected": true,
+          "note_read": true,
+          "chapter_note_clearly_marked": true,
+          "chapter_note": "en esta captura de Etherscan, `Contract ABI` identifica la ABI del contrato y `Export ABI` permite exportarla. Se conservan las etiquetas de la interfaz y el JSON del ejemplo original.",
+          "status": "pass",
+          "evidence": "Contract ABI header and Export ABI control visible above literal JSON. Note makes no unsupported function/value claims.",
+          "retained_source_observations": []
+        },
+        {
+          "id": "12-4",
+          "image": "src/images/ch12/maet_1204.png",
+          "kind": "screenshot",
+          "original_individually_inspected": true,
+          "note_read": true,
+          "chapter_note_clearly_marked": true,
+          "chapter_note": "en la interfaz original, Home significa inicio; Connected Address, dirección conectada; Debug Contracts, depuración de contratos; y Block Explorer, explorador de bloques. Grab funds from faucet indica obtener fondos del faucet. El texto central señala los archivos del frontend y del contrato que forman parte del ejemplo; sus rutas se conservan literalmente.",
+          "status": "pass",
+          "evidence": "Home, Connected Address, Debug Contracts, Block Explorer, Grab funds from faucet and frontend/contract paths visible. Note translates UI without inventing paths.",
+          "retained_source_observations": []
+        },
+        {
+          "id": "12-5",
+          "image": "src/images/ch12/maet_1205.png",
+          "kind": "screenshot",
+          "original_individually_inspected": true,
+          "note_read": true,
+          "chapter_note_clearly_marked": true,
+          "chapter_note": "Copy address significa copiar dirección; View QR Code, ver código QR; View on Block Explorer, ver en el explorador de bloques; Reveal Private Key, revelar clave privada; y Disconnect, desconectar. Se conservan las etiquetas literales del menú de la billetera desechable.",
+          "status": "pass",
+          "evidence": "Menu has Copy address, View QR Code, View on Block Explorer, Reveal Private Key, Disconnect in that order. Note translates labels without advising exposure of real keys.",
+          "retained_source_observations": []
+        },
+        {
+          "id": "12-6",
+          "image": "src/images/ch12/maet_1206.png",
+          "kind": "screenshot",
+          "original_individually_inspected": true,
+          "note_read": true,
+          "chapter_note_clearly_marked": true,
+          "chapter_note": "Connect Wallet significa conectar billetera. La etiqueta del botón se conserva como aparece en la interfaz original.",
+          "status": "pass",
+          "evidence": "Single blue Connect Wallet button visible; note adds only translation.",
+          "retained_source_observations": []
+        },
+        {
+          "id": "12-7",
+          "image": "src/images/ch12/maet_1207.png",
+          "kind": "screenshot",
+          "original_individually_inspected": true,
+          "note_read": true,
+          "chapter_note_clearly_marked": true,
+          "chapter_note": "Connect a Wallet significa conectar una billetera; Installed identifica la billetera instalada y Supported Wallets enumera las compatibles. Burner Wallet es la opción de billetera desechable. El panel What is a Wallet? explica que las billeteras permiten enviar, recibir, almacenar y mostrar activos digitales, y conectarse a sitios sin crear una cuenta y contraseña en cada uno. Get a Wallet significa obtener una billetera y Learn More, más información. Los nombres de productos se conservan.",
+          "status": "pass",
+          "evidence": "Connect a Wallet, Installed Phantom, Supported Wallets with Burner Wallet, explanatory What is a Wallet? panel, Get a Wallet and Learn More all visible. Note attributes login/assets explanation to panel.",
+          "retained_source_observations": []
+        },
+        {
+          "id": "12-8",
+          "image": "src/images/ch12/maet_1208.png",
+          "kind": "screenshot",
+          "original_individually_inspected": true,
+          "note_read": true,
+          "chapter_note_clearly_marked": true,
+          "chapter_note": "Balance significa saldo y Network, red. Read corresponde a la lectura de datos y Write, a las operaciones de escritura; Send significa enviar. payable value indica el importe que acompaña a la llamada, expresado en wei. YourContract, los nombres de funciones y variables, las direcciones y el saludo son valores literales del ejemplo y no se traducen.",
+          "status": "pass",
+          "evidence": "Balance and Network visible; Read/Write/Send panels; setGreeting payable value explicitly labeled wei. Identifiers and sample greeting left literal.",
+          "retained_source_observations": []
+        },
+        {
+          "id": "12-9",
+          "image": "src/images/ch12/maet_1209.png",
+          "kind": "screenshot",
+          "original_individually_inspected": true,
+          "note_read": true,
+          "chapter_note_clearly_marked": true,
+          "chapter_note": "la flecha roja señala el botón del faucet de la red local Hardhat, identificado en el texto como Grab funds, obtener fondos. La captura conserva el saldo visible de 1.0000 ETH.",
+          "status": "pass",
+          "evidence": "Original red arrow points to funds icon, balance 1.0000 ETH and Hardhat visible. Grab funds wording taken from chapter/context, explicitly identified as such.",
+          "retained_source_observations": [
+            "La captura ya muestra 1.0000 ETH aunque el párrafo presenta el paso de obtener fondos; se conserva ese estado, sin sustituirlo por saldo cero."
+          ]
+        },
+        {
+          "id": "12-10",
+          "image": "src/images/ch12/maet_1210.png",
+          "kind": "screenshot",
+          "original_individually_inspected": true,
+          "note_read": true,
+          "chapter_note_clearly_marked": true,
+          "chapter_note": "Read y Write identifican lectura y escritura; Send significa enviar. El formulario setGreeting contiene hello world y un payable value de 100000000000000000 wei, equivalente a 0.1 ETH. Son entradas de la transacción, no el estado ya actualizado del contrato; los identificadores y valores se conservan literalmente.",
+          "status": "pass",
+          "evidence": "setGreeting input hello world and 100000000000000000 wei visible; enlarged temporary detail inspected to count digits. Equals 0.1 ETH. Left panel still totalCounter 0, premium false, old greeting and 0.0000 ETH; note correctly identifies pending input, not updated state.",
+          "retained_source_observations": []
+        },
+        {
+          "id": "12-11",
+          "image": "src/images/ch12/maet_1211.png",
+          "kind": "screenshot",
+          "original_individually_inspected": true,
+          "note_read": true,
+          "chapter_note_clearly_marked": true,
+          "chapter_note": "Transaction Receipt significa recibo de transacción. Balance es el saldo, y Read, Write y Send conservan sus etiquetas de lectura, escritura y envío. Los campos totalCounter, premium y greeting mantienen sus nombres originales; los valores visibles son 1, true y hello world, respectivamente.",
+          "status": "pass",
+          "evidence": "Transaction Receipt visible; totalCounter 1, premium true and greeting hello world match note. Balance 0.1000 ETH retained.",
+          "retained_source_observations": []
+        },
+        {
+          "id": "12-12",
+          "image": "src/images/ch12/maet_1212.png",
+          "kind": "screenshot",
+          "original_individually_inspected": true,
+          "note_read": true,
+          "chapter_note_clearly_marked": true,
+          "chapter_note": "Production Deployment significa despliegue de producción; Domains muestra los dominios del proyecto; Status y Ready indican el estado listo; Created señala la fecha de creación; y Source, el origen del despliegue. Build Logs y Runtime Logs son los registros de compilación y ejecución; Instant Rollback permite volver a un despliegue anterior. Se conserva la interfaz de Vercel de la época del original, junto con sus dominios y fecha.",
+          "status": "pass",
+          "evidence": "Production Deployment, Domains, Status Ready, Created, Source, Build Logs, Runtime Logs and Instant Rollback visible. Note gives generic rollback meaning, not promise about current deployment permissions.",
+          "retained_source_observations": []
+        },
+        {
+          "id": "14-21",
+          "image": "src/images/ch14/maet_1421.png",
+          "kind": "screenshot",
+          "original_individually_inspected": true,
+          "note_read": true,
+          "chapter_note_clearly_marked": true,
+          "chapter_note": "la interfaz del desensamblador muestra el despachador y la función withdraw(uint256), con direcciones, instrucciones y saltos del bytecode de Faucet. Las etiquetas originales de la herramienta se conservan.",
+          "status": "pass",
+          "evidence": "Faucet.bytecode (EVM Graph), _dispatcher and withdraw(uint256) visible with bytecode addresses/instructions/jumps. Note does not invent tiny opcodes or identify tool as Heimdall.",
+          "retained_source_observations": [
+            "Chapter attributes screenshot to Heimdall, but visible UI resembles a graphical disassembler; original retained without correction."
+          ]
+        },
+        {
+          "id": "14-22",
+          "image": "src/images/ch14/maet_1422.png",
+          "kind": "screenshot",
+          "original_individually_inspected": true,
+          "note_read": true,
+          "chapter_note_clearly_marked": true,
+          "chapter_note": "el panel izquierdo contiene el código DOT del grafo de flujo de control de Faucet.sol; el derecho muestra el grafo generado. Engine selecciona el motor, Format el formato de salida y Download permite descargar el resultado. La interfaz original se conserva.",
+          "status": "pass",
+          "evidence": "Left pane visibly DOT digraph with opcode labels; right pane rendered CFG. Engine dot, Format svg and Download controls readable. Note does not claim tiny node contents.",
+          "retained_source_observations": []
+        },
+        {
+          "id": "14-25",
+          "image": "src/images/ch14/maet_1425.png",
+          "kind": "screenshot",
+          "original_individually_inspected": true,
+          "note_read": true,
+          "chapter_note_clearly_marked": true,
+          "chapter_note": "el gráfico de Etherscan muestra el límite de gas promedio de Ethereum entre Jul 30, 2015 y Sep 16, 2024. El eje vertical expresa millones de gas; el horizontal indica los años. Los controles de zoom, las fechas y el gráfico original se conservan.",
+          "status": "pass",
+          "evidence": "Average Gas Limit chart shows Jul 30, 2015 to Sep 16, 2024, vertical M ticks and year axis; note preserves historical scope.",
+          "retained_source_observations": []
+        },
+        {
+          "id": "15-40",
+          "image": "src/images/ch15/maet_1540.png",
+          "kind": "screenshot",
+          "original_individually_inspected": true,
+          "note_read": true,
+          "chapter_note_clearly_marked": true,
+          "chapter_note": "\"Timing games profitability\" indica la rentabilidad de los juegos de temporización. \"Daily View\" y \"Cumulative View\" son las vistas diaria y acumulada. La línea roja, \"Gamers\", corresponde a quienes participan en esos juegos; la verde, \"Non-Gamers\", a quienes no participan. APY es el rendimiento porcentual anual. Las fechas y cifras pertenecen a la captura original, no a una medición actual.",
+          "status": "pass",
+          "evidence": "Timing games profitability, Daily View/Cumulative View and APY axis visible. Red Gamers and green Non-Gamers legend matches note; no current-profit promise.",
+          "retained_source_observations": []
+        },
+        {
+          "id": "15-41",
+          "image": "src/images/ch15/maet_1541.png",
+          "kind": "screenshot",
+          "original_individually_inspected": true,
+          "note_read": true,
+          "chapter_note_clearly_marked": true,
+          "chapter_note": "la gráfica muestra la distribución de los tiempos de las ofertas ganadoras de bloques, tomando la primera recepción por cualquier relay. Incluye los bloques 18,320,000 a 18,720,000 en intervalos de 25 ms. \"All Proposers\" significa todos los proponentes; \"Count of Slots\", cantidad de slots; \"Slot Time [ms]\", tiempo del slot en milisegundos. Se conservan los datos de la imagen original.",
+          "status": "pass",
+          "evidence": "Subtitle explicitly Earliest reception time by any relay, Blocks 18,320,000 to 18,720,000, 25ms bins. All Proposers, Count of Slots and Slot Time [ms] visible.",
+          "retained_source_observations": []
+        },
+        {
+          "id": "15-44",
+          "image": "src/images/ch15/maet_1544.png",
+          "kind": "screenshot",
+          "original_individually_inspected": true,
+          "note_read": true,
+          "chapter_note_clearly_marked": true,
+          "chapter_note": "\"Execution Clients\" significa clientes de ejecución y \"Other\", otros. \"Client diversity has improved!\" anuncia una mejora en la diversidad de clientes en el momento de la captura. La fuente seleccionada es Supermajority.info, con actualización manual; los datos pueden no ser 100% precisos. La estimación se basa en una cobertura autodeclarada de 73.9% de la red y supone que el resto utiliza mayormente Geth. \"Data source\" permite elegir la fuente y \"Read more\" enlaza más información. Los porcentajes y controles corresponden a la interfaz del original, no a datos actuales.",
+          "status": "pass",
+          "evidence": "Execution Clients, Other, diversity-improved banner, supermajority.info manually updated, accuracy caveat, 73.9% self-reported coverage/remaining mostly Geth and selected data source visible. Historical caveat accurate.",
+          "retained_source_observations": []
+        },
+        {
+          "id": "15-45",
+          "image": "src/images/ch15/maet_1545.png",
+          "kind": "screenshot",
+          "original_individually_inspected": true,
+          "note_read": true,
+          "chapter_note_clearly_marked": true,
+          "chapter_note": "\"Consensus Clients\" significa clientes de consenso y \"Other\", otros. \"Client diversity has improved!\" anuncia una mejora en la diversidad de clientes en el momento de la captura. La fuente seleccionada es Miga Labs y la interfaz indica actualización diaria, con la advertencia de que los datos pueden no ser 100% precisos. \"Data source\" permite elegir la fuente y \"Read more\" enlaza más información. Los porcentajes y controles corresponden a la interfaz del original, no a datos actuales.",
+          "status": "pass",
+          "evidence": "Consensus Clients, Other, diversity-improved banner, Miga Labs daily updates/accuracy caveat and selected Miga Labs radio visible. Historical caveat accurate.",
+          "retained_source_observations": []
+        },
+        {
+          "id": "16-1",
+          "image": "src/images/ch16/maet_1601.png",
+          "kind": "screenshot",
+          "original_individually_inspected": true,
+          "note_read": true,
+          "chapter_note_clearly_marked": true,
+          "chapter_note": "La captura conserva los controles originales. \"Select area to zoom\" significa seleccionar un área para ampliar; \"5Y\" indica una ventana de cinco años y \"YTD\", el período transcurrido del año.",
+          "status": "pass",
+          "evidence": "Select area to zoom, selected 5Y and YTD visible. Note deliberately avoids identifying unlabeled metric or claiming multiple series.",
+          "retained_source_observations": [
+            "Caption says comparison between blockchains, but visible image is one unlabeled historical series."
+          ]
+        },
+        {
+          "id": "16-2",
+          "image": "src/images/ch16/maet_1602.png",
+          "kind": "screenshot",
+          "original_individually_inspected": true,
+          "note_read": true,
+          "chapter_note_clearly_marked": true,
+          "chapter_note": "\"Chain data size in GB\" indica el tamaño de los datos de la cadena en GB y \"Timeline\", la línea de tiempo. Los recuadros señalan actualizaciones de Geth y la obsolescencia de Open Ethereum; \"state scheme = path\" conserva el nombre literal del esquema.",
+          "status": "pass",
+          "evidence": "Chain data size in GB and Timeline axes visible. Callouts name Geth version updates, Open Ethereum deprecated and state scheme = path. Note does not repeat mismatched client-distribution caption.",
+          "retained_source_observations": [
+            "Caption calls image client distribution; image instead charts chain data size over time."
+          ]
+        },
+        {
+          "id": "16-3",
+          "image": "src/images/ch16/maet_1603.png",
+          "kind": "screenshot",
+          "original_individually_inspected": true,
+          "note_read": true,
+          "chapter_note_clearly_marked": true,
+          "chapter_note": "\"Gas Limit [gas]\" significa límite de gas, expresado en gas; \"Epoch\" significa época. \"M\" indica millones.",
+          "status": "pass",
+          "evidence": "Gas Limit [gas], M tick suffixes and Epoch tick labels visible. Note translates units/axis labels without repairing source pre-Merge Epoch 0 labels.",
+          "retained_source_observations": []
+        },
+        {
+          "id": "12-1",
+          "image": "src/images/ch12/maet_1201.png",
+          "kind": "diagram",
+          "original_individually_inspected": true,
+          "current_individually_inspected": true,
+          "status": "pass",
+          "evidence": "Blue outer container preserves three separate white boxes left-to-right logic gear, database cylinder, unique frontend. No arrows in either version. All editorial labels translated; cylinder bands, containment and blue grouping retained.",
+          "retained_source_observations": []
+        },
+        {
+          "id": "12-2",
+          "image": "src/images/ch12/maet_1202.png",
+          "kind": "diagram",
+          "original_individually_inspected": true,
+          "current_individually_inspected": true,
+          "status": "pass",
+          "evidence": "White DApp outer frame and blue Ethereum-contract group preserve logic/database left-to-right. Official frontend above alternatives 1 then 2. Two downward fallback arrows retain distinct endpoints. No new contract/frontend connector. Label translations complete.",
+          "retained_source_observations": [
+            "Las flechas hacia las alternativas representan fallbacks en el original, no una conexión explícita entre contratos y frontend; se conserva esa topología."
+          ]
+        },
+        {
+          "id": "12-3",
+          "image": "src/images/ch12/maet_1203.png",
+          "kind": "diagram",
+          "original_individually_inspected": true,
+          "current_individually_inspected": true,
+          "status": "pass",
+          "evidence": "Contracts contain logic/database; downward arrow reaches blockchain indexer. Indexer right-hand bent connector ascends and points into official AWS frontend. Official frontend points down separately to Vercel alternative 1 and IPFS alternative 2. Blue provider boxes remain inside white frontend boxes; outer frame retained.",
+          "retained_source_observations": [
+            "El original muestra conexión del indexador solo con frontend oficial, no con alternativas; no se añadieron conexiones ni se corrigió arquitectura."
+          ]
+        },
+        {
+          "id": "12-13",
+          "image": "src/images/ch12/maet_1213.png",
+          "kind": "diagram",
+          "original_individually_inspected": true,
+          "current_individually_inspected": true,
+          "status": "pass",
+          "evidence": "DApp outer frame encloses contracts, indexer and all three frontends. Stepped red region includes contracts and alternative frontends, excludes indexer/official AWS. Red SCAFFOLD-ETH arrow enters region. Contracts arrow down to indexer; bent indexer connector up/right into AWS. AWS fallback arrows point down to Vercel/IPFS. ETH.LIMO, mydapp.eth.limo and ENS remain outside DApp. Downward ENS-resolution chain and separate bent arrow ending upward beside mydapp.eth below IPFS retained. AWS/Vercel/IPFS, ENS, domains and contenthash unchanged.",
+          "retained_source_observations": [
+            "La flecha de resolución del original termina en el área roja bajo IPFS, junto a mydapp.eth, no en el recuadro IPFS; se conserva ese destino.",
+            "El original incluye AWS, Vercel e indexador en la visión de una DApp totalmente descentralizada; se mantiene arquitectura sin corregir afirmación ni añadir conexiones."
+          ]
+        }
+      ],
+      "rights": "Individual provenance/rights and human editorial review remain pending.",
+      "checks_not_run": [
+        "project build",
+        "tests",
+        "lint",
+        "formatters",
+        "image hash recheck"
+      ]
+    }
+  },
+  "finding_resolutions": {
+    "5-6": "Marcador de fallo y etiqueta ajustados dentro del carril; PNG final inspeccionado.",
+    "17-2": "Separadores 8–9 y 10–15 restituidos; PNG final inspeccionado.",
+    "17-3": "Separadores 8–9 y 10–15 restituidos, con Hash* intacto; PNG final inspeccionado.",
+    "16-4": "Eje de la flecha de pruebas desplazado para separarlo del rótulo; PNG final inspeccionado.",
+    "16-9": "Seis extremos prolongados hasta las cajas de destino; PNG final inspeccionado.",
+    "14-4": "Curva inferior trazada a partir de los píxeles originales, sin sustituirla por una función idealizada; PNG final inspeccionado.",
+    "14-26": "Marco del byte final 5b ampliado y desplazado, con el literal 01015b intacto; recorte del PNG final inspeccionado.",
+    "15-29": "Estado 0/J azul medio restaurado y punta del tramo 3—X eliminada; PNG final cotejado con el original.",
+    "2-5": "La nota distingue el título Select a network de un control de apertura; captura intacta.",
+    "2-22": "La nota identifica la función withdraw sin atribuir apertura al botón; captura intacta."
+  }
+}

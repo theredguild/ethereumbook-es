@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="487" height="421" viewBox="0 0 487 421">
+<title>Figura 5-4. Versión editada en español</title>
+<desc>Superposición editorial transparente sobre la captura histórica original, sin cambiar su escala. Traducción educativa; no es una captura nativa.</desc>
+<rect id="mask-1" x="0" y="0" width="169" height="21" fill="#ffffff"/>
+<text x="1" y="17.5" font-family="DejaVu Sans" font-size="16.75" font-weight="bold" fill="#000000">Frase mnemónica</text>
+<rect id="mask-2" x="86" y="28" width="104" height="11" fill="#ffffff"/>
+<text x="87" y="36" font-family="DejaVu Sans" font-size="8" font-weight="normal" fill="#000000">Ingrese una frase</text>
+<rect id="mask-3" x="218" y="28" width="227" height="11" fill="#ffffff"/>
+<text x="219" y="36" font-family="DejaVu Sans" font-size="8" font-weight="normal" fill="#000000">existente o genere otra al azar. Escribir sus</text>
+<rect id="mask-4" x="86" y="41" width="355" height="24" fill="#ffffff"/>
+<text x="87" y="50.35" font-family="DejaVu Sans" font-size="8" font-weight="normal" fill="#000000">doce palabras probablemente no funcione como espera: requieren una</text>
+<text x="87" y="60.65" font-family="DejaVu Sans" font-size="8" font-weight="normal" fill="#000000">estructura específica (la última es una suma de comprobación).</text>
+<rect id="mask-5" x="86" y="73" width="89" height="11" fill="#ffffff"/>
+<text x="87" y="82" font-family="DejaVu Sans" font-size="8" font-weight="normal" fill="#000000">Más sobre la norma</text>
+<rect id="mask-6" x="202" y="73" width="22" height="11" fill="#ffffff"/>
+<rect id="mask-7" x="88" y="97" width="40" height="10" fill="#9f9f9f"/>
+<text x="89" y="105" font-family="DejaVu Sans" font-size="8" font-weight="normal" fill="#000000">Generar</text>
+<rect id="mask-8" x="136" y="97" width="40" height="10" fill="#ffffff"/>
+<text x="137" y="105.5" font-family="DejaVu Sans" font-size="8" font-weight="normal" fill="#000000">al azar:</text>
+<rect id="mask-9" x="206" y="97" width="171" height="10" fill="#ffffff"/>
+<text x="207" y="104.5" font-family="DejaVu Sans" font-size="7.25" font-weight="normal" fill="#000000">palabras, o ingrese su frase abajo.</text>
+<rect id="mask-10" x="15" y="140" width="48" height="12" fill="#ffffff"/>
+<text x="16" y="149" font-family="DejaVu Sans" font-size="7" font-weight="bold" fill="#000000">Mnemónica</text>
+<rect id="mask-11" x="4" y="183" width="59" height="30" fill="#ffffff"/>
+<text x="62" y="190" text-anchor="end" font-family="DejaVu Sans" font-size="8" font-weight="bold" fill="#000000">Frase de</text>
+<text x="62" y="200" text-anchor="end" font-family="DejaVu Sans" font-size="8" font-weight="bold" fill="#000000">contraseña</text>
+<text x="62" y="210" text-anchor="end" font-family="DejaVu Sans" font-size="8" font-weight="bold" fill="#000000">(opcional)</text>
+<rect id="mask-13" x="39" y="226" width="23" height="10" fill="#ffffff"/>
+<rect id="mask-13-label" x="14" y="238" width="49" height="13" fill="#ffffff"/>
+<text x="15" y="248" font-family="DejaVu Sans" font-size="9" font-weight="bold" fill="#000000">Semilla</text>
+<rect id="mask-14" x="15" y="266" width="48" height="16" fill="#ffffff"/>
+<text x="16" y="278" font-family="DejaVu Sans" font-size="9" font-weight="bold" fill="#000000">Moneda</text>
+<rect id="mask-15" x="41" y="300" width="23" height="10" fill="#ffffff"/>
+<rect id="mask-16" x="6" y="312" width="59" height="16" fill="#ffffff"/>
+<text x="7" y="324" font-family="DejaVu Sans" font-size="8" font-weight="bold" fill="#000000">Clave raíz</text>
+<rect x="0" y="347" width="487" height="74" fill="#ffffff"/>
+<text x="16" y="376" font-family="DejaVu Sans" font-size="20" font-weight="bold" fill="#17243a">Versión editada en español</text>
+<text x="16" y="401" font-family="DejaVu Sans" font-size="14" fill="#334155">Traducción educativa; no es una captura nativa.</text>
+</svg>

@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="852" height="599" viewBox="0 0 852 599" xml:lang="es-419">
+  <title>Figura 14-25: versión editada en español</title>
+  <desc>Traducción educativa de etiquetas visibles mediante superposición a escala nativa. Datos técnicos, curvas, literales y estados originales se conservan. No es una captura nativa en español.</desc>
+  <rect id="mask-title" x="22" y="0" width="405" height="21" fill="#ffffff"/>
+  <text x="23" y="16.28" text-anchor="start" font-family="DejaVu Sans, sans-serif" font-size="17" fill="#111111">Límite de gas promedio de Ethereum</text>
+  <rect id="mask-source" x="23" y="25" width="45" height="13" fill="#ffffff"/>
+  <text x="24" y="35.24" text-anchor="start" font-family="DejaVu Sans, sans-serif" font-size="11" fill="#111111">Fuente:</text>
+  <rect id="mask-help" x="23" y="40" width="355" height="15" fill="#ffffff"/>
+  <text x="24" y="51.24" text-anchor="start" font-family="DejaVu Sans, sans-serif" font-size="11" fill="#111111">Haga clic y arrastre en el gráfico para ampliar</text>
+  <rect id="mask-zoom" x="18" y="71" width="36" height="16" fill="#ffffff"/>
+  <text x="19" y="82.74" text-anchor="start" font-family="DejaVu Sans, sans-serif" font-size="11" fill="#111111">Zoom</text>
+  <rect id="mask-all" x="170" y="71" width="28" height="15" fill="#d1daeb"/>
+  <text x="171" y="81.56" text-anchor="start" font-family="DejaVu Sans, sans-serif" font-size="9" fill="#111111" font-weight="700">Todo</text>
+  <rect id="mask-axis" x="0" y="245" width="15" height="115" fill="#ffffff"/>
+  <text x="7.5" y="305.56" text-anchor="middle" transform="rotate(-90 7.5 302.5)" font-family="DejaVu Sans, sans-serif" font-size="9" fill="#111111">Límite de gas promedio</text>
+  <rect x="0" y="525" width="852" height="74" fill="#f5f5f5"/>
+  <text x="426" y="554" text-anchor="middle" font-family="DejaVu Sans, sans-serif" font-size="20" font-weight="700" fill="#1f2937">Versión editada en español</text>
+  <text x="426" y="581" text-anchor="middle" font-family="DejaVu Sans, sans-serif" font-size="17" fill="#1f2937">Traducción educativa; no es una captura nativa.</text>
+</svg>

@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="708" height="1202" viewBox="0 0 708 1202" xml:lang="es-419">
+  <title>Figura 2-5: versión editada en español, piloto</title>
+  <desc>Superposición de traducción educativa sobre la captura original. No es una captura nativa de MetaMask en español. Ethereum Mainnet continúa seleccionada; no se agregaron controles de Sepolia ausentes en el original.</desc>
+  <g fill="white">
+    <rect id="mask-title" x="178" y="27" width="384" height="56"/>
+    <rect id="mask-search" x="108" y="135" width="210" height="43"/>
+    <rect id="mask-enabled-networks" x="24" y="434" width="310" height="43"/>
+    <rect id="mask-additional-networks" x="24" y="882" width="303" height="43"/>
+    <rect id="mask-add-network" x="211" y="1031" width="410" height="47"/>
+  </g>
+  <rect id="mask-tip" x="170" y="272" width="415" height="90" fill="#ebeff5"/>
+  <g font-family="DejaVu Sans, sans-serif" fill="#000000">
+    <text x="354" y="65" text-anchor="middle" font-size="30" font-weight="700">Seleccionar una red</text>
+    <text x="110" y="169" font-size="31" fill="#4a4a4a">Buscar</text>
+    <text x="174" y="306" font-size="26">Puede arrastrar las redes</text>
+    <text x="174" y="350" font-size="26">para reordenarlas.</text>
+    <text x="28" y="465" font-size="30" fill="#374151">Redes habilitadas</text>
+    <text x="28" y="914" font-size="30" fill="#374151">Redes adicionales</text>
+    <text x="213" y="1065" font-size="23" font-weight="700" fill="#2c23ff">Agregar una red personalizada</text>
+  </g>
+  <rect x="0" y="1128" width="708" height="74" fill="#f5f5f5"/>
+  <g font-family="DejaVu Sans, sans-serif" text-anchor="middle" fill="#1f2937">
+    <text x="354" y="1157" font-size="20" font-weight="700">Versión editada en español · Piloto</text>
+    <text x="354" y="1185" font-size="17">Traducción educativa; no es una captura nativa.</text>
+  </g>
+</svg>

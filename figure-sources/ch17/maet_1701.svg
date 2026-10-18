@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="950" height="230" viewBox="0 0 950 230" lang="es-419">
+<title>Transición de estado de la EVM</title>
+<desc>Estado anterior y bloque entran en la EVM; sale el estado nuevo.</desc>
+<defs>
+<marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="userSpaceOnUse">
+<path d="M0 0 L10 5 L0 10 Z" fill="#000"/>
+</marker>
+</defs>
+<g font-family="DejaVu Sans" font-size="28" fill="#000" stroke-linejoin="round">
+<path d="M5 64 H315" fill="none" stroke="#000" stroke-width="5" marker-end="url(#arrow)"/>
+<path d="M5 170 H315" fill="none" stroke="#000" stroke-width="5" marker-end="url(#arrow)"/>
+<path d="M630 117 H938" fill="none" stroke="#000" stroke-width="5" marker-end="url(#arrow)"/>
+<rect x="318" y="25" width="310" height="185" rx="15" fill="#b4d5e8" stroke="#000" stroke-width="4"/>
+<text x="473.0" y="117.5" text-anchor="middle" dominant-baseline="central" font-size="36" fill="#000">EVM</text>
+<text x="155" y="42" text-anchor="middle" font-size="25" font-style="italic">Estado anterior</text>
+<text x="155" y="148" text-anchor="middle" font-size="27" font-style="italic">Bloque</text>
+<text x="786" y="94" text-anchor="middle" font-size="26" font-style="italic">Estado nuevo</text>
+</g>
+</svg>

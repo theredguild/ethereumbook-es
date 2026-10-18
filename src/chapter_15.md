@@ -605,9 +605,30 @@ En el protocolo de Ethereum, el tiempo se estructura en unidades de 12 segundos 
 
 Los *juegos de temporización* son estrategias en las que los validadores esperan tanto como sea posible antes de proponer un bloque para maximizar sus recompensas de MEV, como se muestra en la Figura 15-40. Esta práctica implica un equilibrio delicado, ya que requiere que los validadores retrasen sus propuestas para capturar más valor y, al mismo tiempo, garanticen que su bloque cuente con el apoyo de una proporción suficiente del comité de atestación para permanecer en la cadena canónica.
 
-![Estrategia de juegos de temporización](images/ch15/maet_1540.png)
+![Suplemento editado en español de la rentabilidad de los juegos de temporización, con curvas roja y verde.](images/ch15/maet_1540-es.png)
 
 Figura 15-40. Estrategia de juegos de temporización
+
+**Nota de la traducción:** Imagen traducida al español mediante inteligencia artificial (IA). Revisión humana pendiente. No es una captura nativa ni una actualización de la aplicación. La captura original en inglés se conserva en el desplegable.
+
+Vista diaria y Vista acumulada conservan sus botones. La leyenda Participantes corresponde a la curva roja; No participantes, a la verde. APY, fechas Feb 11, Feb 25, Mar 10 y Mar 24 de 2024 y valores 3.1 a 3.35 quedan literales. Participantes significa participantes en los juegos de temporización, no todos los validadores.
+
+Texto seleccionable de la versión editada:
+
+- Rentabilidad de los juegos de temporización
+- Vista diaria
+- Vista acumulada
+- Participantes
+- No participantes
+
+<details>
+<summary>Figura 15-40: ver captura original en inglés</summary>
+
+![Estrategia de juegos de temporización](images/ch15/maet_1540.png)
+
+> **Nota de la traducción:** "Timing games profitability" indica la rentabilidad de los juegos de temporización. "Daily View" y "Cumulative View" son las vistas diaria y acumulada. La línea roja, "Gamers", corresponde a quienes participan en esos juegos; la verde, "Non-Gamers", a quienes no participan. APY es el rendimiento porcentual anual. Las fechas y cifras pertenecen a la captura original, no a una medición actual.
+
+</details>
 
 Los juegos de temporización en Ethereum crean un entorno competitivo en el que las ganancias de MEV de un validador pueden traducirse en desventajas para otros. Esta competencia puede perturbar el consenso al aumentar la cantidad de slots perdidos y las posibles reorganizaciones de bloques. Además, motiva a los atestadores a posponer sus validaciones, lo que agrega capas de complejidad al proceso.
 
@@ -615,9 +636,32 @@ Los juegos de temporización en Ethereum crean un entorno competitivo en el que 
 
 ¿Qué es un juego de temporización? Es como esperar el momento perfecto para actuar, con el objetivo de sacarle el máximo provecho. Esto es lo que intentan hacer algunas de las personas que mantienen la red en funcionamiento. Esperan el momento adecuado para actuar y obtener la mayor cantidad de recompensas. Pero este juego de espera puede ser arriesgado. Si su conexión a internet es lenta o no tienen mucha experiencia, pueden perder la oportunidad de cumplir su parte. Y perder demasiadas oportunidades podría hacer que la red sea menos confiable.
 
-![Visualización del riesgo de los juegos de temporización](images/ch15/maet_1541.png)
+![Suplemento editado en español del histograma de tiempos de ofertas ganadoras de bloques.](images/ch15/maet_1541-es.png)
 
 Figura 15-41. Visualización del riesgo de los juegos de temporización
+
+**Nota de la traducción:** Imagen traducida al español mediante inteligencia artificial (IA). Revisión humana pendiente. No es una captura nativa ni una actualización de la aplicación. La captura original en inglés se conserva en el desplegable.
+
+El histograma considera la primera recepción por cualquier relay de los bloques 18,320,000 a 18,720,000, en intervalos de `25ms`. La leyenda incluye todos los proponentes. El eje vertical cuenta slots y el horizontal muestra el tiempo del slot en `[ms]`. Se conservan las barras y todos los números.
+
+Texto seleccionable de la versión editada:
+
+- Distribución de tiempos de ofertas ganadoras de bloques
+- Primera recepción por cualquier relay. Bloques
+- a
+- por intervalo.
+- Todos los proponentes
+- Cantidad de slots
+- Tiempo del slot
+
+<details>
+<summary>Figura 15-41: ver captura original en inglés</summary>
+
+![Visualización del riesgo de los juegos de temporización](images/ch15/maet_1541.png)
+
+> **Nota de la traducción:** la gráfica muestra la distribución de los tiempos de las ofertas ganadoras de bloques, tomando la primera recepción por cualquier relay. Incluye los bloques 18,320,000 a 18,720,000 en intervalos de 25 ms. "All Proposers" significa todos los proponentes; "Count of Slots", cantidad de slots; "Slot Time [ms]", tiempo del slot en milisegundos. Se conservan los datos de la imagen original.
+
+</details>
 
 En este momento, esto no es un gran problema. La mayoría de las entidades que funcionan como validadores no participan demasiado en estos juegos de temporización o no participan en absoluto, como se muestra en la Figura 15-41.
 
@@ -653,15 +697,68 @@ Cuanto más distribuyamos nuestras elecciones entre distintos clientes, más seg
 
 Cuando escribimos este capítulo por primera vez, el porcentaje de uso de Geth era del 63%, lo que representaba un problema, como explicamos antes. Actualmente la situación es más saludable, pero aún tendrá que mejorar en el futuro; en este momento, el 41% de los clientes de ejecución utiliza Geth y el 38% utiliza Nethermind, como se muestra en la Figura 15-44.
 
-![Distribución actual de clientes de ejecución](images/ch15/maet_1544.png)
+![Suplemento editado en español de la distribución histórica de clientes de ejecución.](images/ch15/maet_1544-es.png)
 
 Figura 15-44. Distribución actual de clientes de ejecución
 
+**Nota de la traducción:** Imagen traducida al español mediante inteligencia artificial (IA). Revisión humana pendiente. No es una captura nativa ni una actualización de la aplicación. La captura original en inglés se conserva en el desplegable.
+
+El aviso conserva su estado informativo y anuncia una mejora de diversidad. Geth registra 41%, Nethermind 38%, Besu 16%, Erigon 3%, Reth 2% y Otros 0%. Supermajority.info sigue seleccionado frente a Ethernodes. La captura advierte que los datos quizá no sean 100% precisos, con 73.9% de cobertura autodeclarada y el supuesto de que el resto usa mayormente Geth.
+
+Texto seleccionable de la versión editada:
+
+- Clientes de ejecución
+- ¡La diversidad de clientes ha mejorado!
+- Otros
+- Fuente de datos (leer más):
+- Datos proporcionados por
+- · actualización manual.
+- Con
+- de cobertura de red autodeclarada;
+- se supone que el resto usa mayormente
+- Datos quizá no sean
+- precisos.
+- Leer más
+
+<details>
+<summary>Figura 15-44: ver captura original en inglés</summary>
+
+![Distribución actual de clientes de ejecución](images/ch15/maet_1544.png)
+
+> **Nota de la traducción:** "Execution Clients" significa clientes de ejecución y "Other", otros. "Client diversity has improved!" anuncia una mejora en la diversidad de clientes en el momento de la captura. La fuente seleccionada es Supermajority.info, con actualización manual; los datos pueden no ser 100% precisos. La estimación se basa en una cobertura autodeclarada de 73.9% de la red y supone que el resto utiliza mayormente Geth. "Data source" permite elegir la fuente y "Read more" enlaza más información. Los porcentajes y controles corresponden a la interfaz del original, no a datos actuales.
+
+</details>
+
 Este problema no solo afecta a los clientes de ejecución, sino también a los clientes de consenso, aunque el problema del lado del consenso se abordó rápidamente y la situación es ahora relativamente saludable y estable, como se muestra en la Figura 15-45.
+
+![Suplemento editado en español de la distribución histórica de clientes de consenso.](images/ch15/maet_1545-es.png)
+
+Figura 15-45. Distribución actual de clientes de consenso
+
+**Nota de la traducción:** Imagen traducida al español mediante inteligencia artificial (IA). Revisión humana pendiente. No es una captura nativa ni una actualización de la aplicación. La captura original en inglés se conserva en el desplegable.
+
+El aviso informativo anuncia una mejora de diversidad. Lighthouse registra 42.71%, Prysm 30.91%, Teku 13.86%, Nimbus 8.74%, Lodestar 2.67%, Grandine 1.04% y Otros 0.07%. Miga Labs sigue seleccionado frente a Rated.Network. La fuente se actualiza diariamente y advierte que los datos quizá no sean 100% precisos.
+
+Texto seleccionable de la versión editada:
+
+- Clientes de consenso
+- ¡La diversidad de clientes ha mejorado!
+- Otros
+- Fuente de datos (leer más):
+- Datos proporcionados por
+- · actualización diaria.
+- Datos quizá no sean
+- precisos.
+- Leer más
+
+<details>
+<summary>Figura 15-45: ver captura original en inglés</summary>
 
 ![Distribución actual de clientes de consenso](images/ch15/maet_1545.png)
 
-Figura 15-45. Distribución actual de clientes de consenso
+> **Nota de la traducción:** "Consensus Clients" significa clientes de consenso y "Other", otros. "Client diversity has improved!" anuncia una mejora en la diversidad de clientes en el momento de la captura. La fuente seleccionada es Miga Labs y la interfaz indica actualización diaria, con la advertencia de que los datos pueden no ser 100% precisos. "Data source" permite elegir la fuente y "Read more" enlaza más información. Los porcentajes y controles corresponden a la interfaz del original, no a datos actuales.
+
+</details>
 
 ## Conclusión
 

@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="500" viewBox="0 0 1000 500" role="img" aria-labelledby="title desc" xml:lang="es-419">
+  <title id="title">Arquitectura general de una aplicación tradicional</title>
+  <desc id="desc">Un contenedor azul incluye, de izquierda a derecha, lógica, base de datos y un único frontend. No hay flechas entre los componentes.</desc>
+  <defs>
+    <g id="logic" stroke="#17212b" stroke-width="5" fill="#087db4">
+      <path d="M-18-62H18L21-48L35-41L48-47L65-18L53-8V8L65 18L48 47L35 41L21 48L18 62H-18L-21 48L-35 41L-48 47L-65 18L-53 8V-8L-65-18L-48-47L-35-41L-21-48Z"/>
+      <circle r="34" fill="white"/>
+    </g>
+    <g id="database" stroke="#17212b" stroke-width="5">
+      <path d="M-65-45V45C-65 67 65 67 65 45V-45Z" fill="#087db4"/>
+      <path d="M-65-22.5C-65-.5 65-.5 65-22.5M-65 0C-65 22 65 22 65 0M-65 22.5C-65 44.5 65 44.5 65 22.5" fill="none"/>
+      <ellipse cy="-45" rx="65" ry="18" fill="#58a7d0"/>
+    </g>
+  </defs>
+  <g stroke="#17212b" stroke-width="5">
+    <rect x="4" y="4" width="992" height="492" rx="22" fill="#b7d6e8"/>
+    <rect x="45" y="135" width="285" height="310" rx="20" fill="white"/>
+    <rect x="358" y="135" width="285" height="310" rx="20" fill="white"/>
+    <rect x="671" y="135" width="285" height="310" rx="20" fill="white"/>
+  </g>
+  <g font-family="DejaVu Sans, sans-serif" fill="#17212b" text-anchor="middle">
+    <text x="500" y="85" font-size="44">Aplicación tradicional</text>
+    <use href="#logic" transform="translate(188 260)"/>
+    <use href="#database" transform="translate(500 260)"/>
+    <g font-size="34">
+      <text x="188" y="402">Lógica</text>
+      <text x="500" y="386">Base de</text><text x="500" y="426">datos</text>
+      <text x="813" y="277">Único</text><text x="813" y="320">frontend</text>
+    </g>
+  </g>
+</svg>

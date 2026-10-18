@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1999" height="926" viewBox="0 0 1999 926" role="img" aria-labelledby="title desc">
+<title id="title">Figura 12-12. Versión editada en español</title>
+<desc id="desc">Superposición editorial en español sobre la captura histórica intacta, a escala nativa. No es una captura nativa.</desc>
+<rect id="mask-1" x="16" y="15" width="525" height="51" fill="#f7f7f7"/>
+<text x="17" y="53.45" font-family="DejaVu Sans" font-size="37" font-weight="normal" fill="#111318">Despliegue de producción</text>
+<rect id="mask-2" x="1230" y="24" width="143" height="34" fill="#ffffff"/>
+<text x="1231" y="44.85" font-family="DejaVu Sans" font-size="11" font-weight="normal" fill="#111318">Registros de compilación</text>
+<rect id="mask-3" x="1440" y="24" width="181" height="34" fill="#ffffff"/>
+<text x="1441" y="46.25" font-family="DejaVu Sans" font-size="15" font-weight="normal" fill="#111318">Registros de ejecución</text>
+<rect id="mask-4" x="1740" y="24" width="221" height="34" fill="#ffffff"/>
+<text x="1741" y="48.35" font-family="DejaVu Sans" font-size="21" font-weight="normal" fill="#111318">Reversión inmediata</text>
+<rect id="mask-5" x="983" y="169" width="169" height="35" fill="#ffffff"/>
+<text x="984" y="195.95" font-family="DejaVu Sans" font-size="27" font-weight="normal" fill="#111318">Despliegue</text>
+<rect id="mask-6" x="983" y="290" width="137" height="35" fill="#ffffff"/>
+<text x="984" y="316.95" font-family="DejaVu Sans" font-size="27" font-weight="normal" fill="#111318">Dominios</text>
+<rect id="mask-7" x="983" y="412" width="107" height="34" fill="#ffffff"/>
+<text x="984" y="438.45" font-family="DejaVu Sans" font-size="27" font-weight="normal" fill="#111318">Estado</text>
+<rect id="mask-8" x="1147" y="412" width="120" height="34" fill="#ffffff"/>
+<text x="1148" y="438.45" font-family="DejaVu Sans" font-size="27" font-weight="normal" fill="#111318">Creado</text>
+<rect id="mask-9" x="1016" y="466" width="84" height="32" fill="#ffffff"/>
+<text x="1017" y="491.45" font-family="DejaVu Sans" font-size="27" font-weight="normal" fill="#111318">Listo</text>
+<rect id="mask-10" x="1278" y="466" width="35" height="32" fill="#ffffff"/>
+<text x="1279" y="488.30" font-family="DejaVu Sans" font-size="18" font-weight="normal" fill="#111318">por</text>
+<rect id="mask-11" x="983" y="546" width="103" height="34" fill="#ffffff"/>
+<text x="984" y="572.45" font-family="DejaVu Sans" font-size="27" font-weight="normal" fill="#111318">Origen</text>
+<rect id="mask-12" x="1023" y="598" width="145" height="34" fill="#ffffff"/>
+<text x="1024" y="624.45" font-family="DejaVu Sans" font-size="27" font-weight="normal" fill="#111318">Ver código</text>
+<rect id="mask-13" x="95" y="775" width="355" height="36" fill="#ffffff"/>
+<text x="96" y="801.40" font-family="DejaVu Sans" font-size="24" font-weight="normal" fill="#111318">Configuración del despliegue</text>
+<rect id="mask-14" x="1028" y="775" width="300" height="36" fill="#ffffff"/>
+<text x="1029" y="801.05" font-family="DejaVu Sans" font-size="23" font-weight="normal" fill="#111318">Protección del despliegue</text>
+<rect id="mask-15" x="1395" y="775" width="219" height="36" fill="#ffffff"/>
+<text x="1396" y="799.30" font-family="DejaVu Sans" font-size="18" font-weight="normal" fill="#111318">Protección de desfase</text>
+<rect id="mask-16" x="1674" y="775" width="280" height="36" fill="#ffffff"/>
+<text x="1675" y="801.05" font-family="DejaVu Sans" font-size="23" font-weight="normal" fill="#111318">Evitar arranques en frío</text>
+<rect id="mask-17" x="141" y="182" width="39" height="18" fill="#ffffff"/>
+<text x="142" y="188.5" font-family="DejaVu Sans" font-size="7" font-weight="normal" fill="#111318">pila de</text>
+<text x="142" y="197" font-family="DejaVu Sans" font-size="7" font-weight="normal" fill="#111318">desarrollo</text>
+<rect id="mask-18" x="205" y="173" width="31" height="14" fill="#c4d4ed"/>
+<text x="206" y="183.15" font-family="DejaVu Sans" font-size="9" font-weight="normal" fill="#111318">Inicio</text>
+<rect id="mask-19" x="269" y="174" width="78" height="13" fill="#fafcf8"/>
+<text x="270" y="183.30" font-family="DejaVu Sans" font-size="8" font-weight="normal" fill="#111318">Depurar contratos</text>
+<rect id="mask-20" x="835" y="174" width="71" height="13" fill="#7698ed"/>
+<text x="836" y="182.95" font-family="DejaVu Sans" font-size="7" font-weight="normal" fill="#111318">Conectar billetera</text>
+<rect id="mask-21" x="448" y="232" width="90" height="17" fill="#f2f0f8"/>
+<text x="449" y="244.70" font-family="DejaVu Sans" font-size="12" font-weight="normal" fill="#111318">Bienvenido a</text>
+<rect id="mask-22" x="383" y="296" width="106" height="15" fill="#eff5fd"/>
+<text x="384" y="306.65" font-family="DejaVu Sans" font-size="9" font-weight="normal" fill="#111318">Dirección conectada:</text>
+<rect id="mask-23" x="333" y="330" width="124" height="15" fill="#eff5fd"/>
+<text x="334" y="341.00" font-family="DejaVu Sans" font-size="10" font-weight="normal" fill="#111318">Para comenzar, edite</text>
+<rect id="mask-24" x="271" y="361" width="137" height="15" fill="#eff5fd"/>
+<text x="272" y="371.65" font-family="DejaVu Sans" font-size="9" font-weight="normal" fill="#111318">Edite su contrato inteligente</text>
+<rect id="mask-25" x="519" y="361" width="12" height="15" fill="#eaf3fd"/>
+<text x="520" y="371.30" font-family="DejaVu Sans" font-size="8" font-weight="normal" fill="#111318">en</text>
+<rect id="mask-26" x="286" y="528" width="161" height="32" fill="#fffffa"/>
+<text x="287" y="541.84" font-family="DejaVu Sans" font-size="9" font-weight="normal" fill="#111318">Experimente con su contrato</text>
+<text x="287" y="552.46" font-family="DejaVu Sans" font-size="9" font-weight="normal" fill="#111318">en Depurar contratos.</text>
+<rect id="mask-27" x="541" y="528" width="178" height="32" fill="#fffcfa"/>
+<text x="542" y="541.84" font-family="DejaVu Sans" font-size="9" font-weight="normal" fill="#111318">Explore sus transacciones locales</text>
+<text x="542" y="552.46" font-family="DejaVu Sans" font-size="9" font-weight="normal" fill="#111318">en Explorador de bloques.</text>
+<rect id="mask-28" x="86" y="679" width="65" height="13" fill="#6d98e8"/>
+<text x="87" y="687.95" font-family="DejaVu Sans" font-size="7" font-weight="normal" fill="#111318">Explorar bloques</text>
+<rect id="mask-29" x="378" y="674" width="39" height="20" fill="#f0f3fd"/>
+<text x="379" y="682" font-family="DejaVu Sans" font-size="8" font-weight="normal" fill="#111318">Haga un</text>
+<text x="379" y="691" font-family="DejaVu Sans" font-size="8" font-weight="normal" fill="#111318">fork</text>
+<rect id="mask-30" x="428" y="675" width="47" height="14" fill="#fcf8f5"/>
+<text x="429" y="684.45" font-family="DejaVu Sans" font-size="7" font-weight="normal" fill="#111318">Hecho con</text>
+<rect id="mask-31" x="493" y="675" width="13" height="14" fill="#eff5fd"/>
+<text x="494" y="684.45" font-family="DejaVu Sans" font-size="7" font-weight="normal" fill="#111318">en</text>
+<rect id="mask-32" x="570" y="675" width="38" height="14" fill="#f3f2f5"/>
+<text x="571" y="684.80" font-family="DejaVu Sans" font-size="8" font-weight="normal" fill="#111318">Ayuda</text>
+<rect x="0" y="852" width="1999" height="74" fill="#eef2f7"/>
+<text x="18" y="881" font-family="DejaVu Sans" font-size="22" font-weight="bold" fill="#172033">Versión editada en español</text>
+<text x="18" y="907" font-family="DejaVu Sans" font-size="16" fill="#172033">Traducción educativa; no es una captura nativa.</text>
+</svg>

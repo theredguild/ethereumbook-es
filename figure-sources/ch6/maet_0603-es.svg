@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1496" height="886" viewBox="0 0 1496 886">
+<title>Figura 6-3. Versión editada en español</title>
+<desc>Superposición editorial transparente sobre la captura histórica original, sin cambiar su escala. Traducción educativa; no es una captura nativa.</desc>
+<rect id="mask-1" x="15" y="22" width="803" height="73" fill="#111111"/>
+<text x="16" y="74" font-family="DejaVu Sans" font-size="57" font-weight="normal" fill="#dfdfdf">Faucet de Ethereum Sepolia</text>
+<rect id="mask-2" x="15" y="121" width="966" height="37" fill="#111111"/>
+<text x="16" y="148.5" font-family="DejaVu Sans" font-size="31" font-weight="normal" fill="#dfdfdf">Reciba Sepolia ETH gratis en su billetera. Ofrecido por</text>
+<rect id="mask-3" x="47" y="199" width="179" height="26" fill="#111111"/>
+<rect x="47" y="210" width="179" height="15" fill="#242628"/>
+<text x="48" y="220" font-family="DejaVu Sans" font-size="21" font-weight="normal" fill="#bfc0c1">Seleccionar red*</text>
+<rect id="mask-4" x="54" y="335" width="125" height="26" fill="#111111"/>
+<text x="55" y="354" font-family="DejaVu Sans" font-size="21" font-weight="normal" fill="#dfdfdf">*obligatorio</text>
+<rect id="mask-5" x="47" y="435" width="550" height="37" fill="#242628"/>
+<text x="48" y="465" font-family="DejaVu Sans" font-size="29.25" font-weight="normal" fill="#bfc0c1">Dirección de billetera o nombre ENS*</text>
+<rect id="mask-6" x="47" y="517" width="1050" height="29" fill="#111111"/>
+<text x="48" y="538.5" font-family="DejaVu Sans" font-size="24" font-weight="normal" fill="#dfdfdf">Ingrese la dirección de cuenta o el nombre ENS donde desea recibir tokens</text>
+<rect id="mask-7" x="63" y="602" width="105" height="33" fill="#abc3f6"/>
+<text x="64" y="628.5" font-family="DejaVu Sans" font-size="26" font-weight="bold" fill="#18346a">Recibir</text>
+<rect id="mask-8" x="15" y="710" width="1440" height="75" fill="#111111"/>
+<text x="16" y="740.85" font-family="DejaVu Sans" font-size="28" font-weight="normal" fill="#bfc0c1">Nota: Tratamos de forma segura la dirección de billetera proporcionada al procesar su</text>
+<text x="16" y="770.15" font-family="DejaVu Sans" font-size="28" font-weight="normal" fill="#bfc0c1">solicitud. Estos datos no se usan en ningún otro servicio de Google.</text>
+<rect x="0" y="812" width="1496" height="74" fill="#ffffff"/>
+<text x="16" y="841" font-family="DejaVu Sans" font-size="20" font-weight="bold" fill="#17243a">Versión editada en español</text>
+<text x="16" y="866" font-family="DejaVu Sans" font-size="14" fill="#334155">Traducción educativa; no es una captura nativa.</text>
+</svg>

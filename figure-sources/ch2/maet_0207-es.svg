@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="790" height="1254" viewBox="0 0 790 1254">
+<title>Figura 2-7, versión editada en español</title>
+<desc>Captura histórica conservada con traducción gráfica educativa superpuesta; no es una captura nativa.</desc>
+<g font-family="DejaVu Sans">
+<rect id="mask-0207-1" x="110" y="202" width="133" height="36" fill="#ffffff"/>
+<text x="176.5" y="231.280" text-anchor="middle" font-size="28.20" fill="#000000">Recibir</text>
+<rect id="mask-0207-2" x="96" y="340" width="98" height="32" fill="#ffffff"/>
+<text x="145.0" y="365.920" text-anchor="middle" font-size="24.80" fill="#000000">Estado</text>
+<rect id="mask-0207-3" x="96" y="396" width="137" height="32" fill="#ffffff"/>
+<text x="164.5" y="421.200" text-anchor="middle" font-size="23.00" fill="#18521b">Confirmada</text>
+<rect id="mask-0207-4" x="439" y="339" width="255" height="33" fill="#ffffff"/>
+<text x="566.5" y="362.300" text-anchor="middle" font-size="17.00" fill="#2727ff">Ver en explorador de bloques</text>
+<rect id="mask-0207-5" x="473" y="395" width="221" height="33" fill="#ffffff"/>
+<text x="583.5" y="418.540" text-anchor="middle" font-size="17.60" fill="#2727ff">Copiar ID de transacción</text>
+<rect id="mask-0207-6" x="96" y="461" width="77" height="33" fill="#ffffff"/>
+<text x="134.5" y="487.820" text-anchor="middle" font-size="25.80" fill="#000000">De</text>
+<rect id="mask-0207-7" x="657" y="461" width="36" height="33" fill="#ffffff"/>
+<text x="675.0" y="483.100" text-anchor="middle" font-size="14.00" fill="#000000">Para</text>
+<rect id="mask-0207-8" x="96" y="628" width="160" height="34" fill="#ffffff"/>
+<text x="176.0" y="654.200" text-anchor="middle" font-size="23.00" fill="#000000">Transacción</text>
+<rect id="mask-0207-9" x="96" y="753" width="95" height="31" fill="#ffffff"/>
+<text x="143.5" y="776.660" text-anchor="middle" font-size="20.40" fill="#3b4051">Cantidad</text>
+<rect id="mask-0207-10" x="96" y="818" width="180" height="33" fill="#ffffff"/>
+<text x="186.0" y="840.180" text-anchor="middle" font-size="14.20" fill="#3b4051">Límite de gas (unidades)</text>
+<rect id="mask-0207-11" x="96" y="884" width="115" height="32" fill="#ffffff"/>
+<text x="153.5" y="906.400" text-anchor="middle" font-size="16.00" fill="#3b4051">Precio del gas</text>
+<rect id="mask-0207-12" x="119" y="1063" width="137" height="38" fill="#696969"/>
+<text x="187.5" y="1094.000" text-anchor="middle" font-size="30.00" fill="#080808">Recibir</text>
+<rect id="mask-0207-13" x="119" y="1112" width="167" height="40" fill="#6d6d6d"/>
+<text x="202.5" y="1143.200" text-anchor="middle" font-size="28.00" fill="#153f18">Confirmada</text>
+<rect x="0" y="1180" width="790" height="74" fill="#f3f5f7"/>
+<text x="20" y="1209" font-size="22" fill="#18202b">Versión editada en español</text>
+<text x="20" y="1235" font-size="16" fill="#374151">Traducción educativa; no es una captura nativa.</text>
+</g></svg>

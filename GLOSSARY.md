@@ -270,3 +270,23 @@ Propuestas surgidas del cotejo de los capítulos. No sustituyen una revisión hu
 | jumpdest analysis | análisis de jumpdest | Mantiene relación con JUMPDEST y mapas de destinos. |
 | searcher | buscador | Actor especializado en construcción de bloques. |
 | stack too deep | pila demasiado profunda | Encabezado traducido; texto literal del error preservado. |
+
+## Etiquetas de las figuras
+
+Las etiquetas editoriales de los diagramas siguen las convenciones anteriores. Las etiquetas literales de interfaces, API, opcodes y ejemplos no se traducen dentro de capturas auténticas; las notas separadas explican su significado. Estas equivalencias adicionales siguen pendientes de revisión humana.
+
+Las versiones editadas de capturas traducen etiquetas de interfaz con identificación expresa. No sustituyen los originales ni cambian nombres, cifras, datos o estados. El catálogo oficial `es_419` de MetaMask v13.52.0 fue una referencia del piloto; las nuevas traducciones editoriales se cotejan con cada captura. Un nombre de conector, método o función se conserva aunque coincida con una palabra traducible en otro contexto. Las abreviaturas siguientes se limitan a los rótulos de sus figuras y se desarrollan en el texto seleccionable.
+
+| Inglés | Forma utilizada | Criterio |
+| --- | --- | --- |
+| off-chain daemon | proceso en segundo plano fuera de la cadena | Rol de las figuras de oráculos; no modifica un nombre de servicio ejecutable. |
+| off-chain fetcher of data | recolector de datos fuera de la cadena | Rótulo descriptivo del componente de obtención de datos. |
+| nonce manager contract | contrato administrador de nonces | Conservar nonce y los identificadores literales de la implementación. |
+| stem tree / suffix tree | árbol de tallos / árbol de sufijos | Derivados de tallo y sufijo; la expresión literal `stem` dentro de una fórmula se conserva. |
+| Secret Recovery Phrase | frase secreta de recuperación | Etiqueta del piloto de MetaMask; no traducir las palabras de una frase de recuperación. |
+| password strength | seguridad de la contraseña | Etiqueta del indicador del piloto; Strong se muestra como Fuerte. No se cambia el estado del indicador. |
+| enabled networks | redes habilitadas | Se conservan los nombres propios y la selección de redes de la captura. |
+| Burnt | Quema | Rótulo de la comisión quemada en las capturas del capítulo 6; no cambia importes ni unidades. |
+| IN, indicador de dirección | E, entrada | Abreviatura gráfica para conservar el tamaño del indicador; no se aplica a identificadores de código. |
+| Share / Mint / Run | Comp. / Acuñ. / Ejec. | Solo en los controles de la figura 6-13: Compartir, Acuñar y Ejecutar. |
+| contract, rótulo de consulta | contr. | Abreviatura de contrato en la figura 6-13; no sustituye identificadores ni la forma completa en el texto. |

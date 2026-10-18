@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="942" height="902" viewBox="0 0 942 902">
+<title>Figura 2-15. Versión editada en español</title>
+<desc>Superposición editorial sobre la captura histórica original, sin redimensionar sus datos. Traducción educativa; no es una captura nativa.</desc>
+<rect id="mask-1" x="206" y="22" width="359" height="38" fill="#f3f7fd"/>
+<text x="207" y="50.00" font-family="DejaVu Sans" font-size="24" font-weight="400" fill="#171b26">COMPILADOR DE SOLIDITY</text>
+<rect id="mask-2" x="230" y="92" width="145" height="28" fill="#f3f7fd"/>
+<text x="231" y="113.00" font-family="DejaVu Sans" font-size="19" font-weight="400" fill="#4e5665">COMPILADOR</text>
+<rect id="mask-3" x="543" y="252" width="327" height="38" fill="#f3f7fd"/>
+<text x="544" y="276.00" font-family="DejaVu Sans" font-size="19" font-weight="400" fill="#4e5665">Incluir compilaciones nocturnas</text>
+<rect id="mask-4" x="290" y="329" width="203" height="35" fill="#f3f7fd"/>
+<text x="291" y="351.50" font-family="DejaVu Sans" font-size="16" font-weight="400" fill="#4e5665">Compilación automática</text>
+<rect id="mask-5" x="290" y="394" width="223" height="35" fill="#f3f7fd"/>
+<text x="291" y="419.00" font-family="DejaVu Sans" font-size="20" font-weight="400" fill="#4e5665">Ocultar advertencias</text>
+<rect id="mask-6" x="230" y="467" width="465" height="42" fill="#f3f7fd"/>
+<text x="231" y="497.00" font-family="DejaVu Sans" font-size="31" font-weight="400" fill="#4e5665">Configuraciones avanzadas</text>
+<rect id="mask-7" x="420" y="598" width="140" height="39" fill="#124978"/>
+<text x="421" y="625.00" font-family="DejaVu Sans" font-size="28" font-weight="400" fill="#ffffff">Compilar</text>
+<rect id="mask-8" x="286" y="731" width="389" height="42" fill="#5f6c78"/>
+<text x="287" y="760.00" font-family="DejaVu Sans" font-size="29" font-weight="400" fill="#ffffff">Compilar y ejecutar script</text>
+<rect x="0" y="828" width="942" height="74" fill="#f3f5f7"/>
+<text x="16" y="857" font-family="DejaVu Sans" font-size="20" font-weight="700" fill="#111827">Versión editada en español</text>
+<text x="16" y="882" font-family="DejaVu Sans" font-size="14" fill="#374151">Traducción educativa; no es una captura nativa.</text>
+</svg>

@@ -58,9 +58,30 @@ Los lanzamientos de NFT se convirtieron en guerras de gas, con personas que paga
 
 La capa 1 de Ethereum no fue diseñada para manejar este nivel de demanda de manera eficiente. Sin embargo, la introducción de EIP-1559 en 2021 cambió el funcionamiento de las comisiones al introducir tamaños de bloque variables y un nuevo mecanismo de precios del gas, que redujo los picos de las comisiones de gas durante períodos de alta actividad en la red. La creciente popularidad de las soluciones de L2 ha permitido que Ethereum descargue una parte importante de su carga computacional, lo que reduce aún más las comisiones de gas. Más recientemente, se implementó EIP-4844 (proto-danksharding), que redujo considerablemente las comisiones, en especial para los rollups de L2, e hizo que las transacciones de Ethereum fueran más asequibles para los usuarios. A pesar de estas mejoras, los costos de transacción de Ethereum siguen siendo más altos que los de la mayoría de las otras blockchains (véase la figura 16-1).
 
-![Comparación de los costos de gas entre blockchains](images/ch16/maet_1601.png)
+![Suplemento editado en español de una serie temporal morada, con selección de período y control para ampliar.](images/ch16/maet_1601-es.png)
 
 Figura 16-1. Comparación de los costos de gas entre blockchains
+
+**Nota de la traducción:** Imagen traducida al español mediante inteligencia artificial (IA). Revisión humana pendiente. No es una captura nativa ni una actualización de la aplicación. La captura original en inglés se conserva en el desplegable.
+
+La captura contiene una sola serie sin nombre visible. `5Y` continúa seleccionado en azul; `10Y` y Máx. conservan su tono gris. Este año traduce el control YTD y Seleccione área para ampliar explica el control de ampliación. Ejes 2021 a 2025, 400.00, 200.00 y valor 1.472 permanecen literales. No se infiere una comparación de blockchains que la imagen no muestra.
+
+Texto seleccionable de la versión editada:
+
+- Seleccione área para ampliar
+- Este año
+- Máx.
+
+- La leyenda menciona una comparación entre blockchains, pero la captura muestra una única serie histórica sin identificar.
+
+<details>
+<summary>Figura 16-1: ver captura original en inglés</summary>
+
+![Comparación de los costos de gas entre blockchains](images/ch16/maet_1601.png)
+
+> **Nota de la traducción:** La captura conserva los controles originales. "Select area to zoom" significa seleccionar un área para ampliar; "5Y" indica una ventana de cinco años y "YTD", el período transcurrido del año.
+
+</details>
 
 ### Crecimiento del estado y problemas de almacenamiento persistente
 
@@ -76,9 +97,31 @@ Los desarrolladores de Ethereum han explorado soluciones para frenar el crecimie
 
 La diversidad de clientes también ayuda. Aunque Geth ha sido históricamente el cliente dominante de Ethereum (véase la figura 16-2), alternativas como Nethermind, Erigon y Besu introducen optimizaciones que mejoran la eficiencia del almacenamiento. Erigon, por ejemplo, se especializa en manejar los datos históricos de manera más eficiente, lo que reduce la carga de los nodos completos.
 
-![Distribución de los clientes de Ethereum](images/ch16/maet_1602.png)
+![Suplemento editado en español del gráfico de tamaño de datos de la cadena en GB, con anotaciones históricas.](images/ch16/maet_1602-es.png)
 
 Figura 16-2. Distribución de los clientes de Ethereum
+
+**Nota de la traducción:** Imagen traducida al español mediante inteligencia artificial (IA). Revisión humana pendiente. No es una captura nativa ni una actualización de la aplicación. La captura original en inglés se conserva en el desplegable.
+
+La serie azul conserva sus valores y quiebres. Las anotaciones Jul 12, 2019, Jul 14, 2019 y Jan 9, 2024 indican versiones de Geth actualizadas; Jun 30, 2022 señala Open Ethereum obsoleto. La anotación `(state scheme = path)` es técnica y permanece literal. Se conservan fechas, enlaces, marca Etherscan y escala 0 a 1750.
+
+Texto seleccionable de la versión editada:
+
+- Tamaño de cadena en
+- Línea de tiempo
+- versión actualizada
+- obsoleto
+
+- La leyenda describe una distribución de clientes, pero la imagen grafica el tamaño de los datos de la cadena a lo largo del tiempo.
+
+<details>
+<summary>Figura 16-2: ver captura original en inglés</summary>
+
+![Distribución de los clientes de Ethereum](images/ch16/maet_1602.png)
+
+> **Nota de la traducción:** "Chain data size in GB" indica el tamaño de los datos de la cadena en GB y "Timeline", la línea de tiempo. Los recuadros señalan actualizaciones de Geth y la obsolescencia de Open Ethereum; "state scheme = path" conserva el nombre literal del esquema.
+
+</details>
 
 ### Propagación de bloques y MEV
 
@@ -110,9 +153,27 @@ Los bloques de Ethereum no están limitados por la cantidad de transacciones que
 
 Pero no es tan sencillo como subir sin más el límite de gas. Los bloques más grandes tardan más en propagarse por la red, lo que hace a Ethereum más susceptible a divisiones de la cadena. También aumentan los requisitos de hardware de los nodos completos, lo que nos acerca a la centralización. Por eso, los aumentos del límite de gas se realizan de forma gradual y cuidadosa, equilibrando las mejoras de capacidad de procesamiento con la salud de la red (véase la figura 16-3).
 
-![Cambios históricos del límite de gas](images/ch16/maet_1603.png)
+![Suplemento editado en español del límite de gas histórico, con área azul, años y épocas.](images/ch16/maet_1603-es.png)
 
 Figura 16-3. Cambios históricos del límite de gas
+
+**Nota de la traducción:** Imagen traducida al español mediante inteligencia artificial (IA). Revisión humana pendiente. No es una captura nativa ni una actualización de la aplicación. La captura original en inglés se conserva en el desplegable.
+
+El eje de límite de gas conserva `[gas]` y las marcas 0, 10M, 20M y 30M. Bajo los años 2016 a 2025, Época traduce cada aparición de Epoch sin mover sus valores: cinco ceros, 6853, 88978, 171103, 253228 y 335578. Los escalones y el área azul son los originales.
+
+Texto seleccionable de la versión editada:
+
+- Límite de gas
+- Época
+
+<details>
+<summary>Figura 16-3: ver captura original en inglés</summary>
+
+![Cambios históricos del límite de gas](images/ch16/maet_1603.png)
+
+> **Nota de la traducción:** "Gas Limit [gas]" significa límite de gas, expresado en gas; "Epoch" significa época. "M" indica millones.
+
+</details>
 
 #### El futuro de la ejecución paralela en Ethereum
 

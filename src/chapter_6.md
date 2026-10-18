@@ -90,9 +90,31 @@ Para mantener los bloques en un promedio de 15 millones de gas utilizado, la com
 
 El límite de gas del bloque (casi) siempre se ha incrementado en bloques específicos a valores fijos y redondeados: 10 millones, 12.5 millones, 15 millones y 30 millones, como se puede ver en la Figura 6-1. De hecho, aunque los validadores (y los mineros con el antiguo protocolo de consenso PoW) pueden ajustar ligeramente el objetivo de gas en cada bloque, lo que se traduce directamente en el límite de gas, el límite de gas del bloque es un valor crucial, y todos suelen seguir las recomendaciones de los desarrolladores principales.
 
-![Evolución del límite de gas del bloque a lo largo del tiempo](images/ch6/maet_0601.png)
+![Suplemento editado en español del gráfico histórico de Etherscan sobre el límite promedio de gas de Ethereum.](images/ch6/maet_0601-es.png)
 
 **Figura 6-1.** Evolución del límite de gas del bloque
+
+**Nota de la traducción:** Imagen traducida al español mediante inteligencia artificial (IA). Revisión humana pendiente. No es una captura nativa ni una actualización de la aplicación. La captura original en inglés se conserva en el desplegable.
+
+El área azul muestra el límite promedio de gas a lo largo del tiempo, con crecimiento por escalones hasta 30 M. Todo sigue seleccionado. Se conservan intervalos, fechas, unidades, ejes numéricos, años, cuadrícula y datos del gráfico original.
+
+Texto seleccionable de la versión editada:
+
+- Gráfico del límite promedio de gas de Ethereum
+- Fuente:
+- Haga clic y arrastre en el gráfico para ampliar
+- Zoom
+- Todo
+- Límite promedio de gas
+
+<details>
+<summary>Figura 6-1: ver captura original en inglés</summary>
+
+![Evolución del límite de gas del bloque a lo largo del tiempo](images/ch6/maet_0601.png)
+
+> **Nota de la traducción:** captura original de Etherscan conservada. El gráfico muestra el límite promedio de gas de Ethereum entre el 30 de julio de 2015 y el 17 de octubre de 2024; el eje vertical expresa millones de unidades de gas. Los controles permiten seleccionar intervalos o ampliar el gráfico.
+
+</details>
 
 Las comisiones base no van a los validadores (o mineros) que crean bloques; en cambio, se queman de inmediato, reduciendo el suministro total de ETH. Se introduce una nueva comisión, la *comisión de prioridad*, que se puede considerar como la propina que se paga a los validadores (o mineros) para incentivarlos a incluir las transacciones propias en el siguiente bloque.
 
@@ -268,9 +290,33 @@ $ cast balance 0x7e41354AfE84800680ceB104c5Fc99eCB98A25f0 --rpc-url https://ethe
 
 Para obtener algunos tokens ETH de Sepolia gratuitos, puede usar uno de los faucets en línea. Vamos a usar el faucet de Google Cloud Web3 que entrega 0.05 ETH, que se muestra en la Figura 6-3. Vaya a [Ethereum Sepolia Faucet](https://cloud.google.com/application/web3/faucet/ethereum/sepolia). Pegue su dirección y haga clic en el botón "Receive 0.05 Sepolia ETH". Debería recibir 0.05 ETH muy pronto.
 
-![Interfaz del faucet de Google Cloud Web3](images/ch6/maet_0603.png)
+![Suplemento editado en español del faucet de Google Cloud para Ethereum Sepolia, con campo obligatorio y botón para recibir 0.05 Sepolia ETH.](images/ch6/maet_0603-es.png)
 
 **Figura 6-3.** Faucet de Google Cloud Web3
+
+**Nota de la traducción:** Imagen traducida al español mediante inteligencia artificial (IA). Revisión humana pendiente. No es una captura nativa ni una actualización de la aplicación. La captura original en inglés se conserva en el desplegable.
+
+Ethereum Sepolia está seleccionado. La dirección de billetera o el nombre ENS se ingresa en un campo obligatorio, con ayuda debajo. El botón solicita 0.05 Sepolia ETH. El aviso explica que la dirección se utiliza al procesar la solicitud y no en otros servicios de Google; la captura no representa una solicitud nueva.
+
+Texto seleccionable de la versión editada:
+
+- Faucet de Ethereum Sepolia
+- Reciba Sepolia ETH gratis en su billetera. Ofrecido por
+- Seleccionar red*
+- *obligatorio
+- Dirección de billetera o nombre ENS*
+- Ingrese la dirección de cuenta o el nombre ENS donde desea recibir tokens
+- Recibir
+- Nota: Tratamos de forma segura la dirección de billetera proporcionada al procesar su solicitud. Estos datos no se usan en ningún otro servicio de Google.
+
+<details>
+<summary>Figura 6-3: ver captura original en inglés</summary>
+
+![Interfaz del faucet de Google Cloud Web3](images/ch6/maet_0603.png)
+
+> **Nota de la traducción:** captura original del faucet de Google Cloud Web3 conservada. Se selecciona Ethereum Sepolia y se ingresa la dirección de la billetera o el nombre ENS en el campo obligatorio. El botón solicita 0.05 Sepolia ETH. El aviso inferior indica que la dirección proporcionada se utiliza para procesar la solicitud y no en otros servicios de Google.
+
+</details>
 
 Puede comprobar que su saldo ahora ha cambiado y es distinto de 0:
 
@@ -464,9 +510,53 @@ $ cast send --account example vitalik.eth --value 0.001ether --rpc-url https://e
 
 En la Figura 6-4, puede ver que el valor enviado es de 0.001 ether y que la carga de datos (input data en etherscan) está vacía (`0x00`).
 
-![Transacción con solo valor](images/ch6/maet_0604.png)
+![Suplemento editado en español de una transacción Sepolia exitosa con valor 0.001 ETH y datos de entrada 0x.](images/ch6/maet_0604-es.png)
 
 **Figura 6-4.** Transacción con solo valor (pago)
+
+**Nota de la traducción:** Imagen traducida al español mediante inteligencia artificial (IA). Revisión humana pendiente. No es una captura nativa ni una actualización de la aplicación. La captura original en inglés se conserva en el desplegable.
+
+Los recuadros rojos destacan el valor enviado y los datos de entrada vacíos. Los demás campos muestran estado exitoso, bloque, fecha, emisor, destinatario, comisión, precio y consumo de gas, quema, ahorro y atributos como nonce y posición en el bloque.
+
+Texto seleccionable de la versión editada:
+
+- [ Esta transacción es solo de la red de pruebas Sepolia ]
+- Hash de transacción:
+- Estado:
+- Bloque:
+- Fecha y hora:
+- De:
+- Para:
+- Valor:
+- Comisión:
+- Precio del gas:
+- Límite y uso de gas:
+- Comisiones de gas:
+- Quema y ahorro de comisión:
+- Otros atributos:
+- Datos de entrada:
+- Exitosa
+- confirmaciones
+- Máx:
+- Prioridad máx.:
+- Quema:
+- Ahorro:
+- Tipo:
+- Pos. en bloque:
+- Más detalles:
+- Mostrar menos
+
+- La prosa del capítulo menciona 0x00, mientras la captura muestra 0x; el suplemento conserva 0x sin corregir el original.
+- Fechas y tiempos relativos, incluidas las unidades secs y mins y la palabra ago, se conservan como representación literal histórica del valor temporal.
+
+<details>
+<summary>Figura 6-4: ver captura original en inglés</summary>
+
+![Transacción con solo valor](images/ch6/maet_0604.png)
+
+> **Nota de la traducción:** captura original de Etherscan conservada. Los recuadros rojos destacan Value, el valor enviado de 0.001 ETH, e Input Data, los datos de entrada vacíos indicados como 0x. La transacción fue exitosa en Sepolia. También se muestran hash, bloque, emisor, destinatario, comisión, precio y consumo de gas, y nonce.
+
+</details>
 
 El siguiente ejemplo especifica tanto un valor como una carga de datos (aunque esta carga útil se ignorará, ya que enviaremos una transacción a una EOA):
 
@@ -476,9 +566,53 @@ $ cast send --account example vitalik.eth 0x0001 --value 0.001ether --rpc-url ht
 
 En la Figura 6-5, puede ver que input data ahora contiene algún valor, en particular `0x0001`.
 
-![Transacción con valor y datos](images/ch6/maet_0605.png)
+![Suplemento editado en español de una transacción Sepolia exitosa con valor 0.001 ETH y datos de entrada 0x0001.](images/ch6/maet_0605-es.png)
 
 **Figura 6-5.** Transacción con valor y datos
+
+**Nota de la traducción:** Imagen traducida al español mediante inteligencia artificial (IA). Revisión humana pendiente. No es una captura nativa ni una actualización de la aplicación. La captura original en inglés se conserva en el desplegable.
+
+Los recuadros rojos destacan el valor y la carga de datos. El panel también conserva hash, direcciones, fecha, comisiones, gas y atributos. El desplegable inferior permite elegir cómo ver la entrada; no modifica la carga hexadecimal mostrada.
+
+Texto seleccionable de la versión editada:
+
+- [ Esta transacción es solo de la red de pruebas Sepolia ]
+- Hash de transacción:
+- Estado:
+- Bloque:
+- Fecha y hora:
+- De:
+- Para:
+- Valor:
+- Comisión:
+- Precio del gas:
+- Límite y uso de gas:
+- Comisiones de gas:
+- Quema y ahorro de comisión:
+- Otros atributos:
+- Datos de entrada:
+- Exitosa
+- confirmación
+- Máx:
+- Prioridad máx.:
+- Quema:
+- Ahorro:
+- Tipo:
+- Pos. en bloque:
+- Más detalles:
+- Mostrar menos
+- Ver entrada como
+
+- Fechas y tiempos relativos, incluidas las unidades secs y mins y la palabra ago, se conservan como representación literal histórica del valor temporal.
+
+<details>
+<summary>Figura 6-5: ver captura original en inglés</summary>
+
+![Transacción con valor y datos](images/ch6/maet_0605.png)
+
+> **Nota de la traducción:** captura original de Etherscan conservada. Los recuadros rojos muestran una transacción con valor y datos: Value es 0.001 ETH e Input Data es 0x0001. La pantalla conserva sus campos de estado, bloque, fecha, direcciones, comisiones, gas y nonce.
+
+</details>
 
 La siguiente transacción incluye una carga de datos, pero especifica un valor de cero:
 
@@ -488,9 +622,53 @@ $ cast send --account example vitalik.eth 0x0001 --rpc-url https://ethereum-sepo
 
 La Figura 6-6 muestra una pantalla de confirmación que indica un valor de cero ether enviado en la transacción y que la carga de datos es igual a `0x0001`.
 
-![Transacción con solo datos](images/ch6/maet_0606.png)
+![Suplemento editado en español de una transacción Sepolia exitosa con valor 0 ETH y datos de entrada 0x0001.](images/ch6/maet_0606-es.png)
 
 **Figura 6-6.** Transacción con solo datos (invocación)
+
+**Nota de la traducción:** Imagen traducida al español mediante inteligencia artificial (IA). Revisión humana pendiente. No es una captura nativa ni una actualización de la aplicación. La captura original en inglés se conserva en el desplegable.
+
+Se destacan en rojo el valor cero y la carga de datos no vacía. La transacción consume gas y muestra comisiones pese a no transmitir ETH. Los campos técnicos y los atributos del bloque permanecen en sus posiciones originales.
+
+Texto seleccionable de la versión editada:
+
+- [ Esta transacción es solo de la red de pruebas Sepolia ]
+- Hash de transacción:
+- Estado:
+- Bloque:
+- Fecha y hora:
+- De:
+- Para:
+- Valor:
+- Comisión:
+- Precio del gas:
+- Límite y uso de gas:
+- Comisiones de gas:
+- Quema y ahorro de comisión:
+- Otros atributos:
+- Datos de entrada:
+- Exitosa
+- confirmaciones
+- Máx:
+- Prioridad máx.:
+- Quema:
+- Ahorro:
+- Tipo:
+- Pos. en bloque:
+- Más detalles:
+- Mostrar menos
+- Ver entrada como
+
+- Fechas y tiempos relativos, incluidas las unidades secs y mins y la palabra ago, se conservan como representación literal histórica del valor temporal.
+
+<details>
+<summary>Figura 6-6: ver captura original en inglés</summary>
+
+![Transacción con solo datos](images/ch6/maet_0606.png)
+
+> **Nota de la traducción:** captura original de Etherscan conservada. Los recuadros rojos destacan una transacción con solo datos: Value es 0 ETH e Input Data es 0x0001. El resto de la pantalla muestra el resultado exitoso, bloque, direcciones, comisiones, consumo de gas y nonce.
+
+</details>
 
 Por último, la última transacción no incluye ni un valor para enviar ni una carga de datos:
 
@@ -500,9 +678,52 @@ $ cast send --account example vitalik.eth --rpc-url https://ethereum-sepolia-rpc
 
 La Figura 6-7 muestra nuestra transacción, que envió cero ether e incluyó una carga útil vacía.
 
-![Transacción sin valor ni datos](images/ch6/maet_0607.png)
+![Suplemento editado en español de una transacción Sepolia exitosa sin valor enviado y con datos de entrada vacíos 0x.](images/ch6/maet_0607-es.png)
 
 **Figura 6-7.** Transacción sin valor ni datos
+
+**Nota de la traducción:** Imagen traducida al español mediante inteligencia artificial (IA). Revisión humana pendiente. No es una captura nativa ni una actualización de la aplicación. La captura original en inglés se conserva en el desplegable.
+
+Los recuadros rojos muestran 0 ETH y 0x. La captura conserva el consumo de 21,000 unidades de gas y la comisión correspondiente. Los paneles separan datos generales, consumo y comisiones, atributos y datos de entrada.
+
+Texto seleccionable de la versión editada:
+
+- [ Esta transacción es solo de la red de pruebas Sepolia ]
+- Hash de transacción:
+- Estado:
+- Bloque:
+- Fecha y hora:
+- De:
+- Para:
+- Valor:
+- Comisión:
+- Precio del gas:
+- Límite y uso de gas:
+- Comisiones de gas:
+- Quema y ahorro de comisión:
+- Otros atributos:
+- Datos de entrada:
+- Exitosa
+- confirmaciones
+- Máx:
+- Prioridad máx.:
+- Quema:
+- Ahorro:
+- Tipo:
+- Pos. en bloque:
+- Más detalles:
+- Mostrar menos
+
+- Fechas y tiempos relativos, incluidas las unidades secs y mins y la palabra ago, se conservan como representación literal histórica del valor temporal.
+
+<details>
+<summary>Figura 6-7: ver captura original en inglés</summary>
+
+![Transacción sin valor ni datos](images/ch6/maet_0607.png)
+
+> **Nota de la traducción:** captura original de Etherscan conservada. Los recuadros rojos destacan Value igual a 0 ETH e Input Data vacío, indicado como 0x. Aunque no se envían valor ni datos, la transacción consume 21,000 unidades de gas y paga una comisión.
+
+</details>
 
 ## Transmisión de valor a EOA y contratos
 
@@ -604,9 +825,43 @@ $ cast send --account example --rpc-url https://ethereum-sepolia-rpc.publicnode.
 
 Una vez publicado el contrato, podemos verlo en el explorador de bloques Etherscan, como se muestra en la Figura 6-8.
 
-![Creación de contrato en Etherscan](images/ch6/maet_0608.png)
+![Suplemento editado en español de una transacción Sepolia de creación de contrato, exitosa y con valor 0 ETH.](images/ch6/maet_0608-es.png)
 
 **Figura 6-8.** Transacción de creación de contrato en Etherscan
+
+**Nota de la traducción:** Imagen traducida al español mediante inteligencia artificial (IA). Revisión humana pendiente. No es una captura nativa ni una actualización de la aplicación. La captura original en inglés se conserva en el desplegable.
+
+El recuadro rojo agrupa el destinatario creado y el valor. La dirección del contrato, el selector hexadecimal de la acción y las direcciones del emisor permanecen literales; el estado y los encabezados explican la creación sin alterar los importes ni las fechas.
+
+Texto seleccionable de la versión editada:
+
+- [ Esta transacción es solo de la red de pruebas Sepolia ]
+- Hash de transacción:
+- Estado:
+- Bloque:
+- Fecha y hora:
+- Acción:
+- De:
+- Para:
+- Valor:
+- Comisión:
+- Precio del gas:
+- Exitosa
+- confirmaciones
+- Llamar
+- Método por
+- Creado
+
+- Fechas y tiempos relativos, incluidas las unidades secs y mins y la palabra ago, se conservan como representación literal histórica del valor temporal.
+
+<details>
+<summary>Figura 6-8: ver captura original en inglés</summary>
+
+![Creación de contrato en Etherscan](images/ch6/maet_0608.png)
+
+> **Nota de la traducción:** captura original de Etherscan conservada. El recuadro rojo destaca el contrato creado, identificado con Created en el campo To, y el valor de 0 ETH. La transacción se ejecutó correctamente en Sepolia; los demás campos muestran hash, bloque, fecha, emisor, comisión y precio del gas.
+
+</details>
 
 Podemos consultar el recibo de transacción (usando el hash de la transacción para referenciarla) para obtener información sobre el contrato:
 
@@ -656,9 +911,58 @@ $ cast send --account example $CONTRACT_ADDRESS \
 
 Después de un tiempo, ambas transacciones son visibles en Etherscan, como se muestra en la Figura 6-9.
 
-![Interacciones con el contrato en Etherscan](images/ch6/maet_0609.png)
+![Suplemento editado en español del historial de un contrato en Etherscan con tres transacciones y anotaciones rojas de sus métodos.](images/ch6/maet_0609-es.png)
 
 **Figura 6-9.** Transacciones de depósito de fondos y retiro del contrato
+
+**Nota de la traducción:** Imagen traducida al español mediante inteligencia artificial (IA). Revisión humana pendiente. No es una captura nativa ni una actualización de la aplicación. La captura original en inglés se conserva en el desplegable.
+
+La parte superior presenta saldo, creador y origen de fondos. La tabla ordena tres transacciones de la más reciente a la más antigua. Withdraw, Transfer y Create Contract se conservan como identificadores de método, incluso en las anotaciones que los repiten. Las flechas rojas conservan sus recorridos; los encabezados Bloque y Edad se colocan en espacios libres de su columna para no cubrirlas.
+
+Texto seleccionable de la versión editada:
+
+- Contrato
+- Riesgo bajo
+- Flujo de fondos
+- Etiqueta local
+- Resumen
+- SALDO ETH
+- Más información
+- CREADOR DEL CONTRATO
+- en tx
+- Fondos de
+- Información multicadena
+- Transacciones
+- Transacciones internas
+- Transferencias (ERC-20)
+- Eventos
+- Últimas
+- de un total de
+- transacciones
+- Exportar página actual
+- Descargar datos
+- Hash de transacción
+- Método
+- De
+- Para
+- Importe
+- Comisión
+- Creación de contrato
+- E, abreviatura de entrada
+- Bloque
+- Edad
+
+- Fechas y tiempos relativos, incluidas las unidades secs y mins y la palabra ago, se conservan como representación literal histórica del valor temporal.
+- Withdraw, Transfer y Create Contract se conservan también en las anotaciones rojas porque repiten los identificadores de la columna Method. Encabezados de columna reubicados solo dentro de su espacio para preservar flechas superpuestas.
+
+<details>
+<summary>Figura 6-9: ver captura original en inglés</summary>
+
+![Interacciones con el contrato en Etherscan](images/ch6/maet_0609.png)
+
+> **Nota de la traducción:** captura original de Etherscan con sus anotaciones conservada. Las flechas rojas identifican, de arriba abajo, Withdraw, retiro; Transfer, transferencia; y Create Contract, creación del contrato. Las filas se presentan de la más reciente a la más antigua. El panel superior muestra saldo, creador e información del contrato.
+
+</details>
 
 ## Firmas digitales
 
@@ -1216,9 +1520,46 @@ Estos contratos también pueden diseñarse para requerir múltiples firmas antes
 
 La capacidad de implementar transacciones de múltiples firmas como un contrato inteligente demuestra la flexibilidad de Ethereum. Actualmente, Gnosis Safe se ha convertido en el estándar de facto para crear cuentas de múltiples firmas. Este conjunto de contratos inteligentes probados en condiciones reales es ampliamente utilizado por los principales protocolos y las DAO, y protege más de $6 mil millones en ETH y más de $74 mil millones en tokens ERC-20 a noviembre de 2024, como se ilustra en la Figura 6-13.
 
-![Valor protegido por Gnosis Safe a lo largo del tiempo](images/ch6/maet_0613.png)
+![Suplemento editado en español del panel de Safe con valor en USD, total de ETH, cantidad de cuentas y dos gráficos históricos.](images/ch6/maet_0613-es.png)
 
 **Figura 6-13.** Gnosis Safe protege miles de millones en valor
+
+**Nota de la traducción:** Imagen traducida al español mediante inteligencia artificial (IA). Revisión humana pendiente. No es una captura nativa ni una actualización de la aplicación. La captura original en inglés se conserva en el desplegable.
+
+Las anotaciones rojas señalan $6,507,173,131 de ETH y $74,598,101,563 de tokens ERC20. Las tarjetas inferiores muestran 1,299,120 ETH y 279,568 Safes. El gráfico de área compara ETH nativo y variantes; el gráfico de barras muestra Safes creadas por semana. Se conservan fechas, unidades, series, marcas, flechas y todos los datos originales.
+
+Texto seleccionable de la versión editada:
+
+- de
+- Compartir
+- Acuñar
+- Ejecutar
+- valor de
+- tokens en todos los contratos Safe
+- saldo
+- de contratos Gnosis Safe combinados, acumulado diario en el tiempo
+- nativo
+- variantes
+- Cantidad de Safes creadas
+- Total de Safes creadas por semana
+- Safes creadas
+- en contratos Gnosis Safe
+- en cuentas inteligentes Safe, semanal
+- USD de ETH
+- USD de ERC20s
+- Abreviaturas de la imagen: Comp. significa Compartir; Acuñ., Acuñar; Ejec., Ejecutar; contr., contrato.
+
+- Los títulos originales repiten formulaciones de consultas e incluyen ETH y ERC20 en ambas tarjetas superiores. Se traducen las palabras editoriales sin corregir esas inconsistencias ni redibujar gráficos.
+- Las unidades USD, ETH y ERC20s se mantienen en sus posiciones; las frases abreviadas USD de ETH y USD de ERC20s expresan el valor señalado por las flechas. Los controles usan abreviaturas identificadas en el texto seleccionable para evitar reducir la tipografía.
+
+<details>
+<summary>Figura 6-13: ver captura original en inglés</summary>
+
+![Valor protegido por Gnosis Safe a lo largo del tiempo](images/ch6/maet_0613.png)
+
+> **Nota de la traducción:** captura original del panel de Safe con sus anotaciones conservada. Las flechas rojas señalan el valor en USD del ETH, $6,507,173,131, y de los tokens ERC-20, $74,598,101,563. Los paneles izquierdos inferiores muestran 1,299,120 ETH y 279,568 cuentas Safe. Los gráficos derechos muestran el saldo en USD acumulado a lo largo del tiempo y la cantidad semanal de cuentas Safe creadas; rojo identifica ETH nativo y verde sus variantes.
+
+</details>
 
 > **Nota**  
 >

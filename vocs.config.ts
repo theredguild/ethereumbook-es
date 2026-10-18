@@ -29,13 +29,14 @@ export default defineConfig({
   title: 'Mastering Ethereum',
   titleTemplate: '%s · Mastering Ethereum es-419',
   description: 'Segunda edición en español latinoamericano. Prefacio y 17 capítulos traducidos; revisión y aprobación humana pendientes.',
+  iconUrl: `${basePath.replace(/\/$/, '')}/favicon.svg`,
   srcDir: '.vocs-content',
   renderStrategy: 'full-static',
   basePath,
   baseUrl: process.env.VOCS_BASE_URL || undefined,
   sidebar,
   banner: {
-    content: 'Traducción completa al español latinoamericano, en revisión editorial. Algunas figuras conservan texto en inglés.',
+    content: 'Traducción al español latinoamericano con asistencia de IA. Revisión humana pendiente.',
     dismissable: false,
   },
   topNav: [

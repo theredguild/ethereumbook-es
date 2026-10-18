@@ -19,7 +19,7 @@ Fuente de las observaciones: revisión inglesa `5907a8c137135588a7d5dacd1c3bd6ff
 
 | Recurso | Estado | Acción pendiente |
 | --- | --- | --- |
-| `src/images/ch1/maet_0101.png` (figura 1-1) | Inspeccionada visualmente: contiene etiquetas en inglés. Referencia conservada; leyenda y texto alternativo traducidos. La imagen no fue modificada. | Revisar procedencia y derechos y preparar una versión propia en español antes de publicar la edición. Revisar también la distribución de componentes entre clientes que muestra el diagrama. |
+| `src/images/ch1/maet_0101.png` (figura 1-1) | El piloto conservó la imagen. En la localización posterior se recreó en español, con fuente editable `figure-sources/ch1/maet_0101.svg` y la misma ruta publicada. | Revisión humana de fidelidad, procedencia y derechos. Se conserva la distribución original de componentes entre clientes, pendiente de revisión técnica. |
 
 Etiquetas identificadas en la figura 1-1:
 
@@ -121,7 +121,7 @@ Los bloques son nodos de primer nivel del AST CommonMark/GFM, no una medida de c
 
 ### Figuras de la continuación
 
-Se tradujeron textos alternativos y leyendas. Los 182 usos de imágenes de los capítulos 2 a 17 conservan sus destinos; junto con la figura del capítulo 1 son 183 usos. Texto incrustado, procedencia y derechos de las figuras restantes no se inspeccionaron exhaustivamente y siguen pendientes de revisión individual. No se incorporaron portada ni elementos de diseño de O'Reilly.
+En la etapa textual se tradujeron textos alternativos y leyendas sin modificar las imágenes. Los 182 usos de los capítulos 2 a 17 conservaron sus destinos; junto con la figura del capítulo 1 son 183 usos. Su localización gráfica posterior se registra al final de este documento. No se incorporaron portada ni elementos de diseño de O'Reilly.
 
 ### Capítulo 2: observaciones pendientes
 
@@ -403,3 +403,312 @@ Todas estas afirmaciones se conservaron en la traducción. Son observaciones a v
 
 Todas estas afirmaciones se conservaron en la traducción. Son observaciones a verificar, no erratas confirmadas; consultar antes de aplicar una corrección.
 
+
+## Localización gráfica posterior al borrador textual
+
+Por instrucción del usuario se inspeccionaron las 183 imágenes, una por una. Son 183 usos y 183 archivos distintos. Se recrearon 107 diagramas; 57 capturas auténticas conservan sus bytes y reciben notas de la traducción separadas; 19 figuras con literales, matemáticas o nombres propios se conservaron sin cambios. El capítulo 8 no tiene figuras de imagen.
+
+Las fuentes editables están en `figure-sources/`. Se utilizó Graphviz para el flujo de reentrada y SVG para las geometrías, los árboles, las tablas y los diagramas donde la posición tiene significado. No se agregó un renderizador Mermaid ni dependencias al sitio. `scripts/render-figures.mjs` regenera los PNG con las rutas existentes; el procedimiento y las versiones están en `README.md`.
+
+El manifiesto registra por figura la URL fijada del original, hash SHA-256, dimensiones y codificación, tipo, decisión, etiquetas originales y traducidas, literales conservados, fuente editable, hash de salida y observaciones. Los créditos generales proceden del libro; no se atribuye una autoría o licencia individual sin evidencia. La procedencia, los derechos y la aprobación humana de cada figura permanecen pendientes.
+
+### Cobertura por capítulo
+
+| Capítulo | Figuras | Recreadas | Capturas intactas | Literales intactos |
+| --- | --- | --- | --- | --- |
+| 1 | 1 | 1 | 0 | 0 |
+| 2 | 26 | 0 | 26 | 0 |
+| 3 | 1 | 1 | 0 | 0 |
+| 4 | 17 | 9 | 1 | 7 |
+| 5 | 10 | 9 | 1 | 0 |
+| 6 | 13 | 4 | 9 | 0 |
+| 7 | 1 | 0 | 1 | 0 |
+| 8 | 0 | 0 | 0 | 0 |
+| 9 | 1 | 1 | 0 | 0 |
+| 10 | 1 | 0 | 0 | 1 |
+| 11 | 5 | 5 | 0 | 0 |
+| 12 | 13 | 4 | 9 | 0 |
+| 13 | 7 | 6 | 0 | 1 |
+| 14 | 28 | 23 | 3 | 2 |
+| 15 | 45 | 33 | 4 | 8 |
+| 16 | 9 | 6 | 3 | 0 |
+| 17 | 5 | 5 | 0 | 0 |
+
+### Cotejo independiente y correcciones de la recreación
+
+Se realizó un segundo cotejo visual asistido de los 107 diagramas recreados y de las 57 notas de capturas. No equivale a revisión humana. Se corrigieron espaciados de etiquetas y conexiones, el marco de un byte en la figura 14-26 y los separadores de rangos en las figuras 17-2 y 17-3. La curva de la figura 14-4 se trazó según el original en vez de reemplazarla por una función idealizada. En la figura 15-29 se restituyeron el punto de control 0/J azul medio de la vista B,C,D y la conexión 3—X sin punta de flecha. Son correcciones de la recreación, no del original.
+
+Las dudas de fuente siguen registradas en cada entrada del manifiesto: distribución de componentes en 1-1; diferencias entre texto y capturas en el capítulo 2 y en 16-1/16-2; guías geométricas y rótulos en criptografía; longitudes hexadecimales no estándar en EVM; saltos o marcas omitidas en etapas de consenso; denominación Pedersen frente al contexto KZG en 16-9; puertos y conectores implícitos en las figuras ZK. Se conservaron sin reinterpretación técnica.
+
+### Registro individual
+
+En todas las filas siguen pendientes procedencia/derechos individuales y aprobación humana. La recreación usa formas técnicas genéricas, sin portada ni elementos de diseño de O'Reilly. Las capturas no se recortan, retocan ni sustituyen por interfaces actuales.
+
+| Figura | Tipo | Tratamiento | Procedencia |
+| --- | --- | --- | --- |
+| 1-1 | Diagrama | Recreada; `figure-sources/ch1/maet_0101.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch1/maet_0101.png) |
+| 2-1 | Captura | Bytes intactos; nota separada en español | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch2/maet_0201.png) |
+| 2-2 | Captura | Bytes intactos; nota separada en español | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch2/maet_0202.png) |
+| 2-3 | Captura | Bytes intactos; nota separada en español | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch2/maet_0203.png) |
+| 2-4 | Captura | Bytes intactos; nota separada en español | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch2/maet_0204.png) |
+| 2-5 | Captura | Bytes intactos; nota separada en español | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch2/maet_0205.png) |
+| 2-6 | Captura | Bytes intactos; nota separada en español | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch2/maet_0206.png) |
+| 2-7 | Captura | Bytes intactos; nota separada en español | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch2/maet_0207.png) |
+| 2-8 | Captura | Bytes intactos; nota separada en español | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch2/maet_0208.png) |
+| 2-9 | Captura | Bytes intactos; nota separada en español | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch2/maet_0209.png) |
+| 2-10 | Captura | Bytes intactos; nota separada en español | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch2/maet_0210.png) |
+| 2-11 | Captura | Bytes intactos; nota separada en español | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch2/maet_0211.png) |
+| 2-12 | Captura | Bytes intactos; nota separada en español | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch2/maet_0212.png) |
+| 2-13 | Captura | Bytes intactos; nota separada en español | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch2/maet_0213.png) |
+| 2-14 | Captura | Bytes intactos; nota separada en español | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch2/maet_0214.png) |
+| 2-15 | Captura | Bytes intactos; nota separada en español | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch2/maet_0215.png) |
+| 2-16 | Captura | Bytes intactos; nota separada en español | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch2/maet_0216.png) |
+| 2-17 | Captura | Bytes intactos; nota separada en español | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch2/maet_0217.png) |
+| 2-18 | Captura | Bytes intactos; nota separada en español | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch2/maet_0218.png) |
+| 2-19 | Captura | Bytes intactos; nota separada en español | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch2/maet_0219.png) |
+| 2-20 | Captura | Bytes intactos; nota separada en español | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch2/maet_0220.png) |
+| 2-21 | Captura | Bytes intactos; nota separada en español | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch2/maet_0221.png) |
+| 2-22 | Captura | Bytes intactos; nota separada en español | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch2/maet_0222.png) |
+| 2-23 | Captura | Bytes intactos; nota separada en español | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch2/maet_0223.png) |
+| 2-24 | Captura | Bytes intactos; nota separada en español | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch2/maet_0224.png) |
+| 2-25 | Captura | Bytes intactos; nota separada en español | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch2/maet_0225.png) |
+| 2-26 | Captura | Bytes intactos; nota separada en español | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch2/maet_0226.png) |
+| 3-1 | Diagrama | Recreada; `figure-sources/ch3/maet_0301.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch3/maet_0301.png) |
+| 4-1 | Literales/matemáticas | Bytes intactos; sin rótulos editoriales que traducir | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch4/maet_0401.png) |
+| 4-2 | Literales/matemáticas | Bytes intactos; sin rótulos editoriales que traducir | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch4/maet_0402.png) |
+| 4-3 | Literales/matemáticas | Bytes intactos; sin rótulos editoriales que traducir | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch4/maet_0403.png) |
+| 4-4 | Literales/matemáticas | Bytes intactos; sin rótulos editoriales que traducir | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch4/maet_0404.png) |
+| 4-5 | Literales/matemáticas | Bytes intactos; sin rótulos editoriales que traducir | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch4/maet_0405.png) |
+| 4-6 | Diagrama | Recreada; `figure-sources/ch4/maet_0406.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch4/maet_0406.png) |
+| 4-7 | Diagrama | Recreada; `figure-sources/ch4/maet_0407.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch4/maet_0407.png) |
+| 4-8 | Diagrama | Recreada; `figure-sources/ch4/maet_0408.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch4/maet_0408.png) |
+| 4-9 | Diagrama | Recreada; `figure-sources/ch4/maet_0409.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch4/maet_0409.png) |
+| 4-10 | Captura | Bytes intactos; nota separada en español | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch4/maet_0410.png) |
+| 4-11 | Literales/matemáticas | Bytes intactos; sin rótulos editoriales que traducir | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch4/maet_0411.png) |
+| 4-12 | Literales/matemáticas | Bytes intactos; sin rótulos editoriales que traducir | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch4/maet_0412.png) |
+| 4-13 | Diagrama | Recreada; `figure-sources/ch4/maet_0413.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch4/maet_0413.png) |
+| 4-14 | Diagrama | Recreada; `figure-sources/ch4/maet_0414.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch4/maet_0414.png) |
+| 4-15 | Diagrama | Recreada; `figure-sources/ch4/maet_0415.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch4/maet_0415.png) |
+| 4-16 | Diagrama | Recreada; `figure-sources/ch4/maet_0416.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch4/maet_0416.png) |
+| 4-17 | Diagrama | Recreada; `figure-sources/ch4/maet_0417.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch4/maet_0417.png) |
+| 5-1 | Diagrama | Recreada; `figure-sources/ch5/maet_0501.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch5/maet_0501.png) |
+| 5-2 | Diagrama | Recreada; `figure-sources/ch5/maet_0502.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch5/maet_0502.png) |
+| 5-3 | Diagrama | Recreada; `figure-sources/ch5/maet_0503.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch5/maet_0503.png) |
+| 5-4 | Captura | Bytes intactos; nota separada en español | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch5/maet_0504.png) |
+| 5-5 | Diagrama | Recreada; `figure-sources/ch5/maet_0505.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch5/maet_0505.png) |
+| 5-6 | Diagrama | Recreada; `figure-sources/ch5/maet_0506.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch5/maet_0506.png) |
+| 5-7 | Diagrama | Recreada; `figure-sources/ch5/maet_0507.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch5/maet_0507.png) |
+| 5-8 | Diagrama | Recreada; `figure-sources/ch5/maet_0508.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch5/maet_0508.png) |
+| 5-9 | Diagrama | Recreada; `figure-sources/ch5/maet_0509.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch5/maet_0509.png) |
+| 5-10 | Diagrama | Recreada; `figure-sources/ch5/maet_0510.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch5/maet_0510.png) |
+| 6-1 | Captura | Bytes intactos; nota separada en español | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch6/maet_0601.png) |
+| 6-2 | Diagrama | Recreada; `figure-sources/ch6/maet_0602.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch6/maet_0602.png) |
+| 6-3 | Captura | Bytes intactos; nota separada en español | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch6/maet_0603.png) |
+| 6-4 | Captura | Bytes intactos; nota separada en español | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch6/maet_0604.png) |
+| 6-5 | Captura | Bytes intactos; nota separada en español | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch6/maet_0605.png) |
+| 6-6 | Captura | Bytes intactos; nota separada en español | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch6/maet_0606.png) |
+| 6-7 | Captura | Bytes intactos; nota separada en español | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch6/maet_0607.png) |
+| 6-8 | Captura | Bytes intactos; nota separada en español | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch6/maet_0608.png) |
+| 6-9 | Captura | Bytes intactos; nota separada en español | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch6/maet_0609.png) |
+| 6-10 | Diagrama | Recreada; `figure-sources/ch6/maet_0610.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch6/maet_0610.png) |
+| 6-11 | Diagrama | Recreada; `figure-sources/ch6/maet_0611.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch6/maet_0611.png) |
+| 6-12 | Diagrama | Recreada; `figure-sources/ch6/maet_0612.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch6/maet_0612.png) |
+| 6-13 | Captura | Bytes intactos; nota separada en español | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch6/maet_0613.png) |
+| 7-1 | Captura | Bytes intactos; nota separada en español | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch7/maet_0701.png) |
+| 9-1 | Diagrama | Recreada; `figure-sources/ch9/maet_0901.dot` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch9/maet_0901.png) |
+| 10-1 | Literales/matemáticas | Bytes intactos; sin rótulos editoriales que traducir | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch10/maet_1001.png) |
+| 11-1 | Diagrama | Recreada; `figure-sources/ch11/maet_1101.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch11/maet_1101.png) |
+| 11-2 | Diagrama | Recreada; `figure-sources/ch11/maet_1102.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch11/maet_1102.png) |
+| 11-3 | Diagrama | Recreada; `figure-sources/ch11/maet_1103.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch11/maet_1103.png) |
+| 11-4 | Diagrama | Recreada; `figure-sources/ch11/maet_1104.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch11/maet_1104.png) |
+| 11-5 | Diagrama | Recreada; `figure-sources/ch11/maet_1105.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch11/maet_1105.png) |
+| 12-1 | Diagrama | Recreada; `figure-sources/ch12/maet_1201.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch12/maet_1201.png) |
+| 12-2 | Diagrama | Recreada; `figure-sources/ch12/maet_1202.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch12/maet_1202.png) |
+| 12-3 | Diagrama | Recreada; `figure-sources/ch12/maet_1203.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch12/maet_1203.png) |
+| 12-4 | Captura | Bytes intactos; nota separada en español | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch12/maet_1204.png) |
+| 12-5 | Captura | Bytes intactos; nota separada en español | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch12/maet_1205.png) |
+| 12-6 | Captura | Bytes intactos; nota separada en español | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch12/maet_1206.png) |
+| 12-7 | Captura | Bytes intactos; nota separada en español | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch12/maet_1207.png) |
+| 12-8 | Captura | Bytes intactos; nota separada en español | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch12/maet_1208.png) |
+| 12-9 | Captura | Bytes intactos; nota separada en español | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch12/maet_1209.png) |
+| 12-10 | Captura | Bytes intactos; nota separada en español | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch12/maet_1210.png) |
+| 12-11 | Captura | Bytes intactos; nota separada en español | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch12/maet_1211.png) |
+| 12-12 | Captura | Bytes intactos; nota separada en español | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch12/maet_1212.png) |
+| 12-13 | Diagrama | Recreada; `figure-sources/ch12/maet_1213.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch12/maet_1213.png) |
+| 13-1 | Diagrama | Recreada; `figure-sources/ch13/maet_1301.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch13/maet_1301.png) |
+| 13-2 | Diagrama | Recreada; `figure-sources/ch13/maet_1302.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch13/maet_1302.png) |
+| 13-3 | Diagrama | Recreada; `figure-sources/ch13/maet_1303.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch13/maet_1303.png) |
+| 13-4 | Diagrama | Recreada; `figure-sources/ch13/maet_1304.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch13/maet_1304.png) |
+| 13-5 | Diagrama | Recreada; `figure-sources/ch13/maet_1305.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch13/maet_1305.png) |
+| 13-6 | Literales/matemáticas | Bytes intactos; sin rótulos editoriales que traducir | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch13/maet_1306.png) |
+| 13-7 | Diagrama | Recreada; `figure-sources/ch13/maet_1307.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch13/maet_1307.png) |
+| 14-1 | Diagrama | Recreada; `figure-sources/ch14/maet_1401.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch14/maet_1401.png) |
+| 14-2 | Diagrama | Recreada; `figure-sources/ch14/maet_1402.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch14/maet_1402.png) |
+| 14-3 | Diagrama | Recreada; `figure-sources/ch14/maet_1403.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch14/maet_1403.png) |
+| 14-4 | Diagrama | Recreada; `figure-sources/ch14/maet_1404.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch14/maet_1404.png) |
+| 14-5 | Diagrama | Recreada; `figure-sources/ch14/maet_1405.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch14/maet_1405.png) |
+| 14-6 | Diagrama | Recreada; `figure-sources/ch14/maet_1406.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch14/maet_1406.png) |
+| 14-7 | Diagrama | Recreada; `figure-sources/ch14/maet_1407.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch14/maet_1407.png) |
+| 14-8 | Diagrama | Recreada; `figure-sources/ch14/maet_1408.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch14/maet_1408.png) |
+| 14-9 | Diagrama | Recreada; `figure-sources/ch14/maet_1409.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch14/maet_1409.png) |
+| 14-10 | Diagrama | Recreada; `figure-sources/ch14/maet_1410.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch14/maet_1410.png) |
+| 14-11 | Diagrama | Recreada; `figure-sources/ch14/maet_1411.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch14/maet_1411.png) |
+| 14-12 | Diagrama | Recreada; `figure-sources/ch14/maet_1412.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch14/maet_1412.png) |
+| 14-13 | Diagrama | Recreada; `figure-sources/ch14/maet_1413.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch14/maet_1413.png) |
+| 14-14 | Diagrama | Recreada; `figure-sources/ch14/maet_1414.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch14/maet_1414.png) |
+| 14-15 | Diagrama | Recreada; `figure-sources/ch14/maet_1415.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch14/maet_1415.png) |
+| 14-16 | Diagrama | Recreada; `figure-sources/ch14/maet_1416.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch14/maet_1416.png) |
+| 14-17 | Diagrama | Recreada; `figure-sources/ch14/maet_1417.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch14/maet_1417.png) |
+| 14-18 | Diagrama | Recreada; `figure-sources/ch14/maet_1418.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch14/maet_1418.png) |
+| 14-19 | Diagrama | Recreada; `figure-sources/ch14/maet_1419.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch14/maet_1419.png) |
+| 14-20 | Diagrama | Recreada; `figure-sources/ch14/maet_1420.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch14/maet_1420.png) |
+| 14-21 | Captura | Bytes intactos; nota separada en español | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch14/maet_1421.png) |
+| 14-22 | Captura | Bytes intactos; nota separada en español | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch14/maet_1422.png) |
+| 14-23 | Literales/matemáticas | Bytes intactos; sin rótulos editoriales que traducir | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch14/maet_1423.png) |
+| 14-24 | Literales/matemáticas | Bytes intactos; sin rótulos editoriales que traducir | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch14/maet_1424.png) |
+| 14-25 | Captura | Bytes intactos; nota separada en español | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch14/maet_1425.png) |
+| 14-26 | Diagrama | Recreada; `figure-sources/ch14/maet_1426.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch14/maet_1426.png) |
+| 14-27 | Diagrama | Recreada; `figure-sources/ch14/maet_1427.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch14/maet_1427.png) |
+| 14-28 | Diagrama | Recreada; `figure-sources/ch14/maet_1428.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch14/maet_1428.png) |
+| 15-1 | Diagrama | Recreada; `figure-sources/ch15/maet_1501.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch15/maet_1501.png) |
+| 15-2 | Diagrama | Recreada; `figure-sources/ch15/maet_1502.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch15/maet_1502.png) |
+| 15-3 | Diagrama | Recreada; `figure-sources/ch15/maet_1503.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch15/maet_1503.png) |
+| 15-4 | Literales/matemáticas | Bytes intactos; sin rótulos editoriales que traducir | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch15/maet_1504.png) |
+| 15-5 | Literales/matemáticas | Bytes intactos; sin rótulos editoriales que traducir | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch15/maet_1505.png) |
+| 15-6 | Diagrama | Recreada; `figure-sources/ch15/maet_1506.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch15/maet_1506.png) |
+| 15-7 | Literales/matemáticas | Bytes intactos; sin rótulos editoriales que traducir | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch15/maet_1507.png) |
+| 15-8 | Literales/matemáticas | Bytes intactos; sin rótulos editoriales que traducir | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch15/maet_1508.png) |
+| 15-9 | Literales/matemáticas | Bytes intactos; sin rótulos editoriales que traducir | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch15/maet_1509.png) |
+| 15-10 | Literales/matemáticas | Bytes intactos; sin rótulos editoriales que traducir | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch15/maet_1510.png) |
+| 15-11 | Literales/matemáticas | Bytes intactos; sin rótulos editoriales que traducir | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch15/maet_1511.png) |
+| 15-12 | Literales/matemáticas | Bytes intactos; sin rótulos editoriales que traducir | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch15/maet_1512.png) |
+| 15-13 | Diagrama | Recreada; `figure-sources/ch15/maet_1513.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch15/maet_1513.png) |
+| 15-14 | Diagrama | Recreada; `figure-sources/ch15/maet_1514.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch15/maet_1514.png) |
+| 15-15 | Diagrama | Recreada; `figure-sources/ch15/maet_1515.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch15/maet_1515.png) |
+| 15-16 | Diagrama | Recreada; `figure-sources/ch15/maet_1516.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch15/maet_1516.png) |
+| 15-17 | Diagrama | Recreada; `figure-sources/ch15/maet_1517.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch15/maet_1517.png) |
+| 15-18 | Diagrama | Recreada; `figure-sources/ch15/maet_1518.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch15/maet_1518.png) |
+| 15-19 | Diagrama | Recreada; `figure-sources/ch15/maet_1519.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch15/maet_1519.png) |
+| 15-20 | Diagrama | Recreada; `figure-sources/ch15/maet_1520.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch15/maet_1520.png) |
+| 15-21 | Diagrama | Recreada; `figure-sources/ch15/maet_1521.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch15/maet_1521.png) |
+| 15-22 | Diagrama | Recreada; `figure-sources/ch15/maet_1522.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch15/maet_1522.png) |
+| 15-23 | Diagrama | Recreada; `figure-sources/ch15/maet_1523.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch15/maet_1523.png) |
+| 15-24 | Diagrama | Recreada; `figure-sources/ch15/maet_1524.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch15/maet_1524.png) |
+| 15-25 | Diagrama | Recreada; `figure-sources/ch15/maet_1525.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch15/maet_1525.png) |
+| 15-26 | Diagrama | Recreada; `figure-sources/ch15/maet_1526.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch15/maet_1526.png) |
+| 15-27 | Diagrama | Recreada; `figure-sources/ch15/maet_1527.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch15/maet_1527.png) |
+| 15-28 | Diagrama | Recreada; `figure-sources/ch15/maet_1528.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch15/maet_1528.png) |
+| 15-29 | Diagrama | Recreada; `figure-sources/ch15/maet_1529.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch15/maet_1529.png) |
+| 15-30 | Diagrama | Recreada; `figure-sources/ch15/maet_1530.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch15/maet_1530.png) |
+| 15-31 | Diagrama | Recreada; `figure-sources/ch15/maet_1531.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch15/maet_1531.png) |
+| 15-32 | Diagrama | Recreada; `figure-sources/ch15/maet_1532.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch15/maet_1532.png) |
+| 15-33 | Diagrama | Recreada; `figure-sources/ch15/maet_1533.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch15/maet_1533.png) |
+| 15-34 | Diagrama | Recreada; `figure-sources/ch15/maet_1534.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch15/maet_1534.png) |
+| 15-35 | Diagrama | Recreada; `figure-sources/ch15/maet_1535.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch15/maet_1535.png) |
+| 15-36 | Diagrama | Recreada; `figure-sources/ch15/maet_1536.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch15/maet_1536.png) |
+| 15-37 | Diagrama | Recreada; `figure-sources/ch15/maet_1537.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch15/maet_1537.png) |
+| 15-38 | Diagrama | Recreada; `figure-sources/ch15/maet_1538.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch15/maet_1538.png) |
+| 15-39 | Diagrama | Recreada; `figure-sources/ch15/maet_1539.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch15/maet_1539.png) |
+| 15-40 | Captura | Bytes intactos; nota separada en español | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch15/maet_1540.png) |
+| 15-41 | Captura | Bytes intactos; nota separada en español | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch15/maet_1541.png) |
+| 15-42 | Diagrama | Recreada; `figure-sources/ch15/maet_1542.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch15/maet_1542.png) |
+| 15-43 | Diagrama | Recreada; `figure-sources/ch15/maet_1543.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch15/maet_1543.png) |
+| 15-44 | Captura | Bytes intactos; nota separada en español | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch15/maet_1544.png) |
+| 15-45 | Captura | Bytes intactos; nota separada en español | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch15/maet_1545.png) |
+| 16-1 | Captura | Bytes intactos; nota separada en español | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch16/maet_1601.png) |
+| 16-2 | Captura | Bytes intactos; nota separada en español | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch16/maet_1602.png) |
+| 16-3 | Captura | Bytes intactos; nota separada en español | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch16/maet_1603.png) |
+| 16-4 | Diagrama | Recreada; `figure-sources/ch16/maet_1604.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch16/maet_1604.png) |
+| 16-5 | Diagrama | Recreada; `figure-sources/ch16/maet_1605.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch16/maet_1605.png) |
+| 16-6 | Diagrama | Recreada; `figure-sources/ch16/maet_1606.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch16/maet_1606.png) |
+| 16-7 | Diagrama | Recreada; `figure-sources/ch16/maet_1607.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch16/maet_1607.png) |
+| 16-8 | Diagrama | Recreada; `figure-sources/ch16/maet_1608.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch16/maet_1608.png) |
+| 16-9 | Diagrama | Recreada; `figure-sources/ch16/maet_1609.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch16/maet_1609.png) |
+| 17-1 | Diagrama | Recreada; `figure-sources/ch17/maet_1701.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch17/maet_1701.png) |
+| 17-2 | Diagrama | Recreada; `figure-sources/ch17/maet_1702.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch17/maet_1702.png) |
+| 17-3 | Diagrama | Recreada; `figure-sources/ch17/maet_1703.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch17/maet_1703.png) |
+| 17-4 | Diagrama | Recreada; `figure-sources/ch17/maet_1704.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch17/maet_1704.png) |
+| 17-5 | Diagrama | Recreada; `figure-sources/ch17/maet_1705.svg` | [Original fijado](https://github.com/ethereumbook/ethereumbook/blob/5907a8c137135588a7d5dacd1c3bd6ff6c9c5151/src/images/ch17/maet_1705.png) |
+
+### Verificación de la localización gráfica
+
+- `node scripts/render-figures.mjs` regeneró los 107 diagramas con las fuentes editables. Los 76 recursos conservados coinciden por SHA-256 con los originales; incluyen las 57 capturas.
+- Al quitar únicamente las 57 notas marcadas, los 17 capítulos coinciden byte por byte con el borrador textual anterior a esta etapa. Se conservan los 383 bloques de código, las 23 expresiones MathML y los 183 destinos de imágenes.
+- `npm ci` y la compilación Vocs bajo `/ethereumbook-es/` finalizaron correctamente. En navegador se abrieron las 24 páginas y cargaron las 183 imágenes; las 57 notas aparecieron en sus capítulos, sin errores JavaScript.
+- Se inspeccionaron figuras recreadas en escritorio y una captura auténtica con su nota en pantalla de 390 px y tema oscuro. Los diagramas densos requieren ampliación para leer detalles en pantallas pequeñas.
+- No se ejecutaron ejemplos del libro ni se completó una verificación exhaustiva de destinos externos. Estas comprobaciones y el cotejo independiente asistido no constituyen aprobación humana ni de derechos.
+
+## Piloto de versiones editadas de capturas del capítulo 2
+
+Por instrucción del usuario se agregaron dos traducciones gráficas educativas, como suplementos opcionales de las figuras 2-2 y 2-5. Los originales siguen siendo las capturas mostradas por defecto. Cada suplemento tiene una banda visible que lo identifica como versión editada, una aclaración en el capítulo y texto seleccionable de las etiquetas. No se presenta como captura nativa de una aplicación en español ni como actualización de sus instrucciones.
+
+| Figura original | Suplemento | Fuente editable |
+| --- | --- | --- |
+| 2-2, creación de contraseña | `src/images/ch2/maet_0202-es.png` | `figure-sources/ch2/maet_0202-es.svg` |
+| 2-5, selector de redes | `src/images/ch2/maet_0205-es.png` | `figure-sources/ch2/maet_0205-es.svg` |
+
+Se consultó el catálogo oficial `es_419` incluido en la [versión v13.52.0 de MetaMask](https://github.com/MetaMask/metamask-extension/releases/tag/v13.52.0). El archivo de Chrome descargado coincide con el SHA-256 publicado, `8ea87cd478abde80ead7bd78bf71a05062fd1f260dfdb53de624865d460c5e4a`. El manifiesto conserva el enlace al archivo, sus miembros de idioma, las claves y valores exactos consultados y el aviso de licencia. De las 17 entradas de etiquetas, 11 coinciden con cadenas completas del catálogo; las otras seis son traducciones editoriales del texto histórico visible. En el indicador de seguridad, «Fuerte» también coincide con la clave oficial `strong`.
+
+La versión de MetaMask de las capturas originales no está documentada. v13.52.0 identifica solo el catálogo terminológico consultado. No se instaló ni ejecutó la extensión, no se creó una billetera y no se usaron claves, fondos o transacciones. La descarga y su hash prueban procedencia del catálogo, no permiso para adaptar o publicar imágenes. El aviso de MetaMask y la revisión individual de derechos permanecen separados de la licencia del texto del libro, según `LICENSE.md`.
+
+### Cotejo del piloto
+
+- Las superposiciones SVG cubren únicamente máscaras de texto registradas antes de la comparación. Se componen a escala 1 desde el origen superior izquierdo, sin incrustar el original en la fuente editable ni redimensionarlo. La banda de identificación agrega 74 px debajo de cada captura.
+- Se compararon 1,078,781 píxeles de la figura 2-2 y 798,624 de la figura 2-5, con ambas imágenes aplanadas explícitamente sobre blanco. No hubo diferencias fuera de las máscaras aprobadas ni en ninguna de las 13 regiones protegidas.
+- Se conservan los pasos 1, 2 y 3, el dígito `8` original, los campos ocultos, la casilla marcada, la marca de confirmación, los iconos, los menús y los nombres y estados de las redes. El texto traducido mantiene los roles de color de enlaces, botón e indicador.
+- La figura 2-5 sigue mostrando Ethereum Mainnet seleccionada. No se agregaron Sepolia ni controles ausentes; la discrepancia entre captura e instrucciones del original sigue advertida junto al suplemento.
+- Los 183 archivos de imagen anteriores al piloto conservan sus hashes. Las 57 capturas auténticas coinciden con la fuente inglesa fijada. Al quitar solo los dos desplegables, el capítulo 2 coincide byte por byte con el índice preparado antes del piloto.
+- `npm ci` terminó correctamente. Los dos modos del renderizador, completo y `--screenshots-only`, producen los mismos hashes de los suplementos registrados en el manifiesto.
+- La compilación Vocs bajo `/ethereumbook-es/` generó 55 archivos. En navegador se abrieron las 24 páginas, cargaron 185 imágenes y se conservaron 383 bloques de código y 23 expresiones MathML, sin errores JavaScript. Los dos desplegables comienzan cerrados; 656 destinos locales y fragmentos únicos se verificaron sin hallazgos.
+- Enter abre el desplegable y Espacio lo cierra; el foco permanece visible con un contorno de 2 px. Se comprobó pantalla de 390 px en tema oscuro, sin desbordamiento horizontal, y texto seleccionable ampliado al 200 %. Las etiquetas pequeñas de la imagen requieren ampliación; se abrió el PNG en el navegador y su zoom nativo pasó de 390 a 971 px, sin redimensionar el recurso.
+- La aprobación humana, la fidelidad de las traducciones propuestas y los derechos individuales de originales y adaptaciones siguen pendientes.
+
+## Continuación de las capturas del libro completo
+
+Tras el piloto se revisaron las 55 capturas restantes: 54 recibieron una versión editada y la figura 12-9 se conservó sin duplicado. En esa etapa, el original permanecía primero y cada edición adicional se identificaba dentro de la imagen y en un apartado desplegable con explicación y etiquetas seleccionables. El orden cambió posteriormente por instrucción del usuario, según el registro siguiente. Las versiones de las aplicaciones históricas no están documentadas. Las traducciones nuevas son editoriales, no cadenas atribuidas a un catálogo oficial.
+
+| Capítulo | Capturas originales | Ediciones adicionales, incluido el piloto |
+| --- | ---: | ---: |
+| 2 | 26 | 26 |
+| 4 | 1 | 1 |
+| 5 | 1 | 1 |
+| 6 | 9 | 9 |
+| 7 | 1 | 1 |
+| 12 | 9 | 8 |
+| 14 | 3 | 3 |
+| 15 | 4 | 4 |
+| 16 | 3 | 3 |
+| Total | 57 | 56 |
+
+### Decisiones y límites
+
+- La figura 12-9 solo muestra direcciones, valores, unidades, nombres e iconos; no se creó una imagen idéntica etiquetada como traducción.
+- Se conservan nombres de conectores, productos, redes, métodos y funciones: por ejemplo, Burner Wallet, Fluid Compute, Safe, `Withdraw`, `Transfer` y `withdraw`. Las notas explican su significado sin reemplazar identificadores.
+- Algunos textos pequeños, recortados u ocultos de las capturas no permiten una lectura completa. Se conservaron esos píxeles, sin completar frases por conjetura; las ubicaciones y limitaciones se registran por figura.
+- El cotejo visual independiente detectó rótulos demasiado pequeños en 2-1, 5-4, 6-4 a 6-7, 6-9, 6-13 y 12-12, además del fondo incorrecto de una etiqueta flotante en 6-3. Se corrigieron con saltos de línea, tipografía legible, abreviaturas explicadas o fondos muestreados del original, sin modificar datos ni controles.
+- El cotejo de píxeles detectó desbordamientos de glifos en 2-1, 12-6 y 12-7. Se redujeron las etiquetas dentro de sus máscaras existentes; la comprobación posterior no encontró cambios fuera de las máscaras ni en regiones protegidas.
+- En 15-41, una leyenda del original cruza una línea de cuadrícula. La edición preserva esa línea y coloca la traducción en el espacio de la leyenda; no se redibujan barras, curvas ni datos.
+- Se corrigieron dos errores de transcripción del inventario anterior de 2-1: `+$367.00 (+1.83%)` debía registrar `+$367.00 (+0.18%)`, y `$187.236` debía registrar `$872.36`. Se cotejaron con el original y se conservaron sus píxeles; no son correcciones técnicas del libro.
+- Las convenciones abreviadas se registran en `GLOSSARY.md`. La revisión asistida no constituye aprobación humana, autorización de marcas ni resolución de los derechos de las figuras.
+
+### Comprobaciones de integración de las capturas
+
+- Las 54 ediciones nuevas comparan 57,646,971 píxeles de la extensión original, con ambas imágenes aplanadas explícitamente sobre blanco, sin redimensionar ni convertir el espacio de color. No quedan diferencias fuera de las 701 máscaras aprobadas ni en las 605 regiones protegidas. La banda editorial añade 74 px debajo del original.
+- Los 185 recursos anteriores a esta continuación conservan sus hashes. Al quitar exactamente los 54 apartados añadidos, los 17 capítulos coinciden byte por byte con su estado anterior. Los ejemplos y afirmaciones del libro no se modificaron.
+- En una copia aislada, el renderizador completo regeneró 107 diagramas y 56 capturas editadas; el modo `--screenshots-only` regeneró las mismas 56 ediciones. Todos los hashes coinciden con los recursos del libro. ImageMagick advierte `iCCP: extra compressed data` en el original 12-4; el archivo se conserva sin alterarlo.
+- `npm ci` terminó correctamente, sin habilitar scripts de instalación bloqueados. Vocs compiló bajo `/ethereumbook-es/` y generó 55 archivos. El navegador abrió 24 páginas, decodificó 239 imágenes y conservó 383 bloques de código y 23 expresiones MathML. Los 56 desplegables comienzan cerrados; 659 destinos locales y fragmentos únicos no presentaron fallos. No se registraron errores JavaScript.
+- Enter abre el desplegable y Espacio lo cierra, con foco visible de 2 px. Se inspeccionó presentación móvil de 390 px en tema oscuro, sin desbordamiento horizontal; el texto seleccionable pasó de 16 a 32 px. La imagen 5-4 se abrió directamente y su zoom nativo pasó de 390 a 487 px. Las 56 imágenes editadas servidas conservan los hashes del manifiesto.
+- `ripwire --quality-delta` no encontró empeoramientos de símbolos existentes (`gating="0"`). Señaló siete entradas extensas del registro gráfico anterior como símbolos nuevos; son datos de revisión, no cambios del código de ejecución. No se ejecutó CI remota ni se publicó esta continuación.
+
+## Capturas españolas visibles y originales desplegables
+
+- Por instrucción del usuario, las 56 capturas editadas se muestran por defecto, junto a un aviso de traducción mediante inteligencia artificial, revisión humana pendiente y carácter no nativo de la captura.
+- Cada leyenda conserva su texto y sigue inmediatamente a la imagen española. Las descripciones, etiquetas seleccionables y advertencias permanecen visibles. Los originales en inglés y las notas explicativas de sus controles se trasladaron a desplegables cerrados, identificados por número de figura.
+- Se conservaron las aclaraciones del piloto sobre el catálogo terminológico y la selección de Ethereum Mainnet frente a Sepolia, además de las advertencias sobre frases de recuperación públicas. No se actualizaron las aplicaciones históricas ni se ejecutaron ejemplos.
+- El cotejo textual de las 56 parejas en nueve capítulos conserva exactamente leyendas, rutas y textos alternativos de ambas imágenes, descripciones, etiquetas, advertencias, notas de controles y prosa exterior. Solo cambian orden, aviso de IA y rótulo del desplegable. Los registros anteriores describen verificaciones de sus respectivos estados, no el orden actual.
+- Para este orden se ejecutaron `npm ci` y la compilación bajo `/ethereumbook-es/`. El navegador recorrió 24 páginas y decodificó 239 imágenes. Las 56 parejas muestran la imagen española fuera del desplegable, seguida por la leyenda y el aviso de IA; cada original queda dentro de un desplegable cerrado. Descripciones, etiquetas, advertencias y notas de controles se verificaron en el DOM. No hubo fallos en 662 destinos locales y fragmentos únicos ni errores JavaScript; permanecen 383 bloques de código y 23 expresiones MathML.
+- Los hashes de las 239 imágenes no cambiaron. Enter abre el original y Espacio lo oculta, con foco visible de 2 px y Markdown renderizado dentro del desplegable. La vista móvil oscura de 390 px conserva la imagen española y el aviso visibles, sin desbordamiento horizontal; el texto seleccionable del aviso se amplió de 16 a 32 px.
+
+## Aviso general del sitio
+
+El banner indica "Traducción al español latinoamericano con asistencia de IA. Revisión humana pendiente." Se retiró la advertencia general sobre figuras en inglés después de mostrar las ediciones españolas por defecto. Se conservan los originales desplegables, los literales técnicos y los fragmentos ilegibles registrados; el cambio no implica aprobación humana ni revisión de derechos completada.

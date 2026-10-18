@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="552" viewBox="0 0 1440 552" lang="es-419">
+<title>Árbol de Merkle con aleatoriedad</title>
+<desc>Hojas ordenadas 8, 9, 10 y 15. Pares 8-9 y 10-15 convergen en la raíz. Cada valor se combina con la cadena literal &quot;eth&quot;; Hash* conserva el asterisco.</desc>
+<defs>
+<marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="userSpaceOnUse">
+<path d="M0 0 L10 5 L0 10 Z" fill="#000"/>
+</marker>
+</defs>
+<g font-family="DejaVu Sans" font-size="28" fill="#000" stroke-linejoin="round">
+<path d="M720 89 V118 H352.5 V158 M720 118 H1085 V158" fill="none" stroke="#000" stroke-width="5"/>
+<path d="M352.5 240 V270 H170 V310 M352.5 270 H535 V310" fill="none" stroke="#000" stroke-width="5"/>
+<path d="M1085 240 V270 H900 V310 M1085 270 H1270 V310" fill="none" stroke="#000" stroke-width="5"/>
+<path d="M170 392 V423 H82 V463 M170 423 H258 V463" fill="none" stroke="#000" stroke-width="5"/>
+<path d="M535 392 V423 H447 V463 M535 423 H623 V463" fill="none" stroke="#000" stroke-width="5"/>
+<path d="M900 392 V423 H812 V463 M900 423 H988 V463" fill="none" stroke="#000" stroke-width="5"/>
+<path d="M1270 392 V423 H1182 V463 M1270 423 H1358 V463" fill="none" stroke="#000" stroke-width="5"/>
+<rect x="600" y="7" width="240" height="82" rx="15" fill="#b4d5e8" stroke="#000" stroke-width="4"/>
+<text x="720.0" y="48.0" text-anchor="middle" dominant-baseline="central" font-size="26" fill="#000">Raíz de Merkle</text>
+<rect x="232.5" y="158" width="240" height="82" rx="15" fill="#b4d5e8" stroke="#000" stroke-width="4"/>
+<text x="352.5" y="199.0" text-anchor="middle" dominant-baseline="central" font-size="28" fill="#000">Hash* 8–9</text>
+<rect x="965" y="158" width="240" height="82" rx="15" fill="#b4d5e8" stroke="#000" stroke-width="4"/>
+<text x="1085.0" y="199.0" text-anchor="middle" dominant-baseline="central" font-size="28" fill="#000">Hash* 10–15</text>
+<rect x="50" y="310" width="240" height="82" rx="15" fill="#b4d5e8" stroke="#000" stroke-width="4"/>
+<text x="170.0" y="351.0" text-anchor="middle" dominant-baseline="central" font-size="28" fill="#000">Hash* 8</text>
+<rect x="4" y="463" width="156" height="82" rx="15" fill="#b4d5e8" stroke="#000" stroke-width="4"/>
+<text x="82.0" y="504.0" text-anchor="middle" dominant-baseline="central" font-size="28" fill="#000">8</text>
+<rect x="180" y="463" width="156" height="82" rx="15" fill="#b4d5e8" stroke="#000" stroke-width="4"/>
+<text x="258.0" y="504.0" text-anchor="middle" dominant-baseline="central" font-size="28" fill="#000">&quot;eth&quot;</text>
+<rect x="415" y="310" width="240" height="82" rx="15" fill="#b4d5e8" stroke="#000" stroke-width="4"/>
+<text x="535.0" y="351.0" text-anchor="middle" dominant-baseline="central" font-size="28" fill="#000">Hash* 9</text>
+<rect x="369" y="463" width="156" height="82" rx="15" fill="#b4d5e8" stroke="#000" stroke-width="4"/>
+<text x="447.0" y="504.0" text-anchor="middle" dominant-baseline="central" font-size="28" fill="#000">9</text>
+<rect x="545" y="463" width="156" height="82" rx="15" fill="#b4d5e8" stroke="#000" stroke-width="4"/>
+<text x="623.0" y="504.0" text-anchor="middle" dominant-baseline="central" font-size="28" fill="#000">&quot;eth&quot;</text>
+<rect x="780" y="310" width="240" height="82" rx="15" fill="#b4d5e8" stroke="#000" stroke-width="4"/>
+<text x="900.0" y="351.0" text-anchor="middle" dominant-baseline="central" font-size="28" fill="#000">Hash* 10</text>
+<rect x="734" y="463" width="156" height="82" rx="15" fill="#b4d5e8" stroke="#000" stroke-width="4"/>
+<text x="812.0" y="504.0" text-anchor="middle" dominant-baseline="central" font-size="28" fill="#000">10</text>
+<rect x="910" y="463" width="156" height="82" rx="15" fill="#b4d5e8" stroke="#000" stroke-width="4"/>
+<text x="988.0" y="504.0" text-anchor="middle" dominant-baseline="central" font-size="28" fill="#000">&quot;eth&quot;</text>
+<rect x="1150" y="310" width="240" height="82" rx="15" fill="#b4d5e8" stroke="#000" stroke-width="4"/>
+<text x="1270.0" y="351.0" text-anchor="middle" dominant-baseline="central" font-size="28" fill="#000">Hash* 15</text>
+<rect x="1104" y="463" width="156" height="82" rx="15" fill="#b4d5e8" stroke="#000" stroke-width="4"/>
+<text x="1182.0" y="504.0" text-anchor="middle" dominant-baseline="central" font-size="28" fill="#000">15</text>
+<rect x="1280" y="463" width="156" height="82" rx="15" fill="#b4d5e8" stroke="#000" stroke-width="4"/>
+<text x="1358.0" y="504.0" text-anchor="middle" dominant-baseline="central" font-size="28" fill="#000">&quot;eth&quot;</text>
+</g>
+</svg>

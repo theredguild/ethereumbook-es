@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="804" height="596" viewBox="0 0 804 596" role="img" aria-labelledby="title desc">
+<title id="title">Figura 12-5. Versión editada en español</title>
+<desc id="desc">Superposición editorial en español sobre la captura histórica intacta, a escala nativa. No es una captura nativa.</desc>
+<rect id="mask-1" x="359" y="142" width="274" height="34" fill="#eff3fd"/>
+<text x="360" y="168.10" font-family="DejaVu Sans" font-size="26" font-weight="normal" fill="#101523">Copiar dirección</text>
+<rect id="mask-2" x="359" y="214" width="280" height="35" fill="#eff3fd"/>
+<text x="360" y="240.60" font-family="DejaVu Sans" font-size="26" font-weight="normal" fill="#101523">Ver código QR</text>
+<rect id="mask-3" x="359" y="285" width="325" height="36" fill="#eff3fd"/>
+<text x="360" y="310.35" font-family="DejaVu Sans" font-size="21" font-weight="normal" fill="#101523">Ver en explorador de bloques</text>
+<rect id="mask-4" x="359" y="357" width="294" height="36" fill="#eff3fd"/>
+<text x="360" y="384.10" font-family="DejaVu Sans" font-size="26" font-weight="normal" fill="#fa5c31">Revelar clave privada</text>
+<rect id="mask-5" x="359" y="430" width="227" height="34" fill="#eff3fd"/>
+<text x="360" y="456.10" font-family="DejaVu Sans" font-size="26" font-weight="normal" fill="#fa5c31">Desconectar</text>
+<rect x="0" y="522" width="804" height="74" fill="#eef2f7"/>
+<text x="18" y="551" font-family="DejaVu Sans" font-size="22" font-weight="bold" fill="#172033">Versión editada en español</text>
+<text x="18" y="577" font-family="DejaVu Sans" font-size="16" fill="#172033">Traducción educativa; no es una captura nativa.</text>
+</svg>

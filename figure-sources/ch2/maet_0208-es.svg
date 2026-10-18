@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1475" height="1440" viewBox="0 0 1475 1440">
+<title>Figura 2-8, versión editada en español</title>
+<desc>Captura histórica conservada con traducción gráfica educativa superpuesta; no es una captura nativa.</desc>
+<g font-family="DejaVu Sans">
+<rect id="mask-0208-1" x="33" y="22" width="138" height="24" fill="#ffffff"/>
+<text x="102.0" y="38.720" text-anchor="middle" font-size="11.80" fill="#000000">Red de prueba Sepolia</text>
+<rect id="mask-0208-2" x="1059" y="17" width="416" height="37" fill="#f3f5f7"/>
+<text x="1267.0" y="45.500" text-anchor="middle" font-size="25.00" fill="#454b4d">Buscar por dirección / hash /</text>
+<rect id="mask-0208-3" x="17" y="234" width="327" height="45" fill="#f7f8fc"/>
+<text x="180.5" y="267.300" text-anchor="middle" font-size="27.00" fill="#080a0b">Detalles de transacción</text>
+<rect id="mask-0208-4" x="34" y="358" width="112" height="35" fill="#16539c"/>
+<text x="90.0" y="384.860" text-anchor="middle" font-size="23.40" fill="#ffffff">Resumen</text>
+<rect id="mask-0208-5" x="192" y="358" width="65" height="35" fill="#dde0e5"/>
+<text x="224.5" y="382.300" text-anchor="middle" font-size="17.00" fill="#10131a">Estado</text>
+<rect id="mask-0208-6" x="58" y="471" width="566" height="39" fill="#ffffff"/>
+<text x="341.0" y="498.900" text-anchor="middle" font-size="21.00" fill="#ae242a">[ Esta es solo una transacción de prueba de Sepolia ]</text>
+<rect id="mask-0208-7" x="94" y="582" width="241" height="38" fill="#ffffff"/>
+<text x="214.5" y="609.800" text-anchor="middle" font-size="22.00" fill="#464b4d">Hash de transacción:</text>
+<rect id="mask-0208-8" x="94" y="661" width="114" height="38" fill="#ffffff"/>
+<text x="151.0" y="691.200" text-anchor="middle" font-size="28.00" fill="#464b4d">Estado:</text>
+<rect id="mask-0208-9" x="432" y="665" width="85" height="30" fill="#e0efeb"/>
+<text x="474.5" y="688.400" text-anchor="middle" font-size="21.00" fill="#20785e">Exitosa</text>
+<rect id="mask-0208-10" x="94" y="740" width="100" height="38" fill="#ffffff"/>
+<text x="144.0" y="769.160" text-anchor="middle" font-size="25.40" fill="#464b4d">Bloque:</text>
+<rect id="mask-0208-11" x="579" y="747" width="199" height="29" fill="#f2f2f3"/>
+<text x="678.5" y="767.100" text-anchor="middle" font-size="14.00" fill="#111111">confirmaciones de bloque</text>
+<rect id="mask-0208-12" x="94" y="821" width="177" height="38" fill="#ffffff"/>
+<text x="182.5" y="850.000" text-anchor="middle" font-size="25.00" fill="#464b4d">Fecha y hora:</text>
+<rect id="mask-0208-13" x="500" y="826" width="47" height="31" fill="#ffffff"/>
+<text x="523.5" y="848.300" text-anchor="middle" font-size="17.00" fill="#111111">atrás</text>
+<rect id="mask-0208-14" x="94" y="940" width="91" height="38" fill="#ffffff"/>
+<text x="139.5" y="970.200" text-anchor="middle" font-size="28.00" fill="#464b4d">De:</text>
+<rect id="mask-0208-15" x="94" y="1016" width="69" height="38" fill="#ffffff"/>
+<text x="128.5" y="1045.000" text-anchor="middle" font-size="25.00" fill="#464b4d">Para:</text>
+<rect id="mask-0208-16" x="94" y="1136" width="93" height="38" fill="#ffffff"/>
+<text x="140.5" y="1165.400" text-anchor="middle" font-size="26.00" fill="#464b4d">Valor:</text>
+<rect id="mask-0208-17" x="94" y="1211" width="229" height="39" fill="#ffffff"/>
+<text x="208.5" y="1241.300" text-anchor="middle" font-size="27.00" fill="#464b4d">Comisión:</text>
+<rect id="mask-0208-18" x="94" y="1287" width="170" height="38" fill="#ffffff"/>
+<text x="179.0" y="1314.400" text-anchor="middle" font-size="21.00" fill="#464b4d">Precio del gas:</text>
+<rect x="0" y="1366" width="1475" height="74" fill="#f3f5f7"/>
+<text x="20" y="1395" font-size="22" fill="#18202b">Versión editada en español</text>
+<text x="20" y="1421" font-size="16" fill="#374151">Traducción educativa; no es una captura nativa.</text>
+</g></svg>
