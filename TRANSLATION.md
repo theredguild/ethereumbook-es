@@ -56,6 +56,12 @@ La configuración de Vite sustituye el enlace de accesibilidad de Vocs `2.10.3` 
 
 Las instrucciones de instalación y vista previa están en `README.md` del repositorio. El despliegue es manual y requiere autorización; una compilación correcta no equivale a aprobación editorial ni de derechos.
 
+## Material complementario interactivo
+
+Por autorización posterior del usuario se agregan laboratorios originales de The Red Guild, con plan en `LABS_PLAN.md` y fuentes en `labs/`. Se identifican por separado y no convierten la traducción en una actualización técnica. El capítulo 6 recibe un acceso al laboratorio durante la preparación del sitio; su archivo editorial no cambia.
+
+El primer laboratorio ejecuta transacciones educativas en una EVM en memoria con reglas Shanghai. No utiliza claves ni ejemplos del libro, no solicita secretos personales y no se conecta a redes. Las convenciones terminológicas existentes siguen vigentes. Añadir laboratorios no implica aprobación humana de texto, figuras ni complementos.
+
 ## Revisión y seguimiento
 
 Cada capítulo pasa por: pendiente → borrador traducido → primera revisión de fidelidad e integridad → revisión humana → aprobado. Registrar el estado real en `TRANSLATION_STATUS.md`; no marcar como aprobado un texto que Matta no haya validado.

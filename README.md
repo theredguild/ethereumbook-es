@@ -62,6 +62,28 @@ VOCS_BASE_PATH=/ethereumbook-es npm run preview
 
 Abrir `http://localhost:4173/ethereumbook-es/`. El workflow obtiene `VOCS_BASE_PATH` y `VOCS_BASE_URL` de `actions/configure-pages`; no se fija un dominio de publicación sin aprobarlo.
 
+## Laboratorios interactivos
+
+El plan por capítulo está en [LABS_PLAN.md](LABS_PLAN.md). El primer laboratorio corresponde al capítulo 6 y se abre en `/labs/transactions/`, o en `/ethereumbook-es/labs/transactions/` bajo esa subruta. Es material complementario de The Red Guild, no parte del texto original.
+
+Permite construir y firmar transacciones EIP-1559, inspeccionar sus bytes, enviarlas a una cola educativa, reemplazarlas e incluirlas en una EVM local. Los recibos muestran gas usado, precio efectivo, quema, propina y cambios de cuentas. Incluye casos de nonce futuro, comisión bloqueada, `REVERT` y agotamiento de gas.
+
+La interfaz muestra un paso por vez: Preparar → Revisar → Incluir → Resultado. Se avanza solo al firmar, admitir bytes en la cola o incluir realmente una transacción. Los bloqueos permanecen en la cola; un fallo incluido sí muestra su recibo. Los campos avanzados, bytes, comparaciones de cuentas y fórmulas están en desplegables cerrados. Se pueden consultar pendientes y recibos anteriores sin confundirlos con el borrador actual. Elegir otro ejercicio conserva el estado; reiniciar lo descarta solo tras confirmar el reinicio.
+
+No requiere billetera, RPC, base de datos ni servidor de aplicación. Firma y ejecución ocurren en un Worker con EthereumJS `10.1.3`. Usa cadena educativa `31337`, reglas Shanghai y una clave conocida públicamente. Los saldos son ficticios. Nunca enviar fondos reales a estas direcciones ni importar la clave en una billetera. La cola, los bloques y su política de reemplazo son modelos educativos, no una red ni una implementación de consenso.
+
+`npm run build` prepara las páginas, compila `labs/transactions/` dentro del árbol público generado y luego compila Vocs. Un solo artefacto, `dist/public/`, contiene libro y laboratorio. El preparador añade una tarjeta de práctica opcional después de los dos párrafos introductorios del capítulo 6, sin editar su fuente. Su botón de navegación HTML nativa tiene fondo contrastante, borde y foco visible. La barra lateral lleva a `/laboratorios`, donde se reutiliza ese estilo. Los botones evitan enviar la página independiente al router de Waku. La paginación permanece entre páginas Vocs y se conserva la comprobación de enlaces del libro.
+
+```sh
+npm run test:labs
+npm run build
+npm run preview
+```
+
+Las pruebas ejecutan transacciones contra una EVM en memoria. No usan redes ni ejemplos del libro. `npm run dev` también prepara el laboratorio, pero sus fuentes independientes no tienen recarga en caliente: tras editarlas, ejecutar `npm run build:labs` o reiniciar desarrollo. Para acceso por IP HTTP de una VM, usar la vista previa de producción descrita más abajo.
+
+Una vez inicializado el Worker, firma, cola, ejecución y reinicio funcionan sin conexión. Esto no ofrece instalación offline ni permite recargar la página sin recursos en caché. Recarga y reinicio descartan el estado; no se persisten cuentas, pendientes ni recibos.
+
 ## Regeneración de diagramas
 
 Las fuentes editables de las figuras localizadas se conservan en `figure-sources/`, fuera del árbol público. `figure-sources/manifest.json` relaciona cada fuente con su PNG publicado y registra los originales, las etiquetas traducidas, los literales conservados y las revisiones pendientes. Las capturas de aplicaciones permanecen intactas; sus explicaciones se agregan como notas de la traducción.

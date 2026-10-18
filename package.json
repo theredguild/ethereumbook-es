@@ -6,15 +6,23 @@
     "node": "^26.0.0"
   },
   "scripts": {
-    "predev": "node scripts/prepare-vocs.mjs",
+    "predev": "npm run prepare:site",
     "dev": "vite",
-    "prebuild": "node scripts/prepare-vocs.mjs",
+    "prebuild": "npm run prepare:site",
     "build": "vite build",
+    "prepare:site": "node scripts/prepare-vocs.mjs && npm run build:labs",
+    "build:labs": "vite build --config labs/vite.config.mjs",
+    "test:labs": "node --test labs/transactions/engine.test.mjs",
     "preview": "vocs preview",
     "prepreview:host": "npm run build",
     "preview:host": "vocs preview --host 0.0.0.0 --port 5173"
   },
   "devDependencies": {
+    "@ethereumjs/block": "10.1.3",
+    "@ethereumjs/common": "10.1.3",
+    "@ethereumjs/tx": "10.1.3",
+    "@ethereumjs/util": "10.1.3",
+    "@ethereumjs/vm": "10.1.3",
     "@vitejs/plugin-react": "6.1.2",
     "react": "19.3.1",
     "react-dom": "19.3.1",

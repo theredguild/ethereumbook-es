@@ -1,5 +1,6 @@
 import { cp, mkdir, readFile, rm, writeFile } from 'node:fs/promises'
 import { fileURLToPath } from 'node:url'
+import { siteBase } from './site-path.mjs'
 
 const root = new URL('../', import.meta.url)
 const generated = new URL('.vocs-content/', root)
@@ -23,7 +24,19 @@ const pages = [
   ...editorial.map(([, name]) => [`${name}.md`, name]),
 ]
 for (const [source, destination] of pages) {
-  const content = await readFile(new URL(source, root), 'utf8')
+  let content = await readFile(new URL(source, root), 'utf8')
+  if (destination === 'chapter_6') {
+    const lab = `<aside class="book-lab" aria-label="Práctica opcional: laboratorio de transacciones">
+<p class="book-lab__label">Práctica opcional</p>
+<p class="book-lab__title">Laboratorio de transacciones</p>
+<p>Practica el flujo de una transacción EIP-1559: preparar, firmar, incluir y observar el resultado. Todo ocurre en una EVM local, sin billetera ni fondos reales.</p>
+<form class="book-lab__launch" method="get" action="${siteBase}labs/transactions/"><button class="book-lab__action" type="submit">Abrir laboratorio de transacciones <span aria-hidden="true">→</span></button></form>
+<p class="book-lab__note">Complemento de The Red Guild; no forma parte del texto original.</p>
+</aside>`
+    const introductionEnd = content.indexOf('\n## ')
+    if (introductionEnd === -1) throw new Error('No se encontró el final de la introducción del capítulo 6.')
+    content = `${content.slice(0, introductionEnd)}\n\n${lab}\n${content.slice(introductionEnd)}`
+  }
   // This reading site uses keyword search, not Vocs' external AI chat shortcuts.
   await writeFile(new URL(`pages/${destination}.md`, generated), `---\nshowAskAi: false\n---\n\n${content}`)
 }
@@ -34,6 +47,7 @@ await cp(new URL('src/favicon.svg', root), new URL('public/favicon.svg', generat
 const sidebar = [
   ...chapters.map(([, text, name]) => ({ text, link: name === 'intro' ? '/' : `/${name}` })),
   { text: 'Traducción', items: editorial.map(([text, name]) => ({ text, link: `/${name}` })) },
+  { text: 'Laboratorios', link: '/laboratorios' },
 ]
 await writeFile(new URL('sidebar.json', generated), `${JSON.stringify(sidebar, null, 2)}\n`)
 console.log(`Vocs: ${chapters.length} páginas del libro y ${editorial.length} documentos preparados en ${fileURLToPath(generated)}`)

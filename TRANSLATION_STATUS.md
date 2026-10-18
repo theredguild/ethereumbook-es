@@ -80,3 +80,9 @@ Registro histórico. Esta etapa conservaba los originales primero; el orden actu
 - Por instrucción del usuario se invirtió la presentación de las 56 parejas. La imagen editada en español precede a su leyenda, seguida por un aviso visible de traducción mediante inteligencia artificial, revisión humana pendiente y carácter no nativo de la captura.
 - El original en inglés y la explicación de sus controles permanecen en un desplegable cerrado con el número de figura. Las descripciones, etiquetas seleccionables, advertencias y aclaraciones españolas quedan visibles.
 - No se modificaron imágenes, leyendas, datos ni ejemplos. La figura 12-9 y los diagramas no cambiaron. Los registros anteriores describen el orden utilizado durante sus respectivos cotejos.
+
+## Laboratorios complementarios
+
+- Se agregó `LABS_PLAN.md` con una propuesta para cada uno de los 17 capítulos. Se implementó el primero acordado, transacciones del capítulo 6; los otros 16 permanecen pendientes.
+- El laboratorio usa firma, serialización y ejecución EVM reales en el navegador, con cuentas públicas educativas y ETH ficticios. La cola y los bloques se identifican como modelos didácticos. No se ejecutan ejemplos del libro ni se realizan transacciones de red.
+- El acceso se incorpora al sitio generado y a su navegación, sin modificar los capítulos, sus ejemplos ni sus figuras. Las pruebas del complemento no equivalen a revisión o aprobación editorial humana.

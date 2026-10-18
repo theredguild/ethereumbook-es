@@ -2,3 +2,45 @@
 math [mathcolor] {
   color: inherit;
 }
+
+/* Supplemental practice stays distinct from the translated chapter. */
+.book-lab {
+  margin: 1.75rem 0;
+  padding: 1.25rem;
+  border: 1px solid var(--vocs-border-color-primary);
+  border-inline-start: 4px solid var(--vocs-color-accent);
+  border-radius: 0.5rem;
+  background: var(--vocs-background-color-surface);
+}
+.book-lab p { margin: 0.65rem 0; }
+.book-lab .book-lab__label {
+  margin-top: 0;
+  color: var(--vocs-text-color-secondary);
+  font-size: 0.75rem;
+  font-weight: 650;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.book-lab .book-lab__title { font-size: 1.125rem; font-weight: 700; }
+.book-lab__launch { margin: 1rem 0; }
+.book-lab__action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  max-width: 100%;
+  min-height: 44px;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--vocs-color-accent);
+  border-radius: 0.375rem;
+  background: var(--vocs-color-accent);
+  color: var(--vocs-color-accentInvert);
+  font: inherit;
+  font-weight: 650;
+  line-height: 1.4;
+  text-align: start;
+  cursor: pointer;
+}
+.book-lab__action:hover { text-decoration: underline; text-underline-offset: 0.2em; }
+.book-lab__action:focus-visible { outline: 3px solid var(--vocs-color-accent); outline-offset: 4px; }
+.book-lab .book-lab__note { margin-bottom: 0; color: var(--vocs-text-color-secondary); font-size: 0.8rem; }

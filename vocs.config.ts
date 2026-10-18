@@ -2,9 +2,8 @@ import rehypeRaw from 'rehype-raw'
 import { visit } from 'unist-util-visit'
 import { defineConfig } from 'vocs/config'
 import plainMarkdown from './scripts/plain-markdown.mjs'
+import { siteBase as basePath } from './scripts/site-path.mjs'
 import sidebar from './.vocs-content/sidebar.json' with { type: 'json' }
-
-const basePath = process.env.VOCS_BASE_PATH || '/'
 
 // Adapt rendered URLs and language, never editorial sources or code examples.
 function bookMarkup() {
@@ -15,6 +14,9 @@ function bookMarkup() {
     visit(tree, 'element', (node) => {
       if (node.tagName === 'img' && typeof node.properties.src === 'string' && /^(?:\.\/)?images\//.test(node.properties.src)) {
         node.properties.src = `${basePath.replace(/\/$/, '')}/${node.properties.src.replace(/^\.\//, '')}`
+      }
+      if (node.tagName === 'form' && typeof node.properties.action === 'string' && node.properties.action.startsWith('./labs/')) {
+        node.properties.action = `${basePath}${node.properties.action.slice(2)}`
       }
       if (node.tagName !== 'a' || typeof node.properties?.href !== 'string') return
       const href = node.properties.href
