@@ -1,0 +1,512 @@
+{
+  "BeforeEffectsVault": {
+    "name": "BeforeEffectsVault",
+    "file": "labs/security/contracts.sol",
+    "sourceHash": "0x22b49925b5fd7a2065df9af68a4a8590046fa419f475429fbd0a1600c8838eea",
+    "sourceHashes": {
+      "labs/security/contracts.sol": "0x22b49925b5fd7a2065df9af68a4a8590046fa419f475429fbd0a1600c8838eea"
+    },
+    "compiler": "Solidity 0.8.30+commit.73712a01.Emscripten.clang",
+    "evmVersion": "shanghai",
+    "optimizer": {
+      "enabled": true,
+      "runs": 200
+    },
+    "abi": [
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "account",
+            "type": "address"
+          },
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "amount",
+            "type": "uint256"
+          }
+        ],
+        "name": "Deposited",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "account",
+            "type": "address"
+          },
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "amount",
+            "type": "uint256"
+          }
+        ],
+        "name": "Withdrawn",
+        "type": "event"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "name": "credit",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "deposit",
+        "outputs": [],
+        "stateMutability": "payable",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "held",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "withdraw",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      }
+    ],
+    "bytecode": "0x6080604052348015600e575f5ffd5b506102e88061001c5f395ff3fe60806040526004361061003e575f3560e01c80633ccfd60b14610042578063a285aed714610058578063d0e30db014610078578063d5d44d8014610080575b5f5ffd5b34801561004d575f5ffd5b506100566100ab565b005b348015610063575f5ffd5b50475b60405190815260200160405180910390f35b6100566101c6565b34801561008b575f5ffd5b5061006661009a366004610260565b5f6020819052908152604090205481565b335f90815260208190526040902054806100fa5760405162461bcd60e51b815260206004820152600b60248201526a53696e206372656469746f60a81b60448201526064015b60405180910390fd5b6040515f90339083908381818185875af1925050503d805f8114610139576040519150601f19603f3d011682016040523d82523d5f602084013e61013e565b606091505b505090508061017f5760405162461bcd60e51b815260206004820152600d60248201526c456e76696f2066616c6c69646f60981b60448201526064016100f1565b335f818152602081815260408083209290925590518481527f7084f5476618d8e60b11ef0d7d3f06914655adb8793e28ff7f018d4c76d505d5910160405180910390a25050565b5f34116102065760405162461bcd60e51b815260206004820152600e60248201526d4465706f7369746f20766163696f60901b60448201526064016100f1565b335f908152602081905260408120805434929061022490849061028d565b909155505060405134815233907f2da466a7b24304f47e87fa2e1e5a81b9831ce54fec19055ce277ca2f39ba42c49060200160405180910390a2565b5f60208284031215610270575f5ffd5b81356001600160a01b0381168114610286575f5ffd5b9392505050565b808201808211156102ac57634e487b7160e01b5f52601160045260245ffd5b9291505056fea2646970667358221220c08be58da9ad546c3cf9f14411494334db6077e19dd0bbaf9830cf9550ba058f64736f6c634300081e0033",
+    "runtimeBytecode": "0x60806040526004361061003e575f3560e01c80633ccfd60b14610042578063a285aed714610058578063d0e30db014610078578063d5d44d8014610080575b5f5ffd5b34801561004d575f5ffd5b506100566100ab565b005b348015610063575f5ffd5b50475b60405190815260200160405180910390f35b6100566101c6565b34801561008b575f5ffd5b5061006661009a366004610260565b5f6020819052908152604090205481565b335f90815260208190526040902054806100fa5760405162461bcd60e51b815260206004820152600b60248201526a53696e206372656469746f60a81b60448201526064015b60405180910390fd5b6040515f90339083908381818185875af1925050503d805f8114610139576040519150601f19603f3d011682016040523d82523d5f602084013e61013e565b606091505b505090508061017f5760405162461bcd60e51b815260206004820152600d60248201526c456e76696f2066616c6c69646f60981b60448201526064016100f1565b335f818152602081815260408083209290925590518481527f7084f5476618d8e60b11ef0d7d3f06914655adb8793e28ff7f018d4c76d505d5910160405180910390a25050565b5f34116102065760405162461bcd60e51b815260206004820152600e60248201526d4465706f7369746f20766163696f60901b60448201526064016100f1565b335f908152602081905260408120805434929061022490849061028d565b909155505060405134815233907f2da466a7b24304f47e87fa2e1e5a81b9831ce54fec19055ce277ca2f39ba42c49060200160405180910390a2565b5f60208284031215610270575f5ffd5b81356001600160a01b0381168114610286575f5ffd5b9392505050565b808201808211156102ac57634e487b7160e01b5f52601160045260245ffd5b9291505056fea2646970667358221220c08be58da9ad546c3cf9f14411494334db6077e19dd0bbaf9830cf9550ba058f64736f6c634300081e0033",
+    "storageLayout": {
+      "storage": [
+        {
+          "astId": 5,
+          "contract": "labs/security/contracts.sol:BeforeEffectsVault",
+          "label": "credit",
+          "offset": 0,
+          "slot": "0",
+          "type": "t_mapping(t_address,t_uint256)"
+        }
+      ],
+      "types": {
+        "t_address": {
+          "encoding": "inplace",
+          "label": "address",
+          "numberOfBytes": "20"
+        },
+        "t_mapping(t_address,t_uint256)": {
+          "encoding": "mapping",
+          "key": "t_address",
+          "label": "mapping(address => uint256)",
+          "numberOfBytes": "32",
+          "value": "t_uint256"
+        },
+        "t_uint256": {
+          "encoding": "inplace",
+          "label": "uint256",
+          "numberOfBytes": "32"
+        }
+      }
+    }
+  },
+  "BlockAllVault": {
+    "name": "BlockAllVault",
+    "file": "labs/security/contracts.sol",
+    "sourceHash": "0x22b49925b5fd7a2065df9af68a4a8590046fa419f475429fbd0a1600c8838eea",
+    "sourceHashes": {
+      "labs/security/contracts.sol": "0x22b49925b5fd7a2065df9af68a4a8590046fa419f475429fbd0a1600c8838eea"
+    },
+    "compiler": "Solidity 0.8.30+commit.73712a01.Emscripten.clang",
+    "evmVersion": "shanghai",
+    "optimizer": {
+      "enabled": true,
+      "runs": 200
+    },
+    "abi": [
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "account",
+            "type": "address"
+          },
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "amount",
+            "type": "uint256"
+          }
+        ],
+        "name": "Deposited",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "account",
+            "type": "address"
+          },
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "amount",
+            "type": "uint256"
+          }
+        ],
+        "name": "Withdrawn",
+        "type": "event"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "name": "credit",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "deposit",
+        "outputs": [],
+        "stateMutability": "payable",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "held",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "withdraw",
+        "outputs": [],
+        "stateMutability": "pure",
+        "type": "function"
+      }
+    ],
+    "bytecode": "0x6080604052348015600e575f5ffd5b5061021a8061001c5f395ff3fe60806040526004361061003e575f3560e01c80633ccfd60b14610042578063a285aed714610058578063d0e30db014610078578063d5d44d8014610080575b5f5ffd5b34801561004d575f5ffd5b506100566100ab565b005b348015610063575f5ffd5b50475b60405190815260200160405180910390f35b6100566100f8565b34801561008b575f5ffd5b5061006661009a366004610192565b5f6020819052908152604090205481565b60405162461bcd60e51b815260206004820152601b60248201527f426c6f717565617220746f646f206e6f2065732072657061726172000000000060448201526064015b60405180910390fd5b5f34116101385760405162461bcd60e51b815260206004820152600e60248201526d4465706f7369746f20766163696f60901b60448201526064016100ef565b335f90815260208190526040812080543492906101569084906101bf565b909155505060405134815233907f2da466a7b24304f47e87fa2e1e5a81b9831ce54fec19055ce277ca2f39ba42c49060200160405180910390a2565b5f602082840312156101a2575f5ffd5b81356001600160a01b03811681146101b8575f5ffd5b9392505050565b808201808211156101de57634e487b7160e01b5f52601160045260245ffd5b9291505056fea2646970667358221220690205bd55328010082da7bc2bb341b355df4cba6e9a285c4f1cabd95981385064736f6c634300081e0033",
+    "runtimeBytecode": "0x60806040526004361061003e575f3560e01c80633ccfd60b14610042578063a285aed714610058578063d0e30db014610078578063d5d44d8014610080575b5f5ffd5b34801561004d575f5ffd5b506100566100ab565b005b348015610063575f5ffd5b50475b60405190815260200160405180910390f35b6100566100f8565b34801561008b575f5ffd5b5061006661009a366004610192565b5f6020819052908152604090205481565b60405162461bcd60e51b815260206004820152601b60248201527f426c6f717565617220746f646f206e6f2065732072657061726172000000000060448201526064015b60405180910390fd5b5f34116101385760405162461bcd60e51b815260206004820152600e60248201526d4465706f7369746f20766163696f60901b60448201526064016100ef565b335f90815260208190526040812080543492906101569084906101bf565b909155505060405134815233907f2da466a7b24304f47e87fa2e1e5a81b9831ce54fec19055ce277ca2f39ba42c49060200160405180910390a2565b5f602082840312156101a2575f5ffd5b81356001600160a01b03811681146101b8575f5ffd5b9392505050565b808201808211156101de57634e487b7160e01b5f52601160045260245ffd5b9291505056fea2646970667358221220690205bd55328010082da7bc2bb341b355df4cba6e9a285c4f1cabd95981385064736f6c634300081e0033",
+    "storageLayout": {
+      "storage": [
+        {
+          "astId": 5,
+          "contract": "labs/security/contracts.sol:BlockAllVault",
+          "label": "credit",
+          "offset": 0,
+          "slot": "0",
+          "type": "t_mapping(t_address,t_uint256)"
+        }
+      ],
+      "types": {
+        "t_address": {
+          "encoding": "inplace",
+          "label": "address",
+          "numberOfBytes": "20"
+        },
+        "t_mapping(t_address,t_uint256)": {
+          "encoding": "mapping",
+          "key": "t_address",
+          "label": "mapping(address => uint256)",
+          "numberOfBytes": "32",
+          "value": "t_uint256"
+        },
+        "t_uint256": {
+          "encoding": "inplace",
+          "label": "uint256",
+          "numberOfBytes": "32"
+        }
+      }
+    }
+  },
+  "EffectsFirstVault": {
+    "name": "EffectsFirstVault",
+    "file": "labs/security/contracts.sol",
+    "sourceHash": "0x22b49925b5fd7a2065df9af68a4a8590046fa419f475429fbd0a1600c8838eea",
+    "sourceHashes": {
+      "labs/security/contracts.sol": "0x22b49925b5fd7a2065df9af68a4a8590046fa419f475429fbd0a1600c8838eea"
+    },
+    "compiler": "Solidity 0.8.30+commit.73712a01.Emscripten.clang",
+    "evmVersion": "shanghai",
+    "optimizer": {
+      "enabled": true,
+      "runs": 200
+    },
+    "abi": [
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "account",
+            "type": "address"
+          },
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "amount",
+            "type": "uint256"
+          }
+        ],
+        "name": "Deposited",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "account",
+            "type": "address"
+          },
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "amount",
+            "type": "uint256"
+          }
+        ],
+        "name": "Withdrawn",
+        "type": "event"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "name": "credit",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "deposit",
+        "outputs": [],
+        "stateMutability": "payable",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "held",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "withdraw",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      }
+    ],
+    "bytecode": "0x6080604052348015600e575f5ffd5b506102e98061001c5f395ff3fe60806040526004361061003e575f3560e01c80633ccfd60b14610042578063a285aed714610058578063d0e30db014610078578063d5d44d8014610080575b5f5ffd5b34801561004d575f5ffd5b506100566100ab565b005b348015610063575f5ffd5b50475b60405190815260200160405180910390f35b6100566101c7565b34801561008b575f5ffd5b5061006661009a366004610261565b5f6020819052908152604090205481565b335f90815260208190526040902054806100fa5760405162461bcd60e51b815260206004820152600b60248201526a53696e206372656469746f60a81b60448201526064015b60405180910390fd5b335f818152602081905260408082208290555190919083908381818185875af1925050503d805f8114610148576040519150601f19603f3d011682016040523d82523d5f602084013e61014d565b606091505b505090508061018e5760405162461bcd60e51b815260206004820152600d60248201526c456e76696f2066616c6c69646f60981b60448201526064016100f1565b60405182815233907f7084f5476618d8e60b11ef0d7d3f06914655adb8793e28ff7f018d4c76d505d59060200160405180910390a25050565b5f34116102075760405162461bcd60e51b815260206004820152600e60248201526d4465706f7369746f20766163696f60901b60448201526064016100f1565b335f908152602081905260408120805434929061022590849061028e565b909155505060405134815233907f2da466a7b24304f47e87fa2e1e5a81b9831ce54fec19055ce277ca2f39ba42c49060200160405180910390a2565b5f60208284031215610271575f5ffd5b81356001600160a01b0381168114610287575f5ffd5b9392505050565b808201808211156102ad57634e487b7160e01b5f52601160045260245ffd5b9291505056fea2646970667358221220157996484421cc11009b327f7baa96f55fdda93d675b0aff1f1a70207ed5384164736f6c634300081e0033",
+    "runtimeBytecode": "0x60806040526004361061003e575f3560e01c80633ccfd60b14610042578063a285aed714610058578063d0e30db014610078578063d5d44d8014610080575b5f5ffd5b34801561004d575f5ffd5b506100566100ab565b005b348015610063575f5ffd5b50475b60405190815260200160405180910390f35b6100566101c7565b34801561008b575f5ffd5b5061006661009a366004610261565b5f6020819052908152604090205481565b335f90815260208190526040902054806100fa5760405162461bcd60e51b815260206004820152600b60248201526a53696e206372656469746f60a81b60448201526064015b60405180910390fd5b335f818152602081905260408082208290555190919083908381818185875af1925050503d805f8114610148576040519150601f19603f3d011682016040523d82523d5f602084013e61014d565b606091505b505090508061018e5760405162461bcd60e51b815260206004820152600d60248201526c456e76696f2066616c6c69646f60981b60448201526064016100f1565b60405182815233907f7084f5476618d8e60b11ef0d7d3f06914655adb8793e28ff7f018d4c76d505d59060200160405180910390a25050565b5f34116102075760405162461bcd60e51b815260206004820152600e60248201526d4465706f7369746f20766163696f60901b60448201526064016100f1565b335f908152602081905260408120805434929061022590849061028e565b909155505060405134815233907f2da466a7b24304f47e87fa2e1e5a81b9831ce54fec19055ce277ca2f39ba42c49060200160405180910390a2565b5f60208284031215610271575f5ffd5b81356001600160a01b0381168114610287575f5ffd5b9392505050565b808201808211156102ad57634e487b7160e01b5f52601160045260245ffd5b9291505056fea2646970667358221220157996484421cc11009b327f7baa96f55fdda93d675b0aff1f1a70207ed5384164736f6c634300081e0033",
+    "storageLayout": {
+      "storage": [
+        {
+          "astId": 5,
+          "contract": "labs/security/contracts.sol:EffectsFirstVault",
+          "label": "credit",
+          "offset": 0,
+          "slot": "0",
+          "type": "t_mapping(t_address,t_uint256)"
+        }
+      ],
+      "types": {
+        "t_address": {
+          "encoding": "inplace",
+          "label": "address",
+          "numberOfBytes": "20"
+        },
+        "t_mapping(t_address,t_uint256)": {
+          "encoding": "mapping",
+          "key": "t_address",
+          "label": "mapping(address => uint256)",
+          "numberOfBytes": "32",
+          "value": "t_uint256"
+        },
+        "t_uint256": {
+          "encoding": "inplace",
+          "label": "uint256",
+          "numberOfBytes": "32"
+        }
+      }
+    }
+  },
+  "RecursiveCaller": {
+    "name": "RecursiveCaller",
+    "file": "labs/security/contracts.sol",
+    "sourceHash": "0x22b49925b5fd7a2065df9af68a4a8590046fa419f475429fbd0a1600c8838eea",
+    "sourceHashes": {
+      "labs/security/contracts.sol": "0x22b49925b5fd7a2065df9af68a4a8590046fa419f475429fbd0a1600c8838eea"
+    },
+    "compiler": "Solidity 0.8.30+commit.73712a01.Emscripten.clang",
+    "evmVersion": "shanghai",
+    "optimizer": {
+      "enabled": true,
+      "runs": 200
+    },
+    "abi": [
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "target",
+            "type": "address"
+          }
+        ],
+        "stateMutability": "nonpayable",
+        "type": "constructor"
+      },
+      {
+        "inputs": [],
+        "name": "attempt",
+        "outputs": [],
+        "stateMutability": "payable",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "callbacks",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "held",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "owner",
+        "outputs": [
+          {
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "vault",
+        "outputs": [
+          {
+            "internalType": "contract VaultBase",
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "stateMutability": "payable",
+        "type": "receive"
+      }
+    ],
+    "bytecode": "0x60c060405234801561000f575f5ffd5b506040516104c43803806104c483398101604081905261002e91610043565b6001600160a01b03166080523360a052610070565b5f60208284031215610053575f5ffd5b81516001600160a01b0381168114610069575f5ffd5b9392505050565b60805160a0516104126100b25f395f818161018f015261021901525f8181605b0152818160dc015281816101ec015281816102d9015261034901526104125ff3fe60806040526004361061004b575f3560e01c8062b127831461014f578063732b7a8d146101765780638da5cb5b1461017e578063a285aed7146101c9578063fbfa77cf146101db575f5ffd5b3661014b57336001600160a01b037f000000000000000000000000000000000000000000000000000000000000000016146100ba5760405162461bcd60e51b815260206004820152600a60248201526914dbdb1bc81d985d5b1d60b21b60448201526064015b60405180910390fd5b60015f5f8282546100cb91906103b7565b90915550505f5460031115610149577f00000000000000000000000000000000000000000000000000000000000000006001600160a01b0316633ccfd60b6040518163ffffffff1660e01b81526004015f604051808303815f87803b158015610132575f5ffd5b505af1158015610144573d5f5f3e3d5ffd5b505050505b005b5f5ffd5b34801561015a575f5ffd5b506101635f5481565b6040519081526020015b60405180910390f35b61014961020e565b348015610189575f5ffd5b506101b17f000000000000000000000000000000000000000000000000000000000000000081565b6040516001600160a01b03909116815260200161016d565b3480156101d4575f5ffd5b5047610163565b3480156101e6575f5ffd5b506101b17f000000000000000000000000000000000000000000000000000000000000000081565b336001600160a01b037f0000000000000000000000000000000000000000000000000000000000000000161461027d5760405162461bcd60e51b8152602060048201526014602482015273536f6c6f206163746f722065647563617469766f60601b60448201526064016100b1565b34670de0b6b3a764000014801561029357505f54155b6102d75760405162461bcd60e51b8152602060048201526015602482015274125b9d195b9d1bc81919481d5b98481d5b9a591859605a1b60448201526064016100b1565b7f00000000000000000000000000000000000000000000000000000000000000006001600160a01b031663d0e30db0346040518263ffffffff1660e01b81526004015f604051808303818588803b158015610330575f5ffd5b505af1158015610342573d5f5f3e3d5ffd5b50505050507f00000000000000000000000000000000000000000000000000000000000000006001600160a01b0316633ccfd60b6040518163ffffffff1660e01b81526004015f604051808303815f87803b15801561039f575f5ffd5b505af11580156103b1573d5f5f3e3d5ffd5b50505050565b808201808211156103d657634e487b7160e01b5f52601160045260245ffd5b9291505056fea26469706673582212200ebec6d3887672f4bf482e1d31d03fe7fa3809fed30308c5f770698ae0058a3764736f6c634300081e0033",
+    "runtimeBytecode": "0x60806040526004361061004b575f3560e01c8062b127831461014f578063732b7a8d146101765780638da5cb5b1461017e578063a285aed7146101c9578063fbfa77cf146101db575f5ffd5b3661014b57336001600160a01b037f000000000000000000000000000000000000000000000000000000000000000016146100ba5760405162461bcd60e51b815260206004820152600a60248201526914dbdb1bc81d985d5b1d60b21b60448201526064015b60405180910390fd5b60015f5f8282546100cb91906103b7565b90915550505f5460031115610149577f00000000000000000000000000000000000000000000000000000000000000006001600160a01b0316633ccfd60b6040518163ffffffff1660e01b81526004015f604051808303815f87803b158015610132575f5ffd5b505af1158015610144573d5f5f3e3d5ffd5b505050505b005b5f5ffd5b34801561015a575f5ffd5b506101635f5481565b6040519081526020015b60405180910390f35b61014961020e565b348015610189575f5ffd5b506101b17f000000000000000000000000000000000000000000000000000000000000000081565b6040516001600160a01b03909116815260200161016d565b3480156101d4575f5ffd5b5047610163565b3480156101e6575f5ffd5b506101b17f000000000000000000000000000000000000000000000000000000000000000081565b336001600160a01b037f0000000000000000000000000000000000000000000000000000000000000000161461027d5760405162461bcd60e51b8152602060048201526014602482015273536f6c6f206163746f722065647563617469766f60601b60448201526064016100b1565b34670de0b6b3a764000014801561029357505f54155b6102d75760405162461bcd60e51b8152602060048201526015602482015274125b9d195b9d1bc81919481d5b98481d5b9a591859605a1b60448201526064016100b1565b7f00000000000000000000000000000000000000000000000000000000000000006001600160a01b031663d0e30db0346040518263ffffffff1660e01b81526004015f604051808303818588803b158015610330575f5ffd5b505af1158015610342573d5f5f3e3d5ffd5b50505050507f00000000000000000000000000000000000000000000000000000000000000006001600160a01b0316633ccfd60b6040518163ffffffff1660e01b81526004015f604051808303815f87803b15801561039f575f5ffd5b505af11580156103b1573d5f5f3e3d5ffd5b50505050565b808201808211156103d657634e487b7160e01b5f52601160045260245ffd5b9291505056fea26469706673582212200ebec6d3887672f4bf482e1d31d03fe7fa3809fed30308c5f770698ae0058a3764736f6c634300081e0033",
+    "storageLayout": {
+      "storage": [
+        {
+          "astId": 185,
+          "contract": "labs/security/contracts.sol:RecursiveCaller",
+          "label": "callbacks",
+          "offset": 0,
+          "slot": "0",
+          "type": "t_uint256"
+        }
+      ],
+      "types": {
+        "t_uint256": {
+          "encoding": "inplace",
+          "label": "uint256",
+          "numberOfBytes": "32"
+        }
+      }
+    }
+  }
+}

@@ -83,6 +83,10 @@ Registro histórico. Esta etapa conservaba los originales primero; el orden actu
 
 ## Laboratorios complementarios
 
-- Se agregó `LABS_PLAN.md` con una propuesta para cada uno de los 17 capítulos. Se implementó el primero acordado, transacciones del capítulo 6; los otros 16 permanecen pendientes.
-- El laboratorio usa firma, serialización y ejecución EVM reales en el navegador, con cuentas públicas educativas y ETH ficticios. La cola y los bloques se identifican como modelos didácticos. No se ejecutan ejemplos del libro ni se realizan transacciones de red.
-- El acceso se incorpora al sitio generado y a su navegación, sin modificar los capítulos, sus ejemplos ni sus figuras. Las pruebas del complemento no equivalen a revisión o aprobación editorial humana.
+- Se implementaron laboratorios complementarios para los 17 capítulos, con recorridos guiados y acceso desde el sitio generado. El plan y el estado de comprobación por capítulo están en `LABS_PLAN.md`; los hallazgos y revisiones asistidas, en `LABS_REVIEW.md`.
+- Firma, serialización, ejecución EVM, hashes y derivación HD son reales. Solidity y Vyper compilan fuentes propias editables en el navegador; los capítulos 16 y 17 generan y verifican pruebas Groth16 reales de relaciones acotadas. Red, consenso y economía se identifican como modelos educativos con límites explícitos.
+- No se solicitan secretos personales ni se conectan billeteras, proveedores RPC o redes Ethereum. Cuentas y saldos son educativos; el estado permanece en memoria. No se ejecutan ejemplos del libro ni se realizan transacciones de red.
+- Accesos y navegación se incorporan al sitio generado sin modificar capítulos, ejemplos ni figuras. Las comprobaciones del complemento no equivalen a aprobación editorial o de accesibilidad humana.
+- El software complementario y sus runtimes tienen licencias separadas del libro. Se incluyen textos, inventarios y fuentes para modificación. La licencia real de Vyper 0.4.3 tiene una adición restrictiva pendiente de revisión jurídica humana antes de publicar ese compilador.
+- El primer laboratorio se publicó en `develop` y `main` con el commit firmado `8b8fd7a`. El usuario autorizó respaldar la ampliación en ambas ramas; esa autorización no equivale a aprobación editorial o jurídica. No se ejecutó un despliegue manual ni se verificó CI remota para esta ampliación.
+- Comprobación actual del complemento: `npm ci` completó con los scripts no aprobados bloqueados; `npm run test:labs` aprobó 213 pruebas sin fallos. Esto verifica modelos y contratos, no sustituye los recorridos de navegador ni implica CI remota.

@@ -18,3 +18,9 @@ La autorización comunicada excluye la portada y los elementos de diseño de O'R
 Para el piloto de capturas se consultaron etiquetas breves del catálogo `es_419` de MetaMask v13.52.0. El [aviso del repositorio de MetaMask en la revisión consultada](https://raw.githubusercontent.com/MetaMask/metamask-extension/217c943356cb96e421fe3f4737d94a36361c106c/LICENSE) indica: "Copyright ConsenSys Software Inc. 2022. All rights reserved." Contiene condiciones de uso no comercial y atribución; no se presume que la licencia del texto de este libro cubra ese catálogo, la interfaz o las marcas. La extensión no se incorpora ni se distribuye. Las versiones editadas no implican aval de MetaMask ni revisión de derechos completada.
 
 Esta traducción no implica un aval de los autores originales ni de O'Reilly.
+
+## Software de los laboratorios
+
+La licencia CC BY-SA indicada arriba corresponde al texto del libro. El software complementario original de los laboratorios y sus scripts de compilación se ofrece bajo GNU GPL versión 3 o posterior, salvo archivos con otra licencia explícita. Las dependencias conservan sus propias condiciones.
+
+La [página de laboratorios](./laboratorios) ofrece acceso a las fuentes y avisos completos. Vyper 0.4.3 incluye un texto de licencia modificado que requiere revisión humana antes de publicar ese compilador; no se presenta como una Apache-2.0 estándar. Estos avisos no modifican los derechos sobre el libro, sus figuras ni sus marcas.

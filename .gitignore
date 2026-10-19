@@ -3,3 +3,4 @@ node_modules/
 .vocs/
 .waku/
 dist/
+.cache/lab-assets/

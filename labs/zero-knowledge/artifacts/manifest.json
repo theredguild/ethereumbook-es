@@ -1,0 +1,19 @@
+{
+  "circuitSha256": "8a013bf2101e6eaa0b402fc39ac62a128f7139490fbd01b652ca03f5bd7a793f",
+  "tools": {
+    "circom2": "0.2.22",
+    "circom": "2.2.2",
+    "circomlib": "2.0.5",
+    "snarkjs": "0.7.5"
+  },
+  "curve": "bn128",
+  "power": 12,
+  "setup": "single-operator educational, not production trusted setup",
+  "phase1TranscriptSha256": "afdfeff60215b8e8a618ef6de6d65876c5e0ff73d37ed1ed0799a7d2a88b9380",
+  "phase2TranscriptSha256": "3cb1d7fda474b40a8a1c1c12abccd3974b8a455376f91efccb339392ef8ca06d",
+  "hashes": {
+    "circuit.wasm": "34e4d9712ac2867d1be61f771ac4779b38b85b88d8bdcba3a775b605d7e90610",
+    "final.zkey": "3cb1d7fda474b40a8a1c1c12abccd3974b8a455376f91efccb339392ef8ca06d",
+    "verification-key.json": "cbbb461a19e7cefcbfbdc4f09fa22ec08949e92a6d0476bb69f4e01a4e969c9b"
+  }
+}

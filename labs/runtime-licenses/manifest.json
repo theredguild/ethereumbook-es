@@ -1,0 +1,314 @@
+{
+  "format": 1,
+  "files": [
+    {
+      "file": "GPL-3.0.txt",
+      "bytes": 35148,
+      "sha256": "0ae0485a5bd37a63e63603596417e4eb0e653334fa6c7f932ca3a0e85d4af227",
+      "origin": {
+        "type": "pinned-upstream-url",
+        "url": "https://raw.githubusercontent.com/argotorg/solidity/v0.8.30/LICENSE.txt"
+      }
+    },
+    {
+      "file": "Solidity-0.8.30-third-party-notices.h.in",
+      "bytes": 15933,
+      "sha256": "1f012c981de3cb5e71e596426c6ea774e5b7e9ced4a8c285cfae50dd36e91388",
+      "origin": {
+        "type": "pinned-upstream-url",
+        "url": "https://raw.githubusercontent.com/argotorg/solidity/v0.8.30/cmake/templates/license.h.in"
+      }
+    },
+    {
+      "file": "Pyodide-0.27.7-MPL-2.0.txt",
+      "bytes": 16725,
+      "sha256": "1f256ecad192880510e84ad60474eab7589218784b9a50bc7ceee34c2b91f1d5",
+      "origin": {
+        "type": "pinned-upstream-url",
+        "url": "https://raw.githubusercontent.com/pyodide/pyodide/0.27.7/LICENSE"
+      }
+    },
+    {
+      "file": "CPython-3.12.7-LICENSE.txt",
+      "bytes": 13936,
+      "sha256": "3b2f81fe21d181c499c59a256c8e1968455d6689d269aa85373bfb6af41da3bf",
+      "origin": {
+        "type": "pinned-upstream-url",
+        "url": "https://raw.githubusercontent.com/python/cpython/v3.12.7/LICENSE"
+      }
+    },
+    {
+      "file": "CPython-3.12.7-third-party-license.rst",
+      "bytes": 53905,
+      "sha256": "bad93f2d7f71f6729b12cf0080951ace371acaf5e3fd6835118d53cd4bfd9120",
+      "origin": {
+        "type": "pinned-upstream-url",
+        "url": "https://raw.githubusercontent.com/python/cpython/v3.12.7/Doc/license.rst"
+      }
+    },
+    {
+      "file": "CPython-3.12.7-copyright.rst",
+      "bytes": 451,
+      "sha256": "9e5e6634a7f5444dd83da55ccb265bac825abf72ecddccf7e394f284636bd9df",
+      "origin": {
+        "type": "pinned-upstream-url",
+        "url": "https://raw.githubusercontent.com/python/cpython/v3.12.7/Doc/copyright.rst"
+      }
+    },
+    {
+      "file": "libffi-f08493d-LICENSE.txt",
+      "bytes": 1132,
+      "sha256": "2c9c2acb9743e6b007b91350475308aee44691d96aa20eacef8e199988c8c388",
+      "origin": {
+        "type": "pinned-upstream-url",
+        "url": "https://raw.githubusercontent.com/libffi/libffi/f08493d249d2067c8b3207ba46693dd858f95db3/LICENSE"
+      }
+    },
+    {
+      "file": "hiwire-6a1e672-LICENSE.txt",
+      "bytes": 16725,
+      "sha256": "1f256ecad192880510e84ad60474eab7589218784b9a50bc7ceee34c2b91f1d5",
+      "origin": {
+        "type": "pinned-upstream-url",
+        "url": "https://raw.githubusercontent.com/pyodide/hiwire/6a1e67280a15d929ebeceee54a6358c9c8d5f697/LICENSE"
+      }
+    },
+    {
+      "file": "snarkjs-0.7.5-COPYING.txt",
+      "bytes": 35130,
+      "sha256": "d95c74a62d14f13ebfbc8c1783c315e2ed2389e80048b264bdeddb8114dee945",
+      "origin": {
+        "type": "installed-package-file",
+        "source": "node_modules/snarkjs/COPYING"
+      }
+    },
+    {
+      "file": "solc-js-0.8.30-wrapper-LICENSE.txt",
+      "bytes": 1067,
+      "sha256": "852bcc033a46c62f99fb5ffd43b3241ba2c0c440c6034aa2114505f2c4f03c4a",
+      "origin": {
+        "type": "installed-package-file",
+        "source": "node_modules/solc/LICENSE"
+      }
+    },
+    {
+      "file": "circomlib-2.0.5-bitify.circom",
+      "bytes": 2276,
+      "sha256": "688f121303a2dd0154ceeda8d2f53a9d2d26789d10a69a46acd534642725683e",
+      "origin": {
+        "type": "installed-package-file",
+        "source": "node_modules/circomlib/circuits/bitify.circom"
+      }
+    },
+    {
+      "file": "pycryptodome-3.20.0-LICENSE.rst",
+      "bytes": 2926,
+      "sha256": "4e04660d77c1c64e89d79537919fb8240fa21484a7e3db29f358b2c7f84ea073",
+      "origin": {
+        "type": "verified-archive-member",
+        "asset": {
+          "file": "pyodide/pycryptodome-3.20.0-cp35-abi3-pyodide_2024_0_wasm32.whl",
+          "url": "https://cdn.jsdelivr.net/pyodide/v0.27.7/full/pycryptodome-3.20.0-cp35-abi3-pyodide_2024_0_wasm32.whl",
+          "sha256": "a8f3ee4c770ab953b83a1d6f21dbddea08c4b81b80bd5a6c90cd7d0500bbc3bc"
+        },
+        "member": "pycryptodome-3.20.0.dist-info/licenses/LICENSE.rst"
+      }
+    },
+    {
+      "file": "pycryptodome-3.20.0-AUTHORS.rst",
+      "bytes": 764,
+      "sha256": "1cb670b6cc5bc3a1c38d7e12cdf944442ca790425cf2a628ffbe3012445fe1e4",
+      "origin": {
+        "type": "verified-archive-member",
+        "asset": {
+          "file": "pyodide/pycryptodome-3.20.0-cp35-abi3-pyodide_2024_0_wasm32.whl",
+          "url": "https://cdn.jsdelivr.net/pyodide/v0.27.7/full/pycryptodome-3.20.0-cp35-abi3-pyodide_2024_0_wasm32.whl",
+          "sha256": "a8f3ee4c770ab953b83a1d6f21dbddea08c4b81b80bd5a6c90cd7d0500bbc3bc"
+        },
+        "member": "pycryptodome-3.20.0.dist-info/licenses/AUTHORS.rst"
+      }
+    },
+    {
+      "file": "asttokens-2.4.1-LICENSE.txt",
+      "bytes": 11357,
+      "sha256": "b40930bbcf80744c86c46a12bc9da056641d722716c378f5659b9e555ef833e1",
+      "origin": {
+        "type": "verified-archive-member",
+        "asset": {
+          "file": "pyodide/asttokens-2.4.1-py2.py3-none-any.whl",
+          "url": "https://cdn.jsdelivr.net/pyodide/v0.27.7/full/asttokens-2.4.1-py2.py3-none-any.whl",
+          "sha256": "bfeb9073458201c1f1c03a830e2154df70429d156d47844db30a19e2a7351e55"
+        },
+        "member": "asttokens-2.4.1.dist-info/LICENSE"
+      }
+    },
+    {
+      "file": "six-1.16.0-LICENSE.txt",
+      "bytes": 1066,
+      "sha256": "8bb850c565aa389fdc16f3a46965ad23d82adff60f2393fc2762b63185e8e6c9",
+      "origin": {
+        "type": "verified-archive-member",
+        "asset": {
+          "file": "pyodide/six-1.16.0-py2.py3-none-any.whl",
+          "url": "https://cdn.jsdelivr.net/pyodide/v0.27.7/full/six-1.16.0-py2.py3-none-any.whl",
+          "sha256": "f61235bc3a15086f0369585e5071ae9ba0bd244a111d12b37f683862e6850c0a"
+        },
+        "member": "six-1.16.0.dist-info/LICENSE"
+      }
+    },
+    {
+      "file": "packaging-24.2-LICENSE.txt",
+      "bytes": 197,
+      "sha256": "cad1ef5bd340d73e074ba614d26f7deaca5c7940c3d8c34852e65c4909686c48",
+      "origin": {
+        "type": "verified-archive-member",
+        "asset": {
+          "file": "pyodide/packaging-24.2-py3-none-any.whl",
+          "url": "https://cdn.jsdelivr.net/pyodide/v0.27.7/full/packaging-24.2-py3-none-any.whl",
+          "sha256": "fbf6a5ace596eb8e28fe0089ecfc0bca2eb3930563e9ca06acb98ea5302b99f7"
+        },
+        "member": "packaging-24.2.dist-info/licenses/LICENSE"
+      }
+    },
+    {
+      "file": "packaging-24.2-LICENSE.APACHE.txt",
+      "bytes": 10174,
+      "sha256": "0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594",
+      "origin": {
+        "type": "verified-archive-member",
+        "asset": {
+          "file": "pyodide/packaging-24.2-py3-none-any.whl",
+          "url": "https://cdn.jsdelivr.net/pyodide/v0.27.7/full/packaging-24.2-py3-none-any.whl",
+          "sha256": "fbf6a5ace596eb8e28fe0089ecfc0bca2eb3930563e9ca06acb98ea5302b99f7"
+        },
+        "member": "packaging-24.2.dist-info/licenses/LICENSE.APACHE"
+      }
+    },
+    {
+      "file": "packaging-24.2-LICENSE.BSD.txt",
+      "bytes": 1344,
+      "sha256": "b70e7e9b742f1cc6f948b34c16aa39ffece94196364bc88ff0d2180f0028fac5",
+      "origin": {
+        "type": "verified-archive-member",
+        "asset": {
+          "file": "pyodide/packaging-24.2-py3-none-any.whl",
+          "url": "https://cdn.jsdelivr.net/pyodide/v0.27.7/full/packaging-24.2-py3-none-any.whl",
+          "sha256": "fbf6a5ace596eb8e28fe0089ecfc0bca2eb3930563e9ca06acb98ea5302b99f7"
+        },
+        "member": "packaging-24.2.dist-info/licenses/LICENSE.BSD"
+      }
+    },
+    {
+      "file": "vyper-0.4.3-LICENSE.txt",
+      "bytes": 11549,
+      "sha256": "ba0081957be6d4c459e66c07891761bec9e37c95bc618081cc265673604eb07b",
+      "origin": {
+        "type": "verified-archive-member",
+        "asset": {
+          "file": "pyodide/vyper-0.4.3-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/f3/45/ad3c7d78aaa3e50d229968bc39eaf193f9b8eee79b5f16a3bed8f35e1395/vyper-0.4.3-py3-none-any.whl",
+          "sha256": "3b9671727c888363740dc678e60336759871487d0e4e9fdd973048fa9635c4fd"
+        },
+        "member": "vyper-0.4.3.dist-info/LICENSE"
+      }
+    },
+    {
+      "file": "cbor2-5.6.5-LICENSE.txt",
+      "bytes": 1081,
+      "sha256": "a6afd126d8f545a15166a22f25fadff4b9fb4978bbdd17e97d97d950b66d2fef",
+      "origin": {
+        "type": "verified-archive-member",
+        "asset": {
+          "file": "pyodide/cbor2-5.6.5-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/9b/ef/1c4698cac96d792005ef0611832f38eaee477c275ab4b02cbfc4daba7ad3/cbor2-5.6.5-py3-none-any.whl",
+          "sha256": "3038523b8fc7de312bb9cdcbbbd599987e64307c4db357cd2030c472a6c7d468"
+        },
+        "member": "cbor2-5.6.5.dist-info/LICENSE.txt"
+      }
+    },
+    {
+      "file": "lark-1.1.9-LICENSE.txt",
+      "bytes": 1073,
+      "sha256": "8263e5652d07cecb3adadf05140b65e70cfa169ecec5f520fe1671479ce12a83",
+      "origin": {
+        "type": "verified-archive-member",
+        "asset": {
+          "file": "pyodide/lark-1.1.9-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/e7/9c/eef7c591e6dc952f3636cfe0df712c0f9916cedf317810a3bb53ccb65cdd/lark-1.1.9-py3-none-any.whl",
+          "sha256": "a0dd3a87289f8ccbb325901e4222e723e7d745dbfc1803eaf5f3d2ace19cf2db"
+        },
+        "member": "lark-1.1.9.dist-info/LICENSE"
+      }
+    },
+    {
+      "file": "wheel-0.46.3-LICENSE.txt",
+      "bytes": 1107,
+      "sha256": "30c23618679108f3e8ea1d2a658c7ca417bdfc891c98ef1a89fa4ff0c9828654",
+      "origin": {
+        "type": "verified-archive-member",
+        "asset": {
+          "file": "pyodide/wheel-0.46.3-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/87/22/b76d483683216dde3d67cba61fb2444be8d5be289bf628c13fc0fd90e5f9/wheel-0.46.3-py3-none-any.whl",
+          "sha256": "4b399d56c9d9338230118d705d9737a2a468ccca63d5e813e2a4fc7815d8bc4d"
+        },
+        "member": "wheel-0.46.3.dist-info/licenses/LICENSE.txt"
+      }
+    },
+    {
+      "file": "immutables-0.21-LICENSE.txt",
+      "bytes": 301,
+      "sha256": "8648b04124b59d919a027a4d9572219ac4a34434e7f26cabdd4bd33dd33f01ca",
+      "origin": {
+        "type": "verified-archive-member",
+        "asset": {
+          "file": "pyodide/immutables-0.21.tar.gz",
+          "url": "https://files.pythonhosted.org/packages/69/41/0ccaa6ef9943c0609ec5aa663a3b3e681c1712c1007147b84590cec706a0/immutables-0.21.tar.gz",
+          "sha256": "b55ffaf0449790242feb4c56ab799ea7af92801a0a43f9e2f4f8af2ab24dfc4a"
+        },
+        "member": "immutables-0.21/LICENSE"
+      }
+    },
+    {
+      "file": "immutables-0.21-LICENSE-APACHE.txt",
+      "bytes": 11309,
+      "sha256": "25e8791da26f7e74c4baf19eafd7d137b64a46952ef840ed01c172b680cf4046",
+      "origin": {
+        "type": "verified-archive-member",
+        "asset": {
+          "file": "pyodide/immutables-0.21.tar.gz",
+          "url": "https://files.pythonhosted.org/packages/69/41/0ccaa6ef9943c0609ec5aa663a3b3e681c1712c1007147b84590cec706a0/immutables-0.21.tar.gz",
+          "sha256": "b55ffaf0449790242feb4c56ab799ea7af92801a0a43f9e2f4f8af2ab24dfc4a"
+        },
+        "member": "immutables-0.21/LICENSE-APACHE"
+      }
+    },
+    {
+      "file": "immutables-0.21-NOTICE.txt",
+      "bytes": 63,
+      "sha256": "62c982da0e3173247ec93f7ce1a4101e9b87e353c55cb0d7cd2e4df91794d2fd",
+      "origin": {
+        "type": "verified-archive-member",
+        "asset": {
+          "file": "pyodide/immutables-0.21.tar.gz",
+          "url": "https://files.pythonhosted.org/packages/69/41/0ccaa6ef9943c0609ec5aa663a3b3e681c1712c1007147b84590cec706a0/immutables-0.21.tar.gz",
+          "sha256": "b55ffaf0449790242feb4c56ab799ea7af92801a0a43f9e2f4f8af2ab24dfc4a"
+        },
+        "member": "immutables-0.21/NOTICE"
+      }
+    },
+    {
+      "file": "immutables-0.21-pythoncapi_compat.h",
+      "bytes": 22963,
+      "sha256": "978b522b4e0f430d8f60126af1920d71cba2f32dc2f5cc7f52400105a48773de",
+      "origin": {
+        "type": "verified-archive-member",
+        "asset": {
+          "file": "pyodide/immutables-0.21.tar.gz",
+          "url": "https://files.pythonhosted.org/packages/69/41/0ccaa6ef9943c0609ec5aa663a3b3e681c1712c1007147b84590cec706a0/immutables-0.21.tar.gz",
+          "sha256": "b55ffaf0449790242feb4c56ab799ea7af92801a0a43f9e2f4f8af2ab24dfc4a"
+        },
+        "member": "immutables-0.21/immutables/pythoncapi_compat.h"
+      }
+    }
+  ]
+}

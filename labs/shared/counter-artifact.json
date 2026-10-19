@@ -1,0 +1,109 @@
+{
+  "name": "LabCounter",
+  "file": "LabCounter.sol",
+  "sourceHash": "0xee7db273680816c1375739dbf23840b1ffdc314a7ef308f446f7c7c21e7beb1e",
+  "sourceHashes": {
+    "LabCounter.sol": "0xee7db273680816c1375739dbf23840b1ffdc314a7ef308f446f7c7c21e7beb1e"
+  },
+  "compiler": "Solidity 0.8.30+commit.73712a01.Emscripten.clang",
+  "evmVersion": "shanghai",
+  "optimizer": {
+    "enabled": true,
+    "runs": 200
+  },
+  "abi": [
+    {
+      "inputs": [],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "sender",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "value",
+          "type": "uint256"
+        }
+      ],
+      "name": "ValueChanged",
+      "type": "event"
+    },
+    {
+      "inputs": [],
+      "name": "fail",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "owner",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "next",
+          "type": "uint256"
+        }
+      ],
+      "name": "set_value",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "value",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x60a0604052348015600e575f5ffd5b503360805260805161023e6100315f395f8181606e0152610115015261023e5ff3fe608060405234801561000f575f5ffd5b506004361061004a575f3560e01c80633fa4f2451461004e5780638da5cb5b14610069578063a9cc4718146100a8578063b0f2b72a146100b2575b5f5ffd5b6100565f5481565b6040519081526020015b60405180910390f35b6100907f000000000000000000000000000000000000000000000000000000000000000081565b6040516001600160a01b039091168152602001610060565b6100b06100c5565b005b6100b06100c03660046101f1565b61010a565b6103e75f5560405162461bcd60e51b815260206004820152601060248201526f43616d62696f2072657665727469646f60801b60448201526064015b60405180910390fd5b336001600160a01b037f000000000000000000000000000000000000000000000000000000000000000016146101755760405162461bcd60e51b815260206004820152601060248201526f536f6c6f2070726f706965746172696f60801b6044820152606401610101565b6103e88111156101b55760405162461bcd60e51b815260206004820152600b60248201526a04d6178696d6f20313030360ac1b6044820152606401610101565b5f81905560405181815233907fe2b64d6eb95e02b6354c9dad0f0b75f05c8659bc5f2a0f91bc457fc27c55c6889060200160405180910390a250565b5f60208284031215610201575f5ffd5b503591905056fea2646970667358221220bab1de0bcff4cb5605166e618adab637c69acb8343f8a6b75724fd078f98d63d64736f6c634300081e0033",
+  "runtimeBytecode": "0x608060405234801561000f575f5ffd5b506004361061004a575f3560e01c80633fa4f2451461004e5780638da5cb5b14610069578063a9cc4718146100a8578063b0f2b72a146100b2575b5f5ffd5b6100565f5481565b6040519081526020015b60405180910390f35b6100907f000000000000000000000000000000000000000000000000000000000000000081565b6040516001600160a01b039091168152602001610060565b6100b06100c5565b005b6100b06100c03660046101f1565b61010a565b6103e75f5560405162461bcd60e51b815260206004820152601060248201526f43616d62696f2072657665727469646f60801b60448201526064015b60405180910390fd5b336001600160a01b037f000000000000000000000000000000000000000000000000000000000000000016146101755760405162461bcd60e51b815260206004820152601060248201526f536f6c6f2070726f706965746172696f60801b6044820152606401610101565b6103e88111156101b55760405162461bcd60e51b815260206004820152600b60248201526a04d6178696d6f20313030360ac1b6044820152606401610101565b5f81905560405181815233907fe2b64d6eb95e02b6354c9dad0f0b75f05c8659bc5f2a0f91bc457fc27c55c6889060200160405180910390a250565b5f60208284031215610201575f5ffd5b503591905056fea2646970667358221220bab1de0bcff4cb5605166e618adab637c69acb8343f8a6b75724fd078f98d63d64736f6c634300081e0033",
+  "storageLayout": {
+    "storage": [
+      {
+        "astId": 3,
+        "contract": "LabCounter.sol:LabCounter",
+        "label": "value",
+        "offset": 0,
+        "slot": "0",
+        "type": "t_uint256"
+      }
+    ],
+    "types": {
+      "t_uint256": {
+        "encoding": "inplace",
+        "label": "uint256",
+        "numberOfBytes": "32"
+      }
+    }
+  },
+  "sourceFile": "labs/shared/counter-source.mjs",
+  "sourceExport": "SOLIDITY_SOURCE"
+}

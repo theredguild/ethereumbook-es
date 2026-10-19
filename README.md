@@ -64,15 +64,15 @@ Abrir `http://localhost:4173/ethereumbook-es/`. El workflow obtiene `VOCS_BASE_P
 
 ## Laboratorios interactivos
 
-El plan por capítulo está en [LABS_PLAN.md](LABS_PLAN.md). El primer laboratorio corresponde al capítulo 6 y se abre en `/labs/transactions/`, o en `/ethereumbook-es/labs/transactions/` bajo esa subruta. Es material complementario de The Red Guild, no parte del texto original.
+Los 17 capítulos tienen un laboratorio complementario original de The Red Guild. El acceso aparece después de la introducción de cada capítulo; [catálogo de laboratorios](site/laboratorios.md) reúne los recorridos y enlaza el registro de revisión. No son parte del texto original ni modifican sus ejemplos.
 
-Permite construir y firmar transacciones EIP-1559, inspeccionar sus bytes, enviarlas a una cola educativa, reemplazarlas e incluirlas en una EVM local. Los recibos muestran gas usado, precio efectivo, quema, propina y cambios de cuentas. Incluye casos de nonce futuro, comisión bloqueada, `REVERT` y agotamiento de gas.
+Cada interfaz muestra un paso por vez; ajustes, fuentes, bytes y registros extensos quedan bajo demanda. Los recorridos distinguen preparar, autorizar, ejecutar y observar, con reglas propias de cada capítulo. Editar invalida la autorización correspondiente; una reversión incluida conserva su recibo, gas y nonce, no se presenta como rechazo previo.
 
-La interfaz muestra un paso por vez: Preparar → Revisar → Incluir → Resultado. Se avanza solo al firmar, admitir bytes en la cola o incluir realmente una transacción. Los bloqueos permanecen en la cola; un fallo incluido sí muestra su recibo. Los campos avanzados, bytes, comparaciones de cuentas y fórmulas están en desplegables cerrados. Se pueden consultar pendientes y recibos anteriores sin confundirlos con el borrador actual. Elegir otro ejercicio conserva el estado; reiniciar lo descarta solo tras confirmar el reinicio.
+No requieren billetera, RPC, base de datos ni servidor de aplicación. EthereumJS `10.1.3` ejecuta y firma transacciones en Workers locales con cadena educativa `31337` y reglas Shanghai explícitas. Las firmas, hashes y derivaciones HD son reales; red, consenso y economía muestran sus supuestos y omisiones. Las claves privadas educativas son conocidas públicamente: nunca financiarlas, importarlas en una billetera ni introducir secretos personales.
 
-No requiere billetera, RPC, base de datos ni servidor de aplicación. Firma y ejecución ocurren en un Worker con EthereumJS `10.1.3`. Usa cadena educativa `31337`, reglas Shanghai y una clave conocida públicamente. Los saldos son ficticios. Nunca enviar fondos reales a estas direcciones ni importar la clave en una billetera. La cola, los bloques y su política de reemplazo son modelos educativos, no una red ni una implementación de consenso.
+Los capítulos 7 y 8 compilan fuentes editables con Solidity `0.8.30` y Vyper `0.4.3` en el navegador, usando recursos del propio sitio. Los capítulos 16 y 17 generan y verifican pruebas Groth16 reales vinculadas a los circuitos incluidos; no son una zk-EVM ni una configuración apta para fondos. La licencia real de Vyper tiene una adición restrictiva que exige revisión jurídica humana antes de publicar ese compilador; no se presume compatibilidad a partir de sus metadatos.
 
-`npm run build` prepara las páginas, compila `labs/transactions/` dentro del árbol público generado y luego compila Vocs. Un solo artefacto, `dist/public/`, contiene libro y laboratorio. El preparador añade una tarjeta de práctica opcional después de los dos párrafos introductorios del capítulo 6, sin editar su fuente. Su botón de navegación HTML nativa tiene fondo contrastante, borde y foco visible. La barra lateral lleva a `/laboratorios`, donde se reutiliza ese estilo. Los botones evitan enviar la página independiente al router de Waku. La paginación permanece entre páginas Vocs y se conserva la comprobación de enlaces del libro.
+`npm run build` prepara las páginas, regenera contratos educativos, verifica los artefactos ZK incluidos, compila las 17 entradas de `labs/catalog.mjs`, copia los runtimes y prepara fuentes y licencias antes de compilar Vocs. Node 26 y `tar` son necesarios. El único artefacto de publicación sigue siendo `dist/public/`. Los accesos usan navegación HTML nativa, no el router de Waku; la paginación permanece entre páginas del libro. Raíz y `VOCS_BASE_PATH` se aplican también a módulos, Workers, recursos y enlaces de regreso.
 
 ```sh
 npm run test:labs
@@ -80,9 +80,13 @@ npm run build
 npm run preview
 ```
 
-Las pruebas ejecutan transacciones contra una EVM en memoria. No usan redes ni ejemplos del libro. `npm run dev` también prepara el laboratorio, pero sus fuentes independientes no tienen recarga en caliente: tras editarlas, ejecutar `npm run build:labs` o reiniciar desarrollo. Para acceso por IP HTTP de una VM, usar la vista previa de producción descrita más abajo.
+Las pruebas ejecutan modelos y contratos originales en memoria, sin redes ni ejemplos del libro. `npm run dev` también prepara los laboratorios; sus fuentes independientes no tienen recarga en caliente. Después de editarlas, ejecutar `npm run build:labs` o reiniciar desarrollo. Para acceso por IP HTTP de una VM, usar la vista previa de producción descrita más abajo.
 
-Una vez inicializado el Worker, firma, cola, ejecución y reinicio funcionan sin conexión. Esto no ofrece instalación offline ni permite recargar la página sin recursos en caché. Recarga y reinicio descartan el estado; no se persisten cuentas, pendientes ni recibos.
+`npm run setup:zk` regenera circuitos, parámetros y claves educativos; no se ejecuta durante una compilación ordinaria. `npm run verify:zk` comprueba los hashes de las fuentes y artefactos incluidos. `npm run setup:licenses` actualiza los textos de licencias de los runtimes fijados; cualquier cambio requiere revisar su procedencia y condiciones.
+
+El catálogo y los pies de los 16 laboratorios nuevos abren `/labs/recursos.html`, con licencias, inventarios y archivo de fuentes preferidas para modificación. El laboratorio original del capítulo 6 conserva su interfaz; el catálogo también permite acceder a sus fuentes. Se incluyen instrucciones para extraer y compilar por separado. El software propio de los laboratorios usa GPL-3.0-or-later; el libro y cada dependencia conservan sus condiciones respectivas. Véanse [licencia](LICENSE.md), [plan](LABS_PLAN.md) y [hallazgos y revisiones](LABS_REVIEW.md).
+
+El estado vive solo en memoria. Reiniciar o recargar descarta el recorrido. Algunos cálculos siguen funcionando sin conexión después de cargar sus recursos; esto no ofrece instalación offline ni recarga sin caché. La revisión asistida no sustituye la aprobación editorial, jurídica o de accesibilidad humana.
 
 ## Regeneración de diagramas
 

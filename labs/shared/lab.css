@@ -1,0 +1,34 @@
+.lab-workflow .step-navigation ol { grid-template-columns: repeat(var(--step-count), minmax(0, 1fr)); }
+.lab-workflow .site-header a { font-size: 0.9rem; }
+.lab-workflow pre { max-width: 100%; overflow-x: auto; }
+.lab-workflow .comparison { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; margin: 1rem 0; }
+.lab-workflow .comparison > section { min-width: 0; border: 1px solid var(--border); padding: 1rem; border-radius: 0.4rem; }
+.lab-workflow .comparison h3 { margin-top: 0; }
+.lab-workflow .balance-list { display: grid; grid-template-columns: 1fr auto; gap: 0.4rem 1rem; margin: 0.5rem 0; }
+.lab-workflow .balance-list dt, .lab-workflow .balance-list dd { margin: 0; }
+.lab-workflow .balance-list dd { font-weight: 650; font-variant-numeric: tabular-nums; }
+.lab-workflow .node-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.75rem; margin: 1rem 0; }
+.lab-workflow .node-card { border: 1px solid var(--border); border-radius: 0.4rem; padding: 0.8rem; min-width: 0; overflow-wrap: anywhere; }
+.lab-workflow .node-card h3 { margin-top: 0; }
+.lab-workflow .node-card p { margin-bottom: 0.3rem; }
+.lab-workflow .inline-options { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.lab-workflow .inline-options label { display: flex; align-items: center; gap: 0.5rem; min-height: 44px; }
+.lab-workflow .inline-options input { width: 1.2rem; min-height: 1.2rem; }
+.lab-workflow .compact-table th[scope="row"] { min-width: auto; }
+.lab-workflow .code-editor { min-height: 220px; white-space: pre; tab-size: 4; font-size: 0.85rem; }
+.lab-workflow .breakable { overflow-wrap: anywhere; word-break: break-word; }
+.lab-workflow .hex.breakable { white-space: normal; }
+.lab-workflow .step-result { border-inline-start: 4px solid var(--accent); padding: 0.5rem 0.8rem; margin: 1rem 0; }
+.lab-workflow .trace-controls { display: flex; gap: 0.6rem; align-items: center; flex-wrap: wrap; margin: 1rem 0; }
+.lab-workflow .trace-controls output { font-variant-numeric: tabular-nums; }
+.lab-workflow .experiment-list { padding-inline-start: 1.2rem; }
+.lab-workflow .experiment-list li { padding-block: 0.3rem; }
+.lab-workflow .transaction-order { display: flex; gap: 0.65rem; flex-wrap: wrap; padding: 0; list-style: none; }
+.lab-workflow .transaction-order li { padding: 0.6rem; border: 1px solid var(--border); border-radius: 0.3rem; }
+@media (max-width: 600px) {
+  .lab-workflow .comparison, .lab-workflow .node-grid { grid-template-columns: minmax(0, 1fr); }
+  .lab-workflow .trace-controls button { flex: 1 1 40%; }
+  .lab-workflow .step-navigation button { font-size: 0.72rem; }
+}
+.lab-workflow .field-error { color: var(--error); font-size: 0.82rem; margin: -0.5rem 0 1rem; }
+.lab-workflow [aria-invalid="true"] { border-color: var(--error); }

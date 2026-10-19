@@ -1,0 +1,82 @@
+{
+  "solidity": "0.8.30+commit.73712a01",
+  "vyper": "0.4.3",
+  "pyodide": "0.27.7",
+  "assets": [
+    {
+      "file": "pyodide/pyodide.mjs",
+      "source": "node_modules/pyodide/pyodide.mjs",
+      "sha256": "04c052c815abb0bf2981fa38c2dfa58e3120ee5288c956df2b2a15e301782c5f"
+    },
+    {
+      "file": "pyodide/pyodide.asm.js",
+      "source": "node_modules/pyodide/pyodide.asm.js",
+      "sha256": "6b4c90de5b7172873f04f21884d0e9d2274e305fe32116558fe3e4fbe3618d51"
+    },
+    {
+      "file": "pyodide/pyodide.asm.wasm",
+      "source": "node_modules/pyodide/pyodide.asm.wasm",
+      "sha256": "a50dd1843f805a0b7c45b61037ee0d7b26dfe85efe0e18ef95a34ad24e401f5f"
+    },
+    {
+      "file": "pyodide/python_stdlib.zip",
+      "source": "node_modules/pyodide/python_stdlib.zip",
+      "sha256": "16611534726e5d8ac2bd8f926410b2dcb8d6f49aa24913463533b457a2115c16"
+    },
+    {
+      "file": "pyodide/pyodide-lock.json",
+      "source": "node_modules/pyodide/pyodide-lock.json",
+      "sha256": "9c45b916001a750f4102fc287494f3eab215909c7535c626a20db80fd6333e2c"
+    },
+    {
+      "file": "solc/soljson.js",
+      "source": "node_modules/solc/soljson.js",
+      "sha256": "3bb491a777f76dff9b2fe73ce29ca20e21a971b59a2f2cf8f73415424f00be06"
+    },
+    {
+      "file": "pyodide/pycryptodome-3.20.0-cp35-abi3-pyodide_2024_0_wasm32.whl",
+      "url": "https://cdn.jsdelivr.net/pyodide/v0.27.7/full/pycryptodome-3.20.0-cp35-abi3-pyodide_2024_0_wasm32.whl",
+      "sha256": "a8f3ee4c770ab953b83a1d6f21dbddea08c4b81b80bd5a6c90cd7d0500bbc3bc"
+    },
+    {
+      "file": "pyodide/asttokens-2.4.1-py2.py3-none-any.whl",
+      "url": "https://cdn.jsdelivr.net/pyodide/v0.27.7/full/asttokens-2.4.1-py2.py3-none-any.whl",
+      "sha256": "bfeb9073458201c1f1c03a830e2154df70429d156d47844db30a19e2a7351e55"
+    },
+    {
+      "file": "pyodide/six-1.16.0-py2.py3-none-any.whl",
+      "url": "https://cdn.jsdelivr.net/pyodide/v0.27.7/full/six-1.16.0-py2.py3-none-any.whl",
+      "sha256": "f61235bc3a15086f0369585e5071ae9ba0bd244a111d12b37f683862e6850c0a"
+    },
+    {
+      "file": "pyodide/packaging-24.2-py3-none-any.whl",
+      "url": "https://cdn.jsdelivr.net/pyodide/v0.27.7/full/packaging-24.2-py3-none-any.whl",
+      "sha256": "fbf6a5ace596eb8e28fe0089ecfc0bca2eb3930563e9ca06acb98ea5302b99f7"
+    },
+    {
+      "file": "pyodide/vyper-0.4.3-py3-none-any.whl",
+      "url": "https://files.pythonhosted.org/packages/f3/45/ad3c7d78aaa3e50d229968bc39eaf193f9b8eee79b5f16a3bed8f35e1395/vyper-0.4.3-py3-none-any.whl",
+      "sha256": "3b9671727c888363740dc678e60336759871487d0e4e9fdd973048fa9635c4fd"
+    },
+    {
+      "file": "pyodide/cbor2-5.6.5-py3-none-any.whl",
+      "url": "https://files.pythonhosted.org/packages/9b/ef/1c4698cac96d792005ef0611832f38eaee477c275ab4b02cbfc4daba7ad3/cbor2-5.6.5-py3-none-any.whl",
+      "sha256": "3038523b8fc7de312bb9cdcbbbd599987e64307c4db357cd2030c472a6c7d468"
+    },
+    {
+      "file": "pyodide/lark-1.1.9-py3-none-any.whl",
+      "url": "https://files.pythonhosted.org/packages/e7/9c/eef7c591e6dc952f3636cfe0df712c0f9916cedf317810a3bb53ccb65cdd/lark-1.1.9-py3-none-any.whl",
+      "sha256": "a0dd3a87289f8ccbb325901e4222e723e7d745dbfc1803eaf5f3d2ace19cf2db"
+    },
+    {
+      "file": "pyodide/wheel-0.46.3-py3-none-any.whl",
+      "url": "https://files.pythonhosted.org/packages/87/22/b76d483683216dde3d67cba61fb2444be8d5be289bf628c13fc0fd90e5f9/wheel-0.46.3-py3-none-any.whl",
+      "sha256": "4b399d56c9d9338230118d705d9737a2a468ccca63d5e813e2a4fc7815d8bc4d"
+    },
+    {
+      "file": "pyodide/immutables-0.21.tar.gz",
+      "url": "https://files.pythonhosted.org/packages/69/41/0ccaa6ef9943c0609ec5aa663a3b3e681c1712c1007147b84590cec706a0/immutables-0.21.tar.gz",
+      "sha256": "b55ffaf0449790242feb4c56ab799ea7af92801a0a43f9e2f4f8af2ab24dfc4a"
+    }
+  ]
+}
